@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link type="text/css" rel="stylesheet" href="../public/css/main.css">
+        <script src="../public/javascripts/real_coords.js"></script>
+
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    </head>
+    <body onload="st();window.requestAnimationFrame(update);">
+        <h1 style="text-align:center">Logged In as {{name}}</h1>
+        <div id="container"><canvas id="board"></canvas></div><br>
+        <button onclick="stop()">PERMANENT STOP SIMULATION</button>
+        <button onclick="st()">RESTART SIMULATION</button>
+    </body>
+</html>

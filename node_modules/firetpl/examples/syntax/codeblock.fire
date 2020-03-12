@@ -1,0 +1,6 @@
+div class="code-block"
+    ```js
+        var code = new JavascriptCode();
+        code.bla(`$inlineVar`);
+        code.bla($jsVar);
+    ```

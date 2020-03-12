@@ -1,0 +1,8 @@
+{
+    "en": {
+        "greeding": "Hello $name",
+        "txt": {
+            "message": "Whats going on?"
+        }
+    }
+}

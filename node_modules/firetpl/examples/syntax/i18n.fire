@@ -1,0 +1,4 @@
+h1 @txt.title
+	div class=description
+		@txt.description
+	button type=button @btn.submit

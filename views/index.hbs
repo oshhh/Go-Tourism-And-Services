@@ -9,8 +9,9 @@
     </head>
     <body onload="st();window.requestAnimationFrame(update);">
         <h1 style="text-align:center">Logged In as {{name}}</h1>
-        <div id="container"><canvas id="board"></canvas></div><br>
-        <button onclick="stop()">PERMANENT STOP SIMULATION</button>
-        <button onclick="st()">RESTART SIMULATION</button>
+        <div style="width: 50vw;height:50vh">
+            <h1 style="text-align:center;margin:50px;">Main Content Below</h1>
+            <a href="/logout"><button style="font-size: larger;">LOGOUT</button></a>
+        </div>
     </body>
 </html>

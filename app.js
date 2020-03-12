@@ -2,6 +2,7 @@ const port=5000;
 var express =require('express');
 var path = require('path');
 var hbs = require('express-handlebars');
+var session = require('express-session')
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 
@@ -21,9 +22,15 @@ app.use('/public',express.static(__dirname+'/public'));
 app.use(express.json());
 app.use(express.urlencoded());
 
+app.use(session({secret:"Kathal"}));
+
 app.get('/',function(req,res,next){
   console.log("Main page Access");
-  next();
+  var uname=req.session.uname;
+  if(!uname)
+    res.redirect('/login');
+  else
+    next();
 });
 
 app.set('root',__dirname);

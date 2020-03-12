@@ -1,0 +1,8 @@
+html
+	head
+	body
+		div id=myDiv onShow=show
+			button onClick=filter data-filter=asc
+				Filter ascend
+			button onClick=filter data-filter=desc
+				Filter descend

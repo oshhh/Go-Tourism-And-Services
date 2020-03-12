@@ -1,0 +1,73 @@
+Main Scope:
+
+title
+description
+
+	+-------------------------------------------------+
+	| Scope1										  |
+	| 												  |
+	| listing										  |
+	| parent.name									  |
+	|												  |
+	|	+----------------------------------------+	  |
+	|	| Scope2								 |	  |
+	|	| 										 |	  |
+	|	| item									 |	  |
+	|	| root.name								 |	  |
+	|	+----------------------------------------+	  |
+	|	+----------------------------------------+	  |
+	|	| Scope2								 |	  |
+	|	| 										 |	  |
+	|	| item									 |	  |
+	|	| root.name								 |	  |
+	|	+----------------------------------------+	  |
+	|	+----------------------------------------+	  |
+	|	| Scope2								 |	  |
+	|	| 										 |	  |
+	|	| item									 |	  |
+	|	| root.name								 |	  |
+	|	+----------------------------------------+	  |
+	|												  |
+	+-------------------------------------------------+
+
+pointer1 = title, path=title
+pointer2 = description, path=description
+
+scope1 = Scope1, path=listing
+scope2 = Scope2, path=listing[].item
+
+pointer3 = parent.name, path=name
+pointer4 = root.name, path=name
+
+   In FireTPL:
+- - - - - - - - - - - - - - - - - - - - - - -
+   
+1) Replace scopes with <scope scope=scope001 path=mypath> tags
+   Replace variables with <scope path=mypath>
+   Ignore paths which includes []
+
+   In XQCore:
+- - - - - - - - - - - - - - - - - - - - - - -
+
+2) Scan for <scope> tags and replace it with domFracments
+   Store a pointer of a domFracment eg:
+
+    path:name {
+		pointer3,
+		pointer4
+	}	
+
+	path:listing {
+		scope1
+	}
+
+
+3) In update, replace all domFracments of the changed item with a new domFracment.
+   Replace the pointer
+   Rerender all scopes of this path
+
+4) On a render() call remove all stored pointer and scopes and create new one
+- - - - - - - - - - - - - - - - - - - - - - -
+
+
+

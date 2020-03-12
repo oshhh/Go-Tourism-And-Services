@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scope Placeholder</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="/styles/style.css">
+  <script type="text/javascript" src="lib/jquery.js"></script>
+  <script type="text/javascript" src="js/firetpl.js"></script>
+  <script type="text/javascript">
+	FireTPL.templateCache.listing = function(data, scopes) {
+		var root = data,
+			parent = data,
+			h = new FireTPL.Runtime();
+
+		scopes.scope001 = function(data,parent) {
+			return h.exec('each',data,parent,root, function(data) {
+				var s='';
+				s+='<li><span class="name">'+data.name+'</span><span class="image xq-scope xq-scope002">';
+				var c=data.image;
+				var r=scopes.scope002(c,data);
+				s+=r;
+				s+='</span></li>';
+				return s;
+			});
+		};
+
+		scopes.scope002 = function(c,data) {
+			return h.exec('if',c,parent,root,function(data){
+				var s='';
+				s+='<img src="'+data.image+'">';
+				return s;
+			});
+		};
+
+		var s='';
+		s+='<div class="example"><h1>'+data.title+'</h1><div class="description">'+data.description+
+		'</div><ul class="listing xq-scope xq-scope001"><li>My Fruits are:</li>';
+
+		s+='<scope id="scope001" path="data.listing" parent="data"></scope>';
+		// s+=scopes.scope001(data.listing,data);
+		s+='</ul></div>';
+		return s;
+	};
+
+
+	//Render template
+	$(function() {
+		var $el = $('body');
+		var scopes = {};
+		var data = {
+			title: 'FireTPL scope test',
+			description: 'This script uses FireTPL with usePlaceholder option. We test here whether it\'s possible to replace the <scope> tag with it\'s content without loosing a pointer to the replaced elements',
+			listing: [{
+				name: 'Banana',
+				title: 'Jeahhh Banannnnaaaa....'
+			}, {
+				name: 'Apple',
+				title: 'Hammm Bablll....'
+			}]
+		};
+
+		var html = FireTPL.templateCache.listing(data, scopes);
+
+		var tmpl = $($.parseHTML(html));
+		console.log(tmpl);
+		var node001 = tmpl.find('scope[id=scope001]').get(0);
+		console.log('Scoper001:', node001);
+		
+		var newScope = $.parseHTML(scopes.scope001(data.listing, data));
+		$(node001).replaceWith(newScope);
+		node001 = newScope;
+		$('body').append(tmpl);
+		console.log('Scoper001:', node001);
+		console.log('Scoper001:', newScope);
+
+		setTimeout(function() {
+			//OK let's append a coconut
+			var cocoData = {
+				name: 'Coconut',
+				title: 'Very delicious coconut'
+			};
+
+			html = scopes.scope001([cocoData], data);
+			newScope = $.parseHTML(html);
+			console.log('NewScope:', newScope);
+			$(node001).last().after(newScope);
+			node001 = node001.concat(newScope);
+			console.log('Scoper001:', node001);
+		}, 1000);
+
+		setTimeout(function() {
+			//OK let's prepend a dragonfruit
+			var dragonData = {
+				name: 'Dragonfruit',
+				title: 'I like dragonfruits'
+			};
+
+			html = scopes.scope001([dragonData], data);
+			newScope = $.parseHTML(html);
+			console.log('NewScope:', newScope);
+			$(node001).first().before(newScope);
+			node001 = node001.concat(newScope);
+			console.log('Scoper001:', node001);
+		}, 2000);
+	});
+  </script>
+</head>
+
+<body>
+
+</body>
+</html>

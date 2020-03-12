@@ -1,0 +1,10 @@
+h1 Welcome at plan text example
+div class=description
+	"This is a multiline text block
+	You can put placeholders like $name here
+	A line break wont't be parsed as a <br>"
+	"To make a line break simply add a second text block wrapped in double quotes."
+
+	"Leaf a empty line for a paragraph ;)"
+
+	"Double quotes inside a text block must be html escaped. &quote;I'm doublequoted&quote;"

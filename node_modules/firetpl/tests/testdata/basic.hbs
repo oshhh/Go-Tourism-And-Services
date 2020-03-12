@@ -1,0 +1,17 @@
+<div class="firetpl-template">
+    <h1>This is a basic firetpl tempalte</h1>
+    <span>{{version}}</span>
+    {{#if listing}}
+        <h2>Has listings:</h2>
+        <ul>
+            {{#each listing}}
+                <li class="item">
+                    <span class="name">{{name}}</span>
+                    <span class="gender">{{gender}}</span>
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <h2>Hasn't any listings!</h2>
+    {{/if}}
+</div>

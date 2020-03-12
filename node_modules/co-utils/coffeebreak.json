@@ -1,0 +1,8 @@
+{
+    "project": "co-utils",
+    "browser": false,
+    "libs": "",
+    "files": "",
+    "tests": "tests/*.spec.js",
+    "watch": "*.js"
+}

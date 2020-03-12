@@ -1,0 +1,3 @@
+div $foo.if('bar', 'Yes', 'No')
+div
+    "$bar.if('blubb', 'Yes', 'No')"

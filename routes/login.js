@@ -5,5 +5,10 @@ router.get('/', function(req, res, next) {
   res.render('login',{title:"Login to TKG"});
   console.log("Login Rendered");
 });
-
+router.post('/',function(req,res,next){
+  console.log("BODY: "+req.body.name);
+  req.session.uname=req.body.name;
+  res.redirect('/..');
+  next();
+});
 module.exports = router;

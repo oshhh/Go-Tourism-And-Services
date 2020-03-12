@@ -1,0 +1,3 @@
+# fluf
+
+Suggar for Javascript

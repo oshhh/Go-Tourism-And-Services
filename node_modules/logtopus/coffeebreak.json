@@ -1,0 +1,7 @@
+{
+    "project": "logtopus",
+    "browser": false,
+    "libs": "",
+    "files": "lib/**.js",
+    "tests": "tests/*.spec.js"
+}

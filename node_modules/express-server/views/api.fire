@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+html
+    head
+        title "$serverName API"
+    link rel="stylesheet" href="/express-server/css/styles.css"
+    meta charset="UTF-8"
+body
+    h1 "$serverName API"
+    :each $routes
+	    div class="route"
+		    :if $version
+			    div class="version" $version
+            :if $deprecated
+                div class="deprecated" "deprecated"
+            div class="method method-$api.type" $api.type
+            div class="path"
+                a class="restLink" href="$api.path" target="_blank" $api.path
+            div class="info"
+                div "Info: $title"
+                :each $responses
+                    div class="response"
+                        "Response: $status $name ".
+                        small "( $type )"

@@ -1,0 +1,11 @@
+div class="firetpl-template"
+    h1 "This is a basic firetpl tempalte"
+    span $version
+    :if $listing
+        h2 "Has listings:"
+        :each $listing : ul
+            li class="item"
+                span class="name" $name
+                span class="gender" $gender
+    :else
+        h2 "Hasn't any listings!"

@@ -1,0 +1,7 @@
+div
+    h1 "Welcome!"
+    article
+        "Lorem ipsum Sint veniam ex amet sint.".
+        "<s>Lorem ipsum Do nulla amet aliqua labore.</s>"
+    section
+        "String with inline " quotes"

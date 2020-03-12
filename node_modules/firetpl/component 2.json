@@ -1,0 +1,11 @@
+{
+	"name": "firetpl",
+	"description": "",
+	"version": "<%= version %>",
+	"main": "firetpl.js",
+	"dependencies": {
+	},
+	"scripts": [
+		"firetpl.js"
+	]
+}

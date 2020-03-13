@@ -1,9 +1,4 @@
 var mysql = require('mysql');
-// Username: lHyGk3wWaK
-// Database name: lHyGk3wWaK
-// Password: X38PHfGbqx
-// Server: remotemysql.com
-// Port: 3306
 
 
 tables = {
@@ -24,7 +19,7 @@ tables = {
     'tourist_spot': ['tourist_spot_id', 'name', 'location_id', 'type', 'entry_fee'],
     'guide': ['service_id', 'tourist_spot_id'],
     'trip': ['trip_id', 'departure_date', 'arrival_date', 'destination_id'],
-    'service_request': ['request_id', 'trip_id', 'service_id', 'timestamp', 'quantity', 'cost', 'status', 'user_rating', 'comments'],
+    'service_request': ['request_id', 'trip_id', 'service_id', 'timestamp', 'quantity', 'cost', 'status', 'user_rating', 'service_rating', 'comments'],
     'query': ['query_id', 'user_id', 'query']
 }
 
@@ -34,15 +29,6 @@ var con = mysql.createConnection({
   password: "LTiPskhtKS",
   database: "sql12327792"
 });
-
-
-// var con = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "tourism"
-// });
-
 
 async function connect() {
     con.connect(function(err) {
@@ -58,10 +44,9 @@ async function runQuery(query, result) {
             if (err) throw err;
             console.log(result);
     });
-    return result;
 }
 
-function insert(table_name, data) {
+function _insert_(table_name, data) {
     query = 'insert into user values ('
     for(i = 0; i < tables['user'].length; i ++) {
         if(i == tables['user'].length - 1){
@@ -80,40 +65,46 @@ function select(table_name) {
 }
 
 function register_user(user) {
-    insert('user', user);
+    _insert_('user', user);
+}
+
+function deactivate_user(service_provider_id) {
+    runQuery('update user set is_active = \'N\' where user_id = ' + user_id + ';');
 }
 
 function register_service_provider(service_provider, services) {
-    insert('service_provider', service_provider);
+    _insert_('service_provider', service_provider);
     if(service_provider['domain'] == 'hotel' | service_provider['domain'] == 'restaurant') {
-        insert(service_provider['domain'], service_provider);
+        _insert_(service_provider['domain'], service_provider);
     }
     for(i = 0; i < services.length; i ++) {
-        insert('service', services[i]);
+        _insert_('service', services[i]);
         switch(service_provider['domain']) {
             case 'hotel':
-                insert('room', services[i]);
+                _insert_('room', services[i]);
                 break;
             case 'restaurant':
-                insert('food_item', services[i]);
+                _insert_('food_item', services[i]);
                 break;
             case 'airline':
-                insert('flight', services[i]);
+                _insert_('flight', services[i]);
                 break;
             case 'bus provider':
-                insert('bus', services[i]);
+                _insert_('bus', services[i]);
                 break;
             case 'train provider':
-                insert('train', services[i]);
+                _insert_('train', services[i]);
                 break;
             case 'taxi provider':
-                insert('taxi', services[i]);
+                _insert_('taxi', services[i]);
                 break;
         }
     }
 }
 
-
+function deactivate_service_provider(service_provider_id) {
+    runQuery('update service_provider set is_active = \'N\' where service_provider_id = ' + service_provider_id + ';');
+}
 
 function user_password(user_id) {
     query = 'select password from user where user_id = ' + user_id + ';'
@@ -150,16 +141,27 @@ function whereClause(attribute_values) {
     return query;
 }
 
-async function getGeneralServiceProviderAndService() {
+function getGeneralServiceProviderAndService() {
     attribute_values = inputAttributes(['service_provider', 'service']);
-    query = 'select * ' + 'from service_provider, service where( (service_provider.service_provider_id = service.service_provider_id) and (' + whereClause(attribute_values) +  '));'
-    return await runQuery(query);
+    query = 'select * ' + 'from service_provider, service where( (service_provider.is_active = \'Y\') and (service_provider.service_provider_id = service.service_provider_id) and (' + whereClause(attribute_values) +  '));'
+    runQuery(query);
 }
 
 function getParticularServiceProviderAndService(service_provider, service) {
     attribute_values = inputAttributes(['service_provider', 'service', service_provider, service]);
-    query = 'select * ' + 'from service_provider, service, ' + service_provider + ', ' + service + ' where( (service_provider.service_provider_id = service.service_provider_id) and (service_provider.service_provider_id = ' + service_provider + '.service_provider_id' + ') and (service.service_id = ' + service + '.service_id' + ') and (' + whereClause(attribute_values) +  '));'
-    return runQuery(query);
+    query = 'select * ' + 'from service_provider, service, ' + service_provider + ', ' + service + ' where( (service_provider.is_active = \'Y\') and (service_provider.service_provider_id = service.service_provider_id) and (service_provider.service_provider_id = ' + service_provider + '.service_provider_id' + ') and (service.service_id = ' + service + '.service_id' + ') and (' + whereClause(attribute_values) +  '));'
+    runQuery(query);
+}
+
+function getBusTrain(location1_id, location2_id) {
+    query = '(select * from bus, route r1, route r2 where r1.service_id = bus.service_id and r2.service_id = bus.service_id and r1.location_id = ' + location1_id + ' and r2.location_id = ' + location2_id + ' and r1.arrival_time < r2.arrival_time) union (select * from train, route r1, route r2 where r1.service_id = bus.service_id and r2.service_id = bus.service_id and r1.location_id = ' + location1_id + ' and r2.location_id = ' + location2_id + ' and r1.arrival_time < r2.arrival_time)'
+    runQuery(query);
+}
+
+function getTouristSpots(location_id) {
+    attribute_values = inputAttributes(['tourist_spot'])
+    query = 'select * from tourist_spot where (' + whereClause(attribute_values) + ');';
+    runQuery(query);
 }
 
 function getAvgServiceRating(service_id) {
@@ -172,12 +174,8 @@ function getAvgServiceProviderRating(service_provider_id) {
 
 async function main() {
     await connect();
-    // register_user({'user_id': '\'USR00001\'', 'name': '\'osheen\'', 'email': '\'osheen18059@iiitd.ac.in\'', 'password': '\'xxxx\'', 'address': '\'whatever\'', 'phone_no': '\'7042073559\'', 'location_id': '\'LOC00001\''})
-    result = await getGeneralServiceProviderAndService();
-    console.log(result);
-    // for(table in tables) {
-    //     select(table);
-    // }
+    // getGeneralServiceProviderAndService();
+    getTouristSpots();
 }
 
 main();

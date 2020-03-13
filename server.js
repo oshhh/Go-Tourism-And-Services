@@ -1,6 +1,12 @@
 var mysql = require('mysql');
+// Username: lHyGk3wWaK
+// Database name: lHyGk3wWaK
+// Password: X38PHfGbqx
+// Server: remotemysql.com
+// Port: 3306
 
-table_attributes = {
+
+tables = {
     'location': ['location_id', 'locality', 'city', 'state', 'country', 'pincode'],
     'neighbouring': ['location1_id', 'location2_id', 'distance_in_km'],
     'administrator': ['admin_id', 'name', 'role', 'email'],
@@ -23,37 +29,108 @@ table_attributes = {
 }
 
 var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "tourism"
+  host: "sql12.freesqldatabase.com",
+  user: "sql12327792",
+  password: "LTiPskhtKS",
+  database: "sql12327792"
 });
 
 
-function inputAttributes(tables) {
+// var con = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "",
+//   database: "tourism"
+// });
+
+
+async function connect() {
+    con.connect(function(err) {
+        if (err) throw err;
+        console.log('Connected!');
+    });
+}
+
+async function runQuery(query, result) {
+    var result;
+    console.log(query);
+    await con.query(query, function (err, result) {
+            if (err) throw err;
+            console.log(result);
+    });
+    return result;
+}
+
+function insert(table_name, data) {
+    query = 'insert into user values ('
+    for(i = 0; i < tables['user'].length; i ++) {
+        if(i == tables['user'].length - 1){
+            query += user[tables['user'][i]];
+        } else {
+            query += user[tables['user'][i]] + ', '
+        }
+    }
+    query += ');';
+    runQuery(query);
+}
+
+function select(table_name) {
+    query = 'select * from ' + table_name + ';';
+    runQuery(query);
+}
+
+function register_user(user) {
+    insert('user', user);
+}
+
+function register_service_provider(service_provider, services) {
+    insert('service_provider', service_provider);
+    if(service_provider['domain'] == 'hotel' | service_provider['domain'] == 'restaurant') {
+        insert(service_provider['domain'], service_provider);
+    }
+    for(i = 0; i < services.length; i ++) {
+        insert('service', services[i]);
+        switch(service_provider['domain']) {
+            case 'hotel':
+                insert('room', services[i]);
+                break;
+            case 'restaurant':
+                insert('food_item', services[i]);
+                break;
+            case 'airline':
+                insert('flight', services[i]);
+                break;
+            case 'bus provider':
+                insert('bus', services[i]);
+                break;
+            case 'train provider':
+                insert('train', services[i]);
+                break;
+            case 'taxi provider':
+                insert('taxi', services[i]);
+                break;
+        }
+    }
+}
+
+
+
+function user_password(user_id) {
+    query = 'select password from user where user_id = ' + user_id + ';'
+    return
+}
+
+function inputAttributes(input_tables) {
     attribute_values = {}
-    for(var j = 0; j < tables.length; ++ j) {
-        for(i = 0; i < table_attributes[tables[j]].length; ++ i) {
-            attribute_values[tables[j] + '.' + table_attributes[tables[j]][i]] = ['\'%\''];
+    for(var j = 0; j < input_tables.length; ++ j) {
+        for(i = 0; i < tables[input_tables[j]].length; ++ i) {
+            attribute_values[input_tables[j] + '.' + tables[input_tables[j]][i]] = ['\'%\''];
         }
      
     }
-    console.log('available attributes: ');
-    console.log(attribute_values);
+    // console.log('available attributes: ');
+    // console.log(attribute_values);
     return attribute_values;
-}
-
-async function runQuery(query) {
-    await con.connect(function(err) {
-        if (err) throw err;
-        console.log("Connected!");
-        con.query(query, function (err, result) {
-            if (err) throw err;
-            console.log(query);
-            console.log(result);
-        });
-        
-    });
 }
 
 function whereClause(attribute_values) {
@@ -73,18 +150,17 @@ function whereClause(attribute_values) {
     return query;
 }
 
-function getGeneralServiceProviderAndService() {
+async function getGeneralServiceProviderAndService() {
     attribute_values = inputAttributes(['service_provider', 'service']);
-    return 'select * ' + 'from service_provider, service where( (service_provider.service_provider_id = service.service_provider_id) and (' + whereClause(attribute_values) +  '));'
+    query = 'select * ' + 'from service_provider, service where( (service_provider.service_provider_id = service.service_provider_id) and (' + whereClause(attribute_values) +  '));'
+    return await runQuery(query);
 }
 
 function getParticularServiceProviderAndService(service_provider, service) {
     attribute_values = inputAttributes(['service_provider', 'service', service_provider, service]);
-    return 'select * ' + 'from service_provider, service, ' + service_provider + ', ' + service + ' where( (service_provider.service_provider_id = service.service_provider_id) and (service_provider.service_provider_id = ' + service_provider + '.service_provider_id' + ') and (service.service_id = ' + service + '.service_id' + ') and (' + whereClause(attribute_values) +  '));'
+    query = 'select * ' + 'from service_provider, service, ' + service_provider + ', ' + service + ' where( (service_provider.service_provider_id = service.service_provider_id) and (service_provider.service_provider_id = ' + service_provider + '.service_provider_id' + ') and (service.service_id = ' + service + '.service_id' + ') and (' + whereClause(attribute_values) +  '));'
+    return runQuery(query);
 }
-
-getParticularServiceProviderAndService('hotel', 'room');
-runQuery(getGeneralServiceProviderAndService());
 
 function getAvgServiceRating(service_id) {
     return 'select avg(service_rating) from service_request where service_request.service_id = ' + service_id + ' ';
@@ -94,8 +170,17 @@ function getAvgServiceProviderRating(service_provider_id) {
     return 'select avg(service_rating) from service_request where service_request.service_id in (select service_id from service where service_provider_id = ' + service_provider_id + ') ';
 }
 
+async function main() {
+    await connect();
+    // register_user({'user_id': '\'USR00001\'', 'name': '\'osheen\'', 'email': '\'osheen18059@iiitd.ac.in\'', 'password': '\'xxxx\'', 'address': '\'whatever\'', 'phone_no': '\'7042073559\'', 'location_id': '\'LOC00001\''})
+    result = await getGeneralServiceProviderAndService();
+    console.log(result);
+    // for(table in tables) {
+    //     select(table);
+    // }
+}
 
-
+main();
 
 
 

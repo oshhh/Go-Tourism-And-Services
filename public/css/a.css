@@ -1,0 +1,107 @@
+#main{
+  background-color: #FFF;
+  margin: 0px;
+  padding:0px;
+  /*margin-top: 100px;*/
+}
+.l_bar{
+  width: 100%;
+  background-color: #FFF;
+  font-family: Roboto;
+  font-size:1.3em;
+  padding: 10px;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  border-bottom: 2px solid #CCC;
+  z-index: 1;
+}
+@media only screen and (max-width: 720px) {
+ #menu{
+  display: inline-block;
+ }
+ #togs{
+  display: none;
+ }
+}
+@media only screen and (min-width: 720px) {
+ #menu{
+  display: none;
+ }
+ #togs{
+  display: inline-block;
+ }
+}
+.i_bar{
+  display: inline-block;
+  padding: 10px;
+  cursor: pointer;
+  transition: border-color 1s, background-color 1s;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  border: 1px solid #FFF;
+}
+
+#act{
+  background-color: #9DE1CC;
+}
+
+#menu{
+  float:right;
+  margin-right: 20px;
+}
+.i_bar:hover{
+  border-color: #555;
+ box-shadow: 0px 8px 16px 0px #AAA;
+}
+.a_bar{
+  padding-left: 20px;
+  padding-right: 20px;  
+  cursor: pointer;
+  color: #333;
+  text-decoration:none;
+  width: 100%;
+}
+#par1{
+  height: 100vh;
+  width: 100%;
+  /*background-color: red;*/
+  background-image: url("memublur.jpg");
+  background-attachment: fixed;
+  background-position: 0% 0%;
+  border-bottom: 2px solid #444;
+  /*transform: translateY(0px);*/
+}
+.h1t{
+  font-family: 'Raleway', sans-serif;
+  color: white;
+  text-shadow: 2px 2px #555;
+  font-weight: 100;
+}
+#container1{
+  background-color: red;
+  margin-top: 5vh;
+}
+.splitdiv{
+  width: 50%;
+  height: 75vh;
+  background-color: #363;
+  display: inline-block;
+  /*border: 1px dotted black;*/
+}
+.h2c1{
+  position: relative;
+  top:20%;
+  text-align: center;
+  font-size: 1.5em;
+}
+#container2{
+  background-color: #777;
+  margin: 20px;
+}
+.contentdiv1{
+  height: 500px;
+  display: inline-block;
+  background-color: #9DE1CC;
+  width: 300px;
+}

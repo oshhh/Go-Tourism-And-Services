@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link type="text/css" rel="stylesheet" href="../public/css/main.css">
+        <script src="../public/javascripts/real_coords.js"></script>
+
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    </head>
+    <body onload="st();window.requestAnimationFrame(update);">
+        <h1 style="text-align:center">Logged In as {{name}}</h1>
+        <div style="width: 50vw;height:50vh">
+            <h1 style="text-align:center;margin:50px;">Main Content Below</h1>
+            <a href="/logout"><button style="font-size: larger;">LOGOUT</button></a>
+        </div>
+    </body>
+</html>

@@ -6,8 +6,8 @@ router.get('/', function(req, res, next) {
   console.log("Login Rendered");
 });
 router.post('/',function(req,res,next){
-  console.log("BODY: "+req.body.name);
-  req.session.uname=req.body.name;
+  console.log("BODY: "+req.body.uid);
+  req.session.uname=req.body.uid;
   res.redirect('/..');
   next();
 });

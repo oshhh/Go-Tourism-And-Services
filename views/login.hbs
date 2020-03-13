@@ -1,16 +1,45 @@
 <html>
     <head>
         <title>{{title}}</title>
-        <link type="text/css" rel="stylesheet" href="../public/css/main.css">
+        <link type="text/css" rel="stylesheet" href="../public/css/login.css">
         <link href='https://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
-  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
     <body>
-        <h1 style="text-align:center">LOGIN</h1>
-        <form id="loginForm" autocomplete="off" method="POST" action="/login">
-        <label for="name">UserName</label><br><br>
-        <input type="text" id="name" name="name"><br><br>
-        <input type="submit" value="Actually Log In">
+<div id="container">
+            <h1 style="text-align:center;margin-top:20px;">TKG</h1>
+            <div id="login-box">
+                <h3 style="text-align:center;margin-top:20px;">Login to continue</h3>
+
+                <form id="loginForm" autocomplete="off" method="POST" action="/login">
+
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">User ID</span>
+                </div>
+                <input type="text" id="name" class="form-control" placeholder="UserID" aria-label="Username" aria-describedby="basic-addon1" name="uid">
+                </div>
+
+                
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Password</span>
+                </div>
+                    <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+                    <br>
+            </div>
+                <div class="btn-group btn-group-justified btn-block" role="group">
+                    <button type="submit" class="btn btn-outline-primary ">Login</button>
+                    <a class="btn btn-outline-success" href="/signup">Sign Up</a>
+                </div>
+
+            </div>
+        </div>
         </form>
+
+            </div>
+        </div>
+
+
     </body>
 </html>

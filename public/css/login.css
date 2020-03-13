@@ -1,0 +1,41 @@
+body{
+  background-color:white;
+  font-family: Roboto;
+  color: #5D6063;
+}
+#container{
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  width: 40vw;
+  height: 80vh;
+  margin: 0 auto;
+  padding: 30px;
+}
+#login-box{
+  padding: 30px;
+  /* display: flex; */
+  /* justify-content: center; */
+  flex-direction: column;
+  box-shadow: 0 0 10px #AAA;
+  border: 2px solid #555;
+  border-radius: 5px;
+}
+.input-bar{
+  margin: 20px;
+  width: 30vw;
+  padding: 2px;
+  font-size: medium;
+}
+form{
+  margin-top: 20px;
+}
+h2,h1,h3{
+  font-family: Roboto;
+}
+span{
+  font-family: Roboto;
+}
+input {
+  font-family: Roboto;
+}

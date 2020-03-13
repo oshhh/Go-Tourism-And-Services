@@ -5,6 +5,7 @@ var hbs = require('express-handlebars');
 var session = require('express-session')
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
+// var dbHandler = require('./server.js')
 
 var app=express();
 var serv=require('http').Server(app);

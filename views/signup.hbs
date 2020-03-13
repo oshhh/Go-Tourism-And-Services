@@ -23,9 +23,9 @@
 
             <div class="vertSep"></div>
             <div id="FormGroup">
-                <form class="forms" id="adminForm" autocomplete="off" method="POST" action="/signup?type=1">
+                <form class="forms" id="adminForm" autocomplete="off" method="POST" action="/signup">
+                      <input type="hidden" name="acc_type" value="0"/>
                         <label style="text-align:center;" for="acc-type">New Admin Details</label>
-
                 <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Name</span>
@@ -51,9 +51,9 @@
 
                 </form>
 
-                <form class="forms" id="ProviderForm" autocomplete="off" method="POST" action="/signup?type=2">
+                <form class="forms" id="ProviderForm" autocomplete="off" method="POST" action="/signup">
+                        <input type="hidden" name="acc_type" value="1"/>
                         <label style="text-align:center;" for="acc-type">New Service Provider Details</label>
-
                 <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Name</span>
@@ -63,7 +63,7 @@
 
                 <label style="text-align:center;" for="acc-type">Select Domain</label>
                     
-                <select onchange="selectProvider(this)" class="form-control" id="provider-type">
+                <select onchange="selectProvider(this)" name="providerType" class="form-control" id="provider-type">
                 <option>Hotel</option>
                 <option>Restaurant</option>
                 <option>Airlines</option>
@@ -74,13 +74,13 @@
 
 
                 <div id="wifihid" class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="wifi">
+                    <input name="wifi" type="checkbox" class="custom-control-input" id="wifi">
                     <label class="custom-control-label" for="wifi">Wifi Available</label>
                 </div>
 
 
                 <div id="delhid" class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="deliver">
+                    <input name="delivery" type="checkbox" class="custom-control-input" id="deliver">
                     <label class="custom-control-label" for="deliver">Home Delivery Available</label>
                 </div>
 
@@ -88,7 +88,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Cuisine</span>
                 </div>
-                <textarea id="cuisineText" class="form-control" aria-label="Cuisine"></textarea>
+                <textarea name="cuisine" id="cuisineText" class="form-control" aria-label="Cuisine"></textarea>
                 </div>
 
                 <div id="slochid" >
@@ -97,7 +97,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Locality</span>
                 </div>
-                <textarea id="slocality" class="form-control" aria-label="slocality"></textarea>
+                <textarea id="slocality" name="slocality" class="form-control" aria-label="slocality"></textarea>
                 </div>
 
                 <div class="input-group mb-3">
@@ -128,10 +128,9 @@
                 <button type="submit" class="btn btn-outline-primary btn-block">Submit</button>
 
                 </form>
-                <form class="forms" id="UserForm" autocomplete="off" method="POST" action="/signup?type=2">
-
+                <form class="forms" id="UserForm" autocomplete="off" method="POST" action="/signup">
+                <input type="hidden" name="acc_type" value="2"/>
                 <label style="text-align:center;" for="acc-type">New User Details</label>
-
                 <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="uname1">Name</span>
@@ -171,7 +170,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Address</span>
                 </div>
-                <textarea id="uadd" class="form-control" aria-label="Address"></textarea>
+                <textarea id="uadd" name="uadd" class="form-control" aria-label="Address"></textarea>
                 </div>
 
                 <div class="input-group mb-3">

@@ -1,4 +1,5 @@
 var express = require('express');
+const util = require('util')
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
@@ -19,9 +20,35 @@ router.get('/signup', function(req, res, next) {
   console.log("signup Rendered");
 });
 router.post('/signup',function(req,res,next){
-  console.log("BODY: "+req.body.uid);
-  // req.session.uname=req.body.uid;
+  console.log(util.inspect(req.body, false,null,true))
+  if(req.body.acc_type=='0')
+  {
+    // Use req.body.aname, req.body.arole, req.body.amail 
+  }
+  else if(req.body.acc_type=='1'){
+    // These values always exists : req.body.sname
+    //req.body.wifi/delivery for checkboxes
+    //req.body.slocality/scity/sstate/spin for both hotel & restaurant
+    //cuisine for restaurant only
+      if(req.body.providerType=="Hotel")
+      {
+          
+      }
+      else if(req.body.providerType=="Restaurant")
+      {
+
+      }
+      else{
+
+      }
+  }
+  else if(req.body.acc_type=='2'){
+    //User Data availabe vars in req.body : uname,umail,utel,upass,upass2,uadd,ucity
+  }
+  else{
+    console.log("Bad POST req");
+  }
   res.redirect('/..');
-  next();
+  // next();
 });
 module.exports = router;

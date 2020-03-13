@@ -2,22 +2,190 @@
 
 <head>
     <title>{{title}}</title>
-    <link type="text/css" rel="stylesheet" href="../public/css/login.css">
+    <script src="../public/javascripts/signup.js"></script>
+    <link type="text/css" rel="stylesheet" href="../public/css/signup.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
-<body>
+<body onload="javascript:updateForm()">
     <div id="container">
         <h1 style="text-align:center;margin-top:20px;">TKG</h1>
         <div id="login-box">
             <h3 style="text-align:center;margin-top:20px;">Make A new Account</h3>
+            <label style="text-align:center;" for="acc-type">Select Type Of Account</label>
+            <select onchange="selectOpt(this)" class="form-control" id="acc-type">
+            <option>Admin</option>
+            <option>Service Provider</option>
+            <option>User</option>
+            </select>
 
-            <form id="loginForm" autocomplete="off" method="POST" action="/login">
-                
-            </form>
+            <div class="vertSep"></div>
+            <div id="FormGroup">
+                <form class="forms" id="adminForm" autocomplete="off" method="POST" action="/signup?type=1">
+                        <label style="text-align:center;" for="acc-type">New Admin Details</label>
 
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Name</span>
+                </div>
+                <input type="text" id="aname" class="form-control" placeholder="Admin Name" aria-label="Name" aria-describedby="basic-addon1" name="aname">
+                </div>
+
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Role</span>
+                </div>
+                <input type="text" id="arole" class="form-control" placeholder="Role" aria-label="Role" aria-describedby="basic-addon1" name="arole">
+                </div>
+
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">E-mail</span>
+                </div>
+                <input type="text" id="amail" class="form-control" placeholder="E-Mail" aria-label="email" aria-describedby="basic-addon1" name="amail">
+                </div>
+
+                <button type="submit" class="btn btn-outline-primary btn-block">Submit</button>
+
+                </form>
+
+                <form class="forms" id="ProviderForm" autocomplete="off" method="POST" action="/signup?type=2">
+                        <label style="text-align:center;" for="acc-type">New Service Provider Details</label>
+
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Name</span>
+                </div>
+                <input type="text" id="sname" class="form-control" placeholder="Service Provider Name" aria-label="Name" aria-describedby="basic-addon1" name="sname">
+                </div>
+
+                <label style="text-align:center;" for="acc-type">Select Domain</label>
+                    
+                <select onchange="selectProvider(this)" class="form-control" id="provider-type">
+                <option>Hotel</option>
+                <option>Restaurant</option>
+                <option>Airlines</option>
+                <option>Taxi Service</option>
+                <option>Train Service</option>
+                <option>Guide Organization</option>
+                </select>
+
+
+                <div id="wifihid" class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="wifi">
+                    <label class="custom-control-label" for="wifi">Wifi Available</label>
+                </div>
+
+
+                <div id="delhid" class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="deliver">
+                    <label class="custom-control-label" for="deliver">Home Delivery Available</label>
+                </div>
+
+                <div id="cuisine" class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Cuisine</span>
+                </div>
+                <textarea id="cuisineText" class="form-control" aria-label="Cuisine"></textarea>
+                </div>
+
+                <div id="slochid" >
+
+                <div class="input-group smarg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Locality</span>
+                </div>
+                <textarea id="slocality" class="form-control" aria-label="slocality"></textarea>
+                </div>
+
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Location(City)</span>
+                </div>
+                <input type="text" id="scity" class="form-control" placeholder="Enter City Name" name="scity">
+                </div>
+
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">State</span>
+                </div>
+                <input type="text" id="sstate" class="form-control" placeholder="Enter State" name="sstate">
+                </div>
+
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Pin Code</span>
+                </div>
+                <input type="number" id="spin" class="form-control" placeholder="Enter PIN code" name="spin">
+                </div>
+
+                </div>
+
+
+                <br>
+                <button type="submit" class="btn btn-outline-primary btn-block">Submit</button>
+
+                </form>
+                <form class="forms" id="UserForm" autocomplete="off" method="POST" action="/signup?type=2">
+
+                <label style="text-align:center;" for="acc-type">New User Details</label>
+
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="uname1">Name</span>
+                </div>
+                <input type="text" id="uname" class="form-control" placeholder="Type Your Name" aria-label="Name" aria-describedby="basic-addon1" name="uname">
+                </div>
+
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">E-mail</span>
+                </div>
+                <input type="text" id="umail" class="form-control" placeholder="E-Mail" aria-label="umail" aria-describedby="basic-addon1" name="umail">
+                </div>
+
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Contact No.</span>
+                </div>
+                <input type="number" id="utel" class="form-control" placeholder="Enter Phone number" name="utel">
+                </div>
+
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Password</span>
+                </div>
+                    <input name="upass" type="password" class="form-control" id="upass" placeholder="Enter password">
+                </div>
+
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Retype Password</span>
+                </div>
+                    <input name="upass2" type="password" class="form-control" id="upass2" placeholder="Enter above password">
+                </div>
+
+                <div class="input-group smarg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Address</span>
+                </div>
+                <textarea id="uadd" class="form-control" aria-label="Address"></textarea>
+                </div>
+
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Location(City)</span>
+                </div>
+                <input type="text" id="ucity" class="form-control" placeholder="Enter City Name" name="ucity">
+                </div>
+
+                <br>
+                <button type="submit" class="btn btn-outline-primary btn-block">Submit</button>
+
+                </form>
+            </div>
         </div>
     </div>
 

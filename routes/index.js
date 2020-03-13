@@ -18,4 +18,10 @@ router.get('/signup', function(req, res, next) {
   res.render('signup',{title:"Make new Account"});
   console.log("signup Rendered");
 });
+router.post('/signup',function(req,res,next){
+  console.log("BODY: "+req.body.uid);
+  // req.session.uname=req.body.uid;
+  res.redirect('/..');
+  next();
+});
 module.exports = router;

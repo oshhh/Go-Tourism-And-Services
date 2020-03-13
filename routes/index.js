@@ -1,5 +1,5 @@
 var express = require('express');
-const util = require('util')
+const util = require('util');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
@@ -20,13 +20,14 @@ router.get('/signup', function(req, res, next) {
   console.log("signup Rendered");
 });
 router.post('/signup',function(req,res,next){
-  console.log(util.inspect(req.body, false,null,true))
+  console.log(util.inspect(req.body, false,null,true));
+  serverjs=req.app.get('dbHandler');
   if(req.body.acc_type=='0')
   {
-    // Use req.body.aname, req.body.arole, req.body.amail 
+    // Use req.body.aname, req.body.arole, req.body.amail, req.body.apass, req.body.apass2
   }
   else if(req.body.acc_type=='1'){
-    // These values always exists : req.body.sname
+    // These values always exists : req.body.sname, req.body.spass, req.body.spass2
     //req.body.wifi/delivery for checkboxes
     //req.body.slocality/scity/sstate/spin for both hotel & restaurant
     //cuisine for restaurant only

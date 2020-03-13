@@ -1,21 +1,66 @@
 var mysql = require('mysql');
 
+table_attributes = {
+    'location': ['location_id', 'locality', 'city', 'state', 'country', 'pincode'],
+    'neighbouring': ['location1_id', 'location2_id', 'distance_in_km'],
+    'administrator': ['admin_id', 'name', 'role', 'email'],
+    'user': ['user_id', 'name', 'email', 'password', 'address', 'phone_no', 'location_id'],
+    'service_provider': ['service_provider_id', 'name', 'domain'],
+    'service': ['service_id', 'service_provider_id', 'price', 'discount'],
+    'hotel': ['service_provider_id', 'name', 'location_id', 'wifi_facility'],
+    'room': ['service_id', 'room_type', 'capacity'],
+    'restaurant': ['service_provider_id', 'name', 'location_id', 'delivers', 'cuisine'],
+    'food_item': ['service_id', 'name', 'cuisine'],
+    'flight': ['service_id', 'from_location_id', 'to_location_id', 'departure_time', 'arrival_time'],
+    'taxi': ['service_id', 'car_name', 'capacity', 'AC'],
+    'bus': ['service_id', 'from_location_id', 'to_location_id', 'active_days', 'AC'],
+    'route': ['service_id', 'location_id', 'arrival_time'],
+    'tourist_spot': ['tourist_spot_id', 'name', 'location_id', 'type', 'entry_fee'],
+    'guide': ['service_id', 'tourist_spot_id'],
+    'trip': ['trip_id', 'departure_date', 'arrival_date', 'destination_id'],
+    'service_request': ['request_id', 'trip_id', 'service_id', 'timestamp', 'quantity', 'cost', 'status', 'user_rating', 'comments'],
+    'query': ['query_id', 'user_id', 'query']
+}
+
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "university"
+  database: "tourism"
 });
 
 
-function formQuery(table_name, attribute_values) {
-    query = 'select * from ' + table_name + ' where (';
+function inputAttributes(tables) {
+    attribute_values = {}
+    for(var j = 0; j < tables.length; ++ j) {
+        for(i = 0; i < table_attributes[tables[j]].length; ++ i) {
+            attribute_values[tables[j] + '.' + table_attributes[tables[j]][i]] = ['\'%\''];
+        }
+     
+    }
+    console.log('available attributes: ');
+    console.log(attribute_values);
+    return attribute_values;
+}
 
+async function runQuery(query) {
+    await con.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected!");
+        con.query(query, function (err, result) {
+            if (err) throw err;
+            console.log(query);
+            console.log(result);
+        });
+        
+    });
+}
+
+function whereClause(attribute_values) {
+    query = '';
     var att_no = 0
     for(var attribute in attribute_values) {
         for(var value in attribute_values[attribute]) {
-            console.log(value);
-            console.log(attribute_values[value]);
             query += attribute + ' like ' + attribute_values[attribute][value];
             if(value == attribute_values[attribute].length - 1) continue;
                 query += ' or '
@@ -24,28 +69,33 @@ function formQuery(table_name, attribute_values) {
             query += ') and (';
         att_no ++;
     }
-    query += ');';
-    console.log(query);
+    // console.log(query);
     return query;
 }
 
+function getGeneralServiceProviderAndService() {
+    attribute_values = inputAttributes(['service_provider', 'service']);
+    return 'select * ' + 'from service_provider, service where( (service_provider.service_provider_id = service.service_provider_id) and (' + whereClause(attribute_values) +  '));'
+}
 
-// Query a table_name
-// table_name = 'room'
-// attribute_values = {'service_id': ["\'ROO%\'"], 'room_type': ['\'standard\''], 'capacity': [1, 2]}
+function getParticularServiceProviderAndService(service_provider, service) {
+    attribute_values = inputAttributes(['service_provider', 'service', service_provider, service]);
+    return 'select * ' + 'from service_provider, service, ' + service_provider + ', ' + service + ' where( (service_provider.service_provider_id = service.service_provider_id) and (service_provider.service_provider_id = ' + service_provider + '.service_provider_id' + ') and (service.service_id = ' + service + '.service_id' + ') and (' + whereClause(attribute_values) +  '));'
+}
 
-table_name = 'course';
-attribute_values = {'title': ["\'%\'"]}
+getParticularServiceProviderAndService('hotel', 'room');
+runQuery(getGeneralServiceProviderAndService());
+
+function getAvgServiceRating(service_id) {
+    return 'select avg(service_rating) from service_request where service_request.service_id = ' + service_id + ' ';
+}
+
+function getAvgServiceProviderRating(service_provider_id) {
+    return 'select avg(service_rating) from service_request where service_request.service_id in (select service_id from service where service_provider_id = ' + service_provider_id + ') ';
+}
 
 
 
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-  con.query(formQuery(table_name, attribute_values)
-, function (err, result) {
-    if (err) throw err;
-    console.log(result);
-  });
-});
+
+
 

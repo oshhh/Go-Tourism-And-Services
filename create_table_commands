@@ -1,0 +1,235 @@
+create table Location (
+location_id char(8) primary key,
+locality varchar(100) not null,
+city varchar(100) not null,
+state varchar(100) not null,
+country varchar(100) not null,
+pincode int,
+
+check (location_id like "LOC%")
+);
+
+create table Neighbouring(
+location1_id char(8),
+location2_id char(8),
+distance_in_km int,
+
+primary key(location1_id, location2_id),
+foreign key (location1_id) references Location(location_id),
+foreign key (location2_id) references Location(location_id)
+);
+
+
+
+create table User(
+user_id char(8) primary key,
+name varchar(100) not null,
+email varchar(100) not null,
+password varchar(100) not null,
+address varchar(100),
+phone_no char(10),
+location_id char(8),
+
+foreign key(location_id) references location(location_id),
+check (user_id like "USR%")
+);
+
+create table Administrator(
+admin_id char(8) primary key,
+name varchar(100) not null, 
+role varchar(100) not null,
+email varchar(100) not null,
+
+check(admin_id like "ADM%")
+);
+
+create table Service_Provider(
+service_provider_id char(8) primary key,
+name varchar(100),
+domain varchar(20),
+
+check (
+(service_provider_id like "HOT%" and domain like "Hotel") or
+	(service_provider_id like "RES%" and domain like "Restaurant") or
+(service_provider_id like "AIR%" and domain like "Airline") or
+	(service_provider_id like "TAP%" and domain like "Taxi Provider") or
+	(service_provider_id like "BPR%" and domain like "Bus Provider") or
+	(service_provider_id like "TRP%" and domain like "Train Provider") or
+	(service_provider_id like "GUP%" and domain like "Guide Provider")
+) 
+);
+
+create table Service(
+service_id char(8) primary key,
+service_provider_id char(8),
+price float,
+discount int,
+
+foreign key (service_provider_id) references Service_Provider(service_provider_id),
+check (discount >= 0 and discount <= 100),
+check (
+(service_provider_id like "HOT%" and service_id like "ROO%") or
+	(service_provider_id like "RES%" and service_id like "FOO%") or
+(service_provider_id like "AIR%" and service_id like "FLI%") or
+	(service_provider_id like "TAP%" and service_id like "TAX%") or
+	(service_provider_id like "BPR%" and service_id like "BUS%") or
+	(service_provider_id like "TRP%" and service_id like "TRA%") or
+	(service_provider_id like "GUP%" and service_id like "GUI%") 
+)
+);
+
+create table Hotel(
+service_provider_id char(8) primary key,
+location_id char(8),
+wifi_facility char(1),
+
+foreign key (service_provider_id) references service_provider(service_provider_id),
+foreign key(location_id) references location(location_id),
+check (service_provider_id like "HOT%"),
+check (wifi_facility in ("Y", "N"))
+);
+
+create table Room(
+service_id char(8) primary key,
+room_type varchar(100),
+capacity int,
+
+check(service_id like "ROO%"),
+foreign key(service_id) references Service(service_id),
+check (capacity >= 1)
+);
+
+create table Restaurant(
+service_provider_id char(8) primary key,
+location_id char(8),
+delivers char(1),
+cuisine varchar(100),
+
+foreign key (service_provider_id) references Service_Provider(service_provider_id),
+check (service_provider_id like "RES%"),
+foreign key(location_id) references location(location_id),
+check (accepts_orders in ("Y", "N"))
+);
+
+create table Food_Item(
+service_id char(8) primary key,
+name varchar(100),
+cuisine varchar(100),
+
+foreign key(service_id) references Service(service_id),
+check (service_id like "FOO%")
+);
+
+create table Flight(
+service_id char(8) primary key,
+from_location_id char(8),
+to_location_id char(8),
+departure_time datetime,
+arrival_time datetime,
+
+foreign key(service_id) references Service(service_id),
+check (service_id like "FLI%"),
+foreign key(from_location_id) references location(location_id),
+foreign key(to_location_id) references location(location_id),
+check (departure_time < arrival_time)
+);
+
+create table Taxi(
+service_id char(8) primary key,
+car_name varchar(100),
+capacity int,
+AC char(1),
+
+foreign key(service_id) references Service(service_id),
+check (service_id like "CAR%"),
+check (capacity >= 0),
+check (AC in ("Y", "N"))
+);
+
+create table Bus(
+service_id char(8) primary key,
+from_location_id char(8),
+to_location_id char(8),
+active_days char(7),
+AC char(1),
+foreign key(service_id) references Service(service_id),
+check (service_id like "BUS%"),
+foreign key(from_location_id) references location(location_id),
+foreign key(to_location_id) references location(location_id),
+check (active_days like "[YN][YN][YN][YN][YN][YN][YN]"),
+check (AC in ("Y", "N"))
+);
+
+create table Route (
+service_id char(8),
+location_id char(8),
+arrival_time time,
+
+primary key (service_id, location_id),
+foreign key(service_id) references service(service_id),
+foreign key(location_id) references location(location_id)
+);
+
+create table Tourist_Spot (
+tourist_spot_id char(8) primary key,
+name varchar(100),
+location_id char(8),
+type varchar(100),
+entry_fee float,
+
+foreign key(location_id) references location(location_id)
+);
+
+create table Guide (
+service_id char(8) primary key,
+tourist_spot_id char(8),
+
+foreign key(service_id) references service(service_id),
+check (service_id like "GUI%"),
+foreign key(tourist_spot_id) references Tourist_Spot(tourist_spot_id)
+);
+
+create table Trip (
+trip_id char(8) primary key,
+departure_date date,
+arrival_date date,
+destination_id char(8),
+
+foreign key(destination_id) references location(location_id)
+);
+
+create table Service_Request (
+request_id char(8) primary key,
+trip_id char(8) not null,
+service_id char(8) not null,
+timestamp datetime,
+quantity int not null,
+cost int not null,
+status varchar(15) not null,
+user_rating int,
+service_rating int,
+comments varchar(1000),
+
+foreign key(trip_id) references Trip(trip_id),
+foreign key(service_id) references Service(service_id),
+check (status in ("Pending", "Accepted", "Rejected", "Completed", "Paid")),
+check (user_rating >= 0 and user_rating <= 5),
+check (service_rating >= 0 and service_rating <= 5)
+
+);
+
+create table Query (
+query_id char(8), 
+user_id char(8), 
+query varchar(100),
+foreign key(user_id) references User(user_id)
+);
+
+
+
+
+
+
+
+
+

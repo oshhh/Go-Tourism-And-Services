@@ -128,7 +128,7 @@ async function runQuery(callback, query) {
     });
 }
 
-function _insert_(table_name, data) {
+function insertIntoTable(table_name, data) {
     query = 'insert into user values ('
     for(i = 0; i < tables['user'].length; i ++) {
         if(i == tables['user'].length - 1){
@@ -141,46 +141,46 @@ function _insert_(table_name, data) {
     runQuery(function(result){}, query);
 }
 
-function select(callback, table_name) {
+function selectAllFromTable(callback, table_name) {
     query = 'select * from ' + table_name + ';';
     runQuery(callback, query);
 }
 
 // Register
 function register_user(user) {
-    _insert_('user', user);
+    insertIntoTable('user', user);
 }
 function register_service_provider(service_provider, services) {
-    _insert_('service_provider', service_provider);
+    insertIntoTable('service_provider', service_provider);
     if(service_provider['domain'] == 'hotel' | service_provider['domain'] == 'restaurant') {
-        _insert_(service_provider['domain'], service_provider);
+        insertIntoTable(service_provider['domain'], service_provider);
     }
     for(i = 0; i < services.length; i ++) {
-        _insert_('service', services[i]);
+        insertIntoTable('service', services[i]);
         switch(service_provider['domain']) {
             case 'hotel':
-                _insert_('room', services[i]);
+                insertIntoTable('room', services[i]);
                 break;
             case 'restaurant':
-                _insert_('food_item', services[i]);
+                insertIntoTable('food_item', services[i]);
                 break;
             case 'airline':
-                _insert_('flight', services[i]);
+                insertIntoTable('flight', services[i]);
                 break;
             case 'bus provider':
-                _insert_('bus', services[i]);
+                insertIntoTable('bus', services[i]);
                 break;
             case 'train provider':
-                _insert_('train', services[i]);
+                insertIntoTable('train', services[i]);
                 break;
             case 'taxi provider':
-                _insert_('taxi', services[i]);
+                insertIntoTable('taxi', services[i]);
                 break;
         }
     }
 }
 function register_administrator(administrator) {
-    _insert_('administrator', administrator);
+    insertIntoTable('administrator', administrator);
 }
 
 // Login
@@ -215,7 +215,7 @@ function getLocations(callback, attribute_values) {
 
 // add new location to the table
 function addLocation(location) {
-    _insert_('location', location);
+    insertIntoTable('location', location);
 }
 
 // Temporary function to supply the attributes
@@ -291,12 +291,12 @@ function getTouristSpots(callback, user_id, attribute_values, city, unvisited) {
 
 // Add tourist spot to wishlist
 function addTouristSpotToWishlist(user_id, tourist_spot_id) {
-    _insert_('wishlist', {'user_id': user_id, 'tourist_spot_id': tourist_spot_id});
+    insertIntoTable('wishlist', {'user_id': user_id, 'tourist_spot_id': tourist_spot_id});
 }
 
 // Add tourist spot to visited 
 function markTouristSpotVisited(trip_id, tourist_spot_id) {
-    _insert_('visited', {'trip_id': trip_id, 'tourist_spot_id': tourist_spot_id});
+    insertIntoTable('visited', {'trip_id': trip_id, 'tourist_spot_id': tourist_spot_id});
     runQuery(callback, 'delete from wishlist where user_id in (select user_id from trip where trip_id = ' + trip_id + ') and tourist_spot_id = ' + tourist_spot_id + ');')
 }
 
@@ -307,7 +307,7 @@ function getTrips(callback, attribute_values) {
 
 // Request service
 function requestService(service_request) {
-    _insert_('service_request', service_request);
+    insertIntoTable('service_request', service_request);
 }
 
 // Update status by service_provider
@@ -337,5 +337,35 @@ async function main() {
 
 main();
 
+
+
+module.exports = {
+    'tables' : tables,
+    'createDatabase' : createDatabase,
+    'insertIntoTable' : insertIntoTable,
+    'selectAllFromTable' : selectAllFromTable,
+    'register_user' : register_user,
+    'register_service_provider' : register_service_provider,
+    'register_administrator' : register_administrator,
+    'login_user' : login_user,
+    'login_service_provider' : login_service_provider,
+    'login_administrator' : login_administrator,
+    'deactivate_user' : deactivate_user,
+    'deactivate_service_provider' : deactivate_service_provider,
+    'remove_administrator' : remove_administrator, 
+    'getLocations' : getLocations,
+    'addLocation' : addLocation,
+    'getGeneralServiceProviderAndService' : getGeneralServiceProviderAndService,
+    'getParticularServiceProviderAndService' : getParticularServiceProviderAndService,
+    'getBusTrain' : getBusTrain,
+    'getFlight' : getFlight,
+    'getTouristSpots' : getTouristSpots
+    'addTouristSpotToWishlist' : addTouristSpotToWishlist,
+    'markTouristSpotVisited' : markTouristSpotVisited,
+    'getTrips' : getTrips,
+    'requestService' : requestService,
+    'changeStatusOfServiceRequest' : changeStatusOfServiceRequest,
+    'getServiceRequests' : getServiceRequests
+}
 
 

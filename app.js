@@ -1,17 +1,17 @@
-const port=5060;
+const port=5000;
 var express =require('express');
 var path = require('path');
 var hbs = require('express-handlebars');
 var session = require('express-session')
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
-var dbHandler = require('./server.js')
+// var dbHandler = require('./server.js')
 const util = require('util');
 var app=express();
 var serv=require('http').Server(app);
 //Template Engine init.
 app.set('views', path.join(__dirname, 'views'));
-app.set('dbHandler',dbHandler);
+// app.set('dbHandler',dbHandler);
 app.engine('hbs',hbs({
     extname: 'hbs',
     layoutsDir: path.join(__dirname, 'views',),
@@ -43,7 +43,7 @@ app.use('/',indexRouter);
 app.use('/login',loginRouter);
 serv.listen(port);
 console.log("it's started on http://localhost:"+port);
-dbHandler.getTouristSpots(function(result){
-  console.log(util.inspect(result,false,null,true));
-});
+// dbHandler.getTouristSpots(function(result){
+//   console.log(util.inspect(result,false,null,true));
+// });
 module.exports=app;

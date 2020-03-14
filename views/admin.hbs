@@ -1,17 +1,95 @@
 <html>
     <head>
         <title>{{title}}</title>
+        <script src="../public/javascripts/adminDash.js"></script>
         <link type="text/css" rel="stylesheet" href="../public/css/main.css">
-        <script src="../public/javascripts/real_coords.js"></script>
-
+                <link type="text/css" rel="stylesheet" href="../public/css/admin.css">
         <link href='https://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
-    <body onload="st();window.requestAnimationFrame(update);">
-        <h1 style="text-align:center">Logged In as {{name}}</h1>
-        <div style="width: 50vw;height:50vh">
-            <h1 style="text-align:center;margin:50px;">Main Content Below</h1>
-            <a href="/logout"><button style="font-size: larger;">LOGOUT</button></a>
+    <body onload="javascript:onStart()">
+      <div class="navbar navbar-default fixed-top">
+        <div class='n-item'>Admin Dashboard</div>
+        <div class='n-item'>Welcome {{name}} Role: {{role}}</div>
+        <a href="/logout"><button class='btn btn-outline-primary'>Logout</button></a>
+      </div>
+    <div class="container">
+      
+      <nav class="l_bar" align="center">
+        <div id="togs">
+          <div  class="i_bar" id="act">
+          <a class="a_bar" href="javascript:bs(0)">Service Requests</a>
+          </div>
+          <div class="rightDivider"><a class="a_bar"> </a></div>
+          <div  class="i_bar">
+          <a class="a_bar" href="javascript:bs(1)">Admins</a>
+          </div>
+          <div  class="i_bar">
+          <a class="a_bar" href="javascript:bs(2)">Users</a>
+          </div>
+          <div  class="i_bar">
+          <a class="a_bar" href="javascript:bs(3)">Service Providers</a>
+          </div>
+          <div  class="i_bar">
+          <a class="a_bar" href="javascript:bs(4)">Suggestions</a>
+          </div>
         </div>
+      </nav>
+
+      <div id="content">
+
+          <div id="content1">
+
+ <label id="table_desc">View or edit Service Requests</label><br><br>
+            <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">AdminID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Role</th>
+                <th scope="col">E-Mail</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>ADM0001</td>
+                <td>Naswes</td>
+                <td>msbhe</td>
+                <td>nasgp</td>
+                <td><button class="btn btn-outline-primary">Edit</button></td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>ADM0001</td>
+                <td>Naswes</td>
+                <td>msbhe</td>
+                <td>nasgp</td>
+                <td><button class="btn btn-outline-primary">Edit</button></td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>ADM0001</td>
+                <td>Naswes</td>
+                <td>msbhe</td>
+                <td>nasgp</td>
+                <td><button class="btn btn-outline-primary">Edit</button></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div id="content0">
+            <h2 style="text-align: center;">
+                Loading
+            </h2>
+        </div>
+
+          </div>
+         
+      </div>
+    </div>
     </body>
+
 </html>

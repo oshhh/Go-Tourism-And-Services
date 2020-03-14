@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
-    <body>
+    <body onload="javascript:onStart()">
       <div class="navbar navbar-default fixed-top">
         <div class='n-item'>User Dashboard</div>
         <div class='n-item'>Welcome {{name}}</div>
@@ -34,9 +34,74 @@
           </div>
         </div>
       </nav>
+
+
       <div id="content">
-        Content Goes Here And Updated on switching tab
+        {{!-- <label id="content_label"></label> --}}
+      
+        <div id="content_tab0">
+
+        </div>
+
+        <div id="content_tab1">
+          
+        </div>
+
+        <div id="content_tab2">
+          
+
+        </div>
+
+        <div id="content_tab3">
+          
+            <h2>Available Filters</h2>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Food Item Name</span>
+              </div>
+              <input id="fname" type="text" class="form-control" placeholder="Name">
+              <div class="input-group-prepend">
+              <span class="input-group-text">Restaurant Name</span>
+              </div>
+              <input id="rname" type="text" class="form-control" placeholder="Restaurant">
+              <div class="input-group-prepend">
+                <label class="input-group-text">Delivery</label>
+              </div>
+                <select class="custom-select" id="fdelivery">
+                  <option selected value="0">Both</option>
+                  <option value="1">Yes</option>
+                  <option value="2">No</option>
+                </select>
+              <button onclick="javascript:fillContent()" class='btn btn-outline-primary'>Apply Filters</button>
+            </div>
+
+            {{!-- Filters End --}}
+
+            <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Cuisine</th>
+                <th scope="col">Restaurant</th>
+                <th scope="col">Locality</th>
+                <th scope="col">City</th>
+                <th scope="col">Delivery</th>
+            </tr>
+            </thead>
+            <tbody  id="table2">
+            </tbody>
+          </table>
+
+        </div>
+
+        <div id="content_tab4">
+          
+        </div>
+
       </div>
+
     </div>
     </body>
 

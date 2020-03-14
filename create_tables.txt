@@ -7,7 +7,7 @@ function createDatabase() {
     runQuery('drop table if exists tourist_spot;')
     runQuery('drop table if exists route;')
     runQuery('drop table if exists bus;')
-s    runQuery('drop table if exists taxi;')
+    runQuery('drop table if exists taxi;')
     runQuery('drop table if exists flight;')
     runQuery('drop table if exists food_Item;')
     runQuery('drop table if exists food_item;')

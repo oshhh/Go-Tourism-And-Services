@@ -1,23 +1,25 @@
 <html>
     <head>
         <title>{{title}}</title>
+        <script src="../public/javascripts/login.js"></script>
         <link type="text/css" rel="stylesheet" href="../public/css/login.css">
         <link href='https://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
-    <body>
-<div id="container">
+    <body onload="javascript:onStart()"
+        <div id="container">
             <h1 style="text-align:center;margin-top:20px;">TKG</h1>
             <div id="login-box">
                 <h3 style="text-align:center;margin-top:20px;">Login to continue</h3>
 
-                <form id="loginForm" autocomplete="off" method="POST" action="/login">
+                <form novalidate class="needs-validation" id="loginForm" autocomplete="off" method="POST" action="/login">
 
                 <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">User ID</span>
                 </div>
-                <input type="text" id="name" class="form-control" placeholder="UserID" aria-label="Username" aria-describedby="basic-addon1" name="uid">
+                <input type="text" id="name" class="form-control" placeholder="UserID" aria-label="Username" aria-describedby="basic-addon1" name="uid" required>
+                    <div class="invalid-feedback">Cannot be empty</div>
                 </div>
 
                 
@@ -25,14 +27,16 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Password</span>
                 </div>
-                    <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+                    <input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
+                    <div class="invalid-feedback">Cannot be empty</div>
                     <br>
             </div>
                 <div class="btn-group btn-group-justified btn-block" role="group">
                     <button type="submit" class="btn btn-outline-primary ">Login</button>
                     <a class="btn btn-outline-success" href="/signup">Sign Up</a>
                 </div>
-
+                
+            <div style="display: none;" id="msg_box" class="alert alert-danger msgWarn">{{message}}</div>
             </div>
         </div>
         </form>

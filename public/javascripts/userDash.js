@@ -113,10 +113,6 @@ angularApp.controller("ngContent",function($scope)
 	}
 });
 var labels=["Bookings","Tra","All Hotels","All Food Items","Gui/tour"];
-function onStart()
-{
-
-}
 function bs(current)
 {
 	master=document.getElementById('togs')

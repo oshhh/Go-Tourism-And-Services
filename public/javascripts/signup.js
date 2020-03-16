@@ -1,5 +1,6 @@
 var opt=0;
 var provider=0;
+var formsObj=[]
 function updateProvider()
 {
     wifi=document.getElementById('wifihid');
@@ -29,15 +30,13 @@ function updateProvider()
 }
 function updateForm()
 {
-    master=document.getElementById('FormGroup');
-	all=master.getElementsByClassName("forms");
-	for(var i=0;i<all.length;i++)
+	for(var i=0;i<3;i++)
 	{
 		if(i!=opt){
-		all[i].style.display="none";
+		formsObj[i].style.display="none";
 		}
 		else{
-		all[i].style.display="block";
+		formsObj[i].style.display="block";
 		}	
     }
     if(opt!=1)
@@ -53,7 +52,24 @@ function updateForm()
         }
     updateProvider();
 }
-
+function onStart()
+{
+    console.log("ag");
+    formsObj.push(document.getElementById("adminForm"));
+    formsObj.push(document.getElementById("ProviderForm"));
+    formsObj.push(document.getElementById("UserForm"));
+    console.log("ag")
+    formElements=document.getElementsByClassName('needs-validation');
+    Array.prototype.forEach.call(formElements, function(iter) {
+        iter.addEventListener('submit', function(event) {
+            if (iter.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            iter.className='was-validated';
+          }, false);
+    });
+}
 function selectOpt(selection)
 {
     opt=selection.selectedIndex;

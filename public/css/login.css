@@ -39,3 +39,6 @@ span{
 input {
   font-family: Roboto;
 }
+.msgWarn{
+  margin-top: 20px;
+}

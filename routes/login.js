@@ -1,14 +1,50 @@
 var express = require('express');
 var router = express.Router();
+const util = require('util');
 
 router.get('/', function(req, res, next) {
-  res.render('login',{title:"Login to TKG"});
+  var msg=req.session.msg;
+  if(msg==null)
+    msg="";
+  res.render('login',{title:"Login to TKG",message:msg});
   console.log("Login Rendered");
 });
 router.post('/',function(req,res,next){
-  console.log("BODY: "+req.body.uid);
-  req.session.uname=req.body.uid;
-  res.redirect('/..');
-  next();
+  // console.log("BODY: "+req.body.uid);
+  console.log(util.inspect(req.body, false,null,true));
+  uname=req.body.uid;
+  authenticate=function(result){
+    console.log("got result");
+    console.log(util.inspect(result, false,null,true));
+    if(result.length==0)
+    {
+      req.session.msg="Username does not exists";
+      res.redirect('/..');
+    }
+    else if(result[0].password!=req.body.password)
+    {
+      req.session.msg="Password does not match";
+      res.redirect('/..');
+    }
+    else{
+      req.session.msg="";
+      req.session.uname=req.body.uid;
+      res.redirect('/..');
+    }
+  }
+  if(uname.startsWith("USR"))
+  {
+    req.app.get('dbHandler').login_user(authenticate,uname);
+  }
+  else if(uname.startsWith("ADM"))
+  {
+    req.app.get('dbHandler').login_administrator(authenticate,uname);
+  }
+  else
+  {
+    req.app.get('dbHandler').login_service_provider(authenticate,uname);
+  }
+  // res.redirect('/..');
+  // next();
 });
 module.exports = router;

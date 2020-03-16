@@ -5,13 +5,14 @@ var hbs = require('express-handlebars');
 var session = require('express-session')
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
-// var dbHandler = require('./server.js')
+var dbHandler = require('./server.js')
 const util = require('util');
 var app=express();
 var serv=require('http').Server(app);
 //Template Engine init.
 app.set('views', path.join(__dirname, 'views'));
-// app.set('dbHandler',dbHandler);
+//connect to server.js
+app.set('dbHandler',dbHandler);
 app.engine('hbs',hbs({
     extname: 'hbs',
     layoutsDir: path.join(__dirname, 'views',),
@@ -43,7 +44,7 @@ app.use('/',indexRouter);
 app.use('/login',loginRouter);
 serv.listen(port);
 console.log("it's started on http://localhost:"+port);
-// dbHandler.getTouristSpots(function(result){
+// dbHandler.selectAllFromTable(function(result){
 //   console.log(util.inspect(result,false,null,true));
-// });
+// },"user");
 module.exports=app;

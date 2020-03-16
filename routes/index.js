@@ -5,11 +5,15 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   // res.sendFile(req.app.get('root')+'/public/main.html');
   var uname=req.session.uname;
-  if(uname=="a")
+  if(uname.startsWith("ADM"))
   {
     res.render('admin',{title:"Main Page (Index)",name:uname,role:"Master Admin"});
   }
-  else{
+  else if(uname.startsWith("USR")){
+    res.render('user',{title:"Main Page (Index)",name:uname});
+  }
+  else
+  {
     res.render('user',{title:"Main Page (Index)",name:uname});
   }
   console.log("Index Rendered");
@@ -31,6 +35,7 @@ router.post('/signup',function(req,res,next){
   if(req.body.acc_type=='0')
   {
     // Use req.body.aname, req.body.arole, req.body.amail, req.body.apass, req.body.apass2
+    
   }
   else if(req.body.acc_type=='1'){
     // These values always exists : req.body.sname, req.body.spass, req.body.spass2

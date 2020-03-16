@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>{{title}}</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.js"></script>
         <script src="../public/javascripts/adminDash.js"></script>
         <link type="text/css" rel="stylesheet" href="../public/css/main.css">
                 <link type="text/css" rel="stylesheet" href="../public/css/admin.css">
@@ -8,40 +9,60 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
-    <body onload="javascript:onStart()">
+    <body onload="javascript:onStart()" ng-app="dash">
       <div class="navbar navbar-default fixed-top">
         <div class='n-item'>Admin Dashboard</div>
         <div class='n-item'>Welcome {{name}} Role: {{role}}</div>
         <a href="/logout"><button class='btn btn-outline-primary'>Logout</button></a>
       </div>
-    <div class="container">
+    <div class="container" ng-controller="ngContent">
       
       <nav class="l_bar" align="center">
         <div id="togs">
           <div  class="i_bar" id="act">
-          <a class="a_bar" href="javascript:bs(0)">Service Requests</a>
+          <a ng-click="changeTab(0)" class="a_bar" href="javascript:bs(0)">Service Requests</a>
           </div>
           <div class="rightDivider"><a class="a_bar"> </a></div>
           <div  class="i_bar">
-          <a class="a_bar" href="javascript:bs(1)">Admins</a>
+          <a ng-click="changeTab(1)" class="a_bar" href="javascript:bs(1)">Admins</a>
           </div>
           <div  class="i_bar">
-          <a class="a_bar" href="javascript:bs(2)">Users</a>
+          <a ng-click="changeTab(2)" class="a_bar" href="javascript:bs(2)">Users</a>
           </div>
           <div  class="i_bar">
-          <a class="a_bar" href="javascript:bs(3)">Service Providers</a>
+          <a ng-click="changeTab(3)" class="a_bar" href="javascript:bs(3)">Service Providers</a>
           </div>
           <div  class="i_bar">
-          <a class="a_bar" href="javascript:bs(4)">Suggestions</a>
+          <a ng-click="changeTab(4)" class="a_bar" href="javascript:bs(4)">Suggestions</a>
           </div>
         </div>
       </nav>
 
       <div id="content">
 
-          <div id="content1">
+        <div id="contentTab1" ng-show="tab==1">
 
- <label id="table_desc">View or edit Service Requests</label><br><br>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Filter Name</span>
+              </div>
+              <input ng-model="a.aName" type="text" class="form-control" placeholder="Name">
+              <div class="input-group-prepend">
+              <span class="input-group-text">Filter Role</span>
+              </div>
+              <input ng-model="a.aRole" type="text" class="form-control" placeholder="Role">
+              <div class="input-group-prepend">
+              <span class="input-group-text">Filter E-Mail</span>
+              </div>
+              <input ng-model="a.aMail" type="text" class="form-control" placeholder="E-Mail">
+              <button ng-click="getData(1)" class='btn btn-outline-primary'>Apply Filters</button>
+            </div>
+
+            {{!-- Filters End --}}
+            
+            <h3 style="text-align: center;" ng-show="a.status=='Pending'">Loading Data</h3>
+            
+            <div class="table-responsive">
             <table class="table">
             <thead>
             <tr>
@@ -53,41 +74,53 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>ADM0001</td>
-                <td>Naswes</td>
-                <td>msbhe</td>
-                <td>nasgp</td>
-                <td><button class="btn btn-outline-primary">Edit</button></td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>ADM0001</td>
-                <td>Naswes</td>
-                <td>msbhe</td>
-                <td>nasgp</td>
-                <td><button class="btn btn-outline-primary">Edit</button></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>ADM0001</td>
-                <td>Naswes</td>
-                <td>msbhe</td>
-                <td>nasgp</td>
-                <td><button class="btn btn-outline-primary">Edit</button></td>
+            <tr ng-repeat="it in a.data">
+                <th scope="row">\{{$index}}</th>
+                <td>\{{it.service_id}}</td>
+                <td ng-hide="it.editMode">\{{it.name}}</td>
+                <td ng-hide="it.editMode">\{{it.role}}</td>
+                <td ng-hide="it.editMode">\{{it.mail}}</td>
+                <td ng-hide="it.editMode"><button ng-click="it.editMode=true" class="btn btn-outline-primary">Edit</button></td>
+                
+                <td ng-show="it.editMode"><input  ng-model="it.name" class="form-control" value="\{{it.name}}"></td>
+                <td ng-show="it.editMode"><input ng-model="it.role" class="form-control" value="\{{it.role}}"></td>
+                <td ng-show="it.editMode"><input ng-model="it.mail" class="form-control" value="\{{it.mail}}"></td>
+                <td ng-show="it.editMode"><button ng-click="it.editMode=false;a.updateRecord(it);" class="btn btn-outline-primary">Done</button></td>
+              
+                <td><button ng-click="a.updateRecord(it);" class="btn btn-outline-danger">Delete</button></td>
             </tr>
             </tbody>
-        </table>
+            </table>
+            </div>
 
-        <div id="content0">
+        </div>
+
+        <div id="contentTab0" ng-show="tab==0">
             <h2 style="text-align: center;">
-                Loading
+                Tab0
+            </h2>
+        </div>
+        
+        <div id="contentTab2" ng-show="tab==2">
+            <h2 style="text-align: center;">
+                Tab2
             </h2>
         </div>
 
-          </div>
-         
+        <div id="contentTab3" ng-show="tab==3">
+            <h2 style="text-align: center;">
+                Tab3
+            </h2>
+        </div>
+
+        <div id="contentTab4" ng-show="tab==4">
+            <h2 style="text-align: center;">
+                Tab4
+            </h2>
+        </div>
+
+        </div>
+
       </div>
     </div>
     </body>

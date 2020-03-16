@@ -1,90 +1,132 @@
 <html>
     <head>
         <title>{{title}}</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.js"></script>
         <script src="../public/javascripts/userDash.js"></script>
         <link type="text/css" rel="stylesheet" href="../public/css/main.css">
         <link href='https://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
-    <body onload="javascript:onStart()">
+    <body onload="javascript:onStart()" ng-app="dash">
       <div class="navbar navbar-default fixed-top">
         <div class='n-item'>User Dashboard</div>
         <div class='n-item'>Welcome {{name}}</div>
         <a href="/logout"><button class='btn btn-outline-primary'>Logout</button></a>
       </div>
-    <div class="container">
+    <div class="container" ng-controller="ngContent">
+
       <nav class="l_bar" align="center">
         <div id="togs">
           <div  class="i_bar" id="act">
-          <a class="a_bar" href="javascript:bs(0)">Booking Status</a>
+          <a ng-click="changeTab(0)" class="a_bar" href="javascript:bs(0)">Booking Status</a>
           </div>
           <div class="rightDivider"><a class="a_bar"> </a></div>
-          <div  class="i_bar">
-          <a class="a_bar" href="javascript:bs(1)">Transports</a>
+          <div class="i_bar">
+          <a ng-click="changeTab(1)" class="a_bar" href="javascript:bs(1)">Transports</a>
           </div>
-          <div  class="i_bar">
-          <a class="a_bar" href="javascript:bs(2)">Hotels</a>
+          <div class="i_bar">
+          <a ng-click="changeTab(2)" class="a_bar" href="javascript:bs(2)">Hotels</a>
           </div>
-          <div  class="i_bar">
-          <a class="a_bar" href="javascript:bs(3)">Restaurants</a>
+          <div class="i_bar">
+          <a ng-click="changeTab(3)" class="a_bar" href="javascript:bs(3)">Restaurants</a>
           </div>
-          <div  class="i_bar">
-          <a class="a_bar" href="javascript:bs(4)">Guides/Tourist Spots</a>
+          <div class="i_bar">
+          <a ng-click="changeTab(4)" class="a_bar" href="javascript:bs(4)">Guides/Tourist Spots</a>
           </div>
         </div>
       </nav>
 
 
       <div id="content" class="shadow p-4 mb-4 bg-white">
-        {{!-- <label id="content_label"></label> --}}
       
-        <div id="content_tab0">
+        <div id="content_tab0" ng-show="tab==0">
+            <h3>Content0</h3>
+        </div>
+
+        <div id="content_tab1" ng-show="tab==1">
+          <h3>Content1</h3>
+        </div>
+
+        <div id="content_tab2" ng-show="tab==2">
+          <h3>Content2</h3>
 
         </div>
 
-        <div id="content_tab1">
+        <div id="content_tab3" ng-show="tab==3">
           
-        </div>
-
-        <div id="content_tab2">
-          
-
-        </div>
-
-        <div id="content_tab3">
-          
-            <h2>Available Filters</h2>
+            <h4>Available Filters for restaurant</h4>
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text">Food Item Name</span>
               </div>
-              <input id="fname" type="text" class="form-control" placeholder="Name">
+              <input ng-model="f.fname" id="fname" type="text" class="form-control" placeholder="Name">
               <div class="input-group-prepend">
               <span class="input-group-text">Restaurant Name</span>
               </div>
-              <input id="rname" type="text" class="form-control" placeholder="Restaurant">
+              <input ng-model="f.rname" id="rname" type="text" class="form-control" placeholder="Restaurant">
               <div class="input-group-prepend">
                 <label class="input-group-text">Delivery</label>
               </div>
-                <select class="custom-select" id="fdelivery">
+                <select ng-model="f.delivery" class="custom-select" id="fdelivery">
                   <option selected value="0">Both</option>
                   <option value="1">Yes</option>
                   <option value="2">No</option>
                 </select>
-              <button onclick="javascript:fillContent()" class='btn btn-outline-primary'>Apply Filters</button>
+              <button class='btn btn-outline-primary'>Apply Filters</button>
             </div>
 
+          {{!-- <label id="conten t_label">selected Filters:"\{{f.fname}}","\{{f.rname}}" slectBoxIndex:\{{f.delivery}}</label> --}}
             {{!-- Filters End --}}
           
+
+          <div class="text-center d-flex flex-row justify-content-between align-middle">
+            <label style="text-align:center">Showing \{{f.data.length}} Results</label>
+            <div class="align-middle btn-group mb-3">
+              <div class="input-group-append">
+                <span class="input-group-text">Order By</span>
+              </div>
+              <select ng-model="f.sortOrder" class="custom-select" id="fSort">
+                <option selected value="0">Increasing Price</option>
+                <option value="1">Decreasing Price</option>
+                <option value="2">Increasing Discount</option>
+                <option value="3">Decreasing Discount</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="text-align: center;" class="rowsCont" ng-show="f.status=='Pending'">Loading Data</div>
           <div id="table2" class="rowsCont card-rows">
+            <div ng-repeat="it in f.data" class="rowElement card shadow p-4 mb-4 bg-white">
+              <div class="card-header text-center bg-white align-middle">Restaurant: \{{it.res_name}},\{{it.locality}},\{{it.city}}</div>
+              <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
+                <div class="cardText card-text">\{{it.name}}<br>Delivery Available: \{{it.delivery}}</div>
+                <div class="cardText card-text">Discount: \{{it.discount}}%<br> Description:  \{{it.cuisine}}</div>
+                <button ng-click="f.order(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
+              </div>
+              <div class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
+                <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
+                <button ng-click="f.view(it)" class="btn btn-outline-primary">Reviews</button>
+              </div>
+
+              <div ng-show="it.showRev" class="card-body text-center d-flex flex-row justify-content-between align-middle">
+                <div ng-show="f.reviews[it.service_id].status=='Pending'"class="comments"><br>Loading Please Wait<br><br></div>
+                <div ng-show="f.reviews[it.service_id].status=='OK'" class="comments card-rows">
+                  <div ng-repeat="rev in f.reviews[it.service_id].data" class="rowElement card">
+                    <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
+                    <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
 
         </div>
 
-        <div id="content_tab4">
-          
+        <div id="content_tab4" ng-show="tab==4">
+          <h3>Content4</h3>
         </div>
 
       </div>

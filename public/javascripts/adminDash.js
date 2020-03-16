@@ -1,14 +1,73 @@
-var tab=0;
-var contentArea;
-var content0;
-var content1;
-// var content3;
+var	angularApp = angular.module("dash", []);
+angularApp.controller("ngContent",function($scope)
+{
+	$scope.tab=0;
+	$scope.a={};
+	$scope.a.data=[];
+	$scope.a.aName="";
+	$scope.a.aRole="";
+	$scope.a.aMail="";
+	$scope.a.status="Pending";
+	$scope.a.updateRecord=function(it)
+	{
+		// alert(it.service_id);
+		//update records access modified details by it.service_id/name/role/mail
+		//Toast on successfull update
+	}
+	$scope.a.deleteRecord=function(it)
+	{
+		// alert(it.service_id);
+		//delete record by primary key it.service_id
+		//Toast on successfull delete
+	}
+	$scope.a.view=function(it)
+	{
+
+	}
+	$scope.getData=function(tab)
+	{
+		if(tab==1)
+		{
+			console.log("reached");
+			$scope.a.status="Pending";
+			$scope.a.data=[
+				{
+					service_id:"ADM00001",
+					name:"name1",
+					role:"help",
+					mail:"asb@nsw.com"
+				},
+				{
+					service_id:"ADM00002",
+					name:"name1",
+					role:"help",
+					mail:"asb@nsw.com"
+				},
+				{
+					service_id:"ADM00003",
+					name:"name1",
+					role:"help",
+					mail:"asb@nsw.com"
+				}];
+
+			$scope.a.data.forEach(element => {
+				element.editMode=false;
+			});
+			$scope.a.status="OK";
+		}
+		else{
+
+		}
+	}
+	$scope.changeTab=function(newTab)
+	{
+		$scope.tab=newTab;
+		$scope.getData(newTab);
+		console.log("change Tab: "+newTab);
+	}
+});
 function onStart()
 {
-	contentArea=document.getElementById("content");
-	content0=document.getElementById("content0");
-	content1=document.getElementById("content1");
-	tab=0;
 	bs(0);
 }
 function bs(current)
@@ -23,19 +82,5 @@ function bs(current)
 		else{
 		all[i].id="act"
 		}	
-	}
-	tab=current;
-	fillContent(current);
-}
-function fillContent(type)
-{
-	if(type==1)
-	{
-		content0.style.display="block";
-		content1.style.display="none";
-	}
-	else{
-		content0.style.display="none";
-		content1.style.display="block";
 	}
 }

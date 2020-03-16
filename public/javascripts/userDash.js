@@ -1,52 +1,65 @@
-var tab=0;
-var contentArea;
-var contentLabel;
-var content_tabs=[];
-var labels=["Bookings","Tra","All Hotels","All Food Items","Gui/tour"];
-function onStart()
+var	angularApp = angular.module("dash", []);
+angularApp.controller("ngContent",function($scope)
 {
-	tab=0;
-	contentArea=document.getElementById("content");
-	// contentLabel=document.getElementById("content_label");
-	content_tabs.push(document.getElementById("content_tab0"));
-	content_tabs.push(document.getElementById("content_tab1"));
-	content_tabs.push(document.getElementById("content_tab2"));
-	content_tabs.push(document.getElementById("content_tab3"));
-	content_tabs.push(document.getElementById("content_tab4"));
-	bs(0);
-	fillContent();
-}
-function bs(current)
-{
-	master=document.getElementById('togs')
-	all=master.getElementsByClassName("i_bar")
-	for(var i=0;i<all.length;i++)
+	$scope.tab=0;
+
+	$scope.f={};
+	$scope.f.status="Pending";
+	$scope.f.data=[];
+	$scope.f.fname="";
+	$scope.f.rname="";
+	$scope.f.delivery="0";
+	$scope.f.sortOrder="0";
+	$scope.f.reviews={};
+	$scope.f.order=function(it)
 	{
-		if(i!=current){
-		all[i].id="none"
-		content_tabs[i].style.display="none";
+		alert(it.service_id);
+	}
+	$scope.f.view=function(it)
+	{
+		// alert(it.service_id);
+		if(it.showRev==false)
+		{
+			$scope.f.reviews[it.service_id]={};
+			$scope.f.reviews[it.service_id].status="Pending";
+			//get reviews in f.reviews[serviceID].data
+			$scope.f.reviews[it.service_id].data=[
+				{
+					user:"abc1",
+					timeStamp:"02-08-2015 at 22:10",
+					body:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat pretium nibh ipsum consequat nisl vel pretium. Urna cursus eget nunc scelerisque viverra mauris in.",
+					rating:"4.6"
+				},
+				{
+					user:"abc2",
+					timeStamp:"On 02-08-2017 at 22:10",
+					body:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat pretium nibh ipsum consequat nisl vel pretium. Urna cursus eget nunc scelerisque viverra mauris in.",
+					rating:"3.8"
+				},
+				{
+					user:"abc3",
+					timeStamp:"On 02-08-2016 at 22:10",
+					body:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat pretium nibh ipsum consequat nisl vel pretium. Urna cursus eget nunc scelerisque viverra mauris in.",
+					rating:"4.1"
+				}
+			];
+			//Turn status OK to replace loading text with comments
+			$scope.f.reviews[it.service_id].status="OK";
+			it.showRev=true;
 		}
 		else{
-		all[i].id="act"
-		content_tabs[i].style.display="block";
-		}	
+			it.showRev=false;
+		}
+
 	}
-	tab=current;
-	fillContent();
-}
-function fillContent()
-{	
-	// contentLabel.innerHTML=labels[tab];
-	// content_tabs[tab].innerHTML="HAHA"+tab;
-	//Hotel Content
-	if(tab==3)
+
+	$scope.getData=function(tab)
 	{
-		var fnameFilters=document.getElementById("fname").value;
-		var rnameFilters=document.getElementById("rname").value;
-		//dfilter = 0/1/2
-		var dFilter=document.getElementById("fdelivery").value;
-		//use filter to get queryResult
-		queryResult=[
+		if(tab==3)
+		{
+			$scope.f.status="Pending";
+			//Use $scope.f to get filters and fill $scope.f.data
+			$scope.f.data=[
 			{
 				service_id:"FOO00001",
 				name:"Food1",
@@ -82,67 +95,39 @@ function fillContent()
 				price:200,
 				discount:15,
 				rating:4.5
-			}
-		];
-		var attribs=['name','cuisine','res_name','locality','city','delivery','price','discount'];
-		//remove existing Rows tr Elemens
-		tableElement=document.getElementById("table2");
-		for (let i=tableElement.childNodes.length-1;i>=0;i--) {
-			tableElement.removeChild(tableElement.childNodes[i]);
-		 }
-		 //Add Rows
-		for(let i=0;i<queryResult.length;i++)
-		{
-			// console.log("adding "+i);
-			let outerCard=document.createElement("div");
-			outerCard.className="rowElement card shadow p-4 mb-4 bg-white";
-			
-			let headerCard=document.createElement("div");
-			headerCard.className="card-header text-center bg-white align-middle";
-			headerCard.innerText="Restaurant: "+queryResult[i].res_name+","+queryResult[i].locality+","+queryResult[i].city;
-
-			let bodyCard=document.createElement("div");
-			bodyCard.className="card-body text-center d-flex flex-row justify-content-between align-middle";
-			let nameCard=document.createElement("div");
-			nameCard.className="cardText card-text";
-			nameCard.innerHTML=queryResult[i].name+"<br>Delivery Available: "+((queryResult[i].delivery=="Y")?("Yes"):("No"));
-			let middleCard=document.createElement("div");
-			middleCard.className="cardText card-text";
-			middleCard.innerHTML="Discount: "+queryResult[i].discount+"%<br> Description: "+ queryResult[i].cuisine;
-			let bookButton=document.createElement("Button");
-			bookButton.className="btn btn-outline-primary";
-			bookButton.textContent="Request ("+queryResult[i].price+" Rs)";
-			bookButton.addEventListener("click", function(){
-				alert("booked service: "+queryResult[i].service_id);
-			  });
-
-			bodyCard.appendChild(nameCard);
-			bodyCard.appendChild(middleCard);
-			bodyCard.appendChild(bookButton);
-
-			footerCard=document.createElement("div");
-			footerCard.className="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle";
-			ratingCard=document.createElement("div");
-			ratingCard.className="cardText card-text";
-			ratingCard.innerText="Rating: "+queryResult[i].rating+"/5";
-			let reviewButton=document.createElement("Button");
-			reviewButton.className="btn btn-outline-primary";
-			reviewButton.textContent="View Reviews";
-			reviewButton.addEventListener("click", function(){
-				alert("Open popUp Reviews for "+queryResult[i].service_id);
-			  });
-			footerCard.appendChild(ratingCard);
-			footerCard.appendChild(reviewButton);
-
-			outerCard.appendChild(headerCard);
-			outerCard.appendChild(bodyCard);
-			outerCard.appendChild(footerCard);
-			tableElement.appendChild(outerCard);
+			}];
+			$scope.f.data.forEach(element => {
+				element.showRev=false;
+			});
+			$scope.f.status="OK";
 		}
-		
-	}
-	//Add other domains and Booking status
-	else{
+		else{
 
+		}
+	}
+	$scope.changeTab=function(newTab)
+	{
+		$scope.tab=newTab;
+		$scope.getData(newTab);
+		console.log("change Tab: "+newTab);
+	}
+});
+var labels=["Bookings","Tra","All Hotels","All Food Items","Gui/tour"];
+function onStart()
+{
+
+}
+function bs(current)
+{
+	master=document.getElementById('togs')
+	all=master.getElementsByClassName("i_bar")
+	for(var i=0;i<all.length;i++)
+	{
+		if(i!=current){
+		all[i].id="none"
+		}
+		else{
+		all[i].id="act"
+		}	
 	}
 }

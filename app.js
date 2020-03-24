@@ -5,6 +5,7 @@ var hbs = require('express-handlebars');
 var session = require('express-session')
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
+var signupRouter = require('./routes/signup');
 var dbHandler = require('./server.js')
 const util = require('util');
 var app=express();
@@ -42,6 +43,7 @@ function main()
 app.set('root',__dirname);
 app.use('/',indexRouter);
 app.use('/login',loginRouter);
+app.use('/signup',signupRouter);
 serv.listen(port);
 console.log("it's started on http://localhost:"+port);
 // dbHandler.selectAllFromTable(function(result){

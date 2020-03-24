@@ -6,11 +6,11 @@ tables = {
     'neighbouring': ['location1_id', 'location2_id', 'distance_in_km'],
     'administrator': ['admin_id', 'name', 'role', 'email', 'password'],
     'user': ['user_id', 'name', 'email', 'password', 'address', 'phone_no', 'location_id', 'active'],
-    'service_provider': ['service_provider_id', 'name', 'password', 'domain'],
+    'service_provider': ['approved','service_provider_id', 'name', 'password', 'domain','active'],
     'service': ['service_id', 'service_provider_id', 'price', 'discount'],
-    'hotel': ['service_provider_id', 'name', 'location_id', 'wifi_facility'],
+    'hotel': ['service_provider_id','location_id', 'wifi_facility'],
     'room': ['service_id', 'room_type', 'capacity'],
-    'restaurant': ['service_provider_id', 'name', 'location_id', 'delivers', 'cuisine'],
+    'restaurant': ['service_provider_id', 'location_id', 'delivers', 'cuisine'],
     'food_item': ['service_id', 'name', 'cuisine'],
     'flight': ['service_id', 'from_location_id', 'to_location_id', 'departure_time', 'arrival_time'],
     'taxi': ['service_id', 'car_name', 'capacity', 'AC'],
@@ -23,9 +23,15 @@ tables = {
     'query': ['query_id', 'user_id', 'query']
 }
 
-function createDatabase() {
+function createDatabase(onComplete) {
     // callback = function(result) {console.log(result)}
-    callback = function(result) {}
+    queryRun=0;
+    callback = function(result) {
+        queryRun++;
+        console.log("done"+queryRun);
+        if(queryRun==73)
+            onComplete();
+    }
     runQuery(callback, 'drop table if exists visited;')
     runQuery(callback, 'drop table if exists wishlist;')
     runQuery(callback, 'drop table if exists query;')
@@ -53,7 +59,7 @@ function createDatabase() {
     runQuery(callback, 'create table if not exists neighbouring(location1_id char(8),location2_id char(8),distance_in_km int,primary key(location1_id, location2_id),foreign key (location1_id) references location(location_id),foreign key (location2_id) references location(location_id));')
     runQuery(callback, 'create table if not exists user(user_id char(8) primary key,name varchar(100) not null,email varchar(100) not null,password varchar(100) not null,address varchar(100),phone_no char(10),location_id char(8),active char(1),foreign key(location_id) references location(location_id),check (user_id like \"USR%\"),check(active in (\"Y\", \"N\")));')
     runQuery(callback, 'create table if not exists administrator(admin_id char(8) primary key,name varchar(100) not null, role varchar(100) not null,email varchar(100) not null,password varchar(100),check(admin_id like \"ADM%\"));')
-    runQuery(callback, 'create table if not exists service_provider(service_provider_id char(8) primary key,name varchar(100),password varchar(20),domain varchar(20),active char(1),check ((service_provider_id like \"HOT%\" and domain like \"hotel\") or    (service_provider_id like \"RES%\" and domain like \"restaurant\") or(service_provider_id like \"AIR%\" and domain like \"airline\") or (service_provider_id like \"TAP%\" and domain like \"taxi provider\") or    (service_provider_id like \"BPR%\" and domain like \"bus provider\") or (service_provider_id like \"TRP%\" and domain like \"train provider\") or   (service_provider_id like \"GUP%\" and domain like \"guide provider\")),check(active in (\"Y\", \"N\")) );')
+    runQuery(callback, 'create table if not exists service_provider(approved char(1),service_provider_id char(8) primary key,name varchar(100),password varchar(20),domain varchar(20),active char(1),check ((service_provider_id like \"HOT%\" and domain like \"hotel\") or    (service_provider_id like \"RES%\" and domain like \"restaurant\") or(service_provider_id like \"AIR%\" and domain like \"airline\") or (service_provider_id like \"TAP%\" and domain like \"taxi provider\") or    (service_provider_id like \"BPR%\" and domain like \"bus provider\") or (service_provider_id like \"TRP%\" and domain like \"train provider\") or   (service_provider_id like \"GUP%\" and domain like \"guide provider\")),check(active in (\"Y\", \"N\")), check(approved in (\"Y\",\"N\")) );')
     runQuery(callback, 'create table if not exists service(service_id char(8) primary key,service_provider_id char(8),price float,discount int,foreign key (service_provider_id) references service_provider(service_provider_id),check (discount >= 0 and discount <= 100),check ((service_provider_id like \"HOT%\" and service_id like \"ROO%\") or  (service_provider_id like \"RES%\" and service_id like \"FOO%\") or(service_provider_id like \"AIR%\" and service_id like \"FLI%\") or  (service_provider_id like \"TAP%\" and service_id like \"TAX%\") or (service_provider_id like \"BPR%\" and service_id like \"BUS%\") or (service_provider_id like \"TRP%\" and service_id like \"TRA%\") or (service_provider_id like \"GUP%\" and service_id like \"GUI%\") ));')
     runQuery(callback, 'create table if not exists hotel(service_provider_id char(8) primary key,location_id char(8),wifi_facility char(1),foreign key (service_provider_id) references service_provider(service_provider_id),foreign key(location_id) references location(location_id),check (service_provider_id like \"HOT%\"),check (wifi_facility in (\"Y\", \"N\")));')
     runQuery(callback, 'create table if not exists room(service_id char(8) primary key,room_type varchar(100),capacity int,check(service_id like \"ROO%\"),foreign key(service_id) references service(service_id),check (capacity >= 1));')
@@ -75,13 +81,13 @@ function createDatabase() {
     runQuery(callback, 'INSERT INTO neighbouring VALUES(\'LOC00000\',\'LOC00001\',5),(\'LOC00000\',\'LOC00002\',10),(\'LOC00000\',\'LOC00003\',15),(\'LOC00001\',\'LOC00002\',3),(\'LOC00001\',\'LOC00003\',8),(\'LOC00002\',\'LOC00003\',11),(\'LOC00004\',\'LOC00000\',51),(\'LOC00004\',\'LOC00001\',56),(\'LOC00004\',\'LOC00002\',61),(\'LOC00004\',\'LOC00003\',49),(\'LOC00005\',\'LOC00000\',81),(\'LOC00005\',\'LOC00006\',15),(\'LOC00005\',\'LOC00007\',9),(\'LOC00006\',\'LOC00007\',12),(\'LOC00008\',\'LOC00009\',75),(\'LOC00009\',\'LOC00011\',24),(\'LOC00009\',\'LOC00010\',13),(\'LOC00010\',\'LOC00011\',18),(\'LOC00012\',\'LOC00013\',6),(\'LOC00012\',\'LOC00014\',10),(\'LOC00013\',\'LOC00014\',12),(\'LOC00015\',\'LOC00016\',21),(\'LOC00015\',\'LOC00017\',31),(\'LOC00015\',\'LOC00018\',12),(\'LOC00016\',\'LOC00017\',24),(\'LOC00016\',\'LOC00018\',16),(\'LOC00017\',\'LOC00018\',31),(\'LOC00020\',\'LOC00021\',12),(\'LOC00020\',\'LOC00022\',8),(\'LOC00021\',\'LOC00022\',16),(\'LOC00023\',\'LOC00024\',48),(\'LOC00026\',\'LOC00027\',15),(\'LOC00029\',\'LOC00030\',20),(\'LOC00029\',\'LOC00031\',25),(\'LOC00030\',\'LOC00031\',18),(\'LOC00032\',\'LOC00033\',35),(\'LOC00034\',\'LOC00035\',16),(\'LOC00036\',\'LOC00037\',26);')
     runQuery(callback, 'INSERT INTO user VALUES(\'USR00000\',\'Neeraf \',\'Neeraf@432gmail.com.com\',\'Nera333\',\'138, Angappa Naicken St, Parrys Chennai, Tamil Nadu, 600001\',4425229885,\'LOC00042\',\'Y\'),(\'USR00001\',\'Ekambar \',\'Ekambar@109yahoo.com\',\'pyasf3333\',\'M 9, Part 1, Greater Kailash Delhi, Delhi, 110048\',1129234950,\'LOC00015\',\'Y\'),(\'USR00002\',\'Sankalpa \',\'Sankalpa@322yahoo.com\',\'pfasdre3333\',\'18/19, Alkapuri, 18/19, Alkapuri Vadodara, Gujarat, 390007\',2652337966,\'LOC00043\',\'Y\'),(\'USR00003\',\'Fatik \',\'Fatik@41gmail.com\',\'pyarsdfae33\',\'136, Narayan Dhuru Street, Masjid Bunder Mumbai, Maharashtra, 400003\',2223450058,\'LOC00029\',\'Y\'),(\'USR00004\',\'Shashimohan \',\'Shashimohan@12gmail.com\',\'pyargf3333\',\'Shop No 9, Stn, Nr Silky, Santacruz (west) Mumbai, Maharashtra, 400054\',2226052751,\'LOC00029\',\'Y\'),(\'USR00005\',\'Bhuvanesh\',\'Bhuvanesh@34gmail.com\',\'pyare33dsf33\',\'Shop No 6, D/14, Yogi Nagar, Eksar Road, Borivali (west) Mumbai, Maharashtra, 400091\',3222898524,\'LOC00029\',\'Y\'),(\'USR00006\',\'Tripurari \',\'Tripurari@24gmail.com\',\'pyare333dfs3\',\'21c, Pkt-3, Mig Flat, Mayur Vihar Delhi, Delhi, 110096\',1122615327,\'LOC00015\',\'Y\'),(\'USR00007\',\'Mangal \',\'mangal@238gmail.com\',\'pyare3fdsa333\',\'173, Sarvoday Comm Centre, Salapose Road, Nr Gpo, Ahmedabad, Gujarat, 380001\',7925504021,\'LOC00044\',\'Y\'),(\'USR00008\',\'Raghupati \',\'raghu@288gmail.com\',\'pyare3fd333\',\'36, 16th Cross C M H Road, Lakshmipuram, Ulsoor Bangalore, Karnataka, 560008\',4425575389,\'LOC00045\',\'Y\'),(\'USR00009\',\'Daiwik \',\'daiwik@277gmail.com\',\'pyare33df33\',\'Prasad Heights, 43 Somnath Nagar, Vadgaonsheri, Pune, Maharashtra, 411014\',9242703174,\'LOC00047\',\'Y\'),(\'USR00010\',\'Gagan\',\'gagan@266gmail.com\',\'pyare3df333\',\'167- P, Rashbehari Avenue, Ballygunj, Kolkata, West Bengal, 700019\',8489245681,\'LOC00046\',\'Y\'),(\'USR00011\',\'Jagadbandu \',\'jaga@254gmail.com\',\'jagaasasda\',\'84, Devloped Indl Estate, Perungudi, Chennai, Tamil Nadu, 600096\',2684405124,\'LOC00042\',\'Y\'),(\'USR00012\',\'Uday\',\'uday@244gmail.com\',\'uda234\',\'27, Heavy Water Colony, Chhani Jakat Naka, Vadodara, Gujarat, 390002\',3424961708,\'LOC00043\',\'Y\'),(\'USR00013\',\'Viswas \',\'viswas@2gmail.com\',\'viswasasdadada\',\'24 Temple Road, Agaram Chennai, Tamil Nadu, 600082\',3525378703,\'LOC00042\',\'Y\'),(\'USR00014\',\'Saket \',\'saket@21gmail.com\',\'saket67787777\',\'15 & 16, Richmond Town, Bangalore, Karnataka, 560025\',8022220296,\'LOC00045\',\'Y\'),(\'USR00015\',\'Jusal \',\'jusal@2454gmail.com\',\'jusal1231231\',\'5, 100 Ft Rd, Vysys Bank Colony, B T M Bangalore, Karnataka, 560076\',8726687005,\'LOC00045\',\'Y\'),(\'USR00016\',\'Kunjabihari \',\'kunj@2354gmail.com\',\'kunjklklklasdf\',\'22, Royapettah High Road, Royapettah, Chennai, Tamil Nadu, 600014\',9721623577,\'LOC00042\',\'Y\'),(\'USR00017\',\'Ottakoothan \',\'ottak@3435yahoo.com\',\'ottak1113\',\'1-8-303/69/3, S P Road, Hyderabad, Telangana, 500003\',4428114197,\'LOC00048\',\'Y\'),(\'USR00018\',\'Naval \',\'naval@234gmail.com\',\'naval1111\',\'1a Chirag Mansion, Khetwadi Back Rd, Khetwadi, Mumbai, Maharashtra, 400004\',4027849319,\'LOC00029\',\'Y\'),(\'USR00019\',\'Pyaremohan \',\'pyare@123gmail.com\',\'pyare3333\',\'420, Shri Ram Bhawan, Chandni Chowk Delhi, Delhi, 110006\',1123928452,\'LOC00015\',\'Y\');')
     runQuery(callback, 'INSERT INTO administrator VALUES(\'ADM00000\',\'vekine\',\'Admin\',\'vekine@gmail.com\',\'vekine123\'),(\'ADM00001\',\'Quest\',\'Service providers communications\',\'quet@gmail.com\',\'quet123\'),(\'ADM00002\',\'koneu\',\'Service providers communications\',\'koneu@gmail.com\',\'koeneu123\'),(\'ADM00003\',\'beqone\',\'Service providers communications\',\'bequone@gmail.com\',\'bequone123\'),(\'ADM00004\',\'Keao\',\'Statistician\',\'keao@gmail.com\',\'keao123\'),(\'ADM00005\',\'heotin\',\'Official Paperwork\',\'heotin@gmail.com\',\'heotin123\'),(\'ADM00006\',\'Joegit\',\'User Information handling\',\'joegit@gmail.com\',\'joegit123\'),(\'ADM00007\',\'vibege\',\'User Information handling\',\'vubege@gmail.com\',\'vubege123\'),(\'ADM00008\',\'lenyber\',\'Suggestions Implementation\',\'lenyber@gmail.com\',\'lenyber123\'),(\'ADM00009\',\'niceher\',\'Respondent for user queries\',\'niceher@gmail.com\',\'niceher123\'),(\'ADM00010\',\'sivepec\',\'Respondent for user queries\',\'sivepec@gmail.com\',\'sivepec123\'),(\'ADM00011\',\'jesotun\',\'Verification of guides\',\'jesotn@gmail.com\',\'jesotn123\'),(\'ADM00012\',\'pedakij\',\'Tourist Spots Verification\',\'pedakij@gmail.com\',\'pedakij123\'),(\'ADM00013\',\'zedart\',\'Tourist Spots Verification\',\'zedart0@gmail.com\',\'zedart0123\'),(\'ADM00014\',\'beqzasi\',\'Editor\',\'beqzasi1@gmail.com\',\'beqzasi1123\');')
-    runQuery(callback, 'INSERT INTO service_provider VALUES(\'BPR00042\',\'kat\',\'kat345\',\'Bus Provider\',\'Y\'),(\'BPR00043\',\'tak\',\'tak345\',\'Bus Provider\',\'Y\'),(\'BPR00044\',\'sohail\',\'sohail345\',\'Bus Provider\',\'Y\'),(\'BPR00045\',\'mohan\',\'mohan345\',\'Bus Provider\',\'Y\'),(\'BPR00046\',\'sohan\',\'sohan345\',\'Bus Provider\',\'Y\'),(\'BPR00047\',\'rohan\',\'rohan345\',\'Bus Provider\',\'Y\'),(\'BPR00048\',\'bhol\',\'bhol345\',\'Bus Provider\',\'Y\'),(\'BPR00049\',\'dol\',\'dhol345\',\'Bus Provider\',\'Y\'),(\'BPR00050\',\'gol\',\'gol345\',\'Bus Provider\',\'Y\'),(\'BPR00051\',\'bol\',\'bol345\',\'Bus Provider\',\'Y\'),(\'BPR00052\',\'sop\',\'sop345\',\'Bus Provider\',\'Y\'),(\'BPR00053\',\'cop\',\'cop345\',\'Bus Provider\',\'Y\'),(\'BPR00054\',\'hanry\',\'hanry345\',\'Bus Provider\',\'Y\'),(\'BPR00055\',\'tom\',\'tom345\',\'Bus Provider\',\'Y\'),(\'BPR00056\',\'jerry\',\'jerry345\',\'Bus Provider\',\'Y\'),(\'BPR00057\',\'spider\',\'spider345\',\'Bus Provider\',\'Y\'),(\'BPR00058\',\'map\',\'map345\',\'Bus Provider\',\'Y\'),(\'BPR00059\',\'bat\',\'bat345\',\'Bus Provider\',\'Y\'),(\'BPR00060\',\'john\',\'john345\',\'Bus Provider\',\'Y\'),(\'BPR00061\',\'donu\',\'donu345\',\'Bus Provider\',\'Y\'),(\'BPR00062\',\'bonu\',\'bonu345\',\'Bus Provider\',\'Y\');')
-    runQuery(callback, 'INSERT INTO service_provider VALUES(\'AIR00017\',\'fog\',\'fog456\',\'Airline\',\'Y\'),(\'AIR00018\',\'gol\',\'gol456\',\'Airline\',\'Y\'),(\'AIR00019\',\'sonu\',\'sonu456\',\'Airline\',\'Y\'),(\'AIR00020\',\'farry\',\'farry456\',\'Airline\',\'Y\'),(\'AIR00021\',\'hanti\',\'hanti456\',\'Airline\',\'Y\'),(\'AIR00022\',\'sot\',\'sot456\',\'Airline\',\'Y\'),(\'AIR00023\',\'ewi\',\'ewi456\',\'Airline\',\'Y\'),(\'AIR00024\',\'ftgf\',\'ftgf456\',\'Airline\',\'Y\'),(\'AIR00025\',\'goli\',\'goli456\',\'Airline\',\'Y\'),(\'AIR00026\',\'roli\',\'roli456\',\'Airline\',\'Y\'),(\'AIR00027\',\'doop\',\'doop456\',\'Airline\',\'Y\'),(\'AIR00028\',\'Vivanta\',\'Vivanta456\',\'Airline\',\'Y\'),(\'AIR00029\',\'oogy\',\'oogy456\',\'Airline\',\'Y\'),(\'AIR00031\',\'mooood\',\'mooood456\',\'Airline\',\'Y\');')
-    runQuery(callback, 'INSERT INTO service_provider VALUES(\'TAP00032\',\'fsadf\',\'fsadf234\',\'Taxi Provider\',\'Y\'),(\'TAP00033\',\'asdf\',\'asdf234\',\'Taxi Provider\',\'Y\'),(\'TAP00034\',\'asdfe\',\'asdfe234\',\'Taxi Provider\',\'Y\'),(\'TAP00035\',\'ffd\',\'ffd234\',\'Taxi Provider\',\'Y\'),(\'TAP00036\',\'hgs\',\'hgs234\',\'Taxi Provider\',\'Y\'),(\'TAP00037\',\'fe\',\'fe234\',\'Taxi Provider\',\'Y\'),(\'TAP00038\',\'asdfg\',\'asdfg234\',\'Taxi Provider\',\'Y\'),(\'TAP00039\',\'sdfg\',\'sdfg234\',\'Taxi Provider\',\'Y\'),(\'TAP00040\',\'fdgds\',\'fdgds234\',\'Taxi Provider\',\'Y\'),(\'TAP00041\',\'daby\',\'daby234\',\'Taxi Provider\',\'Y\');')
-    runQuery(callback, 'INSERT INTO service_provider VALUES(\'TRP00001\',\'dgy\',\'dgy567\',\'Train Provider\',\'Y\'),(\'TRP00002\',\'bruno\',\'bruno567\',\'Train Provider\',\'Y\'),(\'TRP00003\',\'hanrr\',\'hanrr567\',\'Train Provider\',\'Y\'),(\'TRP00004\',\'jacck\',\'jacck567\',\'Train Provider\',\'Y\'),(\'TRP00005\',\'kaf\',\'kaf567\',\'Train Provider\',\'Y\'),(\'TRP00006\',\'jaf\',\'jaf567\',\'Train Provider\',\'Y\'),(\'TRP00007\',\'daf\',\'daf567\',\'Train Provider\',\'Y\'),(\'TRP00008\',\'gah\',\'gah567\',\'Train Provider\',\'Y\'),(\'TRP00009\',\'hui\',\'hui567\',\'Train Provider\',\'Y\'),(\'TRP00010\',\'noody\',\'noody567\',\'Train Provider\',\'Y\'),(\'TRP00011\',\'truc\',\'truc567\',\'Train Provider\',\'Y\'),(\'TRP00012\',\'banc\',\'banc567\',\'Train Provider\',\'Y\'),(\'TRP00013\',\'hju\',\'hju567\',\'Train Provider\',\'Y\'),(\'TRP00014\',\'dfy\',\'dfy567\',\'Train Provider\',\'Y\'),(\'TRP00015\',\'dcv\',\'dcv567\',\'Train Provider\',\'Y\'),(\'TRP00016\',\'rty\',\'rty567\',\'Train Provider\',\'Y\');')
-    runQuery(callback, 'INSERT INTO service_provider VALUES(\'RES00001\',\'gooby\',\'gooby789\',\'Restaurant\',\'Y\'),(\'RES00002\',\'comb\',\'comb789\',\'Restaurant\',\'Y\'),(\'RES00003\',\'bom\',\'bom789\',\'Restaurant\',\'Y\'),(\'RES00004\',\'tooop\',\'tooop789\',\'Restaurant\',\'Y\'),(\'RES00005\',\'gooory\',\'gooory789\',\'Restaurant\',\'Y\'),(\'RES00006\',\'suri\',\'suri789\',\'Restaurant\',\'Y\'),(\'RES00007\',\'sudi\',\'sudi789\',\'Restaurant\',\'Y\'),(\'RES00008\',\'gooku\',\'gooku789\',\'Restaurant\',\'Y\'),(\'RES00009\',\'dooku\',\'dooku789\',\'Restaurant\',\'Y\'),(\'RES00010\',\'rummy\',\'rummy789\',\'Restaurant\',\'Y\'),(\'RES00011\',\'bunny\',\'bunny789\',\'Restaurant\',\'Y\'),(\'RES00012\',\'goosy\',\'goosy789\',\'Restaurant\',\'Y\'),(\'RES00013\',\'sory\',\'sory789\',\'Restaurant\',\'Y\'),(\'RES00014\',\'dee\',\'dee789\',\'Restaurant\',\'Y\'),(\'RES00015\',\'bee\',\'bee789\',\'Restaurant\',\'Y\'),(\'RES00016\',\'gee\',\'gee789\',\'Restaurant\',\'Y\'),(\'RES00017\',\'gelu\',\'gelu789\',\'Restaurant\',\'Y\'),(\'RES00018\',\'abus\',\'abus789\',\'Restaurant\',\'Y\'),(\'RES00019\',\'smil\',\'smil789\',\'Restaurant\',\'Y\'),(\'RES00020\',\'adbdul\',\'adbdul789\',\'Restaurant\',\'Y\'),(\'RES00021\',\'vohn\',\'vohn789\',\'Restaurant\',\'Y\'),(\'RES00022\',\'vohmu\',\'vohmu789\',\'Restaurant\',\'Y\'),(\'RES00023\',\'choi\',\'vhoi789\',\'Restaurant\',\'Y\'),(\'RES00024\',\'fooky\',\'fooky789\',\'Restaurant\',\'Y\'),(\'RES00025\',\'gluudy\',\'gluudy789\',\'Restaurant\',\'Y\'),(\'RES00026\',\'hine\',\'hine789\',\'Restaurant\',\'Y\'),(\'RES00027\',\'bonyyy\',\'bonyyy789\',\'Restaurant\',\'Y\'),(\'RES00028\',\'dasyyyy\',\'dasyyyy789\',\'Restaurant\',\'Y\'),(\'RES00029\',\'chittt\',\'chittt789\',\'Restaurant\',\'Y\');')
-    runQuery(callback, 'INSERT INTO service_provider VALUES(\'HOT00001\',\'vanyr\',\'vanyr55\',\'Hotel\',\'Y\'),(\'HOT00002\',\'vanyK\',\'vanyk55\',\'Hotel\',\'Y\'),(\'HOT00003\',\'fnaay\',\'fnaay55\',\'Hotel\',\'Y\'),(\'HOT00004\',\'hyi\',\'hyi55\',\'Hotel\',\'Y\'),(\'HOT00005\',\'chittt\',\'chittt55\',\'Hotel\',\'Y\'),(\'HOT00006\',\'rits\',\'rits55\',\'Hotel\',\'Y\'),(\'HOT00007\',\'chittt\',\'chittt55\',\'Hotel\',\'Y\'),(\'HOT00008\',\'dereee\',\'dereee55\',\'Hotel\',\'Y\'),(\'HOT00009\',\'wen1\',\'wen155\',\'Hotel\',\'Y\'),(\'HOT00010\',\'dttt\',\'dttt55\',\'Hotel\',\'Y\'),(\'HOT00011\',\'fog\',\'fog55\',\'Hotel\',\'Y\'),(\'HOT00012\',\'liion\',\'liion55\',\'Hotel\',\'Y\'),(\'HOT00013\',\'lion\',\'lion55\',\'Hotel\',\'Y\'),(\'HOT00014\',\'tigeey\',\'tigeey55\',\'Hotel\',\'Y\'),(\'HOT00016\',\'chini\',\'chini55\',\'Hotel\',\'Y\'),(\'HOT00017\',\'pini\',\'pini55\',\'Hotel\',\'Y\'),(\'HOT00019\',\'jummy\',\'jummy55\',\'Hotel\',\'Y\'),(\'HOT00020\',\'fuunaay\',\'fuunaay55\',\'Hotel\',\'Y\'),(\'HOT00022\',\'gout\',\'gout55\',\'Hotel\',\'Y\'),(\'HOT00023\',\'goat\',\'goat55\',\'Hotel\',\'Y\'),(\'HOT00025\',\'pub\',\'pub55\',\'Hotel\',\'Y\'),(\'HOT00026\',\'pab\',\'pab55\',\'Hotel\',\'Y\'),(\'HOT00027\',\'palu\',\'palu55\',\'Hotel\',\'Y\'),(\'HOT00028\',\'paly\',\'paly55\',\'Hotel\',\'Y\'),(\'HOT00029\',\'palt\',\'palt55\',\'Hotel\',\'Y\'),(\'HOT00030\',\'part\',\'part55\',\'Hotel\',\'Y\'),(\'HOT00031\',\'aly\',\'aly55\',\'Hotel\',\'Y\'),(\'HOT00032\',\'alyuni\',\'alyuni55\',\'Hotel\',\'Y\'),(\'HOT00033\',\'chungg\',\'chungg55\',\'Hotel\',\'Y\'),(\'HOT00034\',\'geek\',\'geek55\',\'Hotel\',\'Y\'),(\'HOT00035\',\'ofty\',\'ofty55\',\'Hotel\',\'Y\'),(\'HOT00036\',\'softy\',\'softy55\',\'Hotel\',\'Y\'),(\'HOT00037\',\'johmy\',\'johmy55\',\'Hotel\',\'Y\'),(\'HOT00038\',\'dopy\',\'dopy55\',\'Hotel\',\'Y\'),(\'HOT00039\',\'vog\',\'vog55\',\'Hotel\',\'Y\'),(\'HOT00040\',\'vol\',\'vol55\',\'Hotel\',\'Y\'),(\'HOT00041\',\'val\',\'val55\',\'Hotel\',\'Y\'),(\'HOT00042\',\'callyy\',\'callyy55\',\'Hotel\',\'Y\'),(\'HOT00044\',\'gooooooopy\',\'gooooooopy55\',\'Hotel\',\'Y\'),(\'HOT00045\',\'aqua\',\'aqua55\',\'Hotel\',\'Y\');')
-    runQuery(callback, 'INSERT INTO service_provider VALUES(\'GUP00000\',\'aquamann\',\'aquamann44\',\'Guide Provider\',\'Y\'),(\'GUP00001\',\'joks\',\'joks44\',\'Guide Provider\',\'Y\'),(\'GUP00002\',\'manup\',\'manup44\',\'Guide Provider\',\'Y\'),(\'GUP00003\',\'scuuby\',\'scuuby44\',\'Guide Provider\',\'Y\'),(\'GUP00004\',\'boof\',\'boof44\',\'Guide Provider\',\'Y\'),(\'GUP00005\',\'hell2\',\'hell244\',\'Guide Provider\',\'Y\'),(\'GUP00006\',\'hell1\',\'hell144\',\'Guide Provider\',\'Y\'),(\'GUP00007\',\'goog\',\'goog44\',\'Guide Provider\',\'Y\'),(\'GUP00008\',\'joffy\',\'joffy44\',\'Guide Provider\',\'Y\'),(\'GUP00009\',\'juney\',\'juney44\',\'Guide Provider\',\'Y\'),(\'GUP00010\',\'buney\',\'buney44\',\'Guide Provider\',\'Y\'),(\'GUP00011\',\'foggggggy\',\'foggggggy44\',\'Guide Provider\',\'Y\'),(\'GUP00012\',\'rabbit\',\'rabbit44\',\'Guide Provider\',\'Y\'),(\'GUP00013\',\'fooooogg\',\'fooooogg44\',\'Guide Provider\',\'Y\'),(\'GUP00014\',\'toyyyyy\',\'toyyyyy44\',\'Guide Provider\',\'Y\'),(\'GUP00015\',\'boooolu\',\'boooolu44\',\'Guide Provider\',\'Y\'),(\'GUP00016\',\'aqua\',\'aqua44\',\'Guide Provider\',\'Y\'),(\'GUP00017\',\'asfsaa\',\'asfsaa44\',\'Guide Provider\',\'Y\'),(\'GUP00018\',\'voif\',\'voif44\',\'Guide Provider\',\'Y\'),(\'GUP00019\',\'hojiji\',\'hojiji44\',\'Guide Provider\',\'Y\'),(\'GUP00020\',\'qubek\',\'qubek44\',\'Guide Provider\',\'Y\'),(\'GUP00021\',\'ebi\',\'ebi44\',\'Guide Provider\',\'Y\'),(\'GUP00022\',\'usiiii\',\'usiiii44\',\'Guide Provider\',\'Y\');')
+    runQuery(callback, 'INSERT INTO service_provider VALUES(\'Y\',\'BPR00042\',\'kat\',\'kat345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00043\',\'tak\',\'tak345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00044\',\'sohail\',\'sohail345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00045\',\'mohan\',\'mohan345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00046\',\'sohan\',\'sohan345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00047\',\'rohan\',\'rohan345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00048\',\'bhol\',\'bhol345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00049\',\'dol\',\'dhol345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00050\',\'gol\',\'gol345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00051\',\'bol\',\'bol345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00052\',\'sop\',\'sop345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00053\',\'cop\',\'cop345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00054\',\'hanry\',\'hanry345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00055\',\'tom\',\'tom345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00056\',\'jerry\',\'jerry345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00057\',\'spider\',\'spider345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00058\',\'map\',\'map345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00059\',\'bat\',\'bat345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00060\',\'john\',\'john345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00061\',\'donu\',\'donu345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00062\',\'bonu\',\'bonu345\',\'Bus Provider\',\'Y\');')
+    runQuery(callback, 'INSERT INTO service_provider VALUES(\'Y\',\'AIR00017\',\'fog\',\'fog456\',\'Airline\',\'Y\'),(\'Y\',\'AIR00018\',\'gol\',\'gol456\',\'Airline\',\'Y\'),(\'Y\',\'AIR00019\',\'sonu\',\'sonu456\',\'Airline\',\'Y\'),(\'Y\',\'AIR00020\',\'farry\',\'farry456\',\'Airline\',\'Y\'),(\'Y\',\'AIR00021\',\'hanti\',\'hanti456\',\'Airline\',\'Y\'),(\'Y\',\'AIR00022\',\'sot\',\'sot456\',\'Airline\',\'Y\'),(\'Y\',\'AIR00023\',\'ewi\',\'ewi456\',\'Airline\',\'Y\'),(\'Y\',\'AIR00024\',\'ftgf\',\'ftgf456\',\'Airline\',\'Y\'),(\'Y\',\'AIR00025\',\'goli\',\'goli456\',\'Airline\',\'Y\'),(\'Y\',\'AIR00026\',\'roli\',\'roli456\',\'Airline\',\'Y\'),(\'Y\',\'AIR00027\',\'doop\',\'doop456\',\'Airline\',\'Y\'),(\'Y\',\'AIR00028\',\'Vivanta\',\'Vivanta456\',\'Airline\',\'Y\'),(\'Y\',\'AIR00029\',\'oogy\',\'oogy456\',\'Airline\',\'Y\'),(\'Y\',\'AIR00031\',\'mooood\',\'mooood456\',\'Airline\',\'Y\');')
+    runQuery(callback, 'INSERT INTO service_provider VALUES(\'Y\',\'TAP00032\',\'fsadf\',\'fsadf234\',\'Taxi Provider\',\'Y\'),(\'Y\',\'TAP00033\',\'asdf\',\'asdf234\',\'Taxi Provider\',\'Y\'),(\'Y\',\'TAP00034\',\'asdfe\',\'asdfe234\',\'Taxi Provider\',\'Y\'),(\'Y\',\'TAP00035\',\'ffd\',\'ffd234\',\'Taxi Provider\',\'Y\'),(\'Y\',\'TAP00036\',\'hgs\',\'hgs234\',\'Taxi Provider\',\'Y\'),(\'Y\',\'TAP00037\',\'fe\',\'fe234\',\'Taxi Provider\',\'Y\'),(\'Y\',\'TAP00038\',\'asdfg\',\'asdfg234\',\'Taxi Provider\',\'Y\'),(\'Y\',\'TAP00039\',\'sdfg\',\'sdfg234\',\'Taxi Provider\',\'Y\'),(\'Y\',\'TAP00040\',\'fdgds\',\'fdgds234\',\'Taxi Provider\',\'Y\'),(\'Y\',\'TAP00041\',\'daby\',\'daby234\',\'Taxi Provider\',\'Y\');')
+    runQuery(callback, 'INSERT INTO service_provider VALUES(\'Y\',\'TRP00001\',\'dgy\',\'dgy567\',\'Train Provider\',\'Y\'),(\'Y\',\'TRP00002\',\'bruno\',\'bruno567\',\'Train Provider\',\'Y\'),(\'Y\',\'TRP00003\',\'hanrr\',\'hanrr567\',\'Train Provider\',\'Y\'),(\'Y\',\'TRP00004\',\'jacck\',\'jacck567\',\'Train Provider\',\'Y\'),(\'Y\',\'TRP00005\',\'kaf\',\'kaf567\',\'Train Provider\',\'Y\'),(\'Y\',\'TRP00006\',\'jaf\',\'jaf567\',\'Train Provider\',\'Y\'),(\'Y\',\'TRP00007\',\'daf\',\'daf567\',\'Train Provider\',\'Y\'),(\'Y\',\'TRP00008\',\'gah\',\'gah567\',\'Train Provider\',\'Y\'),(\'Y\',\'TRP00009\',\'hui\',\'hui567\',\'Train Provider\',\'Y\'),(\'Y\',\'TRP00010\',\'noody\',\'noody567\',\'Train Provider\',\'Y\'),(\'Y\',\'TRP00011\',\'truc\',\'truc567\',\'Train Provider\',\'Y\'),(\'Y\',\'TRP00012\',\'banc\',\'banc567\',\'Train Provider\',\'Y\'),(\'Y\',\'TRP00013\',\'hju\',\'hju567\',\'Train Provider\',\'Y\'),(\'Y\',\'TRP00014\',\'dfy\',\'dfy567\',\'Train Provider\',\'Y\'),(\'Y\',\'TRP00015\',\'dcv\',\'dcv567\',\'Train Provider\',\'Y\'),(\'Y\',\'TRP00016\',\'rty\',\'rty567\',\'Train Provider\',\'Y\');')
+    runQuery(callback, 'INSERT INTO service_provider VALUES(\'Y\',\'RES00001\',\'gooby\',\'gooby789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00002\',\'comb\',\'comb789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00003\',\'bom\',\'bom789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00004\',\'tooop\',\'tooop789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00005\',\'gooory\',\'gooory789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00006\',\'suri\',\'suri789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00007\',\'sudi\',\'sudi789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00008\',\'gooku\',\'gooku789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00009\',\'dooku\',\'dooku789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00010\',\'rummy\',\'rummy789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00011\',\'bunny\',\'bunny789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00012\',\'goosy\',\'goosy789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00013\',\'sory\',\'sory789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00014\',\'dee\',\'dee789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00015\',\'bee\',\'bee789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00016\',\'gee\',\'gee789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00017\',\'gelu\',\'gelu789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00018\',\'abus\',\'abus789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00019\',\'smil\',\'smil789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00020\',\'adbdul\',\'adbdul789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00021\',\'vohn\',\'vohn789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00022\',\'vohmu\',\'vohmu789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00023\',\'choi\',\'vhoi789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00024\',\'fooky\',\'fooky789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00025\',\'gluudy\',\'gluudy789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00026\',\'hine\',\'hine789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00027\',\'bonyyy\',\'bonyyy789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00028\',\'dasyyyy\',\'dasyyyy789\',\'Restaurant\',\'Y\'),(\'Y\',\'RES00029\',\'chittt\',\'chittt789\',\'Restaurant\',\'Y\');')
+    runQuery(callback, 'INSERT INTO service_provider VALUES(\'Y\',\'HOT00001\',\'vanyr\',\'vanyr55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00002\',\'vanyK\',\'vanyk55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00003\',\'fnaay\',\'fnaay55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00004\',\'hyi\',\'hyi55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00005\',\'chittt\',\'chittt55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00006\',\'rits\',\'rits55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00007\',\'chittt\',\'chittt55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00008\',\'dereee\',\'dereee55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00009\',\'wen1\',\'wen155\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00010\',\'dttt\',\'dttt55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00011\',\'fog\',\'fog55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00012\',\'liion\',\'liion55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00013\',\'lion\',\'lion55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00014\',\'tigeey\',\'tigeey55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00016\',\'chini\',\'chini55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00017\',\'pini\',\'pini55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00019\',\'jummy\',\'jummy55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00020\',\'fuunaay\',\'fuunaay55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00022\',\'gout\',\'gout55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00023\',\'goat\',\'goat55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00025\',\'pub\',\'pub55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00026\',\'pab\',\'pab55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00027\',\'palu\',\'palu55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00028\',\'paly\',\'paly55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00029\',\'palt\',\'palt55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00030\',\'part\',\'part55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00031\',\'aly\',\'aly55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00032\',\'alyuni\',\'alyuni55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00033\',\'chungg\',\'chungg55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00034\',\'geek\',\'geek55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00035\',\'ofty\',\'ofty55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00036\',\'softy\',\'softy55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00037\',\'johmy\',\'johmy55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00038\',\'dopy\',\'dopy55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00039\',\'vog\',\'vog55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00040\',\'vol\',\'vol55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00041\',\'val\',\'val55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00042\',\'callyy\',\'callyy55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00044\',\'gooooooopy\',\'gooooooopy55\',\'Hotel\',\'Y\'),(\'Y\',\'HOT00045\',\'aqua\',\'aqua55\',\'Hotel\',\'Y\');')
+    runQuery(callback, 'INSERT INTO service_provider VALUES(\'Y\',\'GUP00000\',\'aquamann\',\'aquamann44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00001\',\'joks\',\'joks44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00002\',\'manup\',\'manup44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00003\',\'scuuby\',\'scuuby44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00004\',\'boof\',\'boof44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00005\',\'hell2\',\'hell244\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00006\',\'hell1\',\'hell144\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00007\',\'goog\',\'goog44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00008\',\'joffy\',\'joffy44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00009\',\'juney\',\'juney44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00010\',\'buney\',\'buney44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00011\',\'foggggggy\',\'foggggggy44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00012\',\'rabbit\',\'rabbit44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00013\',\'fooooogg\',\'fooooogg44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00014\',\'toyyyyy\',\'toyyyyy44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00015\',\'boooolu\',\'boooolu44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00016\',\'aqua\',\'aqua44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00017\',\'asfsaa\',\'asfsaa44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00018\',\'voif\',\'voif44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00019\',\'hojiji\',\'hojiji44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00020\',\'qubek\',\'qubek44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00021\',\'ebi\',\'ebi44\',\'Guide Provider\',\'Y\'),(\'Y\',\'GUP00022\',\'usiiii\',\'usiiii44\',\'Guide Provider\',\'Y\');')
     runQuery(callback, 'INSERT INTO service VALUES(\'BUS00001\',\'BPR00042\',4000,5),(\'BUS00002\',\'BPR00043\',2000,10),(\'BUS00003\',\'BPR00044\',6000,15),(\'BUS00004\',\'BPR00045\',7000,20),(\'BUS00005\',\'BPR00046\',3000,40),(\'BUS00006\',\'BPR00047\',4000,20),(\'BUS00007\',\'BPR00048\',8000,5),(\'BUS00008\',\'BPR00049\',5000,10),(\'BUS00009\',\'BPR00050\',4000,15),(\'BUS00010\',\'BPR00051\',5000,20),(\'BUS00011\',\'BPR00052\',6000,5),(\'BUS00012\',\'BPR00053\',5000,10),(\'BUS00013\',\'BPR00054\',4000,0),(\'BUS00014\',\'BPR00055\',8000,5),(\'BUS00015\',\'BPR00056\',2000,0),(\'BUS00016\',\'BPR00057\',2000,40),(\'BUS00017\',\'BPR00058\',2000,20),(\'BUS00018\',\'BPR00059\',2000,20),(\'BUS00019\',\'BPR00060\',5000,5),(\'BUS00020\',\'BPR00061\',4000,10),(\'BUS00021\',\'BPR00062\',3000,10);')
     runQuery(callback, 'INSERT INTO service VALUES(\'FLI00000\',\'AIR00017\',6000,5),(\'FLI00001\',\'AIR00018\',3000,10),(\'FLI00002\',\'AIR00019\',4500,5),(\'FLI00003\',\'AIR00020\',5000,5),(\'FLI00004\',\'AIR00021\',10000,0),(\'FLI00005\',\'AIR00022\',6000,5),(\'FLI00006\',\'AIR00023\',5500,10),(\'FLI00007\',\'AIR00024\',6000,10),(\'FLI00008\',\'AIR00025\',6000,5),(\'FLI00009\',\'AIR00026\',7000,10),(\'FLI00010\',\'AIR00027\',7000,5),(\'FLI00011\',\'AIR00028\',12000,10),(\'FLI00012\',\'AIR00029\',6000,0),(\'FLI00014\',\'AIR00031\',6000,5);')
     runQuery(callback, 'INSERT INTO service VALUES(\'ROO00001\',\'HOT00001\',1000,5),(\'ROO00002\',\'HOT00002\',2000,10),(\'ROO00003\',\'HOT00003\',4000,5),(\'ROO00004\',\'HOT00004\',3000,15),(\'ROO00005\',\'HOT00005\',2000,20),(\'ROO00006\',\'HOT00006\',1500,10),(\'ROO00007\',\'HOT00007\',2500,0),(\'ROO00008\',\'HOT00008\',3500,5),(\'ROO00009\',\'HOT00009\',2000,10),(\'ROO00010\',\'HOT00010\',1500,0),(\'ROO00011\',\'HOT00011\',5000,0),(\'ROO00012\',\'HOT00012\',2000,10),(\'ROO00013\',\'HOT00013\',3000,5),(\'ROO00014\',\'HOT00014\',800,10),(\'ROO00016\',\'HOT00016\',1500,20),(\'ROO00017\',\'HOT00017\',2000,10),(\'ROO00019\',\'HOT00019\',500,0),(\'ROO00020\',\'HOT00020\',4500,10),(\'ROO00022\',\'HOT00022\',3400,0),(\'ROO00023\',\'HOT00023\',5600,15),(\'ROO00025\',\'HOT00025\',2300,10),(\'ROO00026\',\'HOT00026\',10000,0),(\'ROO00027\',\'HOT00027\',5000,0),(\'ROO00028\',\'HOT00028\',2000,5),(\'ROO00029\',\'HOT00029\',8000,10),(\'ROO00030\',\'HOT00030\',1200,20),(\'ROO00031\',\'HOT00031\',1800,5),(\'ROO00032\',\'HOT00032\',3200,0),(\'ROO00033\',\'HOT00033\',4700,0),(\'ROO00034\',\'HOT00034\',3300,0),(\'ROO00035\',\'HOT00035\',5000,10),(\'ROO00036\',\'HOT00036\',4300,15),(\'ROO00037\',\'HOT00037\',3100,0),(\'ROO00038\',\'HOT00038\',2000,0),(\'ROO00039\',\'HOT00039\',3400,5),(\'ROO00040\',\'HOT00040\',2100,10),(\'ROO00041\',\'HOT00041\',2700,0),(\'ROO00042\',\'HOT00042\',2300,0),(\'ROO00044\',\'HOT00044\',2100,0),(\'ROO00045\',\'HOT00045\',2300,0);')
@@ -105,12 +111,20 @@ function createDatabase() {
     // runQuery(callback, 'INSERT INTO bus VALUES(\'BUS00001\',\'LOC00031\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00002\',\'LOC00032\',\'LOC00007\',\'YYYNYNY\',\'Y\'),(\'BUS00003\',\'LOC00035\',\'LOC00005\',\'YNNNYNY\',\'Y\'),(\'BUS00004\',\'LOC00015\',\'LOC00030\',\'YNYYYNY\',\'Y\'),(\'BUS00005\',\'LOC00015\',\'LOC00026\',\'YNYNNNY\',\'Y\'),(\'BUS00006\',\'LOC00019\',\'LOC00030\',\'YNYNNYY\',\'Y\'),(\'BUS00007\',\'LOC00029\',\'LOC00033\',\'YNYNYNY\',\'Y\'),(\'BUS00008\',\'LOC00001\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00009\',\'LOC00018\',\'LOC00023\',\'YNYNYNY\',\'N\'),(\'BUS00010\',\'LOC00015\',\'LOC00001\',\'YNYNYNY\',\'Y\'),(\'BUS00011\',\'LOC00016\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00012\',\'LOC00017\',\'LOC00011\',\'YNYNYNY\',\'Y\'),(\'BUS00013\',\'LOC00018\',\'LOC00003\',\'YNYNYNY\',\'N\'),(\'BUS00014\',\'LOC00015\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00015\',\'LOC00018\',\'LOC00001\',\'YNYNYNY\',\'Y\'),(\'BUS00016\',\'LOC00033\',\'LOC00001\',\'YNYNYNY\',\'Y\'),(\'BUS00017\',\'LOC00029\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00018\',\'LOC00008\',\'LOC00036\',\'YNYNYNY\',\'N\'),(\'BUS00019\',\'LOC00015\',\'LOC00005\',\'YNYNYNY\',\'Y\'),(\'BUS00020\',\'LOC00003\',\'LOC00037\',\'YNYNYNY\',\'N\'),(\'BUS00021\',\'LOC00009\',\'LOC00038\',\'YNYNYNY\',\'Y\');')
 }
 
+// var con = mysql.createConnection({
+//   host: "sql12.freesqldatabase.com",
+//   user: "sql12327792",
+//   password: "LTiPskhtKS",
+//   database: "sql12327792"
+// });
+
 var con = mysql.createConnection({
-  host: "sql12.freesqldatabase.com",
-  user: "sql12327792",
-  password: "LTiPskhtKS",
-  database: "sql12327792"
-});
+    host: "127.0.0.1",
+    user: "root",
+    port:"3307",
+    password: "zzzz",
+    database: "dbms_project"
+  });
 
 async function connect() {
     con.connect(function(err) {
@@ -119,26 +133,30 @@ async function connect() {
     });
 }
 
-async function runQuery(callback, query) {
-    // console.log(query);
-    result = await con.query(query, function (err, result) {
-            if (err) throw err;
-            // console.log(result);
+function runQuery(callback, query) {
+    console.log("Query Run/ :"+query);
+    result = con.query(query, function (err, result) {
+        if (err)
+        {
+            callback(null);
+            return;
+        } 
+        // console.log(result);
+        if(callback!=null)
             callback(result);
     });
 }
 
-function insertIntoTable(table_name, data) {
-    query = 'insert into user values ('
-    for(i = 0; i < tables['user'].length; i ++) {
-        if(i == tables['user'].length - 1){
-            query += user[tables['user'][i]];
-        } else {
-            query += user[tables['user'][i]] + ', '
-        }
+function insertIntoTable(callback,table_name, data) {
+    query = 'insert into '+table_name+' values ('
+    for(i = 0; i <tables[table_name].length;i++) {
+        query += '\"'+data[tables[table_name][i]]+'\"';
+        if(i != tables[table_name].length - 1)
+            query += ', '
     }
     query += ');';
-    runQuery(function(result){}, query);
+    console.log(query);
+    runQuery(callback, query);
 }
 
 function selectAllFromTable(callback, table_name) {
@@ -147,53 +165,57 @@ function selectAllFromTable(callback, table_name) {
 }
 
 // Register
-function register_user(user) {
-    insertIntoTable('user', user);
+function register_user(callback,user) {
+    insertIntoTable(callback,'user', user);
 }
-function register_service_provider(service_provider, services) {
-    insertIntoTable('service_provider', service_provider);
+function register_service(callback,service_type,service)
+{
+    insertIntoTable('service', service);
+    switch(service_type){
+        case 'hotel':
+            insertIntoTable(callback,'room', service);
+            break;
+        case 'restaurant':
+            insertIntoTable(callback,'food_item', service);
+            break;
+        case 'airline':
+            insertIntoTable(callback,'flight', service);
+            break;
+        case 'bus':
+            insertIntoTable(callback,'bus', service);
+            break;
+        case 'train':
+            insertIntoTable(callback,'train', service);
+            break;
+        case 'taxi':
+            insertIntoTable(callback,'taxi', service);
+            break;
+    }
+}
+function register_service_provider(callback,service_provider) {
     if(service_provider['domain'] == 'hotel' | service_provider['domain'] == 'restaurant') {
-        insertIntoTable(service_provider['domain'], service_provider);
+        insertIntoTable('service_provider', service_provider);
+        insertIntoTable(callback,service_provider['domain'], service_provider);
     }
-    for(i = 0; i < services.length; i ++) {
-        insertIntoTable('service', services[i]);
-        switch(service_provider['domain']) {
-            case 'hotel':
-                insertIntoTable('room', services[i]);
-                break;
-            case 'restaurant':
-                insertIntoTable('food_item', services[i]);
-                break;
-            case 'airline':
-                insertIntoTable('flight', services[i]);
-                break;
-            case 'bus provider':
-                insertIntoTable('bus', services[i]);
-                break;
-            case 'train provider':
-                insertIntoTable('train', services[i]);
-                break;
-            case 'taxi provider':
-                insertIntoTable('taxi', services[i]);
-                break;
-        }
+    else{
+        insertIntoTable(callback,'service_provider', service_provider);
     }
 }
-function register_administrator(administrator) {
-    insertIntoTable('administrator', administrator);
+function register_administrator(callback,administrator) {
+    insertIntoTable(callback,'administrator', administrator);
 }
 
 // Login
 function login_user(callback, user_id) {
-    query = 'select password from user where user_id = ' + user_id + ';'
+    query = 'select password from user where user_id = \"' + user_id + '\";'
     return runQuery(callback, query);
 }
 function login_service_provider(callback, user_id) {
-    query = 'select password from service_provider where user_id = ' + user_id + ';'
+    query = 'select password from service_provider where service_provider_id = \"' + user_id + '\";'
     return runQuery(callback, query);
 }
 function login_administrator(callback, user_id) {
-    query = 'select password from administrator where user_id = ' + user_id + ';'
+    query = 'select password from administrator where admin_id = \"' + user_id + '\";'
     return runQuery(callback, query);
 }
 
@@ -210,12 +232,14 @@ function remove_administrator(service_provider_id) {
 
 // get locations matching the search
 function getLocations(callback, attribute_values) {
-    runQuery(callback, 'select * from location where ' + whereClause(attribute_values) + ';');
+    query= 'select * from location ' + whereClause(attribute_values) + ';';
+    console.log(query);
+    runQuery(callback,query);
 }
 
 // add new location to the table
-function addLocation(location) {
-    insertIntoTable('location', location);
+function addLocation(callback,location) {
+    insertIntoTable(callback,'location', location);
 }
 
 // Temporary function to supply the attributes
@@ -234,11 +258,11 @@ function inputAttributes(input_tables) {
 
 // Make where clause condition statement from attribute values
 function whereClause(attribute_values) {
-    query = '';
+    query = 'where ';
     var att_no = 0
     for(var attribute in attribute_values) {
         for(var value in attribute_values[attribute]) {
-            query += attribute + ' like ' + attribute_values[attribute][value];
+            query += attribute + ' REGEXP ' + attribute_values[attribute][value];
             if(value == attribute_values[attribute].length - 1) continue;
                 query += ' or '
         }
@@ -281,11 +305,13 @@ async function getFlight(callback, from_location_id, to_location_id) {
 // Get a list of tourist spots that are in a city, only unvisited or both visited and unvisited
 function getTouristSpots(callback, user_id, attribute_values, city, unvisited) {
     attribute_values = inputAttributes(['tourist_spot'])
+    console.log(attribute_values);
     if(unvisited) {
-        query = 'select * from tourist_spot, location where (tourist_spot_id not in (select tourist_spot_id from visited where user_id in ( select user_id from trip where trip_id = ' + trip_id +')) tourist_spot.location_id = location.location_id and location.city = ' + city + ' ) and (' + whereClause(attribute_values) + ');';
+        query = 'select * from tourist_spot, location where (tourist_spot_id not in (select tourist_spot_id from visited where user_id in ( select user_id from trip where trip_id = ' + trip_id +')) tourist_spot.location_id = location.location_id and location.city REGEXP '+ city + ') and (' + whereClause(attribute_values) + ');';
     } else {
-        query = 'select * from tourist_spot, location where (tourist_spot.location_id = location.location_id and location.city = ' + city + ' ) and (' + whereClause(attribute_values) + ');';
+        query = 'select * from tourist_spot, location where (tourist_spot.location_id = location.location_id and location.city REGEXP ' + city + ' ) and (' + whereClause(attribute_values) + ');';
     }
+    console.log(query);
     runQuery(callback, query);
 }
 
@@ -324,17 +350,50 @@ function getServiceRequests(callback, user_id, attribute_values) {
 }
 
 async function main() {
+    console.log('Start serverjs');
     await connect();
-    // createDatabase();
-    // console.log('done');
+    // createDatabase(function(){
+    //     console.log('done Creation');
+    // });
+    console.log('done Connect');
     // console.log(await getFlight(callback, '\'LOC00015\'', '\'LOC00029\''));
-    getTouristSpots(function(result) {console.log(result)}, null, null, '\'Delhi\'', false);
+    // getTouristSpots(function(result) {console.log(result)}, null, null, '\'Delhi\'', false);
     // getGeneralServiceProviderAndService(function(result){console.log(result)});
+   
+    // getLocations(function(result){
+    //     console.log(result);
+    // },{city:["\"Delhi\""]})
+    // register_user(function(){
+    //     console.log("insert Done");
+    // },
+    // {
+    //     user_id:"USR00051",
+    //     name:"Sudhir", 
+    //     email:"asga@sd.com",
+    //     password:"zzzz",
+    //     address:"asag",
+    //     phone_no:"1234567891",
+    //     location_id:"LOC00001",
+    //     active:"Y"
+    // });
     // getTouristSpots();
 }
 
-
-
+function count_table(callback,table_name)
+{
+    query="select count(*) as cnt from "+table_name+";";
+    runQuery(callback,query);
+}
+function getUserInfo(callback,uid)
+{
+    query="select * from user where user_id=\""+uid+"\";";
+    runQuery(callback,query);
+}
+function getAdminInfo(callback,uid)
+{
+    query="select * from administrator where admin_id=\""+uid+"\";";
+    runQuery(callback,query);
+}
 main();
 
 
@@ -346,6 +405,8 @@ module.exports = {
     'selectAllFromTable' : selectAllFromTable,
     'register_user' : register_user,
     'register_service_provider' : register_service_provider,
+    'register_service':register_service,
+    'count_table':count_table,
     'register_administrator' : register_administrator,
     'login_user' : login_user,
     'login_service_provider' : login_service_provider,
@@ -359,13 +420,13 @@ module.exports = {
     'getParticularServiceProviderAndService' : getParticularServiceProviderAndService,
     'getBusTrain' : getBusTrain,
     'getFlight' : getFlight,
-    'getTouristSpots' : getTouristSpots
+    'getTouristSpots' : getTouristSpots,
     'addTouristSpotToWishlist' : addTouristSpotToWishlist,
     'markTouristSpotVisited' : markTouristSpotVisited,
     'getTrips' : getTrips,
     'requestService' : requestService,
     'changeStatusOfServiceRequest' : changeStatusOfServiceRequest,
-    'getServiceRequests' : getServiceRequests
+    'getServiceRequests' : getServiceRequests,
+    'getUserInfo':getUserInfo,
+    'getAdminInfo':getAdminInfo
 }
-
-

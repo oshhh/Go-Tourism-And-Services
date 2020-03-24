@@ -36,7 +36,11 @@
                     <a class="btn btn-outline-success" href="/signup">Sign Up</a>
                 </div>
                 
+            {{#if red}}
             <div style="display: none;" id="msg_box" class="alert alert-danger msgWarn">{{message}}</div>
+            {{else}}
+            <div style="display: none;" id="msg_box" class="alert alert-success msgWarn">{{message}}</div>
+            {{/if}} 
             </div>
         </div>
         </form>

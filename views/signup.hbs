@@ -71,7 +71,7 @@
 
                 </form>
 
-                <form oninput='spass2.setCustomValidity(spass2.value != spass.value ? "Passwords do not match." : "")' novalidate class="forms needs-validation" id="ProviderForm" autocomplete="off" method="POST" action="/signup">
+                <form oninput='spass2.setCustomValidity(spass2.value != spass.value ? "Passwords do not match." : "")' novalidate class="forms" id="ProviderForm" autocomplete="off" method="POST" action="/signup">
                         <input type="hidden" name="acc_type" value="1"/>
                         <label style="text-align:center;" for="acc-type">New Service Provider Details</label>
                 <div class="input-group mb-3">
@@ -101,12 +101,13 @@
                 <label style="text-align:center;" for="acc-type">Select Domain</label>
                     
                 <select onchange="selectProvider(this)" name="providerType" class="form-control" id="provider-type">
-                <option>Hotel</option>
-                <option>Restaurant</option>
-                <option>Airlines</option>
-                <option>Taxi Service</option>
-                <option>Train Service</option>
-                <option>Guide Organization</option>
+                <option>hotel</option>
+                <option>restaurant</option>
+                <option>airline</option>
+                <option>taxi provider</option>
+                <option>bus provider</option>
+                <option>train provider</option>
+                <option>guide provider</option>
                 </select>
 
 

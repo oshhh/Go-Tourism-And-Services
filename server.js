@@ -111,20 +111,20 @@ function createDatabase(onComplete) {
     // runQuery(callback, 'INSERT INTO bus VALUES(\'BUS00001\',\'LOC00031\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00002\',\'LOC00032\',\'LOC00007\',\'YYYNYNY\',\'Y\'),(\'BUS00003\',\'LOC00035\',\'LOC00005\',\'YNNNYNY\',\'Y\'),(\'BUS00004\',\'LOC00015\',\'LOC00030\',\'YNYYYNY\',\'Y\'),(\'BUS00005\',\'LOC00015\',\'LOC00026\',\'YNYNNNY\',\'Y\'),(\'BUS00006\',\'LOC00019\',\'LOC00030\',\'YNYNNYY\',\'Y\'),(\'BUS00007\',\'LOC00029\',\'LOC00033\',\'YNYNYNY\',\'Y\'),(\'BUS00008\',\'LOC00001\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00009\',\'LOC00018\',\'LOC00023\',\'YNYNYNY\',\'N\'),(\'BUS00010\',\'LOC00015\',\'LOC00001\',\'YNYNYNY\',\'Y\'),(\'BUS00011\',\'LOC00016\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00012\',\'LOC00017\',\'LOC00011\',\'YNYNYNY\',\'Y\'),(\'BUS00013\',\'LOC00018\',\'LOC00003\',\'YNYNYNY\',\'N\'),(\'BUS00014\',\'LOC00015\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00015\',\'LOC00018\',\'LOC00001\',\'YNYNYNY\',\'Y\'),(\'BUS00016\',\'LOC00033\',\'LOC00001\',\'YNYNYNY\',\'Y\'),(\'BUS00017\',\'LOC00029\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00018\',\'LOC00008\',\'LOC00036\',\'YNYNYNY\',\'N\'),(\'BUS00019\',\'LOC00015\',\'LOC00005\',\'YNYNYNY\',\'Y\'),(\'BUS00020\',\'LOC00003\',\'LOC00037\',\'YNYNYNY\',\'N\'),(\'BUS00021\',\'LOC00009\',\'LOC00038\',\'YNYNYNY\',\'Y\');')
 }
 
-// var con = mysql.createConnection({
-//   host: "sql12.freesqldatabase.com",
-//   user: "sql12327792",
-//   password: "LTiPskhtKS",
-//   database: "sql12327792"
-// });
-
 var con = mysql.createConnection({
-    host: "127.0.0.1",
-    user: "root",
-    port:"3307",
-    password: "zzzz",
-    database: "dbms_project"
-  });
+  host: "remotemysql.com",
+  user: "lHyGk3wWaK",
+  password: "IAahckiJYJ",
+  database: "lHyGk3wWaK"
+});
+
+// var con = mysql.createConnection({
+//     host: "127.0.0.1",
+//     user: "root",
+//     port:"3307",
+//     password: "zzzz",
+//     database: "dbms_project"
+//   });
 
 async function connect() {
     con.connect(function(err) {

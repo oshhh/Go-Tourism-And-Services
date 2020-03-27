@@ -1,0 +1,10 @@
+th,td{
+    width: 100px;
+}
+th:last-child,td:last-child{
+    width: 200px;
+    text-align: center;
+}
+input{
+    min-width: 100px;
+}

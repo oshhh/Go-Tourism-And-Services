@@ -1,5 +1,5 @@
 var	angularApp = angular.module("dash", []);
-angularApp.controller("ngContent",function($scope)
+angularApp.controller("ngContent",function($scope,$http)
 {
 	$scope.tab=0;
 
@@ -23,29 +23,22 @@ angularApp.controller("ngContent",function($scope)
 			$scope.f.reviews[it.service_id]={};
 			$scope.f.reviews[it.service_id].status="Pending";
 			//get reviews in f.reviews[serviceID].data
-			$scope.f.reviews[it.service_id].data=[
+			console.log("sent Review")
+			$http.get("/data/getData",{params:{
+				type:"review",
+				service_id:it.service_id
+				}}).then(
+				function(data, status, headers, config) {
+				if(data.data.isRes)
 				{
-					user:"abc1",
-					timeStamp:"02-08-2015 at 22:10",
-					body:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat pretium nibh ipsum consequat nisl vel pretium. Urna cursus eget nunc scelerisque viverra mauris in.",
-					rating:"4.6"
-				},
-				{
-					user:"abc2",
-					timeStamp:"On 02-08-2017 at 22:10",
-					body:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat pretium nibh ipsum consequat nisl vel pretium. Urna cursus eget nunc scelerisque viverra mauris in.",
-					rating:"3.8"
-				},
-				{
-					user:"abc3",
-					timeStamp:"On 02-08-2016 at 22:10",
-					body:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat pretium nibh ipsum consequat nisl vel pretium. Urna cursus eget nunc scelerisque viverra mauris in.",
-					rating:"4.1"
+					$scope.f.reviews[it.service_id].data=data.data.content;
+					$scope.f.reviews[it.service_id].status="OK";
+					it.showRev=true;
 				}
-			];
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
 			//Turn status OK to replace loading text with comments
-			$scope.f.reviews[it.service_id].status="OK";
-			it.showRev=true;
 		}
 		else{
 			it.showRev=false;
@@ -58,48 +51,36 @@ angularApp.controller("ngContent",function($scope)
 		if(tab==3)
 		{
 			$scope.f.status="Pending";
-			//Use $scope.f to get filters and fill $scope.f.data
-			$scope.f.data=[
-			{
-				service_id:"FOO00001",
-				name:"Food1",
-				cuisine:"BUDBDUBDU",
-				res_name:"Res name",
-				locality:"locality",
-				city:"city",
-				delivery:"Y",
-				price:550,
-				discount:0,
-				rating:3.9
-			},
-			{
-				service_id:"FOO00002",
-				name:"Food2",
-				cuisine:"NSHDSU",
-				res_name:"Res name",
-				locality:"locality",
-				city:"city",
-				delivery:"N",
-				price:150,
-				discount:20,
-				rating:4.1
-			},
-			{
-				service_id:"FOO00003",
-				name:"Food3",
-				cuisine:"Description of Item",
-				res_name:"Res name",
-				locality:"locality",
-				city:"city",
-				delivery:"N",
-				price:200,
-				discount:15,
-				rating:4.5
-			}];
-			$scope.f.data.forEach(element => {
-				element.showRev=false;
-			});
-			$scope.f.status="OK";
+			console.log("sent");
+			$http.get("/data/getData",{params:{
+				type:"food",
+				fname:$scope.f.fname,
+				rname:$scope.f.rname,
+				delivery:$scope.f.delivery
+				}}).then(
+				function(data, status, headers, config) {
+				// console.log(data);
+				$scope.f.data=data.data.content;
+				$scope.f.data.forEach(element => {
+					element.showRev=false;
+				});
+				$scope.f.status="OK";
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
+			// $scope.f.data=[
+			// {
+			// 	service_id:"FOO00001",
+			// 	name:"Food1",
+			// 	cuisine:"BUDBDUBDU",
+			// 	res_name:"Res name",
+			// 	locality:"locality",
+			// 	city:"city",
+			// 	delivery:"Y",
+			// 	price:550,
+			// 	discount:0,
+			// 	rating:3.9
+			// }];
 		}
 		else{
 

@@ -30,6 +30,7 @@ angularApp.controller("ngContent",function($scope)
 		{
 			console.log("reached");
 			$scope.a.status="Pending";
+			
 			$scope.a.data=[
 				{
 					service_id:"ADM00001",

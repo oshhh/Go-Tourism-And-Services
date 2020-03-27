@@ -6,6 +6,7 @@ var session = require('express-session')
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var signupRouter = require('./routes/signup');
+var dataRouter = require('./routes/data');
 var dbHandler = require('./server.js')
 const util = require('util');
 var app=express();
@@ -44,6 +45,7 @@ app.set('root',__dirname);
 app.use('/',indexRouter);
 app.use('/login',loginRouter);
 app.use('/signup',signupRouter);
+app.use('/data',dataRouter);
 serv.listen(port);
 console.log("it's started on http://localhost:"+port);
 // dbHandler.selectAllFromTable(function(result){

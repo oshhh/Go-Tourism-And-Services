@@ -71,6 +71,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Role</th>
                 <th scope="col">E-Mail</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -80,14 +81,15 @@
                 <td ng-hide="it.editMode">\{{it.name}}</td>
                 <td ng-hide="it.editMode">\{{it.role}}</td>
                 <td ng-hide="it.editMode">\{{it.mail}}</td>
-                <td ng-hide="it.editMode"><button ng-click="it.editMode=true" class="btn btn-outline-primary">Edit</button></td>
                 
                 <td ng-show="it.editMode"><input  ng-model="it.name" class="form-control" value="\{{it.name}}"></td>
                 <td ng-show="it.editMode"><input ng-model="it.role" class="form-control" value="\{{it.role}}"></td>
                 <td ng-show="it.editMode"><input ng-model="it.mail" class="form-control" value="\{{it.mail}}"></td>
-                <td ng-show="it.editMode"><button ng-click="it.editMode=false;a.updateRecord(it);" class="btn btn-outline-primary">Done</button></td>
-              
-                <td><button ng-click="a.updateRecord(it);" class="btn btn-outline-danger">Delete</button></td>
+                <td>
+                  <button ng-hide="it.editMode" ng-click="it.editMode=true" class="btn btn-outline-primary butTab">Edit</button>
+                  <button ng-show="it.editMode" ng-click="it.editMode=false;a.updateRecord(it);" class="btn btn-outline-primary butTab">Done</button>
+                  <button ng-click="a.updateRecord(it);" class="btn btn-outline-danger butTab">Delete</button>
+                </td>
             </tr>
             </tbody>
             </table>

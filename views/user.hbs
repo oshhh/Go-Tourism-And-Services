@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
-    <body onload="javascript:onStart()" ng-app="dash">
+    <body ng-app="dash">
       <div class="navbar navbar-default fixed-top">
         <div class='n-item'>User Dashboard</div>
         <div class='n-item'>Welcome {{name}} (username:{{uid}})</div>
@@ -74,7 +74,7 @@
                   <option value="1">Yes</option>
                   <option value="2">No</option>
                 </select>
-              <button class='btn btn-outline-primary'>Apply Filters</button>
+              <button ng-click="getData(3)" class='btn btn-outline-primary'>Apply Filters</button>
             </div>
 
           {{!-- <label id="conten t_label">selected Filters:"\{{f.fname}}","\{{f.rname}}" slectBoxIndex:\{{f.delivery}}</label> --}}
@@ -113,6 +113,8 @@
               <div ng-show="it.showRev" class="card-body text-center d-flex flex-row justify-content-between align-middle">
                 <div ng-show="f.reviews[it.service_id].status=='Pending'"class="comments"><br>Loading Please Wait<br><br></div>
                 <div ng-show="f.reviews[it.service_id].status=='OK'" class="comments card-rows">
+                  <br>
+                  <label style="text-align:center">Showing \{{f.reviews[it.service_id].data.length}} Result(s)</label>
                   <div ng-repeat="rev in f.reviews[it.service_id].data" class="rowElement card">
                     <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
                     <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>

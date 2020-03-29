@@ -29,15 +29,24 @@ router.get('/getData', function(req, res, next) {
         serverjs.getFlight(sendResponse,{
           from_city: req.query.from,
           to_city: req.query.to,
-          departure_time: req.query.departure_time,
+          departure_time: req.query.departure_time
         });       
     break;
     case 'taxi':
         serverjs.getTaxi(sendResponse, {
           car_name: req.query.car_name,
           capacity: req.query.capacity,
-          AC: req.query.AC,
+          AC: req.query.AC
         });       
+    break;
+    case 'room':
+        serverjs.getRoom(sendResponse, {
+          // name: req.query.name,
+          city: req.query.city,
+          room_type: req.query.room_type,
+          capacity: req.query.capacity,
+          wifi_facility: req.query.wifi_facility
+        });      
     break;
     case 'food':
       serverjs.getFoodItems(sendResponse,{

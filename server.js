@@ -140,6 +140,8 @@ function runQuery(callback, query) {
             console.log(err);
             callback(null);
             return;
+        } else {
+            console.log(result);
         }
         if(callback!=null)
             callback(result);
@@ -315,6 +317,15 @@ async function getTaxi(callback, attribute_values) {
     return await runQuery(callback, query);
 }
 
+// Get room
+async function getRoom(callback, attribute_values) {
+    if(Object.keys(attribute_values).length == 0) {
+        attribute_values = assignAttributes(['room', 'hotel', 'service'])
+    }
+    query = 'select room.service_id, hotel.service_provider_id, locality, city, room_type, capacity, wifi_facility, price, discount, (SELECT COALESCE(AVG(user_rating),0) FROM service_request as u where u.service_id=service.service_id)  as rating  from room, hotel, location, service where (service.service_id = room.service_id) and (hotel.service_provider_id = service.service_provider_id) and (location.location_id = hotel.location_id) and (' + whereClause(attribute_values) + ');'
+    return await runQuery(callback, query);
+}
+
 
 // Get a list of tourist spots that are in a city, only unvisited or both visited and unvisited
 function getTouristSpots(callback, user_id, attribute_values, city, unvisited) {
@@ -470,6 +481,7 @@ module.exports = {
     'getBusTrain' : getBusTrain,
     'getFlight' : getFlight,
     'getTaxi' : getTaxi,
+    'getRoom' : getRoom,
     'getTouristSpots' : getTouristSpots,
     'addTouristSpotToWishlist' : addTouristSpotToWishlist,
     'markTouristSpotVisited' : markTouristSpotVisited,

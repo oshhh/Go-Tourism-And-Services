@@ -29,6 +29,17 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.taxi.sortOrder="0";
 	$scope.taxi.reviews={};
 
+	$scope.room={}
+	$scope.room.status = "Pending";
+	$scope.room.data = [];
+	$scope.room.name = "";
+	$scope.room.city = "";
+	$scope.room.room_type = "";
+	$scope.room.capacity = "";
+	$scope.room.wifi_facility = "0";
+	$scope.room.sortOrder="0";
+	$scope.room.reviews={};
+
 
 	$scope.trip={
 		tdateStart:"",
@@ -111,6 +122,22 @@ angularApp.controller("ngContent",function($scope,$http)
 		});
 	}
 	$scope.taxi.order=function(it)
+	{
+		// alert(it.service_id);
+		// console.log($http.post);
+		$http.post('/data/service_request',JSON.stringify({
+			user_id:$scope.curUser.uid,
+			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
+			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
+			service_id:it.service_id
+		}))
+		.then(function(response){
+			console.log("got");
+		},function(response){
+			console.log("err");
+		});
+	}
+	$scope.room.order=function(it)
 	{
 		// alert(it.service_id);
 		// console.log($http.post);
@@ -210,6 +237,34 @@ angularApp.controller("ngContent",function($scope,$http)
 			it.showRev=false;
 		}
 	}
+	$scope.room.view=function(it)
+	{
+		if(it.showRev==false)
+		{
+			$scope.room.reviews[it.service_id]={};
+			$scope.room.reviews[it.service_id].status="Pending";
+			//get reviews in transport.reviews[serviceID].data
+			// console.log("sent Review")
+			$http.get("/data/getData",{params:{
+				type:"review",
+				service_id:it.service_id
+				}}).then(
+				function(data, status, headers, config) {
+				if(data.data.isRes)
+				{
+					$scope.room.reviews[it.service_id].data=data.data.content;
+					$scope.room.reviews[it.service_id].status="OK";
+					it.showRev=true;
+				}
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
+			//Turn status OK to replace loading text with comments
+		}
+		else{
+			it.showRev=false;
+		}
+	}
 	$scope.getData=function(tab)
 	{
 		if(tab == 0)
@@ -270,6 +325,31 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.taxi.status="OK";
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
+		}
+		else if(tab==4)
+		{
+			var newDate = new Date($scope.trip.tdateStart);
+			console.log(newDate.toUTCString());
+			$scope.room.status="Pending";
+			// console.log("sent");
+			console.log("room!");
+			$http.get("/data/getData",{params:{
+				type:"room",
+				name: "\"%" + $scope.room.name + "%\"",
+				city: "\"%" + $scope.room.city + "%\"",
+				room_type: "\"%" + $scope.room.room_type + "%\"",
+				capacity:  ($scope.room.capacity == "" ? "\"%\"" : $scope.room.capacity) ,
+				wifi_facility: ( $scope.room.wifi_facility == 0) ? ("\"%\"") : ($scope.room.wifi_facility == 1 ? "\"Y\"" : "\"N\"" )
+				}}).then(
+				function(data, status, headers, config) {
+				$scope.room.data=data.data.content;
+				$scope.room.data.forEach(element => {
+					element.showRev=false;
+				});
+				$scope.room.status="OK";
 				},function(data, status, headers, config) {
 					console.log("error");
 				});

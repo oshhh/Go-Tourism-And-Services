@@ -317,8 +317,90 @@
         </div>
 
         <div id="content_tab4" ng-show="tab==4">
-          <h3>Content4</h3>
+            <h4>Available Filters for Flight</h4>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+              <span class="input-group-text">Name</span>
+              </div>
+              <input ng-model="room.name" id="name" type="text" class="form-control" placeholder="Inactive">
+              <div class="input-group-prepend">
+              <span class="input-group-text">City</span>
+              </div>
+              <input ng-model="room.city" id="room_city" type="text" class="form-control" placeholder="Delhi">
+              <div>
+              <span class="input-group-text">Room Type</span>
+              </div>
+              <input ng-model="room.room_type" id="room_type" type="text" class="form-control" placeholder="double">
+              <div class="input-group-prepend">
+              <span class="input-group-text">Capacity</span>
+              </div>
+              <input ng-model="room.capacity" id="capacity" type="text" class="form-control" placeholder="4">                
+              <div class="input-group-prepend">
+              <span class="input-group-text">Wifi</span>
+              </div>
+                <select ng-model="room.wifi_facility" class="custom-select" id="taxiAC">
+                  <option selected value="0">Both</option>
+                  <option value="1">Yes</option>
+                  <option value="2">No</option>
+                </select>
+              <div class="input-group-prepend">              
+              <button ng-click="getData(4)" class='btn btn-outline-primary'>Apply Filters</button>
+              </div>
+            </div>
+
+          {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
+            {{!-- Filters End --}}
+          
+
+          <div class="text-center d-flex flex-row justify-content-between align-middle">
+            <label style="text-align:center">Showing \{{food.data.length}} Results</label>
+            <div class="align-middle btn-group mb-3">
+              <div class="input-group-append">
+                <span class="input-group-text">Order By</span>
+              </div>
+              <select ng-model="room.sortOrder" class="custom-select" id="fSort">
+                <option selected value="0">Increasing Price</option>
+                <option value="1">Decreasing Price</option>
+                <option value="2">Increasing Discount</option>
+                <option value="3">Decreasing Discount</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="text-align: center;" class="rowsCont" ng-show="room.status=='Pending'">Loading Data</div>
+          <div id="table3" class="rowsCont card-rows">
+            <div ng-repeat="it in room.data" class="rowElement card shadow p-4 mb-4 bg-white">
+              <div class="card-header text-center bg-white align-middle">Service ID: \{{it.service_id}} Service Provider ID: \{{it.service_provider_id}}</div>
+              <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
+                <div class="cardText card-text"></div>
+                <div class="cardText card-text">Hotel Name: \{{it.name}} <br> Hotel Locality: \{{it.locality}} <br> Hotel City: \{{it.city}}</div>
+                <div class="cardText card-text">Room Type: \{{it.room_type}} <br> Capacity: \{{it.capacity}} </div>
+                <div class="cardText card-text">Wifi: \{{it.wifi_facility}} </div>
+                <button ng-click="room.order(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
+              </div>
+              <div class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
+                <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
+                <button ng-click="room.view(it)" class="btn btn-outline-primary">Reviews</button>
+              </div>
+
+              <div ng-show="it.showRev" class="card-body text-center d-flex flex-row justify-content-between align-middle">
+                <div ng-show="room.reviews[it.service_id].status=='Pending'"class="comments"><br>Loading Please Wait<br><br></div>
+                <div ng-show="room.reviews[it.service_id].status=='OK'" class="comments card-rows">
+                  <br>
+                  <label style="text-align:center">Showing \{{room.reviews[it.service_id].data.length}} Result(s)</label>
+                  <div ng-repeat="rev in room.reviews[it.service_id].data" class="rowElement card">
+                    <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
+                    <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
+
 
         <div id="content_tab5" ng-show="tab==5">
           

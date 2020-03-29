@@ -39,7 +39,6 @@ app.get('/',function(req,res,next){
 });
 function main()
 {
-  console.log(b);
 }
 app.set('root',__dirname);
 app.use('/',indexRouter);

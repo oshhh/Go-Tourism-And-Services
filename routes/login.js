@@ -3,6 +3,12 @@ var router = express.Router();
 const util = require('util');
 
 router.get('/', function(req, res, next) {
+  res.render('user',{
+    title:"User Dashboard",
+    name:"UDA",
+    uid:"USR00012"
+  });
+  return;
   var msg=req.session.msg;
   var redColor=true;
   if(msg==null)

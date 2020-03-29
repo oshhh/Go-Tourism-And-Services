@@ -11,3 +11,8 @@ where(
 select u.name as user,r.timestamp,r.comments as  body,r.user_rating as rating
 from user as u,service_request as r,trip as t
 where(u.user_id=t.user_id and r.trip_id=t.trip_id and r.service_id REGEXP ".*");
+
+select t.trip_id,u.user_id,t.departure_date,t.arrival_date,t.city
+from trip as t,user as u
+where(u.user_id=t.user_id and u.user_id REGEXP ".*")
+ORDER BY t.departure_date;

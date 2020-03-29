@@ -4,6 +4,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.js"></script>
         <script src="../public/javascripts/userDash.js"></script>
         <link type="text/css" rel="stylesheet" href="../public/css/main.css">
+        <link type="text/css" rel="stylesheet" href="../public/css/user.css">
         <link href='https://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -11,10 +12,28 @@
     <body ng-app="dash">
       <div class="navbar navbar-default fixed-top">
         <div class='n-item'>User Dashboard</div>
-        <div class='n-item'>Welcome {{name}} (username:{{uid}})</div>
+        <div class='n-item'>Welcome <span id="nmU">{{name}}</span> (username:<span id="idU">{{uid}}</span>)</div>
         <a href="/logout"><button class='btn btn-outline-primary'>Logout</button></a>
       </div>
     <div class="container" ng-controller="ngContent">
+      <div id="padder"></div>
+      <div class="splitBar">
+        <div style="font-size: medium;">
+          <label style="text-align: center;margin:auto 0">Organize your service requests into trips</label>
+          <div class="input-group">
+            <label class="input-group-text">Start Date</label>
+            <input ng-bind="trip.tdateStart" ng-model="trip.tdateStart" style="font-size: 0.8rem" class="marg" type="date" id="birthday" name="birthday">
+            <label class="input-group-text">End Date</label>
+            <input ng-bind="trip.tdateEnd" ng-model="trip.tdateEnd" style="font-size: 0.8rem" class="marg" type="date" id="birthday" name="birthday">
+            <label class="input-group-text">City</label>
+            <input ng-bind="trip.tcity" ng-model="trip.tcity" style="font-size: 0.8rem" class="marg" ng-model="tripcity" id="tcity" type="text" class="form-control" placeholder="City">
+          </div>
+        </div>
+        <div>
+          <h1>Free Space</h1>
+        </div>
+      </div>
+
 
       <nav class="l_bar" align="center">
         <div id="togs">

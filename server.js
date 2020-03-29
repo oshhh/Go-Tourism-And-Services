@@ -71,7 +71,7 @@ function createDatabase(onComplete) {
     runQuery(callback, 'create table if not exists tourist_spot (tourist_spot_id char(8) primary key,name varchar(100),location_id char(8),type varchar(100),entry_fee float,foreign key(location_id) references location(location_id));')
     runQuery(callback, 'create table if not exists guide (service_id char(8) primary key,tourist_spot_id char(8),foreign key(service_id) references service(service_id),check (service_id like \"GUI%\"),foreign key(tourist_spot_id) references tourist_spot(tourist_spot_id));')
     runQuery(callback, 'create table if not exists trip (trip_id char(8) primary key,user_id char(8),departure_date date,arrival_date date,city varchar(100),foreign key(user_id) references user(user_id));')
-    runQuery(callback, 'create table if not exists service_request (request_id char(8) primary key,trip_id char(8) not null,service_id char(8) not null,timestamp datetime,quantity int not null,cost int not null,status varchar(15) not null,user_rating int,service_rating int,comments varchar(1000),foreign key(trip_id) references trip(trip_id),foreign key(service_id) references service(service_id),check (status in (\"Pending\", \"Accepted\", \"Rejected\", \"Completed\", \"Paid\")),check (user_rating >= 0 and user_rating <= 5),check (service_rating >= 0 and service_rating <= 5));')
+    runQuery(callback, 'create table if not exists service_request (request_id char(8) primary key,trip_id char(8),service_id char(8) not null,timestamp datetime,quantity int not null,cost int not null,status varchar(15) not null,user_rating int,service_rating int,comments varchar(1000),foreign key(trip_id) references trip(trip_id),foreign key(service_id) references service(service_id),check (status in (\"Pending\", \"Accepted\", \"Rejected\", \"Completed\", \"Paid\")),check (user_rating >= 0 and user_rating <= 5),check (service_rating >= 0 and service_rating <= 5));')
     runQuery(callback, 'create table if not exists query (query_id char(8), user_id char(8), query varchar(100),foreign key(user_id) references user(user_id));')
     runQuery(callback, 'create table if not exists wishlist (user_id char(8), tourist_spot_id char(8), primary key(user_id, tourist_spot_id), foreign key(user_id) references user(user_id), foreign key(tourist_spot_id) references tourist_spot(tourist_spot_id))');
     runQuery(callback, 'create table if not exists visited (trip_id char(8), tourist_spot_id char(8), primary key(trip_id, tourist_spot_id), foreign key(trip_id) references trip(trip_id), foreign key(tourist_spot_id) references tourist_spot(tourist_spot_id))');
@@ -348,35 +348,6 @@ function getServiceRequests(callback, user_id, attribute_values) {
     runQuery(callback, 'select * from service_request where trip_id in (select trip_id from trip where user_id = ' + user_id +') and (' + whereClause(attribute_values) + ');');
 }
 
-async function main() {
-    console.log('Start serverjs');
-    await connect();
-    // createDatabase(function(){
-    //     console.log('done Creation');
-    // });
-    console.log('done Connect');
-    // console.log(await getFlight(callback, '\'LOC00015\'', '\'LOC00029\''));
-    // getTouristSpots(function(result) {console.log(result)}, null, null, '\'Delhi\'', false);
-    // getGeneralServiceProviderAndService(function(result){console.log(result)});
-   
-    // getLocations(function(result){
-    //     console.log(result);
-    // },{city:["\"Delhi\""]})
-    // register_user(function(){
-    //     console.log("insert Done");
-    // },
-    // {
-    //     user_id:"USR00012",
-    //     name:"Sudhir", 
-    //     email:"asga@sd.com",
-    //     password:"zzzz",
-    //     address:"asag",
-    //     phone_no:"1234567891",
-    //     location_id:"LOC00001",
-    //     active:"Y"
-    // });
-    // getTouristSpots();
-}
 
 function count_table(callback,table_name)
 {
@@ -415,6 +386,45 @@ function getServiceReview(callback,service_id)
     where(u.user_id=t.user_id and r.trip_id=t.trip_id and r.service_id REGEXP "`+service_id+`");`;
     runQuery(callback,query);
 }
+function getTrips(callback,user_id)
+{
+    query=`select t.trip_id,u.user_id,t.departure_date,t.arrival_date,t.city
+    from trip as t,user as u
+    where(u.user_id=t.user_id and u.user_id REGEXP "`+user_id+`")
+    ORDER BY t.departure_date;`
+    runQuery(callback,query)
+}
+
+
+async function main() {
+    console.log('Start serverjs');
+    await connect();
+    // createDatabase(function(){
+    //     console.log('done Creation');
+    // });
+    console.log('done Connect');
+    // console.log(await getFlight(callback, '\'LOC00015\'', '\'LOC00029\''));
+    // getTouristSpots(function(result) {console.log(result)}, null, null, '\'Delhi\'', false);
+    // getGeneralServiceProviderAndService(function(result){console.log(result)});
+   
+    // getLocations(function(result){
+    //     console.log(result);
+    // },{city:["\"Delhi\""]})
+    // register_user(function(){
+    //     console.log("insert Done");
+    // },
+    // {
+    //     user_id:"USR00012",
+    //     name:"Sudhir", 
+    //     email:"asga@sd.com",
+    //     password:"zzzz",
+    //     address:"asag",
+    //     phone_no:"1234567891",
+    //     location_id:"LOC00001",
+    //     active:"Y"
+    // });
+    // getTouristSpots();
+}
 main();
 
 
@@ -451,5 +461,6 @@ module.exports = {
     'getUserInfo':getUserInfo,
     'getAdminInfo':getAdminInfo,
     'getFoodItems':getFoodItems,
-    'getServiceReview':getServiceReview
+    'getServiceReview':getServiceReview,
+    'getTrips':getTrips
 }

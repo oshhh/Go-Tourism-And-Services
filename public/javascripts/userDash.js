@@ -5,6 +5,11 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.f={};
 	$scope.f.status="Pending";
 	$scope.f.data=[];
+
+	$scope.f.from_city = ""
+	$scope.f.to_city = ""
+	$scope.f.departure_date = ""
+
 	$scope.f.fname="";
 	$scope.f.rname="";
 	$scope.f.delivery="0";
@@ -123,17 +128,40 @@ angularApp.controller("ngContent",function($scope,$http)
 					console.log("error");
 				});
 		}
-		else if(tab==3)
+		else if(tab==1)
+		{
+			var newDate = new Date($scope.trip.tdateStart);
+			console.log(newDate.toUTCString());
+			$scope.f.status="Pending";
+			// console.log("sent");
+			console.log(["\"%" + $scope.transport.from + "%\""]);
+			$http.get("/data/getData",{params:{
+				type:"flight",
+				from: "\"%" + $scope.f.from + "%\"",
+				to: "\"%" + $scope.f.to + "%\"",
+				departure_time: "\"%" + $scope.f.departure_date + "%\"" 
+				}}).then(
+				function(data, status, headers, config) {
+				$scope.f.data=data.data.content;
+				$scope.f.data.forEach(element => {
+					element.showRev=false;
+				});
+				$scope.f.status="OK";
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
+		}
+		else if(tab==5)
 		{
 			var newDate = new Date($scope.trip.tdateStart);
 			console.log(newDate.toUTCString());
 			$scope.f.status="Pending";
 			// console.log("sent");
 			$http.get("/data/getData",{params:{
-				type:"food",
-				fname:$scope.f.fname,
-				rname:$scope.f.rname,
-				delivery:$scope.f.delivery
+				type: "food",
+				fname: "\"%" + $scope.f.fname + "%\"",
+				rname: "\"%" + $scope.f.rname + "%\"",
+				delivery:($scope.f.delivery)
 				}}).then(
 				function(data, status, headers, config) {
 				$scope.f.data=data.data.content;
@@ -148,6 +176,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	}
 	$scope.changeTab=function(newTab)
 	{
+		console.log("changed tabbb");
 		$scope.tab=newTab;
 		$scope.getData(newTab);
 		console.log("change Tab: "+newTab);

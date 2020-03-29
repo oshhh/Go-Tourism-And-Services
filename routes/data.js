@@ -25,11 +25,20 @@ router.get('/getData', function(req, res, next) {
   serverjs=req.app.get('dbHandler');
   switch(req.query.type)
   {
+    case 'flight':
+        console.log("from : ");
+        console.log(req.query.from);
+        serverjs.getFlight(sendResponse,{
+          from_city: req.query.from,
+          to_city: req.query.to,
+          departure_time: req.query.departure_time,
+        });       
+    break;
     case 'food':
       serverjs.getFoodItems(sendResponse,{
         name:(req.query.fname=="")?(".*"):(req.query.fname),
         rest:(req.query.rname=="")?(".*"):(req.query.rname),
-        delivery:(req.query.delivery==1)?("Y"):(".*")
+        delivery:(req.query.delivery==1)?("Y"):("\"%\"")
       });
     break;
     case "service_request":
@@ -58,6 +67,7 @@ router.get('/getData', function(req, res, next) {
     case "review":
       serverjs.getServiceReview(sendResponse,req.query.service_id);
       break;
+
     case 'trip':
       serverjs.getTrips(sendResponse,req.query.user_id)
       break;

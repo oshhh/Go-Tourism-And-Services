@@ -11,7 +11,7 @@ tables = {
     'room': ['service_id', 'room_type', 'capacity'],
     'restaurant': ['service_provider_id', 'location_id', 'delivers', 'cuisine'],
     'food_item': ['service_id', 'name', 'cuisine'],
-    'flight': ['service_id', 'from_location_id', 'to_location_id', 'departure_time', 'arrival_time'],
+    'flight': ['service_id', 'from_city', 'to_city', 'departure_time', 'arrival_time'],
     'taxi': ['service_id', 'car_name', 'capacity', 'AC'],
     'bus': ['service_id', 'from_location_id', 'to_location_id', 'active_days', 'AC'],
     'route': ['service_id', 'location_id', 'arrival_time'],
@@ -260,11 +260,7 @@ function whereClause(attribute_values) {
     query = '';
     var att_no = 0
     for(var attribute in attribute_values) {
-        for(var value in attribute_values[attribute]) {
-            query += attribute + ' like ' + attribute_values[attribute][value];
-            if(value == attribute_values[attribute].length - 1) continue;
-                query += ' or '
-        }
+        query += attribute + ' like ' + attribute_values[attribute];
         if(att_no == Object.keys(attribute_values).length - 1) continue;
             query += ') and (';
         att_no ++;
@@ -275,7 +271,9 @@ function whereClause(attribute_values) {
 
 // Query service providers and services in general
 function getGeneralServiceProviderAndService(callback, attribute_values, rating = 0) {
-    attribute_values = assignAttributes(['service_provider', 'service']);
+    if(Object.keys(attribute_values).length == 0) {
+        attribute_values = assignAttributes(['service_provider', 'service']);
+    }
     query = 'select * ' + 'from service_provider, service where( (service_provider.active = \'Y\') and (service_provider.service_provider_id = service.service_provider_id) and (' + whereClause(attribute_values) +  ') and service.service_id in (select service_request.service_id from service_request group by(service_id) having avg(service_rating) >= ' + rating + '));'
     runQuery(callback, query);
 }
@@ -283,27 +281,36 @@ function getGeneralServiceProviderAndService(callback, attribute_values, rating 
 // Query on a particular service provider and service based on the attributes
 // No special queries for hotels, restaurants, guide required, this one satisfies all filters
 function getParticularServiceProviderAndService(callback, service_provider, service, attribute_values, rating = 0) {
-    attribute_values = assignAttributes(['service_provider', 'service', service_provider, service]);
+    if(Object.keys(attribute_values).length == 0) {
+        attribute_values = assignAttributes(['service_provider', 'service', service_provider, service]);
+    }
     query = 'select * ' + 'from service_provider, service, ' + service_provider + ', ' + service + ' where( (service_provider.active = \'Y\') and (service_provider.service_provider_id = service.service_provider_id) and (service_provider.service_provider_id = ' + service_provider + '.service_provider_id' + ') and (service.service_id = ' + service + '.service_id' + ') and (' + whereClause(attribute_values) +  ') and service.service_id in (select service_id from service_request group by(service_id) having avg(rating) > ' + rating +'));'
     runQuery(callback, query);
 }
 
 // Get busses and trains from one location to another
 function getBusTrain(callback, location1_id, location2_id, attribute_values) {
-    attribute_values = assignAttributes(['bus', 'train'])
+    if(Object.keys(attribute_values).length == 0) {
+        attribute_values = assignAttributes(['bus', 'train'])
+    }
     query = '(select * from bus, route r1, route r2 where r1.service_id = bus.service_id and r2.service_id = bus.service_id and r1.location_id = ' + location1_id + ' and r2.location_id = ' + location2_id + ' and r1.arrival_time < r2.arrival_time  and (' + whereClause(attribute_values) + ')) union (select * from train, route r1, route r2 where r1.service_id = train.service_id and r2.service_id = train.service_id and r1.location_id = ' + location1_id + ' and r2.location_id = ' + location2_id + ' and r1.arrival_time < r2.arrival_time and (' + whereClause(attribute_values) + '));' 
     runQuery(callback, query);
 }
 
 // Get flights from one location id's city to another location id's city
-async function getFlight(callback, from_location_id, to_location_id) {
-    query = 'select * from flight, location l1, location l2 where flight.from_city = l1.city and l1.location_id = ' + from_location_id + ' and flight.to_city = l2.city and l2.location_id = ' + to_location_id + ';'
+async function getFlight(callback, attribute_values) {
+    if(Object.keys(attribute_values).length == 0) {
+        attribute_values = assignAttributes(['flight', 'service'])
+    }
+    query = 'select * from flight, service where ( service.service_id = flight.service_id) and (' + whereClause(attribute_values) + ');'
     return await runQuery(callback, query);
 }
 
 // Get a list of tourist spots that are in a city, only unvisited or both visited and unvisited
 function getTouristSpots(callback, user_id, attribute_values, city, unvisited) {
-    attribute_values = assignAttributes(['tourist_spot'])
+    if(Object.keys(attribute_values).length == 0) {
+        attribute_values = assignAttributes(['tourist_spot'])
+    }
     console.log(attribute_values);
     if(unvisited) {
         query = 'select * from tourist_spot, location where (tourist_spot_id not in (select tourist_spot_id from visited where user_id in ( select user_id from trip where trip_id = ' + trip_id +')) tourist_spot.location_id = location.location_id and location.city REGEXP '+ city + ') and (' + whereClause(attribute_values) + ');';
@@ -376,7 +383,7 @@ function getFoodItems(callback,filters)
     p.service_provider_id=s.service_provider_id and 
     r.service_provider_id=s.service_provider_id and 
     l.location_id=r.location_id and
-    f.name REGEXP "`+filters.name+`" and p.name REGEXP "`+filters.rest+`" and r.delivers REGEXP "`+filters.delivery+`");
+    f.name like `+filters.name+` and p.name like `+filters.rest+` and r.delivers like `+filters.delivery+`);
     `
     runQuery(callback,query);
 }

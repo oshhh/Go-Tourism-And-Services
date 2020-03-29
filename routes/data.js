@@ -26,19 +26,24 @@ router.get('/getData', function(req, res, next) {
   switch(req.query.type)
   {
     case 'flight':
-        console.log("from : ");
-        console.log(req.query.from);
         serverjs.getFlight(sendResponse,{
           from_city: req.query.from,
           to_city: req.query.to,
           departure_time: req.query.departure_time,
         });       
     break;
+    case 'taxi':
+        serverjs.getTaxi(sendResponse, {
+          car_name: req.query.car_name,
+          capacity: req.query.capacity,
+          AC: req.query.AC,
+        });       
+    break;
     case 'food':
       serverjs.getFoodItems(sendResponse,{
         name:(req.query.fname=="")?(".*"):(req.query.fname),
         rest:(req.query.rname=="")?(".*"):(req.query.rname),
-        delivery:(req.query.delivery==1)?("Y"):("\"%\"")
+        delivers: req.query.delivers
       });
     break;
     case "service_request":

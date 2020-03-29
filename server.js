@@ -297,14 +297,24 @@ function getBusTrain(callback, location1_id, location2_id, attribute_values) {
     runQuery(callback, query);
 }
 
-// Get flights from one location id's city to another location id's city
+// Get flights
 async function getFlight(callback, attribute_values) {
     if(Object.keys(attribute_values).length == 0) {
         attribute_values = assignAttributes(['flight', 'service'])
     }
-    query = 'select * from flight, service where ( service.service_id = flight.service_id) and (' + whereClause(attribute_values) + ');'
+    query = 'select flight.service_id, service_provider_id, from_city, to_city, departure_time, arrival_time, price, discount, (SELECT COALESCE(AVG(user_rating),0) FROM service_request as u where u.service_id=service.service_id)  as rating  from flight, service where ( service.service_id = flight.service_id) and (' + whereClause(attribute_values) + ');'
     return await runQuery(callback, query);
 }
+
+// Get taxi
+async function getTaxi(callback, attribute_values) {
+    if(Object.keys(attribute_values).length == 0) {
+        attribute_values = assignAttributes(['taxi', 'service'])
+    }
+    query = 'select taxi.service_id, service_provider_id, car_name, capacity, AC, price, discount, (SELECT COALESCE(AVG(user_rating),0) FROM service_request as u where u.service_id=service.service_id)  as rating  from taxi, service where ( service.service_id = taxi.service_id) and (' + whereClause(attribute_values) + ');'
+    return await runQuery(callback, query);
+}
+
 
 // Get a list of tourist spots that are in a city, only unvisited or both visited and unvisited
 function getTouristSpots(callback, user_id, attribute_values, city, unvisited) {
@@ -383,7 +393,7 @@ function getFoodItems(callback,filters)
     p.service_provider_id=s.service_provider_id and 
     r.service_provider_id=s.service_provider_id and 
     l.location_id=r.location_id and
-    f.name like `+filters.name+` and p.name like `+filters.rest+` and r.delivers like `+filters.delivery+`);
+    f.name like `+filters.name+` and p.name like `+filters.rest+` and r.delivers like `+filters.delivers +`);
     `
     runQuery(callback,query);
 }
@@ -459,6 +469,7 @@ module.exports = {
     'getParticularServiceProviderAndService' : getParticularServiceProviderAndService,
     'getBusTrain' : getBusTrain,
     'getFlight' : getFlight,
+    'getTaxi' : getTaxi,
     'getTouristSpots' : getTouristSpots,
     'addTouristSpotToWishlist' : addTouristSpotToWishlist,
     'markTouristSpotVisited' : markTouristSpotVisited,

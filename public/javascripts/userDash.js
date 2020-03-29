@@ -2,19 +2,33 @@ var	angularApp = angular.module("dash", []);
 angularApp.controller("ngContent",function($scope,$http)
 {
 	$scope.tab=0;
-	$scope.f={};
-	$scope.f.status="Pending";
-	$scope.f.data=[];
+	$scope.food={};
+	$scope.food.status="Pending";
+	$scope.food.data=[];
+	$scope.food.fname="";
+	$scope.food.rname="";
+	$scope.food.delivers="0";
+	$scope.food.sortOrder="0";
+	$scope.food.reviews={};
 
-	$scope.f.from_city = ""
-	$scope.f.to_city = ""
-	$scope.f.departure_date = ""
+	$scope.flight={}
+	$scope.flight.status = "Pending";
+	$scope.flight.data = [];
+	$scope.flight.from_city = "";
+	$scope.flight.to_city = "";
+	$scope.flight.departure_date = "";
+	$scope.flight.sortOrder="0";
+	$scope.flight.reviews={};
 
-	$scope.f.fname="";
-	$scope.f.rname="";
-	$scope.f.delivery="0";
-	$scope.f.sortOrder="0";
-	$scope.f.reviews={};
+	$scope.taxi={}
+	$scope.taxi.status = "Pending";
+	$scope.taxi.data = [];
+	$scope.taxi.car_name = "";
+	$scope.taxi.capacity = "";
+	$scope.taxi.AC = "0";
+	$scope.taxi.sortOrder="0";
+	$scope.taxi.reviews={};
+
 
 	$scope.trip={
 		tdateStart:"",
@@ -64,7 +78,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			}
 		});
 	}
-	$scope.f.order=function(it)
+	$scope.food.order=function(it)
 	{
 		// alert(it.service_id);
 		// console.log($http.post);
@@ -80,12 +94,44 @@ angularApp.controller("ngContent",function($scope,$http)
 			console.log("err");
 		});
 	}
-	$scope.f.view=function(it)
+	$scope.flight.order=function(it)
+	{
+		// alert(it.service_id);
+		// console.log($http.post);
+		$http.post('/data/service_request',JSON.stringify({
+			user_id:$scope.curUser.uid,
+			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
+			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
+			service_id:it.service_id
+		}))
+		.then(function(response){
+			console.log("got");
+		},function(response){
+			console.log("err");
+		});
+	}
+	$scope.taxi.order=function(it)
+	{
+		// alert(it.service_id);
+		// console.log($http.post);
+		$http.post('/data/service_request',JSON.stringify({
+			user_id:$scope.curUser.uid,
+			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
+			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
+			service_id:it.service_id
+		}))
+		.then(function(response){
+			console.log("got");
+		},function(response){
+			console.log("err");
+		});
+	}
+	$scope.food.view=function(it)
 	{
 		if(it.showRev==false)
 		{
-			$scope.f.reviews[it.service_id]={};
-			$scope.f.reviews[it.service_id].status="Pending";
+			$scope.food.reviews[it.service_id]={};
+			$scope.food.reviews[it.service_id].status="Pending";
 			//get reviews in f.reviews[serviceID].data
 			// console.log("sent Review")
 			$http.get("/data/getData",{params:{
@@ -95,8 +141,64 @@ angularApp.controller("ngContent",function($scope,$http)
 				function(data, status, headers, config) {
 				if(data.data.isRes)
 				{
-					$scope.f.reviews[it.service_id].data=data.data.content;
-					$scope.f.reviews[it.service_id].status="OK";
+					$scope.food.reviews[it.service_id].data=data.data.content;
+					$scope.food.reviews[it.service_id].status="OK";
+					it.showRev=true;
+				}
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
+			//Turn status OK to replace loading text with comments
+		}
+		else{
+			it.showRev=false;
+		}
+	}
+	$scope.flight.view=function(it)
+	{
+		if(it.showRev==false)
+		{
+			$scope.flight.reviews[it.service_id]={};
+			$scope.flight.reviews[it.service_id].status="Pending";
+			//get reviews in transport.reviews[serviceID].data
+			// console.log("sent Review")
+			$http.get("/data/getData",{params:{
+				type:"review",
+				service_id:it.service_id
+				}}).then(
+				function(data, status, headers, config) {
+				if(data.data.isRes)
+				{
+					$scope.flight.reviews[it.service_id].data=data.data.content;
+					$scope.flight.reviews[it.service_id].status="OK";
+					it.showRev=true;
+				}
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
+			//Turn status OK to replace loading text with comments
+		}
+		else{
+			it.showRev=false;
+		}
+	}
+	$scope.taxi.view=function(it)
+	{
+		if(it.showRev==false)
+		{
+			$scope.taxi.reviews[it.service_id]={};
+			$scope.taxi.reviews[it.service_id].status="Pending";
+			//get reviews in transport.reviews[serviceID].data
+			// console.log("sent Review")
+			$http.get("/data/getData",{params:{
+				type:"review",
+				service_id:it.service_id
+				}}).then(
+				function(data, status, headers, config) {
+				if(data.data.isRes)
+				{
+					$scope.taxi.reviews[it.service_id].data=data.data.content;
+					$scope.taxi.reviews[it.service_id].status="OK";
 					it.showRev=true;
 				}
 				},function(data, status, headers, config) {
@@ -112,18 +214,18 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		if(tab == 0)
 		{
-			$scope.f.status="Pending";
+			$scope.food.status="Pending";
 			console.log("sent");
 			$http.get("/data/getData",{params:{
 				type:"service_request"
 				}}).then(
 				function(data, status, headers, config) {
 				// console.log(data);
-				$scope.f.data=data.data.content;
-				$scope.f.data.forEach(element => {
+				$scope.food.data=data.data.content;
+				$scope.food.data.forEach(element => {
 					element.showRev=false;
 				});
-				$scope.f.status="OK";
+				$scope.food.status="OK";
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -132,20 +234,42 @@ angularApp.controller("ngContent",function($scope,$http)
 		{
 			var newDate = new Date($scope.trip.tdateStart);
 			console.log(newDate.toUTCString());
-			$scope.f.status="Pending";
+			$scope.flight.status="Pending";
 			// console.log("sent");
 			$http.get("/data/getData",{params:{
 				type:"flight",
-				from: "\"%" + $scope.f.from_city + "%\"",
-				to: "\"%" + $scope.f.to_city + "%\"",
-				departure_time: "\"%" + $scope.f.departure_date + "%\"" 
+				from: "\"%" + $scope.flight.from_city + "%\"",
+				to: "\"%" + $scope.flight.to_city + "%\"",
+				departure_time: "\"%" + $scope.flight.departure_date + "%\"" 
 				}}).then(
 				function(data, status, headers, config) {
-				$scope.f.data=data.data.content;
-				$scope.f.data.forEach(element => {
+				$scope.flight.data=data.data.content;
+				$scope.flight.data.forEach(element => {
 					element.showRev=false;
 				});
-				$scope.f.status="OK";
+				$scope.flight.status="OK";
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
+		}
+		else if(tab==3)
+		{
+			var newDate = new Date($scope.trip.tdateStart);
+			console.log(newDate.toUTCString());
+			$scope.taxi.status="Pending";
+			// console.log("sent");
+			$http.get("/data/getData",{params:{
+				type:"taxi",
+				car_name: "\"%" + $scope.taxi.car_name + "%\"",
+				capacity:  ($scope.taxi.capacity == "" ? "\"%\"" : $scope.taxi.capacity) ,
+				AC: ( $scope.taxi.AC == 0) ? ("\"%\"") : ($scope.taxi.AC == 1 ? "\"Y\"" : "\"N\"" )
+				}}).then(
+				function(data, status, headers, config) {
+				$scope.taxi.data=data.data.content;
+				$scope.taxi.data.forEach(element => {
+					element.showRev=false;
+				});
+				$scope.taxi.status="OK";
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -154,20 +278,20 @@ angularApp.controller("ngContent",function($scope,$http)
 		{
 			var newDate = new Date($scope.trip.tdateStart);
 			console.log(newDate.toUTCString());
-			$scope.f.status="Pending";
+			$scope.food.status="Pending";
 			// console.log("sent");
 			$http.get("/data/getData",{params:{
 				type: "food",
-				fname: "\"%" + $scope.f.fname + "%\"",
-				rname: "\"%" + $scope.f.rname + "%\"",
-				delivery:($scope.f.delivery)
+				fname: "\"%" + $scope.food.fname + "%\"",
+				rname: "\"%" + $scope.food.rname + "%\"",
+				delivers: ( $scope.food.delivers ==0) ? ("\"%\"") : ($scope.food.delivers == 1 ? "\"Y\"" : "\"N\"" )
 				}}).then(
 				function(data, status, headers, config) {
-				$scope.f.data=data.data.content;
-				$scope.f.data.forEach(element => {
+				$scope.food.data=data.data.content;
+				$scope.food.data.forEach(element => {
 					element.showRev=false;
 				});
-				$scope.f.status="OK";
+				$scope.food.status="OK";
 				},function(data, status, headers, config) {
 					console.log("error");
 				});

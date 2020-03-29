@@ -103,27 +103,27 @@ function createDatabase(onComplete) {
     runQuery(callback, 'INSERT INTO taxi VALUES(\'TAX00001\',\'ciaz\',4,\'Y\'),(\'TAX00002\',\'ritz\',4,\'N\'),(\'TAX00003\',\'bmw\',4,\'Y\'),(\'TAX00004\',\'swift\',4,\'Y\'),(\'TAX00005\',\'ciaz\',4,\'Y\'),(\'TAX00006\',\'scorpio\',7,\'Y\'),(\'TAX00007\',\'ertiga\',7,\'Y\'),(\'TAX00008\',\'maruti Eeco\',6,\'N\'),(\'TAX00009\',\'i10\',4,\'Y\'),(\'TAX00010\',\'xuv\',4,\'Y\');')
     runQuery(callback, 'INSERT INTO route VALUES(\'BUS00001\',\'LOC00000\',\'12:00:00\'),(\'BUS00002\',\'LOC00001\',\'05:00:00\'),(\'BUS00003\',\'LOC00002\',\'06:00:00\'),(\'BUS00004\',\'LOC00003\',\'08:00:00\'),(\'BUS00005\',\'LOC00004\',\'01:00:00\'),(\'BUS00006\',\'LOC00005\',\'21:00:00\'),(\'BUS00007\',\'LOC00006\',\'05:00:00\'),(\'BUS00008\',\'LOC00007\',\'09:00:00\'),(\'BUS00009\',\'LOC00008\',\'07:00:00\'),(\'BUS00010\',\'LOC00009\',\'01:00:00\'),(\'BUS00011\',\'LOC00010\',\'04:00:00\'),(\'BUS00012\',\'LOC00011\',\'05:00:00\'),(\'BUS00013\',\'LOC00012\',\'02:00:00\'),(\'BUS00014\',\'LOC00013\',\'06:00:00\'),(\'BUS00015\',\'LOC00014\',\'01:00:00\'),(\'BUS00016\',\'LOC00015\',\'04:00:00\'),(\'BUS00017\',\'LOC00016\',\'02:00:00\'),(\'BUS00018\',\'LOC00017\',\'03:00:00\'),(\'BUS00019\',\'LOC00018\',\'09:00:00\'),(\'BUS00020\',\'LOC00019\',\'07:00:00\'),(\'BUS00021\',\'LOC00020\',\'02:00:00\'),(\'FLI00000\',\'LOC00021\',\'05:00:00\'),(\'FLI00001\',\'LOC00022\',\'02:00:00\'),(\'FLI00002\',\'LOC00023\',\'06:00:00\'),(\'FLI00003\',\'LOC00024\',\'12:00:00\'),(\'FLI00004\',\'LOC00025\',\'03:30:00\'),(\'FLI00005\',\'LOC00026\',\'01:45:00\'),(\'FLI00006\',\'LOC00027\',\'21:50:00\'),(\'FLI00007\',\'LOC00028\',\'15:45:00\'),(\'FLI00008\',\'LOC00029\',\'02:50:00\'),(\'FLI00009\',\'LOC00030\',\'20:45:00\'),(\'FLI00010\',\'LOC00031\',\'04:00:00\'),(\'FLI00011\',\'LOC00032\',\'06:00:00\'),(\'FLI00012\',\'LOC00033\',\'02:00:00\'),(\'FLI00014\',\'LOC00034\',\'01:45:00\'),(\'TAX00001\',\'LOC00036\',\'02:35:00\'),(\'TAX00002\',\'LOC00037\',\'03:45:00\'),(\'TAX00003\',\'LOC00038\',\'08:50:00\'),(\'TAX00004\',\'LOC00039\',\'07:45:00\'),(\'TAX00005\',\'LOC00040\',\'11:20:00\'),(\'TAX00006\',\'LOC00001\',\'12:00:00\'),(\'TAX00007\',\'LOC00002\',\'12:00:00\'),(\'TAX00008\',\'LOC00003\',\'12:00:00\'),(\'TAX00009\',\'LOC00004\',\'12:00:00\'),(\'TAX00010\',\'LOC00005\',\'12:00:00\'),(\'TRA00001\',\'LOC00006\',\'12:00:00\'),(\'TRA00002\',\'LOC00007\',\'12:00:00\'),(\'TRA00003\',\'LOC00008\',\'12:00:00\'),(\'TRA00004\',\'LOC00009\',\'12:00:00\'),(\'TRA00005\',\'LOC00010\',\'12:00:00\'),(\'TRA00006\',\'LOC00011\',\'12:00:00\'),(\'TRA00007\',\'LOC00012\',\'12:00:00\'),(\'TRA00008\',\'LOC00013\',\'12:00:00\'),(\'TRA00009\',\'LOC00014\',\'12:00:00\'),(\'TRA00010\',\'LOC00015\',\'12:00:00\'),(\'TRA00011\',\'LOC00016\',\'12:00:00\'),(\'TRA00012\',\'LOC00017\',\'12:00:00\'),(\'TRA00013\',\'LOC00018\',\'12:00:00\'),(\'TRA00014\',\'LOC00019\',\'12:00:00\'),(\'TRA00015\',\'LOC00020\',\'12:00:00\'),(\'TRA00016\',\'LOC00021\',\'12:00:00\');')
     runQuery(callback, 'INSERT INTO guide VALUES(\'GUI00001\',\'TOR00001\'),(\'GUI00002\',\'TOR00002\'),(\'GUI00003\',\'TOR00003\'),(\'GUI00004\',\'TOR00004\'),(\'GUI00005\',\'TOR00005\'),(\'GUI00006\',\'TOR00006\'),(\'GUI00007\',\'TOR00007\'),(\'GUI00008\',\'TOR00008\'),(\'GUI00009\',\'TOR00009\'),(\'GUI00010\',\'TOR00010\'),(\'GUI00011\',\'TOR00011\'),(\'GUI00012\',\'TOR00012\'),(\'GUI00013\',\'TOR00013\'),(\'GUI00014\',\'TOR00014\'),(\'GUI00015\',\'TOR00015\'),(\'GUI00016\',\'TOR00016\'),(\'GUI00017\',\'TOR00017\'),(\'GUI00018\',\'TOR00018\'),(\'GUI00019\',\'TOR00019\'),(\'GUI00020\',\'TOR00020\'),(\'GUI00021\',\'TOR00021\'),(\'GUI00022\',\'TOR00022\');')
-    runQuery(callback, 'INSERT INTO trip VALUES(\'TRP00001\',\'USR00012\',\'2019-1-3\',\'2019-1-13\',\'ladakh\'),(\'TRP00002\',\'USR00002\',\'2020-2-14\',\'2020-2-27\',\'ladakh\'),(\'TRP00003\',\'USR00012\',\'2019-3-31\',\'2019-4-13\',\'ladakh\'),(\'TRP00004\',\'USR00012\',\'2019-4-20\',\'2019-4-30\',\'J&K\'),(\'TRP00005\',\'USR00012\',\'2019-5-3\',\'2019-5-13\',\'J&K\'),(\'TRP00006\',\'USR00012\',\'2019-5-20\',\'2019-5-28\',\'Srinagar\'),(\'TRP00007\',\'USR00012\',\'2019-6-1\',\'2019-6-13\',\'Srinagar\'),(\'TRP00008\',\'USR00012\',\'2019-6-3\',\'2019-7-20\',\'Srinagar\'),(\'TRP00009\',\'USR00012\',\'2019-7-19\',\'2019-7-29\',\'Shimla\'),(\'TRP00010\',\'USR00012\',\'2019-7-30\',\'2019-8-30\',\'Dehradun\'),(\'TRP00011\',\'USR00012\',\'2019-9-12\',\'2019-9-22\',\'chamoli\'),(\'TRP00012\',\'USR00012\',\'2019-11-23\',\'2019-12-1\',\'Haridwar\');')
+    runQuery(callback, 'INSERT INTO trip VALUES(\'TRP00001\',\'USR00000\',\'2019-1-3\',\'2019-1-13\',\'ladakh\'),(\'TRP00002\',\'USR00002\',\'2020-2-14\',\'2020-2-27\',\'ladakh\'),(\'TRP00003\',\'USR00012\',\'2019-3-31\',\'2019-4-13\',\'ladakh\'),(\'TRP00004\',\'USR00012\',\'2019-4-20\',\'2019-4-30\',\'J&K\'),(\'TRP00005\',\'USR00012\',\'2019-5-3\',\'2019-5-13\',\'J&K\'),(\'TRP00006\',\'USR00012\',\'2019-5-20\',\'2019-5-28\',\'Srinagar\'),(\'TRP00007\',\'USR00012\',\'2019-6-1\',\'2019-6-13\',\'Srinagar\'),(\'TRP00008\',\'USR00012\',\'2019-6-3\',\'2019-7-20\',\'Srinagar\'),(\'TRP00009\',\'USR00012\',\'2019-7-19\',\'2019-7-29\',\'Shimla\'),(\'TRP00010\',\'USR00012\',\'2019-7-30\',\'2019-8-30\',\'Dehradun\'),(\'TRP00011\',\'USR00012\',\'2019-9-12\',\'2019-9-22\',\'chamoli\'),(\'TRP00012\',\'USR00012\',\'2019-11-23\',\'2019-12-1\',\'Haridwar\');')
     runQuery(callback, 'INSERT INTO service_request VALUES(\'RST00001\',\'TRP00001\',\'BUS00011\',\'2020-01-01 10:10:10\',8,8000,\"Pending\",4,5,\'nice service\'),(\'RST00002\',\'TRP00002\',\'FOO00004\',\'2020-01-01 10:10:10\',4,4000,\"Accepted\",5,5,\'excelent service\'),(\'RST00003\',\'TRP00003\',\'FLI00005\',\'2020-01-01 10:10:10\',5,5000,\"Completed\",4,4,\'nice experience\'),(\'RST00004\',\'TRP00004\',\'TAX00005\',\'2020-01-01 10:10:10\',4,4000,\"paid\",4,4,\'good service\'),(\'RST00005\',\'TRP00005\',\'ROO00005\',\'2020-01-01 10:10:10\',5,5000,\"Pending\",4,5,\'neat and clean hotel\'),(\'RST00006\',\'TRP00006\',\'TRA00015\',\'2020-01-01 10:10:10\',4,3000,\"Accepted\",4,5,\'average experience\'),(\'RST00007\',\'TRP00007\',\'BUS00007\',\'2020-01-01 10:10:10\',4,2500,\"Completed\",5,5,\'good experience\'),(\'RST00008\',\'TRP00008\',\'TAX00009\',\'2020-01-01 10:10:10\',4,5000,\"Rejected\",4,4,\'good service\'),(\'RST00009\',\'TRP00009\',\'FOO00013\',\'2020-01-01 10:10:10\',1,2000,\"Pending\",3,4,\'delicious food\'),(\'RST00010\',\'TRP00010\',\'ROO00002\',\'2020-01-01 10:10:10\',2,2500,\"Accepted\",5,5,\'neat and clean hotel\'),(\'RST00011\',\'TRP00011\',\'ROO00009\',\'2020-01-01 10:10:10\',7,8000,\"Completed\",4,4,\'nice hotel\'),(\'RST00012\',\'TRP00012\',\'TAX00006\',\'2020-01-01 10:10:10\',4,4000,\"Rejected\",5,5,\'good service\');')
     runQuery(callback, 'INSERT INTO query VALUES(\'QRY00001\',\'USR00000\',\'is there any smoking room In hotel ?\'),(\'QRY00002\',\'USR00001\',\'Can you make sea food on special demand ?\'),(\'QRY00003\',\'USR00002\',\'What is the last time we can report before the flight ?\'),(\'QRY00004\',\'USR00003\',\'Can I change my destination 2 times ?\'),(\'QRY00005\',\'USR00004\',\'Can I book more than 2 seats on one identity card? \'),(\'QRY00006\',\'USR00005\',\'Can I travel with my pet dog ?\'),(\'QRY00007\',\'USR00006\',\'Is there any female guide ?\'),(\'QRY00008\',\'USR00007\',\'Will there be 2 bathroom ?\'),(\'QRY00009\',\'USR00008\',\'Whether they use garlic or not ?\'),(\'QRY00010\',\'USR00009\',\'is there swimming pool in your hotel ?\'),(\'QRY00011\',\'USR00010\',\'do you accept online payment ?\'),(\'QRY00012\',\'USR00011\',\'Can you make food on special demands ?\');')
     // runQuery(callback, 'INSERT INTO train VALUES(\'TRA00001\',\'LOC00005\',\'LOC00036\',\'YNYYNYY\',\'Y\'),(\'TRA00002\',\'LOC00009\',\'LOC00032\',\'YYNNYYY\',\'Y\'),(\'TRA00003\',\'LOC00004\',\'LOC00015\',\'YNYYNYY\',\'Y\'),(\'TRA00004\',\'LOC00011\',\'LOC00001\',\'YNYNYNY\',\'N\'),(\'TRA00005\',\'LOC00021\',\'LOC00002\',\'YNYNYNY\',\'Y\'),(\'TRA00006\',\'LOC00022\',\'LOC00033\',\'YNYNYNY\',\'Y\'),(\'TRA00007\',\'LOC00025\',\'LOC00002\',\'YNYNYNY\',\'N\'),(\'TRA00008\',\'LOC00035\',\'LOC00001\',\'YNYNYNY\',\'N\'),(\'TRA00009\',\'LOC00036\',\'LOC00015\',\'YNYNYNY\',\'N\'),(\'TRA00010\',\'LOC00037\',\'LOC00016\',\'YNYNYNY\',\'Y\'),(\'TRA00011\',\'LOC00001\',\'LOC00033\',\'YNYNYNY\',\'N\'),(\'TRA00012\',\'LOC00011\',\'LOC00020\',\'YNYNYNY\',\'N\'),(\'TRA00013\',\'LOC00001\',\'LOC00025\',\'YNYNYNY\',\'N\'),(\'TRA00014\',\'LOC00002\',\'LOC00034\',\'YNYNYNY\',\'N\'),(\'TRA00015\',\'LOC00025\',\'LOC00004\',\'YNYNYNY\',\'Y\'),(\'TRA00016\',\'LOC00015\',\'LOC00023\',\'YNYNYNY\',\'Y\');')
     // runQuery(callback, 'INSERT INTO bus VALUES(\'BUS00001\',\'LOC00031\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00002\',\'LOC00032\',\'LOC00007\',\'YYYNYNY\',\'Y\'),(\'BUS00003\',\'LOC00035\',\'LOC00005\',\'YNNNYNY\',\'Y\'),(\'BUS00004\',\'LOC00015\',\'LOC00030\',\'YNYYYNY\',\'Y\'),(\'BUS00005\',\'LOC00015\',\'LOC00026\',\'YNYNNNY\',\'Y\'),(\'BUS00006\',\'LOC00019\',\'LOC00030\',\'YNYNNYY\',\'Y\'),(\'BUS00007\',\'LOC00029\',\'LOC00033\',\'YNYNYNY\',\'Y\'),(\'BUS00008\',\'LOC00001\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00009\',\'LOC00018\',\'LOC00023\',\'YNYNYNY\',\'N\'),(\'BUS00010\',\'LOC00015\',\'LOC00001\',\'YNYNYNY\',\'Y\'),(\'BUS00011\',\'LOC00016\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00012\',\'LOC00017\',\'LOC00011\',\'YNYNYNY\',\'Y\'),(\'BUS00013\',\'LOC00018\',\'LOC00003\',\'YNYNYNY\',\'N\'),(\'BUS00014\',\'LOC00015\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00015\',\'LOC00018\',\'LOC00001\',\'YNYNYNY\',\'Y\'),(\'BUS00016\',\'LOC00033\',\'LOC00001\',\'YNYNYNY\',\'Y\'),(\'BUS00017\',\'LOC00029\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00018\',\'LOC00008\',\'LOC00036\',\'YNYNYNY\',\'N\'),(\'BUS00019\',\'LOC00015\',\'LOC00005\',\'YNYNYNY\',\'Y\'),(\'BUS00020\',\'LOC00003\',\'LOC00037\',\'YNYNYNY\',\'N\'),(\'BUS00021\',\'LOC00009\',\'LOC00038\',\'YNYNYNY\',\'Y\');')
 }
 
-// var con = mysql.createConnection({
-//   host: "remotemysql.com",
-//   user: "lHyGk3wWaK",
-//   password: "IAahckiJYJ",
-//   database: "lHyGk3wWaK"
-// });
-
 var con = mysql.createConnection({
-    host: "127.0.0.1",
-    user: "root",
-    port:"3307",
-    password: "zzzz",
-    database: "dbms_project"
-  });
+  host: "remotemysql.com",
+  user: "lHyGk3wWaK",
+  password: "IAahckiJYJ",
+  database: "lHyGk3wWaK"
+});
+
+// var con = mysql.createConnection({
+//     host: "127.0.0.1",
+//     user: "root",
+//     port:"3307",
+//     password: "zzzz",
+//     database: "dbms_project"
+//   });
 
 async function connect() {
     con.connect(function(err) {
@@ -137,10 +137,10 @@ function runQuery(callback, query) {
     result = con.query(query, function (err, result) {
         if (err)
         {
+            console.log(err);
             callback(null);
             return;
-        } 
-        // console.log(result);
+        }
         if(callback!=null)
             callback(result);
     });
@@ -242,7 +242,7 @@ function addLocation(callback,location) {
 }
 
 // Temporary function to supply the attributes
-function inputAttributes(input_tables) {
+function assignAttributes(input_tables) {
     attribute_values = {}
     for(var j = 0; j < input_tables.length; ++ j) {
         for(i = 0; i < tables[input_tables[j]].length; ++ i) {
@@ -257,11 +257,11 @@ function inputAttributes(input_tables) {
 
 // Make where clause condition statement from attribute values
 function whereClause(attribute_values) {
-    query = 'where ';
+    query = '';
     var att_no = 0
     for(var attribute in attribute_values) {
         for(var value in attribute_values[attribute]) {
-            query += attribute + ' REGEXP ' + attribute_values[attribute][value];
+            query += attribute + ' like ' + attribute_values[attribute][value];
             if(value == attribute_values[attribute].length - 1) continue;
                 query += ' or '
         }
@@ -275,7 +275,7 @@ function whereClause(attribute_values) {
 
 // Query service providers and services in general
 function getGeneralServiceProviderAndService(callback, attribute_values, rating = 0) {
-    attribute_values = inputAttributes(['service_provider', 'service']);
+    attribute_values = assignAttributes(['service_provider', 'service']);
     query = 'select * ' + 'from service_provider, service where( (service_provider.active = \'Y\') and (service_provider.service_provider_id = service.service_provider_id) and (' + whereClause(attribute_values) +  ') and service.service_id in (select service_request.service_id from service_request group by(service_id) having avg(service_rating) >= ' + rating + '));'
     runQuery(callback, query);
 }
@@ -283,14 +283,14 @@ function getGeneralServiceProviderAndService(callback, attribute_values, rating 
 // Query on a particular service provider and service based on the attributes
 // No special queries for hotels, restaurants, guide required, this one satisfies all filters
 function getParticularServiceProviderAndService(callback, service_provider, service, attribute_values, rating = 0) {
-    attribute_values = inputAttributes(['service_provider', 'service', service_provider, service]);
+    attribute_values = assignAttributes(['service_provider', 'service', service_provider, service]);
     query = 'select * ' + 'from service_provider, service, ' + service_provider + ', ' + service + ' where( (service_provider.active = \'Y\') and (service_provider.service_provider_id = service.service_provider_id) and (service_provider.service_provider_id = ' + service_provider + '.service_provider_id' + ') and (service.service_id = ' + service + '.service_id' + ') and (' + whereClause(attribute_values) +  ') and service.service_id in (select service_id from service_request group by(service_id) having avg(rating) > ' + rating +'));'
     runQuery(callback, query);
 }
 
 // Get busses and trains from one location to another
 function getBusTrain(callback, location1_id, location2_id, attribute_values) {
-    attribute_values = inputAttributes(['bus', 'train'])
+    attribute_values = assignAttributes(['bus', 'train'])
     query = '(select * from bus, route r1, route r2 where r1.service_id = bus.service_id and r2.service_id = bus.service_id and r1.location_id = ' + location1_id + ' and r2.location_id = ' + location2_id + ' and r1.arrival_time < r2.arrival_time  and (' + whereClause(attribute_values) + ')) union (select * from train, route r1, route r2 where r1.service_id = train.service_id and r2.service_id = train.service_id and r1.location_id = ' + location1_id + ' and r2.location_id = ' + location2_id + ' and r1.arrival_time < r2.arrival_time and (' + whereClause(attribute_values) + '));' 
     runQuery(callback, query);
 }
@@ -303,7 +303,7 @@ async function getFlight(callback, from_location_id, to_location_id) {
 
 // Get a list of tourist spots that are in a city, only unvisited or both visited and unvisited
 function getTouristSpots(callback, user_id, attribute_values, city, unvisited) {
-    attribute_values = inputAttributes(['tourist_spot'])
+    attribute_values = assignAttributes(['tourist_spot'])
     console.log(attribute_values);
     if(unvisited) {
         query = 'select * from tourist_spot, location where (tourist_spot_id not in (select tourist_spot_id from visited where user_id in ( select user_id from trip where trip_id = ' + trip_id +')) tourist_spot.location_id = location.location_id and location.city REGEXP '+ city + ') and (' + whereClause(attribute_values) + ');';
@@ -344,8 +344,10 @@ function changeStatusOfServiceRequest(request_id, status) {
 // Caller should make sure that user_id is the id of the user currently logged in 
 // to ensure no user can view the service requests of any other user
 function getServiceRequests(callback, user_id, attribute_values) {
-    attribute_values = inputAttributes(['service_request']);
-    runQuery(callback, 'select * from service_request where trip_id in (select trip_id from trip where user_id = ' + user_id +') and (' + whereClause(attribute_values) + ');');
+    if(Object.keys(attribute_values).length == 0) {
+        attribute_values = assignAttributes(['service_request']);
+    }
+    runQuery(callback, 'select * from service_request where trip_id in (select trip_id from trip where trip.user_id = \"' + user_id +'\") and (' + whereClause(attribute_values) + ');');
 }
 
 async function main() {
@@ -355,6 +357,7 @@ async function main() {
     //     console.log('done Creation');
     // });
     console.log('done Connect');
+    runQuery(function(result) {console.log(result);}, "select trip_id from trip where trip.user_id = \"USR00000\"")
     // console.log(await getFlight(callback, '\'LOC00015\'', '\'LOC00029\''));
     // getTouristSpots(function(result) {console.log(result)}, null, null, '\'Delhi\'', false);
     // getGeneralServiceProviderAndService(function(result){console.log(result)});
@@ -415,9 +418,8 @@ function getServiceReview(callback,service_id)
     where(u.user_id=t.user_id and r.trip_id=t.trip_id and r.service_id REGEXP "`+service_id+`");`;
     runQuery(callback,query);
 }
+
 main();
-
-
 
 module.exports = {
     'tables' : tables,

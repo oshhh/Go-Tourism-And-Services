@@ -48,7 +48,25 @@ angularApp.controller("ngContent",function($scope,$http)
 
 	$scope.getData=function(tab)
 	{
-		if(tab==3)
+		if(tab == 0)
+		{
+			$scope.f.status="Pending";
+			console.log("sent");
+			$http.get("/data/getData",{params:{
+				type:"service_request"
+				}}).then(
+				function(data, status, headers, config) {
+				// console.log(data);
+				$scope.f.data=data.data.content;
+				$scope.f.data.forEach(element => {
+					element.showRev=false;
+				});
+				$scope.f.status="OK";
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
+		}
+		else if(tab==3)
 		{
 			$scope.f.status="Pending";
 			console.log("sent");
@@ -81,9 +99,6 @@ angularApp.controller("ngContent",function($scope,$http)
 			// 	discount:0,
 			// 	rating:3.9
 			// }];
-		}
-		else{
-
 		}
 	}
 	$scope.changeTab=function(newTab)

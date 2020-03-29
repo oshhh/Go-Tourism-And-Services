@@ -31,6 +31,29 @@ router.get('/getData', function(req, res, next) {
         delivery:(req.query.delivery==1)?("Y"):(".*")
       });
     break;
+    case "service_request":
+      serverjs.getServiceRequests(function(result){
+        if(result)
+        {
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({
+            isRes:true,
+            msg:"Query OK: sending result",
+            content:result
+          }));
+          console.log("results obtained!")
+        }
+        else{
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({
+            isRes:false,
+            msg:"Unknown Request sent"
+          }));
+        }
+      },req.session.uname,
+      {});
+    break;
+
     case "review":
       serverjs.getServiceReview(function(result){
         if(result)

@@ -41,7 +41,21 @@
       <div id="content" class="shadow p-4 mb-4 bg-white">
       
         <div id="content_tab0" ng-show="tab==0">
-            <h3>Content0</h3>
+          <div class="text-center d-flex flex-row justify-content-between align-middle">
+            <label style="text-align:center">Showing \{{f.data.length}} Results</label>
+          </div>
+
+          <div style="text-align: center;" class="rowsCont" ng-show="f.status=='Pending'">Loading Data</div>
+          <div id="table2" class="rowsCont card-rows">
+            <div ng-repeat="it in f.data" class="rowElement card shadow p-4 mb-4 bg-white">
+              <div class="card-header text-center bg-white align-middle">Requested Service: \{{it.service_id}}</div>
+              <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
+                <div class="cardText card-text">Trip ID: \{{it.trip_id}}<br> Request Timestamp: \{{it.timestamp}}</div>
+                <div class="cardText card-text">Status: \{{it.status}}</div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <div id="content_tab1" ng-show="tab==1">

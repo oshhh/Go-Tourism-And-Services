@@ -134,11 +134,10 @@ angularApp.controller("ngContent",function($scope,$http)
 			console.log(newDate.toUTCString());
 			$scope.f.status="Pending";
 			// console.log("sent");
-			console.log(["\"%" + $scope.transport.from + "%\""]);
 			$http.get("/data/getData",{params:{
 				type:"flight",
-				from: "\"%" + $scope.f.from + "%\"",
-				to: "\"%" + $scope.f.to + "%\"",
+				from: "\"%" + $scope.f.from_city + "%\"",
+				to: "\"%" + $scope.f.to_city + "%\"",
 				departure_time: "\"%" + $scope.f.departure_date + "%\"" 
 				}}).then(
 				function(data, status, headers, config) {

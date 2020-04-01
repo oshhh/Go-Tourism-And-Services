@@ -32,6 +32,24 @@ router.get('/getData', function(req, res, next) {
           departure_time: req.query.departure_time
         });       
     break;
+    case 'bus_train':
+        serverjs.getBusTrain(function(result){
+          routes = {}
+          console.log("result");
+          for(bus in result) {
+            serverjs.getRoute(function(route) {
+                routes[result[bus].service_id] = route;
+                console.log("route");
+                console.log(route);
+              }, "\"" + bus.service_id + "\""
+            );
+          }
+          console.log(routes);
+          sendResponse({result : result, routes : routes});
+        }, req.query.t_type, req.query.from, req.query.to, {
+          AC: req.query.AC
+        });      
+    break;
     case 'taxi':
         serverjs.getTaxi(sendResponse, {
           car_name: req.query.car_name,
@@ -56,27 +74,27 @@ router.get('/getData', function(req, res, next) {
       });
     break;
     case "service_request":
-      serverjs.getServiceRequests(function(result){
-        if(result)
-        {
-          res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({
-            isRes:true,
-            msg:"Query OK: sending result",
-            content:result
-          }));
-          console.log("results obtained!")
-        }
-        else{
-          res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({
-            isRes:false,
-            msg:"Unknown Request sent"
-          }));
-        }
-      },req.session.uname,
-      {});
-    break;
+        serverjs.getServiceRequests(function(result){
+          if(result)
+          {
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({
+              isRes:true,
+              msg:"Query OK: sending result",
+              content:result
+            }));
+            console.log("results obtained!")
+          }
+          else{
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({
+              isRes:false,
+              msg:"Unknown Request sent"
+            }));
+          }
+        },req.session.uname,
+        {});
+      break;
 
     case "review":
       serverjs.getServiceReview(sendResponse,req.query.service_id);

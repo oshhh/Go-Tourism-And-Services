@@ -20,6 +20,17 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.flight.sortOrder="0";
 	$scope.flight.reviews={};
 
+	$scope.bus_train={}
+	$scope.bus_train.status = "Pending";
+	$scope.bus_train.data = [];
+	$scope.bus_train.route_data = []
+	$scope.bus_train.t_type = "0";
+	$scope.bus_train.from = "";
+	$scope.bus_train.to = "";
+	$scope.bus_train.AC = "0";
+	$scope.bus_train.sortOrder="0";
+	$scope.bus_train.reviews={};
+
 	$scope.taxi={}
 	$scope.taxi.status = "Pending";
 	$scope.taxi.data = [];
@@ -121,6 +132,22 @@ angularApp.controller("ngContent",function($scope,$http)
 			console.log("err");
 		});
 	}
+	$scope.bus_train.order=function(it)
+	{
+		// alert(it.service_id);
+		// console.log($http.post);
+		$http.post('/data/service_request',JSON.stringify({
+			user_id:$scope.curUser.uid,
+			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
+			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
+			service_id:it.service_id
+		}))
+		.then(function(response){
+			console.log("got");
+		},function(response){
+			console.log("err");
+		});
+	}
 	$scope.taxi.order=function(it)
 	{
 		// alert(it.service_id);
@@ -198,6 +225,34 @@ angularApp.controller("ngContent",function($scope,$http)
 				{
 					$scope.flight.reviews[it.service_id].data=data.data.content;
 					$scope.flight.reviews[it.service_id].status="OK";
+					it.showRev=true;
+				}
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
+			//Turn status OK to replace loading text with comments
+		}
+		else{
+			it.showRev=false;
+		}
+	}
+	$scope.bus_train.view=function(it)
+	{
+		if(it.showRev==false)
+		{
+			$scope.bus_train.reviews[it.service_id]={};
+			$scope.bus_train.reviews[it.service_id].status="Pending";
+			//get reviews in transport.reviews[serviceID].data
+			// console.log("sent Review")
+			$http.get("/data/getData",{params:{
+				type:"review",
+				service_id:it.service_id
+				}}).then(
+				function(data, status, headers, config) {
+				if(data.data.isRes)
+				{
+					$scope.bus_train.reviews[it.service_id].data=data.data.content;
+					$scope.bus_train.reviews[it.service_id].status="OK";
 					it.showRev=true;
 				}
 				},function(data, status, headers, config) {
@@ -303,6 +358,30 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.flight.status="OK";
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
+		}
+		else if(tab==2)
+		{
+			var newDate = new Date($scope.trip.tdateStart);
+			console.log(newDate.toUTCString());
+			$scope.taxi.status="Pending";
+			// console.log("sent");
+			$http.get("/data/getData",{params:{
+				type:"bus_train",
+				t_type : ( $scope.bus_train.t_type == 0) ? ("\"%\"") : ($scope.bus_train.t_type == 1 ? "\"Y\"" : "\"N\"" ),
+				from: "\"%" + $scope.bus_train.from + "%\"",
+				to: "\"%" + $scope.bus_train.to + "%\"",
+				AC: ( $scope.bus_train.AC == 0) ? ("\"%\"") : ($scope.bus_train.AC == 1 ? "\"B\"" : "\"T\"" )
+				}}).then(
+				function(data, status, headers, config) {
+					$scope.bus_train.data=data.data.content.result;
+					$scope.bus_train.route_data=data.data.content.routes;
+					$scope.bus_train.data.forEach(element => {
+					element.showRev=false;
+				});
+				$scope.bus_train.status="OK";
 				},function(data, status, headers, config) {
 					console.log("error");
 				});

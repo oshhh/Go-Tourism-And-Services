@@ -166,24 +166,23 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">Type</span>
               </div>
-              <div>
-                <label><input ng-model="food.accept_bus" id="accept_bus" type="checkbox" name="Bus"/> Bus </label>
-              </div>
-              <div>
-                <label><input ng-model="food.accept_train" id="accept_train" type="checkbox" name="Train"> Train </label> 
-              </div>
+                <select ng-model="bus_train.type" class="custom-select" id="bus_train_type">
+                  <option selected value="0">Both</option>
+                  <option value="1">Bus</option>
+                  <option value="2">Train</option>
+                </select>
               <div class="input-group-prepend">
               <span class="input-group-text">From</span>
               </div>
-              <input ng-model="food.tranport_from" id="transport_from" type="text" class="form-control" placeholder="Delhi">
+              <input ng-model="bus_train.from" id="transport_from" type="text" class="form-control" placeholder="India Gate">
               <div class="input-group-prepend">
               <span class="input-group-text">To</span>
               </div>
-              <input ng-model="food.tranport_to" id="transport_to" type="text" class="form-control" placeholder="Mumbai">
+              <input ng-model="bus_train.to" id="transport_to" type="text" class="form-control" placeholder="Lal Quila">
               <div class="input-group-prepend">
-                <label class="input-group-text">Delivery</label>
+                <label class="input-group-text">AC</label>
               </div>
-                <select ng-model="food.delivery" class="custom-select" id="fdelivery">
+                <select ng-model="bus_train.AC" class="custom-select" id="bustrainAC">
                   <option selected value="0">Both</option>
                   <option value="1">Yes</option>
                   <option value="2">No</option>
@@ -210,26 +209,29 @@
             </div>
           </div>
 
-          <div style="text-align: center;" class="rowsCont" ng-show="food.status=='Pending'">Loading Data</div>
-          <div id="table4" class="rowsCont card-rows">
-            <div ng-repeat="it in food.data" class="rowElement card shadow p-4 mb-4 bg-white">
-              <div class="card-header text-center bg-white align-middle">Restaurant: \{{it.res_name}},\{{it.locality}},\{{it.city}}</div>
+           <div style="text-align: center;" class="rowsCont" ng-show="bus_train.status=='Pending'">Loading Data</div>
+          <div id="table3" class="rowsCont card-rows">
+            <div ng-repeat="it in bus_train.data" class="rowElement card shadow p-4 mb-4 bg-white">
+              <div class="card-header text-center bg-white align-middle">Service ID: \{{it.service_id}}</div>
               <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
-                <div class="cardText card-text">\{{it.name}}<br>Delivery Available: \{{it.delivery}}</div>
-                <div class="cardText card-text">Discount: \{{it.discount}}%<br> Description:  \{{it.cuisine}}</div>
-                <button ng-click="food.order(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
+                <div class="cardText card-text">AC: \{{it.AC}} </div>
+                <button ng-click="taxi.order(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
+              </div>
+              <label> <b>Route: </b></label>
+              <div ng-repeat='it2 in bus-train.route_data[' + \{{it.service_id}} +  ']' >
+                <label> \{{it2.service_id}} \{{it2.location_id}} \{{it2.locality}} \{{it2.city}} \{{it2.arrival_time}} </label>
               </div>
               <div class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
                 <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
-                <button ng-click="food.view(it)" class="btn btn-outline-primary">Reviews</button>
+                <button ng-click="taxi.view(it)" class="btn btn-outline-primary">Reviews</button>
               </div>
 
               <div ng-show="it.showRev" class="card-body text-center d-flex flex-row justify-content-between align-middle">
-                <div ng-show="food.reviews[it.service_id].status=='Pending'"class="comments"><br>Loading Please Wait<br><br></div>
-                <div ng-show="food.reviews[it.service_id].status=='OK'" class="comments card-rows">
+                <div ng-show="taxi.reviews[it.service_id].status=='Pending'"class="comments"><br>Loading Please Wait<br><br></div>
+                <div ng-show="taxi.reviews[it.service_id].status=='OK'" class="comments card-rows">
                   <br>
-                  <label style="text-align:center">Showing \{{food.reviews[it.service_id].data.length}} Result(s)</label>
-                  <div ng-repeat="rev in food.reviews[it.service_id].data" class="rowElement card">
+                  <label style="text-align:center">Showing \{{taxi.reviews[it.service_id].data.length}} Result(s)</label>
+                  <div ng-repeat="rev in taxi.reviews[it.service_id].data" class="rowElement card">
                     <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
                     <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
                   </div>
@@ -238,11 +240,14 @@
 
             </div>
           </div>
+
+            </div>
+          </div>
         </div>
 
         <div id="content_tab3" ng-show="tab==3">
-            <h4>Available Filters for Flight</h4>
-
+            <h4>Available Filters for Taxis</h4>
+            <b>Please note that Taxis are booked for the whole day (8:00 AM to 8:00 PM). The charges given are for the same. </b>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
               <span class="input-group-text">Car Name</span>
@@ -317,7 +322,7 @@
         </div>
 
         <div id="content_tab4" ng-show="tab==4">
-            <h4>Available Filters for Flight</h4>
+            <h4>Available Filters for Hotel Rooms</h4>
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -404,7 +409,7 @@
 
         <div id="content_tab5" ng-show="tab==5">
           
-            <h4>Available Filters for restaurant</h4>
+            <h4>Available Filters for Restaurants and Food</h4>
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">

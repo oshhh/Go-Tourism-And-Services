@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>{{title}}</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.js"></script>
+        <script src="../public/javascripts/providerDash.js"></script>
+        <link type="text/css" rel="stylesheet" href="../public/css/main.css">
+        <link type="text/css" rel="stylesheet" href="../public/css/provider.css">
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <body ng-app="dash">
+      <div class="navbar navbar-default fixed-top">
+        <div class='n-item'>Service Provider Dashboard</div>
+        <div class='n-item'>Welcome <span id="nmU">{{name}}</span> (username:<span id="idU">{{uid}}</span>)</div>
+        <a href="/logout"><button class='btn btn-outline-primary'>Logout</button></a>
+      </div>
+    <div class="container" ng-controller="ngContent">
+      <div id="padder"></div>
+      <nav class="l_bar" align="center">
+        <div id="togs">
+          <div  class="i_bar" id="act">
+          <a ng-click="changeTab(0)" class="a_bar" href="javascript:bs(0)">Booking Status</a>
+          </div>
+          <div class="rightDivider"><a class="a_bar"> </a></div>
+          <div class="i_bar">
+          <a ng-click="changeTab(1)" class="a_bar" href="javascript:bs(1)">Running Services</a>
+          </div>
+          <div class="i_bar">
+          <a ng-click="changeTab(2)" class="a_bar" href="javascript:bs(2)">User Queries</a>
+          </div>
+        </div>
+      </nav>
+
+      {{!-- <h3 style="text-align: center;">Current Tab:\{{tab}}</h3> --}}
+      <div id="mainC" class="shadow p-4 mb-4 bg-white">
+        <div id="content_tab0" ng-show="tab==0">
+          <h3>Content0</h3>
+        </div>
+
+        <div id="content_tab1" ng-show="tab==1">
+          <h3>Content1</h3>
+        </div>
+
+        <div id="content_tab6" ng-show="tab==2">
+          <h3>Content2</h3>
+        </div>
+
+      </div>
+
+    </div>
+    </body>
+
+</html>

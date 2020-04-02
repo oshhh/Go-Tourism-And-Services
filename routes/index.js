@@ -43,7 +43,11 @@ router.get('/', function(req, res, next) {
   }
   else
   {
-    res.send("Service Provider Page");
+    res.render('provider',{
+      title:"Providers Dashboard",
+      uid:"RES00001",
+      name:"as",
+    });
     // res.render('user',{title:"Main Page (Index)",name:uname});
   }
   console.log("Index Rendered");

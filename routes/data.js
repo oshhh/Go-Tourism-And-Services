@@ -94,8 +94,7 @@ router.get('/getData', function(req, res, next) {
     case "service_request":
         serverjs.user.getServiceRequests(sendResponse,req.session.uname,
         {});
-      break;
-
+    break;
     case "review":
       serverjs.user.getServiceReview(sendResponse,req.query.service_id);
       break;
@@ -111,6 +110,25 @@ router.get('/getData', function(req, res, next) {
         role: req.query.role,
         email: req.query.email
       });
+    break;
+    case 'user':
+        serverjs.admin.getUsers(sendResponse, {
+          user_id : req.query.user_id,
+          name : req.query.name,
+          email : req.query.email,
+          phone_no : req.query.phone_no,
+          city : req.query.city,        
+        });
+    break;
+    case 'service_provider':
+        serverjs.admin.getServiceProviders(sendResponse, {
+          service_provider_id : req.query.service_provider_id,
+          name : req.query.name,
+          domain : req.query.domain,
+          active : req.query.active,
+          approved : req.query.approved,
+        });
+    break;
     default:
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({msg:"Unknown Request sent"}))

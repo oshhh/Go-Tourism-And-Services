@@ -10,6 +10,24 @@ angularApp.controller("ngContent",function($scope, $http)
 	$scope.admin.email="";
 	$scope.admin.status="Pending";
 
+	$scope.user={};
+	$scope.user.data=[];
+	$scope.user.user_id="";
+	$scope.user.name="";
+	$scope.user.email="";
+	$scope.user.phone_no ="";
+	$scope.user.city="";
+	$scope.user.status="Pending";
+
+	$scope.service_provider={};
+	$scope.service_provider.data=[];
+	$scope.service_provider.service_provider_id="";
+	$scope.service_provider.name="";
+	$scope.service_provider.domain="";
+	$scope.service_provider.active="";
+	$scope.service_provider.approved="";
+	$scope.service_provider.status="Pending";
+
 	$scope.trip={
 		tdateStart:"",
 		tdateEnd:"",
@@ -30,6 +48,14 @@ angularApp.controller("ngContent",function($scope, $http)
 		//Toast on successfull delete
 	}
 	$scope.admin.view=function(it)
+	{
+
+	}
+	$scope.user.view=function(it)
+	{
+
+	}
+	$scope.service_provider.view=function(it)
 	{
 
 	}
@@ -60,6 +86,50 @@ angularApp.controller("ngContent",function($scope, $http)
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
+		} else if(tab == 2) {
+			var newDate = new Date($scope.trip.tdateStart);
+			console.log(newDate.toUTCString());
+			$scope.user.status="Pending";
+			// console.log("sent");
+			$http.get("/data/getData",{params:{
+				type:"user",
+				user_id: "\"%" + $scope.user.user_id + "%\"",
+				name: "\"%" + $scope.user.name + "%\"",
+				email: "\"%" + $scope.user.email + "%\"",
+				phone_no: "\"%" + $scope.user.phone_no + "%\"",
+				city: "\"%" + $scope.user.city + "%\"" ,
+				}}).then(
+				function(data, status, headers, config) {
+				$scope.user.data=data.data.content;
+				$scope.user.data.forEach(element => {
+					element.showRev=false;
+				});
+				$scope.user.status="OK";
+				},function(data, status, headers, config) {
+					console.log("error");
+				});		
+		} else if(tab == 3) {
+			var newDate = new Date($scope.trip.tdateStart);
+			console.log(newDate.toUTCString());
+			$scope.service_provider.status="Pending";
+			// console.log("sent");
+			$http.get("/data/getData",{params:{
+				type:"service_provider",
+				service_provider_id: "\"%" + $scope.service_provider.service_provider_id + "%\"",
+				name: "\"%" + $scope.service_provider.name + "%\"",
+				domain: "\"%" + $scope.service_provider.domain + "%\"",
+				active: "\"%" + $scope.service_provider.active + "%\"" ,
+				approved: "\"%" + $scope.service_provider.approved + "%\"" ,
+				}}).then(
+				function(data, status, headers, config) {
+				$scope.service_provider.data=data.data.content;
+				$scope.service_provider.data.forEach(element => {
+					element.showRev=false;
+				});
+				$scope.service_provider.status="OK";
+				},function(data, status, headers, config) {
+					console.log("error");
+				});		
 		}
 	}
 	$scope.changeTab=function(newTab)

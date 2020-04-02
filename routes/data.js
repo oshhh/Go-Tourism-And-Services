@@ -26,7 +26,7 @@ router.get('/getData', function(req, res, next) {
   switch(req.query.type)
   {
     case 'flight':
-        serverjs.getFlight(sendResponse,{
+        serverjs.getFlights(sendResponse,{
           from_city: req.query.from,
           to_city: req.query.to,
           departure_time: req.query.departure_time
@@ -42,7 +42,7 @@ router.get('/getData', function(req, res, next) {
             bus = result[bus];
             result_[bus.service_id].route = [];
           }
-          serverjs.getRoute(function(routes) {
+          serverjs.getRoutes(function(routes) {
             for(i in routes) {
               if(routes[i].service_id in result_) {
                 result_[routes[i].service_id].route.push(routes[i]);
@@ -102,6 +102,14 @@ router.get('/getData', function(req, res, next) {
     case 'trip':
       serverjs.getTrips(sendResponse,req.query.user_id)
       break;
+    // Admin
+    case 'admin':
+      serverjs.getAdmins(sendResponse, {
+        admin_id: req.query.admin_id,
+        name: req.query.name,
+        role: req.query.role,
+        email: req.query.email
+      })
     default:
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({msg:"Unknown Request sent"}))

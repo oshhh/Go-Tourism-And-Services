@@ -274,23 +274,14 @@ function whereClause(attribute_values) {
     return query;
 }
 
-// Query service providers and services in general
-function getGeneralServiceProviderAndService(callback, attribute_values, rating = 0) {
-    if(Object.keys(attribute_values).length == 0) {
-        attribute_values = assignAttributes(['service_provider', 'service']);
-    }
-    query = 'select * ' + 'from service_provider, service where( (service_provider.active = \'Y\') and (service_provider.service_provider_id = service.service_provider_id) and (' + whereClause(attribute_values) +  ') and service.service_id in (select service_request.service_id from service_request group by(service_id) having avg(service_rating) >= ' + rating + '));'
-    runQuery(callback, query);
-}
 
-// Query on a particular service provider and service based on the attributes
-// No special queries for hotels, restaurants, guide required, this one satisfies all filters
-function getParticularServiceProviderAndService(callback, service_provider, service, attribute_values, rating = 0) {
+// Get flights
+async function getFlights(callback, attribute_values) {
     if(Object.keys(attribute_values).length == 0) {
-        attribute_values = assignAttributes(['service_provider', 'service', service_provider, service]);
+        attribute_values = assignAttributes(['flight', 'service'])
     }
-    query = 'select * ' + 'from service_provider, service, ' + service_provider + ', ' + service + ' where( (service_provider.active = \'Y\') and (service_provider.service_provider_id = service.service_provider_id) and (service_provider.service_provider_id = ' + service_provider + '.service_provider_id' + ') and (service.service_id = ' + service + '.service_id' + ') and (' + whereClause(attribute_values) +  ') and service.service_id in (select service_id from service_request group by(service_id) having avg(rating) > ' + rating +'));'
-    runQuery(callback, query);
+    query = 'select flight.service_id, service_provider_id, from_city, to_city, departure_time, arrival_time, price, discount, (SELECT COALESCE(AVG(user_rating),0) FROM service_request as u where u.service_id=service.service_id)  as rating  from flight, service where ( service.service_id = flight.service_id) and (' + whereClause(attribute_values) + ');'
+    return await runQuery(callback, query);
 }
 
 // Get busses and trains from one location to another
@@ -320,15 +311,6 @@ function getRoutes(callback) {
     runQuery(callback, query);
 }
 
-// Get flights
-async function getFlights(callback, attribute_values) {
-    if(Object.keys(attribute_values).length == 0) {
-        attribute_values = assignAttributes(['flight', 'service'])
-    }
-    query = 'select flight.service_id, service_provider_id, from_city, to_city, departure_time, arrival_time, price, discount, (SELECT COALESCE(AVG(user_rating),0) FROM service_request as u where u.service_id=service.service_id)  as rating  from flight, service where ( service.service_id = flight.service_id) and (' + whereClause(attribute_values) + ');'
-    return await runQuery(callback, query);
-}
-
 // Get taxi
 async function getTaxis(callback, attribute_values) {
     if(Object.keys(attribute_values).length == 0) {
@@ -347,6 +329,21 @@ async function getRooms(callback, attribute_values) {
     return await runQuery(callback, query);
 }
 
+function getFoodItems(callback,filters)
+{
+    query=`
+    select s.service_id,f.name,f.cuisine,s.price,s.discount,p.name as res_name,l.locality,l.city,r.delivers,
+    (SELECT COALESCE(AVG(user_rating),0) FROM service_request as u where u.service_id=s.service_id)  as rating 
+    from food_item as f,service_provider as p,location as l, restaurant as r,service as s 
+    where(
+    f.service_id=s.service_id and 
+    p.service_provider_id=s.service_provider_id and 
+    r.service_provider_id=s.service_provider_id and 
+    l.location_id=r.location_id and
+    f.name like `+filters.name+` and p.name like `+filters.rest+` and r.delivers like `+filters.delivers +`);
+    `
+    runQuery(callback,query);
+}
 
 // Get a list of tourist spots that are in a city, only unvisited or both visited and unvisited
 function getTouristSpots(callback, attribute_values, city, unvisited = false) {
@@ -365,19 +362,8 @@ function getGuides(callback, attribute_values, tourist_spot_name, tourist_spot_c
     if(Object.keys(attribute_values).length == 0) {
         attribute_values = assignAttributes(['guide', 'tourist_spot'])
     }
-    query = 'select * from guide, tourist_spot, location where (guide.tourist_spot_id = tourist_spot.tourist_spot_id) and (tourist_spot.location_id = location.location_id and location.city like ' + tourist_spot_city + ' ) and ( tourist_spot.name like ' + tourist_spot_name + ');';
+    query = 'select * from guide, service, tourist_spot, location where (guide.service_id = service.service_id) and (guide.tourist_spot_id = tourist_spot.tourist_spot_id) and (tourist_spot.location_id = location.location_id and location.city like ' + tourist_spot_city + ' ) and ( tourist_spot.name like ' + tourist_spot_name + ');';
     runQuery(callback, query);
-}
-
-// Add tourist spot to wishlist
-function addTouristSpotToWishlist(user_id, tourist_spot_id) {
-    insertIntoTable('wishlist', {'user_id': user_id, 'tourist_spot_id': tourist_spot_id});
-}
-
-// Add tourist spot to visited 
-function markTouristSpotVisited(trip_id, tourist_spot_id) {
-    insertIntoTable('visited', {'trip_id': trip_id, 'tourist_spot_id': tourist_spot_id});
-    runQuery(callback, 'delete from wishlist where user_id in (select user_id from trip where trip_id = ' + trip_id + ') and tourist_spot_id = ' + tourist_spot_id + ');')
 }
 
 // Filter trips (based on user_id and other attributes)
@@ -418,21 +404,6 @@ function getUserInfo(callback,uid)
 function getAdminInfo(callback,uid)
 {
     query="select * from administrator where admin_id=\""+uid+"\";";
-    runQuery(callback,query);
-}
-function getFoodItems(callback,filters)
-{
-    query=`
-    select s.service_id,f.name,f.cuisine,s.price,s.discount,p.name as res_name,l.locality,l.city,r.delivers,
-    (SELECT COALESCE(AVG(user_rating),0) FROM service_request as u where u.service_id=s.service_id)  as rating 
-    from food_item as f,service_provider as p,location as l, restaurant as r,service as s 
-    where(
-    f.service_id=s.service_id and 
-    p.service_provider_id=s.service_provider_id and 
-    r.service_provider_id=s.service_provider_id and 
-    l.location_id=r.location_id and
-    f.name like `+filters.name+` and p.name like `+filters.rest+` and r.delivers like `+filters.delivers +`);
-    `
     runQuery(callback,query);
 }
 function getServiceReview(callback,service_id)
@@ -486,19 +457,22 @@ main();
 
 
 module.exports = {
+    'user': {
+    'register_user' : register_user,
+    'login_user' : login_user,
+    'deactivate_user' : deactivate_user,
+
+    }
     'tables' : tables,
     'createDatabase' : createDatabase,
     'insertIntoTable' : insertIntoTable,
     'selectAllFromTable' : selectAllFromTable,
-    'register_user' : register_user,
     'register_service_provider' : register_service_provider,
     'register_service':register_service,
     'count_table':count_table,
     'register_administrator' : register_administrator,
-    'login_user' : login_user,
     'login_service_provider' : login_service_provider,
     'login_administrator' : login_administrator,
-    'deactivate_user' : deactivate_user,
     'deactivate_service_provider' : deactivate_service_provider,
     'remove_administrator' : remove_administrator, 
     'getLocations' : getLocations,

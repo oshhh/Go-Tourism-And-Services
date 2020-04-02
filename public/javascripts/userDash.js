@@ -51,6 +51,22 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.room.sortOrder="0";
 	$scope.room.reviews={};
 
+	$scope.tourist_spot={}
+	$scope.tourist_spot.status = "Pending";
+	$scope.tourist_spot.data = [];
+	$scope.tourist_spot.name = "";
+	$scope.tourist_spot.t_type = "";
+	$scope.tourist_spot.city = "";
+	$scope.tourist_spot.sortOrder="0";
+	$scope.tourist_spot.reviews={};
+
+	$scope.guide={}
+	$scope.guide.status = "Pending";
+	$scope.guide.data = [];
+	$scope.guide.tourist_spot_name = "";
+	$scope.guide.tourist_spot_city = "";
+	$scope.guide.sortOrder="0";
+	$scope.guide.reviews={};
 
 	$scope.trip={
 		tdateStart:"",
@@ -180,6 +196,40 @@ angularApp.controller("ngContent",function($scope,$http)
 			console.log("err");
 		});
 	}
+	$scope.tourist_spot.order=function(it)
+	{
+		// alert(it.service_id);
+		// console.log($http.post);
+		$http.post('/data/service_request',JSON.stringify({
+			user_id:$scope.curUser.uid,
+			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
+			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
+			service_id:it.service_id
+		}))
+		.then(function(response){
+			console.log("got");
+		},function(response){
+			console.log("err");
+		});
+	}
+	$scope.guide.order=function(it)
+	{
+		// alert(it.service_id);
+		// console.log($http.post);
+		$http.post('/data/service_request',JSON.stringify({
+			user_id:$scope.curUser.uid,
+			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
+			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
+			service_id:it.service_id
+		}))
+		.then(function(response){
+			console.log("got");
+		},function(response){
+			console.log("err");
+		});
+	}
+
+
 	$scope.food.view=function(it)
 	{
 		if(it.showRev==false)
@@ -320,6 +370,63 @@ angularApp.controller("ngContent",function($scope,$http)
 			it.showRev=false;
 		}
 	}
+	$scope.tourist_spot.view=function(it)
+	{
+		if(it.showRev==false)
+		{
+			$scope.tourist_spot.reviews[it.service_id]={};
+			$scope.tourist_spot.reviews[it.service_id].status="Pending";
+			//get reviews in transport.reviews[serviceID].data
+			// console.log("sent Review")
+			$http.get("/data/getData",{params:{
+				type:"review",
+				service_id:it.service_id
+				}}).then(
+				function(data, status, headers, config) {
+				if(data.data.isRes)
+				{
+					$scope.tourist_spot.reviews[it.service_id].data=data.data.content;
+					$scope.tourist_spot.reviews[it.service_id].status="OK";
+					it.showRev=true;
+				}
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
+			//Turn status OK to replace loading text with comments
+		}
+		else{
+			it.showRev=false;
+		}
+	}
+	$scope.guide.view=function(it)
+	{
+		if(it.showRev==false)
+		{
+			$scope.guide.reviews[it.service_id]={};
+			$scope.guide.reviews[it.service_id].status="Pending";
+			//get reviews in transport.reviews[serviceID].data
+			// console.log("sent Review")
+			$http.get("/data/getData",{params:{
+				type:"review",
+				service_id:it.service_id
+				}}).then(
+				function(data, status, headers, config) {
+				if(data.data.isRes)
+				{
+					$scope.guide.reviews[it.service_id].data=data.data.content;
+					$scope.guide.reviews[it.service_id].status="OK";
+					it.showRev=true;
+				}
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
+			//Turn status OK to replace loading text with comments
+		}
+		else{
+			it.showRev=false;
+		}
+	}
+	
 	$scope.getData=function(tab)
 	{
 		if(tab == 0)
@@ -376,8 +483,7 @@ angularApp.controller("ngContent",function($scope,$http)
 				AC: ( $scope.bus_train.AC == 0) ? ("\"%\"") : ($scope.bus_train.AC == 1 ? "\"B\"" : "\"T\"" )
 				}}).then(
 				function(data, status, headers, config) {
-					$scope.bus_train.data=data.data.content.result;
-					$scope.bus_train.route_data=data.data.content.routes;
+					$scope.bus_train.data=data.data.content;
 					$scope.bus_train.data.forEach(element => {
 					element.showRev=false;
 				});
@@ -451,6 +557,49 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.food.status="OK";
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
+		}
+		else if(tab==6)
+		{
+			var newDate = new Date($scope.trip.tdateStart);
+			console.log(newDate.toUTCString());
+			$scope.food.status="Pending";
+			// console.log("sent");
+			$http.get("/data/getData",{params:{
+				type: "tourist_spot",
+				name: "\"%" + $scope.tourist_spot.name + "%\"",
+				t_type: "\"%" + $scope.tourist_spot.t_type + "%\"",
+				city: "\"%" + $scope.tourist_spot.city + "%\"",
+				}}).then(
+				function(data, status, headers, config) {
+				$scope.tourist_spot.data=data.data.content;
+				$scope.tourist_spot.data.forEach(element => {
+					element.showRev=false;
+				});
+				$scope.tourist_spot.status="OK";
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
+		}
+		else if(tab==7)
+		{
+			var newDate = new Date($scope.trip.tdateStart);
+			console.log(newDate.toUTCString());
+			$scope.guide.status="Pending";
+			// console.log("sent");
+			$http.get("/data/getData",{params:{
+				type: "guide",
+				tourist_spot_name: "\"%" + $scope.guide.tourist_spot_name + "%\"",
+				tourist_spot_city: "\"%" + $scope.guide.tourist_spot_city + "%\"",
+				}}).then(
+				function(data, status, headers, config) {
+				$scope.guide.data=data.data.content;
+				$scope.guide.data.forEach(element => {
+					element.showRev=false;
+				});
+				$scope.guide.status="OK";
 				},function(data, status, headers, config) {
 					console.log("error");
 				});

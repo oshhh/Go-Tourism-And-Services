@@ -1,63 +1,65 @@
 var	angularApp = angular.module("dash", []);
-angularApp.controller("ngContent",function($scope)
+angularApp.controller("ngContent",function($scope, $http)
 {
 	$scope.tab=0;
-	$scope.a={};
-	$scope.a.data=[];
-	$scope.a.aName="";
-	$scope.a.aRole="";
-	$scope.a.aMail="";
-	$scope.a.status="Pending";
-	$scope.a.updateRecord=function(it)
+	$scope.admin={};
+	$scope.admin.data=[];
+	$scope.admin.admin_id="";
+	$scope.admin.name="";
+	$scope.admin.role="";
+	$scope.admin.email="";
+	$scope.admin.status="Pending";
+
+	$scope.trip={
+		tdateStart:"",
+		tdateEnd:"",
+		tcity:""
+	}
+
+
+	$scope.admin.updateRecord=function(it)
 	{
 		// alert(it.service_id);
-		//update records access modified details by it.service_id/name/role/mail
+		//update records access modified details by it.service_id/name/role/email
 		//Toast on successfull update
 	}
-	$scope.a.deleteRecord=function(it)
+	$scope.admin.deleteRecord=function(it)
 	{
 		// alert(it.service_id);
 		//delete record by primary key it.service_id
 		//Toast on successfull delete
 	}
-	$scope.a.view=function(it)
+	$scope.admin.view=function(it)
 	{
 
 	}
 	$scope.getData=function(tab)
 	{
-		if(tab==1)
+		if(tab == 0)
 		{
-			console.log("reached");
-			$scope.a.status="Pending";
-			
-			$scope.a.data=[
-				{
-					service_id:"ADM00001",
-					name:"name1",
-					role:"help",
-					mail:"asb@nsw.com"
-				},
-				{
-					service_id:"ADM00002",
-					name:"name1",
-					role:"help",
-					mail:"asb@nsw.com"
-				},
-				{
-					service_id:"ADM00003",
-					name:"name1",
-					role:"help",
-					mail:"asb@nsw.com"
-				}];
-
-			$scope.a.data.forEach(element => {
-				element.editMode=false;
-			});
-			$scope.a.status="OK";
 		}
-		else{
-
+		else if(tab==1)
+		{
+			var newDate = new Date($scope.trip.tdateStart);
+			console.log(newDate.toUTCString());
+			$scope.admin.status="Pending";
+			// console.log("sent");
+			$http.get("/data/getData",{params:{
+				type:"admin",
+				admin_id: "\"%" + $scope.admin.admin_id + "%\"",
+				name: "\"%" + $scope.admin.name + "%\"",
+				role: "\"%" + $scope.admin.role + "%\"",
+				email: "\"%" + $scope.admin.email + "%\"" 
+				}}).then(
+				function(data, status, headers, config) {
+				$scope.admin.data=data.data.content;
+				$scope.admin.data.forEach(element => {
+					element.showRev=false;
+				});
+				$scope.admin.status="OK";
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
 		}
 	}
 	$scope.changeTab=function(newTab)

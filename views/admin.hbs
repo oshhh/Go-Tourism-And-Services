@@ -44,23 +44,27 @@
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text">Filter Name</span>
+                <span class="input-group-text">ID</span>
               </div>
-              <input ng-model="a.aName" type="text" class="form-control" placeholder="Name">
+              <input ng-model="a.id" type="text" class="form-control" placeholder="Name">
               <div class="input-group-prepend">
-              <span class="input-group-text">Filter Role</span>
+                <span class="input-group-text">Name</span>
               </div>
-              <input ng-model="a.aRole" type="text" class="form-control" placeholder="Role">
+              <input ng-model="admin.name" type="text" class="form-control" placeholder="Name">
               <div class="input-group-prepend">
-              <span class="input-group-text">Filter E-Mail</span>
+              <span class="input-group-text">Role</span>
               </div>
-              <input ng-model="a.aMail" type="text" class="form-control" placeholder="E-Mail">
+              <input ng-model="admin.role" type="text" class="form-control" placeholder="Role">
+              <div class="input-group-prepend">
+              <span class="input-group-text">E-Mail</span>
+              </div>
+              <input ng-model="admin.email" type="text" class="form-control" placeholder="E-Mail">
               <button ng-click="getData(1)" class='btn btn-outline-primary'>Apply Filters</button>
             </div>
 
             {{!-- Filters End --}}
             
-            <h3 style="text-align: center;" ng-show="a.status=='Pending'">Loading Data</h3>
+            <h3 style="text-align: center;" ng-show="admin.status=='Pending'">Loading Data</h3>
             
             <div class="table-responsive">
             <table class="table">
@@ -75,20 +79,20 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="it in a.data">
+            <tr ng-repeat="it in admin.data">
                 <th scope="row">\{{$index}}</th>
                 <td>\{{it.service_id}}</td>
                 <td ng-hide="it.editMode">\{{it.name}}</td>
                 <td ng-hide="it.editMode">\{{it.role}}</td>
-                <td ng-hide="it.editMode">\{{it.mail}}</td>
+                <td ng-hide="it.editMode">\{{it.email}}</td>
                 
                 <td ng-show="it.editMode"><input  ng-model="it.name" class="form-control" value="\{{it.name}}"></td>
                 <td ng-show="it.editMode"><input ng-model="it.role" class="form-control" value="\{{it.role}}"></td>
                 <td ng-show="it.editMode"><input ng-model="it.mail" class="form-control" value="\{{it.mail}}"></td>
                 <td>
                   <button ng-hide="it.editMode" ng-click="it.editMode=true" class="btn btn-outline-primary butTab">Edit</button>
-                  <button ng-show="it.editMode" ng-click="it.editMode=false;a.updateRecord(it);" class="btn btn-outline-primary butTab">Done</button>
-                  <button ng-click="a.updateRecord(it);" class="btn btn-outline-danger butTab">Delete</button>
+                  <button ng-show="it.editMode" ng-click="it.editMode=false;admin.updateRecord(it);" class="btn btn-outline-primary butTab">Done</button>
+                  <button ng-click="admin.updateRecord(it);" class="btn btn-outline-danger butTab">Delete</button>
                 </td>
             </tr>
             </tbody>

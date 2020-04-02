@@ -23,7 +23,7 @@ router.post('/',function(req,res,next){
       }
       // console.log("sending");
       // console.log(data);
-      serverjs.register_administrator(function(result){
+      serverjs.admin.register_administrator(function(result){
         if(result)
         {
           req.session.msg="SAccount Created Succesfully, Login with your username: "+data.admin_id;
@@ -234,7 +234,7 @@ router.post('/',function(req,res,next){
         location_id:"LOC00000",
         active:"Y"
       }
-      serverjs.register_user(function(result){
+      serverjs.user.register_user(function(result){
         if(result)
         {
           req.session.msg="SAccount Created Succesfully, Login with your username: "+data.user_id;

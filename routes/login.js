@@ -56,15 +56,15 @@ router.post('/',function(req,res,next){
   }
   if(uname.startsWith("USR"))
   {
-    req.app.get('dbHandler').login_user(authenticate,uname);
+    req.app.get('dbHandler').user.login_user(authenticate,uname);
   }
   else if(uname.startsWith("ADM"))
   {
-    req.app.get('dbHandler').login_administrator(authenticate,uname);
+    req.app.get('dbHandler').admin.login_administrator(authenticate,uname);
   }
   else
   {
-    req.app.get('dbHandler').login_service_provider(authenticate,uname);
+    req.app.get('dbHandler').service_provider.login_service_provider(authenticate,uname);
   }
   // res.redirect('/..');
   // next();

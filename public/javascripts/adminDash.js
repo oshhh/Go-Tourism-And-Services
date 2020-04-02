@@ -1,17 +1,26 @@
 var	angularApp = angular.module("dash", []);
-angularApp.controller("ngContent",function($scope)
+angularApp.controller("ngContent",function($scope, $http)
 {
 	$scope.tab=0;
 	$scope.admin={};
 	$scope.admin.data=[];
+	$scope.admin.admin_id="";
 	$scope.admin.name="";
 	$scope.admin.role="";
-	$scope.admin.mail="";
+	$scope.admin.email="";
 	$scope.admin.status="Pending";
+
+	$scope.trip={
+		tdateStart:"",
+		tdateEnd:"",
+		tcity:""
+	}
+
+
 	$scope.admin.updateRecord=function(it)
 	{
 		// alert(it.service_id);
-		//update records access modified details by it.service_id/name/role/mail
+		//update records access modified details by it.service_id/name/role/email
 		//Toast on successfull update
 	}
 	$scope.admin.deleteRecord=function(it)
@@ -37,6 +46,7 @@ angularApp.controller("ngContent",function($scope)
 			// console.log("sent");
 			$http.get("/data/getData",{params:{
 				type:"admin",
+				admin_id: "\"%" + $scope.admin.admin_id + "%\"",
 				name: "\"%" + $scope.admin.name + "%\"",
 				role: "\"%" + $scope.admin.role + "%\"",
 				email: "\"%" + $scope.admin.email + "%\"" 

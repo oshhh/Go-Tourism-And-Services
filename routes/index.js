@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
   serverjs=req.app.get('dbHandler');
   if(uname.startsWith("ADM"))
   {
-    serverjs.getAdminInfo(function(result){
+    serverjs.admin.getAdminInfo(function(result){
       if(result)
       {
         res.render('admin',{
@@ -25,7 +25,7 @@ router.get('/', function(req, res, next) {
     },uname);
   }
   else if(uname.startsWith("USR")){
-    serverjs.getUserInfo(function(result)
+    serverjs.user.getUserInfo(function(result)
     {
       if(result)
       {

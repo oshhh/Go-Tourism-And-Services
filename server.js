@@ -388,8 +388,21 @@ function getServiceRequests(callback, user_id, attribute_values) {
     if(Object.keys(attribute_values).length == 0) {
         attribute_values = assignAttributes(['service_request']);
     }
-    runQuery(callback, 'select * from service_request where trip_id in (select trip_id from trip where trip.user_id = \"' + user_id +'\") and (' + whereClause(attribute_values) + ');');
+    query = 'select * from service_request where trip_id in (select trip_id from trip where trip.user_id = \"' + user_id +'\") and (' + whereClause(attribute_values) + ');'
+    runQuery(callback, query);
 }
+
+
+
+function getAdmins(callback, attribute_values) {
+    if(attribute_values == null) {
+        attribute_values = assignAttributes(['administrator'])
+    }
+    query = 'select * from administrator where (' + whereClause(attribute_values) + ')';
+    runQuery(callback, query);
+}
+
+
 
 function count_table(callback,table_name)
 {
@@ -422,7 +435,6 @@ function getTrips(callback,user_id)
     ORDER BY t.departure_date;`
     runQuery(callback,query)
 }
-
 
 async function main() {
     console.log('Start serverjs');
@@ -458,42 +470,42 @@ main();
 
 module.exports = {
     'user': {
-    'register_user' : register_user,
-    'login_user' : login_user,
-    'deactivate_user' : deactivate_user,
+        'register_user' : register_user,
+        'login_user' : login_user,
+        'deactivate_user' : deactivate_user,
+        'getFlights' : getFlights,
+        'getBusTrains' : getBusTrains,
+        'getRoutes' : getRoutes,
+        'getTaxis' : getTaxis,
+        'getRooms' : getRooms,
+        'getFoodItems':getFoodItems,
+        'getTouristSpots' : getTouristSpots,
+        'getGuides' : getGuides,
+        'getServiceRequests' : getServiceRequests,
+        'getUserInfo':getUserInfo,
+    },
+    'admin' : {
+        'register_administrator' : register_administrator,
+        'login_administrator' : login_administrator,
+        'getAdminInfo':getAdminInfo,
+        'remove_administrator' : remove_administrator, 
+        'getAdmins' : getAdmins,
+    },
+    'service_provider' : {
+        'register_service_provider' : register_service_provider,
+        'login_service_provider' : login_service_provider,
+        'register_service':register_service,
+        'deactivate_service_provider' : deactivate_service_provider,
 
-    }
+    },
     'tables' : tables,
     'createDatabase' : createDatabase,
     'insertIntoTable' : insertIntoTable,
     'selectAllFromTable' : selectAllFromTable,
-    'register_service_provider' : register_service_provider,
-    'register_service':register_service,
     'count_table':count_table,
-    'register_administrator' : register_administrator,
-    'login_service_provider' : login_service_provider,
-    'login_administrator' : login_administrator,
-    'deactivate_service_provider' : deactivate_service_provider,
-    'remove_administrator' : remove_administrator, 
     'getLocations' : getLocations,
     'addLocation' : addLocation,
-    'getGeneralServiceProviderAndService' : getGeneralServiceProviderAndService,
-    'getParticularServiceProviderAndService' : getParticularServiceProviderAndService,
-    'getBusTrains' : getBusTrains,
-    'getRoutes' : getRoutes,
-    'getFlights' : getFlights,
-    'getTaxis' : getTaxis,
-    'getRooms' : getRooms,
-    'getTouristSpots' : getTouristSpots,
-    'getGuides' : getGuides,
-    'addTouristSpotToWishlist' : addTouristSpotToWishlist,
-    'markTouristSpotVisited' : markTouristSpotVisited,
-    'getTrips' : getTrips,
     'requestService' : requestService,
     'changeStatusOfServiceRequest' : changeStatusOfServiceRequest,
-    'getServiceRequests' : getServiceRequests,
-    'getUserInfo':getUserInfo,
-    'getAdminInfo':getAdminInfo,
-    'getFoodItems':getFoodItems,
     'getServiceReview':getServiceReview,
 }

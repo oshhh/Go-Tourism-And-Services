@@ -145,9 +145,10 @@ function runQuery(callback, query) {
             return;
         } else {
             console.log(result);
-        }
-        if(callback!=null)
+            if(callback!=null)
             callback(result);
+        }
+
     });
 }
 
@@ -388,7 +389,21 @@ function getServiceRequests(callback, user_id, attribute_values) {
     if(Object.keys(attribute_values).length == 0) {
         attribute_values = assignAttributes(['service_request']);
     }
-    query = 'select distinct * from service_request where trip_id in (select distinct trip_id from trip where trip.user_id = \"' + user_id +'\") and (' + whereClause(attribute_values) + ');'
+    query=''
+    if(user_id.startsWith("USR"))
+    {
+        query = `select distinct * 
+        from service_request
+        where trip_id in (select distinct trip_id from trip where trip.user_id = \"` + user_id +`\") 
+        and (` + whereClause(attribute_values) + `);`;
+    }
+    else{
+        query = `select service_request.*,u.name,u.email,u.address,u.phone_no
+        from service_request,service_provider as p, service as s,user as u,trip as t
+        where (t.user_id=u.user_id and t.trip_id=service_request.trip_id and
+        service_request.service_id=s.service_id and s.service_provider_id=p.service_provider_id 
+        and p.service_provider_id="`+user_id+`");`;
+    }
     runQuery(callback, query);
 }
 
@@ -449,6 +464,14 @@ function getTrips(callback,user_id)
     where(u.user_id=t.user_id and u.user_id REGEXP "`+user_id+`")
     ORDER BY t.departure_date;`
     runQuery(callback,query)
+}
+
+function updateOneColumn(callback,data)
+{
+    query=`update `+data.table_name+`
+    set `+data.column_name+` = "`+data.newValue+`" 
+    where `+data.whereColumn+` = "`+data.whereValue+`";`;
+    runQuery(callback,query);
 }
 
 async function main() {
@@ -525,4 +548,5 @@ module.exports = {
     'requestService' : requestService,
     'changeStatusOfServiceRequest' : changeStatusOfServiceRequest,
     'getServiceReview':getServiceReview,
+    'updateOneColumn':updateOneColumn
 }

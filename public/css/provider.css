@@ -4,3 +4,16 @@
   border-radius: 5px;
   padding: 20px;
 }
+th,td{
+  width: 100px;
+}
+th:last-child,td:last-child{
+  width: 200px;
+  text-align: center;
+}
+h6{
+  margin: 30px;
+}
+button{
+  margin: 20px;
+}

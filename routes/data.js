@@ -7,6 +7,7 @@ router.get('/getData', function(req, res, next) {
   sendResponse=function(result){
     if(result)
     {
+      console.log("got result",result)
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({
         isRes:true,
@@ -139,6 +140,19 @@ router.post('/service_request',function(req, res, next){
   console.log(util.inspect(req.body, false,null,true));
   serverjs=req.app.get('dbHandler');
   //insert into table service Request
+});
+router.post('/updateData', function(req, res, next) {
+  console.log("REQS");
+  console.log(util.inspect(req.body, false,null,true));
+  serverjs=req.app.get('dbHandler');
+  serverjs.updateOneColumn(function(result){
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({
+      isRes:true,
+      msg:"Query OK: sending result",
+      content:result
+    }));
+  },req.body);
 });
 
 module.exports = router;

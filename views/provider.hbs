@@ -35,7 +35,45 @@
       {{!-- <h3 style="text-align: center;">Current Tab:\{{tab}}</h3> --}}
       <div id="mainC" class="shadow p-4 mb-4 bg-white">
         <div id="content_tab0" ng-show="tab==0">
-          <h3>Content0</h3>
+          <h3>Service Requests</h3>
+
+
+            <div id="table1" class="rowsCont card-rows">
+              <div ng-repeat="it in reqs.data" class="rowElement card shadow p-4 mb-4 bg-white">
+              <div class="card-header text-center bg-white align-middle">Request by \{{it.name}} at \{{it.timestamp.replace('T',' on ')}}</div>
+              <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
+                <div>
+                  <h6>Details Of Service Request</h6>
+                  <ul style="list-style-type: none;" ng-repeat="(k,v) in it">
+                    <li ng-hide="k==updateResult">\{{k}} : \{{v}}</li>
+                  </ul>
+                </div>
+                <div class="d-flex flex-column justify-content-around">
+                  <div>
+                    <h6>Change Status</h6>
+                    <select ng-model="it.status" ng-change="changeStatus(it)"class="form-control">
+                      <option>Pending</option>
+                      <option>Accepted</option>
+                      <option>Rejected</option>
+                      <option>Completed</option>
+                      <option>Paid</option>
+                    </select>
+                    <br><br>
+                    <h6>Give User Rating (<span style="font-family: monospace;">\{{it.user_rating}}</span>)</h6>
+                    <div class="input-group mb-3">
+                    <input type="range" class="custom-range" min="0" max="5" class="form-control" ng-model="it.user_rating" ng-bind="it.user_rating">
+                    {{!-- <input class="form-control" type="text" ng-model="it.user_rating" ng-bind="it.user_rating" style="text-align: center;"> --}}
+                    </div>
+                    <br>
+                    <button ng-click="changeRating(it)" type="button" class="btn btn-primary">Update</button>
+                  </div>
+                    <h6>\{{it.updateResult}}</h6>
+                </div>
+
+              </div>
+              </div>
+            </div>
+
         </div>
 
         <div id="content_tab1" ng-show="tab==1">

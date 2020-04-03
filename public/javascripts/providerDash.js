@@ -1,6 +1,7 @@
 var	angularApp = angular.module("dash", []);
 angularApp.controller("ngContent",function($scope,$http)
 {
+	$scope.statusLabels={0:"Pending", 1:"Accepted", 2:"Rejected", 3:"Completed", 4:"Paid"};
 	$scope.tab=0;
 	$scope.curUser={
 		name:document.getElementById("nmU").innerHTML,
@@ -8,7 +9,53 @@ angularApp.controller("ngContent",function($scope,$http)
 	};
 	$scope.reqs={
 		data:[],
-		status:"Pending"
+		status:"Pending",
+	}
+	$scope.changeStatus=function(it)
+	{
+		it.updateResult="Sending";
+		$http.post('/data/updateData',JSON.stringify({
+			table_name:"service_request",
+			column_name:"status",
+			newValue:it.status,
+			whereColumn:"request_id",
+			whereValue:it.request_id
+		}))
+		.then(function(response){
+			if(response.data.content.affectedRows==0)
+			{
+				it.updateResult="Data Not updated";
+			}
+			else{
+				it.updateResult="Data updated";
+			}
+			console.log(response);
+		},function(response){
+			console.log("err");
+		});
+	}
+	$scope.changeRating=function(it)
+	{
+		it.updateResult="Sending";
+		$http.post('/data/updateData',JSON.stringify({
+			table_name:"service_request",
+			column_name:"user_rating",
+			newValue:it.user_rating,
+			whereColumn:"request_id",
+			whereValue:it.request_id
+		}))
+		.then(function(response){
+			if(response.data.content.affectedRows==0)
+			{
+				it.updateResult="Data Not updated";
+			}
+			else{
+				it.updateResult="Data updated";
+			}
+			console.log(response);
+		},function(response){
+			console.log("err");
+		});
 	}
 	//sends get request with inputparams and put that data into destOBJ object
 	$scope.putData=function(sourceUrl,inputParams,destObj,callback)
@@ -31,9 +78,12 @@ angularApp.controller("ngContent",function($scope,$http)
 		{
 			console.log("sending");
 			$scope.reqs.status="Pending";
-			$scope.putData('/data/getData',{type:'service_request'},$scope.reqs,function(result){
+			$scope.putData('/data/getData',{type:'service_request'},$scope.reqs,function(){
+				$scope.reqs.data.forEach(element => {
+					element.updateResult="";
+				});
 				console.log('Got Everything');
-				console.log(result);
+				console.log($scope.reqs);
 			})
 		}
 		else if(tab==1)
@@ -52,6 +102,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		$scope.getData(newTab);
 		console.log("change Tab: "+newTab);
 	}
+	$scope.changeTab(0);
 	console.log("init Done");
 	console.log($scope.tab);
 });

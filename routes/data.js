@@ -23,6 +23,9 @@ router.get('/getData', function(req, res, next) {
       }));
     }
   };
+  let prov=".*"
+  if(req.query.service_provider_id)
+  prov=req.query.service_provider_id;
   serverjs=req.app.get('dbHandler');
   switch(req.query.type)
   {
@@ -31,7 +34,9 @@ router.get('/getData', function(req, res, next) {
         serverjs.user.getFlights(sendResponse,{
           from_city: req.query.from,
           to_city: req.query.to,
-          departure_time: req.query.departure_time
+          departure_time: req.query.departure_time,
+          service_provider_id: prov
+          
         });       
     break;
     case 'bus_train':
@@ -56,14 +61,16 @@ router.get('/getData', function(req, res, next) {
             sendResponse(result);
           });
         }, req.query.t_type, req.query.from, req.query.to, {
-          AC: req.query.AC
+          AC: req.query.AC,
+          service_provider_id: prov
         });      
     break;
     case 'taxi':
         serverjs.user.getTaxis(sendResponse, {
           car_name: req.query.car_name,
           capacity: req.query.capacity,
-          AC: req.query.AC
+          AC: req.query.AC,
+          service_provider_id: prov
         });       
     break;
     case 'room':
@@ -72,14 +79,16 @@ router.get('/getData', function(req, res, next) {
           city: req.query.city,
           room_type: req.query.room_type,
           capacity: req.query.capacity,
-          wifi_facility: req.query.wifi_facility
+          wifi_facility: req.query.wifi_facility,
+          service_provider_id: prov
         });      
     break;
     case 'food':
       serverjs.user.getFoodItems(sendResponse,{
         name:(req.query.fname=="")?(".*"):(req.query.fname),
         rest:(req.query.rname=="")?(".*"):(req.query.rname),
-        delivers: req.query.delivers
+        delivers: req.query.delivers,
+        service_provider_id: prov
       });
     break;
     case 'tourist_spot':
@@ -130,6 +139,11 @@ router.get('/getData', function(req, res, next) {
           approved : req.query.approved,
         });
     break;
+    case 'services':
+      serverjs.getServices(sendResponse,{
+
+      })
+      break;
     default:
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({msg:"Unknown Request sent"}))

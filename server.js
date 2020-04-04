@@ -473,7 +473,11 @@ function updateOneColumn(callback,data)
     where `+data.whereColumn+` = "`+data.whereValue+`";`;
     runQuery(callback,query);
 }
-
+function getServices(callback,data)
+{
+    query=`as`;
+    runQuery(query);
+}
 async function main() {
     console.log('Start serverjs');
     await connect();
@@ -536,7 +540,7 @@ module.exports = {
         'login_service_provider' : login_service_provider,
         'register_service':register_service,
         'deactivate_service_provider' : deactivate_service_provider,
-
+        'getServices':getServices
     },
     'tables' : tables,
     'createDatabase' : createDatabase,

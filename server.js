@@ -117,7 +117,8 @@ var con = mysql.createConnection({
   host: "remotemysql.com",
   user: "lHyGk3wWaK",
   password: "IAahckiJYJ",
-  database: "lHyGk3wWaK"
+  database: "lHyGk3wWaK",
+  multipleStatements: true
 });
 
 // var con = mysql.createConnection({
@@ -151,7 +152,12 @@ function runQuery(callback, query) {
 
     });
 }
-
+function runTransaction(callback,queries)
+{
+    console.log("Transaction Run/ :");
+    console.log(queries);
+    // con.query(queries,)
+}
 function insertIntoTable(callback,table_name, data) {
     query = 'insert into '+table_name+' values ('
     for(i = 0; i <tables[table_name].length;i++) {
@@ -175,27 +181,37 @@ function register_user(callback,user) {
 }
 function register_service(callback,service_type,service)
 {
-    insertIntoTable('service', service);
-    switch(service_type){
-        case 'hotel':
-            insertIntoTable(callback,'room', service);
-            break;
-        case 'restaurant':
-            insertIntoTable(callback,'food_item', service);
-            break;
-        case 'airline':
-            insertIntoTable(callback,'flight', service);
-            break;
-        case 'bus':
-            insertIntoTable(callback,'bus', service);
-            break;
-        case 'train':
-            insertIntoTable(callback,'train', service);
-            break;
-        case 'taxi':
-            insertIntoTable(callback,'taxi', service);
-            break;
-    }
+    insertIntoTable(function(result){
+        if(result)
+        {
+            console.log('inserted main');
+            console.log(service_type);
+            switch(service_type){
+                case 'hotel':
+                    insertIntoTable(callback,'room', service);
+                    break;
+                case 'restaurant':
+                    insertIntoTable(callback,'food_item', service);
+                    break;
+                case 'airline':
+                    insertIntoTable(callback,'flight', service);
+                    break;
+                case 'bus':
+                    insertIntoTable(callback,'bus', service);
+                    break;
+                case 'train':
+                    insertIntoTable(callback,'train', service);
+                    break;
+                case 'taxi':
+                    insertIntoTable(callback,'taxi', service);
+                    break;
+            }
+        }
+        else{
+            callback(null);
+        }
+    },'service', service);
+    
 }
 function register_service_provider(callback,service_provider) {
     if(service_provider['domain'] == 'hotel' | service_provider['domain'] == 'restaurant') {
@@ -341,7 +357,8 @@ function getFoodItems(callback,filters)
     p.service_provider_id=s.service_provider_id and 
     r.service_provider_id=s.service_provider_id and 
     l.location_id=r.location_id and
-    f.name like `+filters.name+` and p.name like `+filters.rest+` and r.delivers like `+filters.delivers +`);
+    f.name like `+filters.name+` and p.name like `+filters.rest+` and r.delivers like `+filters.delivers +`
+    and p.service_provider_id like `+filters.service_provider_id+`);
     `
     runQuery(callback,query);
 }
@@ -473,9 +490,19 @@ function updateOneColumn(callback,data)
     where `+data.whereColumn+` = "`+data.whereValue+`";`;
     runQuery(callback,query);
 }
+function updateList(callback,data)
+{
+    query='';
+    for(i in data){
+        query+='update '+data[i].table_name+
+        ' set '+data[i].column_name+' = "'+data[i].newValue+
+        '" where '+data[i].whereColumn+' = "'+data[i].whereValue+'";';
+    }
+    runQuery(callback,query);
+}
 function getServices(callback,data)
 {
-    query=`as`;
+    query=`blank`;
     runQuery(query);
 }
 async function main() {
@@ -552,5 +579,6 @@ module.exports = {
     'requestService' : requestService,
     'changeStatusOfServiceRequest' : changeStatusOfServiceRequest,
     'getServiceReview':getServiceReview,
-    'updateOneColumn':updateOneColumn
+    'updateOneColumn':updateOneColumn,
+    'updateList':updateList
 }

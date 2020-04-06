@@ -3,39 +3,10 @@ body{
     font-family: Roboto;
     color: #5D6063;
 }
-.container{
-    margin-top: 10%;
-}
-@media (max-width: 800px) {
-    .container{
-        margin-top: 20%;
-    }
-}
-@media (max-width: 500px) {
-    .container{
-        margin-top: 25%;
-    }
-}
 h1{
     font-family: Roboto;
 }
-.navbar{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 
-    /* height: 20vh; */
-    /* width: 100%; */
-    background-color: #FFF;
-    font-family: Roboto;
-    font-size:1.3em;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    border-bottom: 2px solid #CCC;
-    box-shadow: 0 0 10px #AAA;
-    z-index: 1;
-}
 .n-item{
     margin: 10px;
 }
@@ -141,4 +112,85 @@ h3{
 table{
     table-layout: fixed;
     width: 100%;
+}
+.head-side{
+    background-color: #FFF;
+}
+.top_sidebar{
+    display: inline;
+    vertical-align: middle;
+}
+#side-toggle{
+    border: 2px solid #AAA;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: -25px;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    background-color: #FFF;
+    padding-top:11px;
+    cursor: pointer;
+    transition: border-color 1s, background-color 1s;
+}
+#side-toggle:hover{
+    border-color: #555;
+    box-shadow: 0px 8px 16px 0px #AAA;
+}
+/* #side-toggle:focus{
+    background-color: aquamarine;
+} */
+#side-content{
+    display: flex;
+    justify-content:space-evenly;
+    flex-direction: column;
+}
+#sidebar{
+    position: fixed;
+    /* padding-left: 20px; */
+    top: 75px;
+    right: -380px;
+    width: 400px;
+    bottom: 0px;
+    z-index:2 ;
+    font-family: Roboto;
+    font-size:1em;
+    box-shadow: 0 0 10px #AAA;
+    border-left: 2px solid #BBB;
+    background-color: #FFF;
+    overflow-x: visible;
+    transition: right 0.2s;
+}
+.navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    /* height: 20vh; */
+    /* width: 100%; */
+    background-color: #FFF;
+    font-family: Roboto;
+    font-size:1.3em;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    border-bottom: 2px solid #CCC;
+    box-shadow: 0 0 10px #AAA;
+    height: 75px;
+    z-index: 1;
+}
+.container{
+    margin-top: 75px;
+}
+@media (max-width: 800px) {
+    .navbar{
+        height: 150px;
+    }
+    #sidebar{
+        top:150px;
+    }
+    .container{
+        margin-top: 150px;
+    }
 }

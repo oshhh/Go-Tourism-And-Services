@@ -12,7 +12,7 @@
     <body ng-app="dash">
       <div class="navbar navbar-default fixed-top">
         <div class='n-item'>Service Provider Dashboard</div>
-        <div class='n-item'>Welcome <span id="nmU">{{name}}</span> (username:<span id="idU">{{uid}}</span>)</div>
+        <div class='n-item'>Welcome <span id="nmU">{{name}}</span> (userID:<span id="idU">{{uid}}</span>)</div>
         <a href="/logout"><button class='btn btn-outline-primary'>Logout</button></a>
       </div>
     <div class="container" ng-controller="ngContent">
@@ -32,10 +32,17 @@
         </div>
       </nav>
 
+      <div id="sidebar">
+        <div onclick="toggle_sidebar()" ng-click="toggle_sidebar" id="side-toggle"><strong>S</strong></div>
+        <div id="side-content">
+          <h3 style="text-align: center;">Content SideBar</h3>
+        </div>
+      </div>
+
       {{!-- <h3 style="text-align: center;">Current Tab:\{{tab}}</h3> --}}
       <div id="mainC" class="shadow p-4 mb-4 bg-white">
         <div id="content_tab0" ng-show="tab==0">
-          <h3>Service Requests</h3>
+          <h5 style="text-align: center;">Service Requests</h5>
 
 
             <div id="table1" class="rowsCont card-rows">
@@ -43,7 +50,6 @@
               <div class="card-header text-center bg-white align-middle">Request by \{{it.name}} at \{{it.timestamp.replace('T',' on ')}}</div>
               <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
                 <div>
-                  <h6>Details Of Service Request</h6>
                   <ul style="list-style-type: none;" ng-repeat="(k,v) in it">
                     <li ng-hide="k==updateResult">\{{k}} : \{{v}}</li>
                   </ul>
@@ -77,7 +83,55 @@
         </div>
 
         <div id="content_tab1" ng-show="tab==1">
-          <h3>Content1</h3>
+          <div id="table1" class="rowsCont card-rows">
+            <div class="rowElement card shadow p-4 mb-4 bg-white">
+              <div class="d-flex flex-row justify-content-between">
+                <button ng-click="addServiceForm()" class="btn btn-success d-flex align-items-center">Add New</button>
+                <h6class="d-flex align-items-center">\{{currentServices.createStatus}}</h6>
+              </div>
+            </div>
+            <div ng-show="currentServices.showNew" class="rowElement card shadow p-4 mb-4 bg-white">
+              <div>
+                  <div ng-repeat="e in currentServices.model.newModel" class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">\{{e.name}}</span>
+                      <input ng-model="currentServices.newData[e.value]" ng-show="e.type==0" type="text" class="form-control">
+                      <textarea ng-model="currentServices.newData[e.value]" ng-show="e.type==1" class="form-control"></textarea>
+                    </div>
+                  </div>
+                <button ng-click="createService()" class="btn btn-success">Create</button>
+
+              </div>
+            </div>
+            <div ng-repeat="it in currentServices.data" class="rowElement card shadow p-4 mb-4 bg-white">
+              <div class="card-header text-center bg-white align-middle">\{{currentServices.model.header.name}} : \{{it[currentServices.model.header.value]}}</div>
+                <div  style="margin: 20px;" class="d-flex flex-row justify-content-between">
+                  <div>
+                  <h7>Edit Details</h7>
+                  <br>
+                  <label ng-repeat="v in currentServices.model.view">\{{v.name}} : \{{it[v.value]}}</label>
+                  <div ng-repeat="e in currentServices.model.editable" class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">\{{e.name}}</span>
+                      <input ng-model="it[e.value]" ng-show="e.type==0" type="text" class="form-control" value="\{{it[e.value]}}">
+                      <textarea ng-model="it[e.value]" ng-show="e.type==1" class="form-control">\{{it[e.value]}}</textarea>
+                    </div>
+                  </div>
+
+                  </div>                  
+
+                  <div class="d-flex flex-column justify-content-start">
+                    <br>
+                    <button ng-click="updateService(it)" class="btn btn-primary">Update</button>
+                    <br>
+                    <button ng-click="deleteService(it)" class="btn btn-danger">Delete</button>
+                    <br>
+                    <h6>\{{it.updateResult}}</h6>
+                  </div>
+
+                </div>
+            </div>
+          </div>
         </div>
 
         <div id="content_tab6" ng-show="tab==2">
@@ -85,6 +139,7 @@
         </div>
 
       </div>
+      
 
     </div>
     </body>

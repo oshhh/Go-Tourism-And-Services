@@ -96,7 +96,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.getTrips=function()
 	{
 		rest={};
-		$scope.putData('/data/getData',{type:'trip',user_id:$scope.curUser.uid},rest,
+		$scope.putData('/api/getData',{type:'trip',user_id:$scope.curUser.uid},rest,
 		function(){
 			console.log("got trips");
 			console.log(rest);
@@ -120,7 +120,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		// alert(it.service_id);
 		// console.log($http.post);
-		$http.post('/data/service_request',JSON.stringify({
+		$http.post('/api/service_request',JSON.stringify({
 			user_id:$scope.curUser.uid,
 			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
 			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
@@ -136,7 +136,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		// alert(it.service_id);
 		// console.log($http.post);
-		$http.post('/data/service_request',JSON.stringify({
+		$http.post('/api/service_request',JSON.stringify({
 			user_id:$scope.curUser.uid,
 			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
 			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
@@ -152,7 +152,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		// alert(it.service_id);
 		// console.log($http.post);
-		$http.post('/data/service_request',JSON.stringify({
+		$http.post('/api/service_request',JSON.stringify({
 			user_id:$scope.curUser.uid,
 			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
 			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
@@ -168,7 +168,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		// alert(it.service_id);
 		// console.log($http.post);
-		$http.post('/data/service_request',JSON.stringify({
+		$http.post('/api/service_request',JSON.stringify({
 			user_id:$scope.curUser.uid,
 			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
 			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
@@ -184,7 +184,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		// alert(it.service_id);
 		// console.log($http.post);
-		$http.post('/data/service_request',JSON.stringify({
+		$http.post('/api/service_request',JSON.stringify({
 			user_id:$scope.curUser.uid,
 			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
 			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
@@ -200,7 +200,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		// alert(it.service_id);
 		// console.log($http.post);
-		$http.post('/data/service_request',JSON.stringify({
+		$http.post('/api/service_request',JSON.stringify({
 			user_id:$scope.curUser.uid,
 			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
 			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
@@ -216,7 +216,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		// alert(it.service_id);
 		// console.log($http.post);
-		$http.post('/data/service_request',JSON.stringify({
+		$http.post('/api/service_request',JSON.stringify({
 			user_id:$scope.curUser.uid,
 			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
 			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
@@ -238,7 +238,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			$scope.food.reviews[it.service_id].status="Pending";
 			//get reviews in f.reviews[serviceID].data
 			// console.log("sent Review")
-			$http.get("/data/getData",{params:{
+			$http.get("/api/getData",{params:{
 				type:"review",
 				service_id:it.service_id
 				}}).then(
@@ -266,7 +266,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			$scope.flight.reviews[it.service_id].status="Pending";
 			//get reviews in transport.reviews[serviceID].data
 			// console.log("sent Review")
-			$http.get("/data/getData",{params:{
+			$http.get("/api/getData",{params:{
 				type:"review",
 				service_id:it.service_id
 				}}).then(
@@ -294,7 +294,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			$scope.bus_train.reviews[it.service_id].status="Pending";
 			//get reviews in transport.reviews[serviceID].data
 			// console.log("sent Review")
-			$http.get("/data/getData",{params:{
+			$http.get("/api/getData",{params:{
 				type:"review",
 				service_id:it.service_id
 				}}).then(
@@ -322,7 +322,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			$scope.taxi.reviews[it.service_id].status="Pending";
 			//get reviews in transport.reviews[serviceID].data
 			// console.log("sent Review")
-			$http.get("/data/getData",{params:{
+			$http.get("/api/getData",{params:{
 				type:"review",
 				service_id:it.service_id
 				}}).then(
@@ -350,7 +350,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			$scope.room.reviews[it.service_id].status="Pending";
 			//get reviews in transport.reviews[serviceID].data
 			// console.log("sent Review")
-			$http.get("/data/getData",{params:{
+			$http.get("/api/getData",{params:{
 				type:"review",
 				service_id:it.service_id
 				}}).then(
@@ -378,7 +378,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			$scope.tourist_spot.reviews[it.service_id].status="Pending";
 			//get reviews in transport.reviews[serviceID].data
 			// console.log("sent Review")
-			$http.get("/data/getData",{params:{
+			$http.get("/api/getData",{params:{
 				type:"review",
 				service_id:it.service_id
 				}}).then(
@@ -406,7 +406,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			$scope.guide.reviews[it.service_id].status="Pending";
 			//get reviews in transport.reviews[serviceID].data
 			// console.log("sent Review")
-			$http.get("/data/getData",{params:{
+			$http.get("/api/getData",{params:{
 				type:"review",
 				service_id:it.service_id
 				}}).then(
@@ -433,7 +433,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		{
 			$scope.food.status="Pending";
 			console.log("sent");
-			$http.get("/data/getData",{params:{
+			$http.get("/api/getData",{params:{
 				type:"service_request"
 				}}).then(
 				function(data, status, headers, config) {
@@ -453,7 +453,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			console.log(newDate.toUTCString());
 			$scope.flight.status="Pending";
 			// console.log("sent");
-			$http.get("/data/getData",{params:{
+			$http.get("/api/getData",{params:{
 				type:"flight",
 				from: "\"%" + $scope.flight.from_city + "%\"",
 				to: "\"%" + $scope.flight.to_city + "%\"",
@@ -475,7 +475,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			console.log(newDate.toUTCString());
 			$scope.taxi.status="Pending";
 			// console.log("sent");
-			$http.get("/data/getData",{params:{
+			$http.get("/api/getData",{params:{
 				type:"bus_train",
 				t_type : ( $scope.bus_train.t_type == 0) ? ("\"%\"") : ($scope.bus_train.t_type == 1 ? "\"Y\"" : "\"N\"" ),
 				from: "\"%" + $scope.bus_train.from + "%\"",
@@ -498,7 +498,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			console.log(newDate.toUTCString());
 			$scope.taxi.status="Pending";
 			// console.log("sent");
-			$http.get("/data/getData",{params:{
+			$http.get("/api/getData",{params:{
 				type:"taxi",
 				car_name: "\"%" + $scope.taxi.car_name + "%\"",
 				capacity:  ($scope.taxi.capacity == "" ? "\"%\"" : $scope.taxi.capacity) ,
@@ -521,7 +521,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			$scope.room.status="Pending";
 			// console.log("sent");
 			console.log("room!");
-			$http.get("/data/getData",{params:{
+			$http.get("/api/getData",{params:{
 				type:"room",
 				name: "\"%" + $scope.room.name + "%\"",
 				city: "\"%" + $scope.room.city + "%\"",
@@ -545,7 +545,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			console.log(newDate.toUTCString());
 			$scope.food.status="Pending";
 			// console.log("sent");
-			$http.get("/data/getData",{params:{
+			$http.get("/api/getData",{params:{
 				type: "food",
 				fname: "\"%" + $scope.food.fname + "%\"",
 				rname: "\"%" + $scope.food.rname + "%\"",
@@ -567,7 +567,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			console.log(newDate.toUTCString());
 			$scope.food.status="Pending";
 			// console.log("sent");
-			$http.get("/data/getData",{params:{
+			$http.get("/api/getData",{params:{
 				type: "tourist_spot",
 				name: "\"%" + $scope.tourist_spot.name + "%\"",
 				t_type: "\"%" + $scope.tourist_spot.t_type + "%\"",
@@ -589,7 +589,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			console.log(newDate.toUTCString());
 			$scope.guide.status="Pending";
 			// console.log("sent");
-			$http.get("/data/getData",{params:{
+			$http.get("/api/getData",{params:{
 				type: "guide",
 				tourist_spot_name: "\"%" + $scope.guide.tourist_spot_name + "%\"",
 				tourist_spot_city: "\"%" + $scope.guide.tourist_spot_city + "%\"",

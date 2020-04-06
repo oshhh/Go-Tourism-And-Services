@@ -155,8 +155,8 @@ router.post('/service_request',function(req, res, next){
   serverjs=req.app.get('dbHandler');
   //insert into table service Request
 });
-router.post('/updateData', function(req, res, next) {
-  console.log("REQS");
+router.put('/updateData', function(req, res, next) {
+  // console.log("REQS");
   console.log(util.inspect(req.body, false,null,true));
   serverjs=req.app.get('dbHandler');
   serverjs.updateOneColumn(function(result){
@@ -168,5 +168,44 @@ router.post('/updateData', function(req, res, next) {
     }));
   },req.body);
 });
-
+router.put('/updateList', function(req, res, next) {
+  console.log("Update LIst");
+  console.log(util.inspect(req.body, false,null,true));
+  serverjs=req.app.get('dbHandler');
+  serverjs.updateList(function(result){
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({
+      isRes:true,
+      msg:"Query OK: sending result",
+      content:result
+    }));
+  },req.body);
+});
+router.post('/addService',function(req,res,next){
+  sendResponse=function(result){
+    if(result)
+    {
+      console.log("got result",result)
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({
+        isRes:true,
+        msg:"Query OK: sending result",
+        content:result
+      }));
+    }
+    else{
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({
+        isRes:false,
+        msg:"Unknown Request sent"
+      }));
+    }
+  };
+  console.log(util.inspect(req.body, false,null,true));
+  serverjs=req.app.get('dbHandler');
+  serverjs.count_table(function(result){
+    req.body.service_id=req.body.prefix+("00000" + result[0]['cnt']).slice(-5);
+    serverjs.service_provider.register_service(sendResponse,req.body.type,req.body);
+  },'service');
+});
 module.exports = router;

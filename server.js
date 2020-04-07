@@ -474,14 +474,14 @@ function getServiceReview(callback,service_id)
     runQuery(callback,query);
 }
 
-function getTrips(callback,user_id)
-{
-    query=`select distinct t.trip_id,u.user_id,t.departure_date,t.arrival_date,t.city
-    from trip as t,user as u
-    where(u.user_id=t.user_id and u.user_id REGEXP "`+user_id+`")
-    ORDER BY t.departure_date;`
-    runQuery(callback,query)
-}
+// function getTrips(callback,user_id)
+// {
+//     query=`select distinct t.trip_id,u.user_id,t.departure_date,t.arrival_date,t.city
+//     from trip as t,user as u
+//     where(u.user_id=t.user_id and u.user_id REGEXP "`+user_id+`")
+//     ORDER BY t.departure_date;`
+//     runQuery(callback,query)
+// }
 
 function updateOneColumn(callback,data)
 {
@@ -550,6 +550,7 @@ module.exports = {
         'getFoodItems':getFoodItems,
         'getTouristSpots' : getTouristSpots,
         'getGuides' : getGuides,
+        'getTrips' : getTrips,
         'getServiceRequests' : getServiceRequests,
         'getUserInfo':getUserInfo,
     },

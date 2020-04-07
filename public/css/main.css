@@ -133,6 +133,7 @@ table{
     padding-top:11px;
     cursor: pointer;
     transition: border-color 1s, background-color 1s;
+    z-index: 2;
 }
 #side-toggle:hover{
     border-color: #555;
@@ -150,7 +151,7 @@ table{
     position: fixed;
     /* padding-left: 20px; */
     top: 75px;
-    right: -380px;
+    right: 0px;
     width: 400px;
     bottom: 0px;
     z-index:2 ;

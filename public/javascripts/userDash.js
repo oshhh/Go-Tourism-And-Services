@@ -79,7 +79,8 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.trip={
 		tdateStart:"",
 		tdateEnd:"",
-		tcity:""
+		tcity:"",
+		formStatus:0
 	}
 	$scope.curUser={
 		name:document.getElementById("nmU").innerHTML,
@@ -619,7 +620,18 @@ angularApp.controller("ngContent",function($scope,$http)
 		$scope.getData(newTab);
 		console.log("change Tab: "+newTab);
 	}
-
+	$scope.openTripMenu=function(){
+		$scope.trip.formStatus=1;
+	}
+	$scope.addTrip=function()
+	{
+		$scope.trip.formStatus=0;
+		// console.log("Trip MEnu")
+	}
+	$scope.selectTrip=function(it)
+	{
+		alert("works");
+	}
 	console.log("init Done");
 	$scope.getTrips();
 });
@@ -637,4 +649,10 @@ function bs(current)
 		all[i].id="act"
 		}	
 	}
+}
+function toggle_sidebar()
+{
+	sidebarDOM=document.getElementById("sidebar");
+	sidebarDOM.style.right=(sidebarDOM.style.right=="-380px")?("0px"):("-380px");
+	console.log("called toggle"+sidebarDOM.style.right);
 }

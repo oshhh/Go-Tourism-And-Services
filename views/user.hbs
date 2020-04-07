@@ -118,16 +118,18 @@
           <div id="table2" class="rowsCont card-rows">
             <div ng-repeat="it in service_request.data" class="rowElement card shadow p-4 mb-4 bg-white">
               <div class="card-header text-center bg-white align-middle">Trip ID: \{{it.trip_id}}</div>
-              <div id="table3" class="rowsCont card-rows">
+              <label style="align-middle">Destination: \{{it.city}}</label>
+              <label style="align-middle">Departure Date: \{{it.departure_date}}</label>
+              <label style="align-middle">Return Date: \{{it.arrival_date}}</label>
                 <div ng-repeat="it2 in it.service_requests" class="rowElement card shadow p-4 mb-4 bg-white">
-                  <div class="cardText card-text">Service Request ID: \{{it2.service_request_id}}<br> Request Timestamp: \{{it2.timestamp}}</div>
-                  <div class="cardText card-text">Status: \{{it2.status}}</div>
+                  <label> Service Request: \{{it2.request_id}} </label>
+                  <label> Service ID: \{{it2.service_id}} </label>
+                  <label> Timestamp: \{{it2.timestamp}} </label>
+                  <label> Status: \{{it2.status}} </label>
                 </div>
               </div>
             </div>
           </div>
-
-        </div>
 
         <div id="content_tab1" ng-show="tab==1">
             <h4>Available Filters for Flight</h4>

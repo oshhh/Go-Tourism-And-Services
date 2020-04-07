@@ -121,7 +121,7 @@ router.get('/getData', function(req, res, next) {
               result.push(trips[trip_id]);
             }
             sendResponse(result);
-          },"\"" + req.session.uname + "\"", {});
+          },req.session.uname, {});
         }, {
             user_id : "\"" + req.session.uname + "\"",
           })

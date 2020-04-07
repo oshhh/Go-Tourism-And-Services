@@ -179,6 +179,10 @@ function selectAllFromTable(callback, table_name) {
 function register_user(callback,user) {
     insertIntoTable(callback,'user', user);
 }
+function delete_service(callback,service_type,Service)
+{
+    
+}
 function register_service(callback,service_type,service)
 {
     insertIntoTable(function(result){

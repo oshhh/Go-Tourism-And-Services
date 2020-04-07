@@ -17,7 +17,7 @@
       </div>
     <div class="container" ng-controller="ngContent">
       <div id="padder"></div>
-      <div class="splitBar">
+      {{!-- <div class="splitBar">
         <div style="font-size: medium;">
           <label style="text-align: center;margin:auto 0">Organize your service requests into trips</label>
           <div class="input-group">
@@ -32,7 +32,7 @@
         <div>
           <h1>Free Space</h1>
         </div>
-      </div>
+      </div> --}}
 
 
       <nav class="l_bar" align="center">
@@ -65,6 +65,47 @@
         </div>
       </nav>
 
+
+      <div id="sidebar">
+        <div onclick="toggle_sidebar()" ng-click="toggle_sidebar" id="side-toggle"><strong>S</strong></div>
+        <div id="side-content">
+          <h5 style="text-align: center;">Trip Selected</h5>
+          <div class="trip-list">
+            <ul class="list-group">
+              <li ng-click="selectTrip(0)" class="list-group-item list-group-item-action active">Loc A to B month/date</li>
+              <li class="list-group-item list-group-item-action">Loc A to B month/date</li>
+              <li class="list-group-item list-group-item-action">Loc A to B month/date</li>
+              <li class="list-group-item list-group-item-action">Loc A to B month/date</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-body text-center">
+              <button ng-click="openTripMenu()" class="btn btn-success">Plan New Trip</button>
+              <div ng-show="trip.formStatus==1">
+
+                <div class="input-group">
+                  <label class="input-group-text">Start Date</label>
+                <input ng-bind="trip.tdateStart" ng-model="trip.tdateStart" style="font-size: 0.8rem" class="marg" type="date" id="birthday" name="birthday">
+                </div>
+                
+                <div class="input-group">
+                  <label class="input-group-text">End Date</label>
+                <input ng-bind="trip.tdateEnd" ng-model="trip.tdateEnd" style="font-size: 0.8rem" class="marg" type="date" id="birthday" name="birthday">
+                </div>
+                
+                <div class="input-group">
+                   <label class="input-group-text">City</label>
+                <input ng-bind="trip.tcity" ng-model="trip.tcity" style="font-size: 0.8rem" class="marg" ng-model="tripcity" id="tcity" type="text" class="form-control" placeholder="City">
+                </div>                
+               
+                <button class="btn btn-success" ng-click="addTrip()">Create</button>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
 
       <div id="content" class="shadow p-4 mb-4 bg-white">
       

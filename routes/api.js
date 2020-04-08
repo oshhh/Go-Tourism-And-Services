@@ -352,6 +352,8 @@ router.post('/addService',function(req,res,next){
   serverjs.count_table(function(result){
     req.body.service_id=req.body.prefix+("00000" + result[0]['cnt']).slice(-5);
     serverjs.service_provider.register_service(function(res2){
+      console.log("inside");
+      console.log(req.body.prefix+("00000" + result[0]['cnt']).slice(-5));
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({
         isRes:true,

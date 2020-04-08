@@ -146,6 +146,103 @@ angularApp.controller("ngContent",function($scope,$http)
 					console.log(err);
 				  }
 			}
+			else if($scope.curUser.uid.startsWith("TRP"))
+			{
+				try{
+					let res= await $http.get("/api/getData",{
+						params:{
+						type:'servicesByProvider',
+						func:"getTrains",
+						service_provider_id:$scope.curUser.uid
+						}
+					});
+					$scope.currentServices.data=res.data.content;
+					console.log($scope.currentServices.data);
+					$scope.currentServices.status="OK";
+					$scope.currentServices.data.forEach(async element => {
+						element.updateResult="";
+						element.routeData=[];
+					let routeData=await $http.get("/api/getData",{
+							params:
+							{
+							type: "route",
+							service_id:element.service_id
+							}
+						});
+					element.routeData=routeData.data.content;
+					});
+				}
+				catch(err) {
+					console.log(err);
+				  }
+			}
+			else if($scope.curUser.uid.startsWith("AIR"))
+			{
+				try{
+					let res= await $http.get("/api/getData",{
+						params:{
+						type:'servicesByProvider',
+						func:"getFlight",
+						service_provider_id:$scope.curUser.uid
+						}
+					});
+					$scope.currentServices.data=res.data.content;
+					console.log($scope.currentServices.data);
+					$scope.currentServices.status="OK";
+					$scope.currentServices.data.forEach(async element => {
+						element.updateResult="";
+						element.routeData=[];
+					});
+				}
+				catch(err) {
+					console.log(err);
+				  }
+			}
+			else if($scope.curUser.uid.startsWith("HOT"))
+			{
+				try{
+					let res= await $http.get("/api/getData",{
+						params:{
+						type:'servicesByProvider',
+						func:"getRoom",
+						service_provider_id:$scope.curUser.uid
+						}
+					});
+					$scope.currentServices.data=res.data.content;
+					console.log($scope.currentServices.data);
+					$scope.currentServices.status="OK";
+					$scope.currentServices.data.forEach(async element => {
+						element.updateResult="";
+						element.routeData=[];
+					});
+				}
+				catch(err) {
+					console.log(err);
+				  }
+			}
+			else if($scope.curUser.uid.startsWith("TAP"))
+			{
+				try{
+					let res= await $http.get("/api/getData",{
+						params:{
+						type:'servicesByProvider',
+						func:"getTaxi",
+						service_provider_id:$scope.curUser.uid
+						}
+					});
+					$scope.currentServices.data=res.data.content;
+					console.log($scope.currentServices.data);
+					$scope.currentServices.status="OK";
+					$scope.currentServices.data.forEach(async element => {
+						element.updateResult="";
+						element.routeData=[];
+					});
+				}
+				catch(err) {
+					console.log(err);
+				  }
+			}
+			
 		}
 		else if(tab==2)
 		{
@@ -226,11 +323,11 @@ angularApp.controller("ngContent",function($scope,$http)
 					service_id:addServiceResult.data,
 					arr:insertData
 				}));
-				$scope.currentServices.createStatus="Added New Service";
-				$scope.changeTab($scope.tab);
-				$scope.currentServices.showNew=false;
-				console.log(addServiceResult.data);
+				// console.log(addServiceResult.data);
 			}
+			$scope.currentServices.createStatus="Added New Service";
+			$scope.changeTab($scope.tab);
+			$scope.currentServices.showNew=false;
 		}
 		catch(err)
 		{
@@ -262,6 +359,16 @@ angularApp.controller("ngContent",function($scope,$http)
 						whereColumn:$scope.currentServices.model.editable[i].searchKey,
 						whereValue:it[$scope.currentServices.model.editable[i].searchValue]
 					})
+				}
+				else if($scope.currentServices.model.editable[i].type==3)
+				{
+					reqBody.push({
+						table_name:$scope.currentServices.model.editable[i].table,
+						column_name:$scope.currentServices.model.editable[i].column,
+						newValue:new Date(it[$scope.currentServices.model.editable[i].value]).toISOString().slice(0, 19).replace('T', ' '),
+						whereColumn:$scope.currentServices.model.editable[i].searchKey,
+						whereValue:it[$scope.currentServices.model.editable[i].searchValue]
+					});
 				}
 				else{
 					reqBody.push({
@@ -302,6 +409,7 @@ angularApp.controller("ngContent",function($scope,$http)
 				}
 				console.log("sending Route Insert");
 				console.log(insertData);
+				console.log(it[$scope.currentServices.model.globalID.searchKey]);
 				insertState=await $http.post('/api/insertList',JSON.stringify({
 					type:'route',
 					service_id:it[$scope.currentServices.model.globalID.searchKey],
@@ -316,6 +424,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		catch(err)
 		{
 			it.updateResult="Data Not updated";
+			console.log(err);
 		}
 	}
 	$scope.deleteService=function(it)
@@ -524,9 +633,418 @@ angularApp.controller("ngContent",function($scope,$http)
 				} 
 			};
 		}
+		else if($scope.curUser.uid.startsWith("TRP")){
+			$scope.currentServices.model={
+				type:'train',
+				prefix:"TRA",
+				route:true,
+				newModel:[
+					{
+						name:"From",
+						value:"from_location_id",
+						display:"from_location_id_v",
+						type:2
+					},
+					{
+						name:"To",
+						value:"to_location_id",
+						display:"to_location_id_v",
+						type:2
+					},
+					{
+						name:"Active Days",
+						value:"active_days",
+						type:0
+					},
+					{
+						name:"AC(Y/N)",
+						value:"AC",
+						type:0
+					},
+					{
+						name:"Price",
+						value:"price",
+						type:0
+					},
+					{
+						name:"Discount",
+						value:"discount",
+						type:0
+					},
+				],
+				routeModel:{
+
+				},
+				header:{
+					name:"Service ID",
+					value:"service_id"
+				},
+				view:[
+					{
+						name:"service_id",
+						value:"service_id"
+					}
+				],
+				editable:[
+					{
+						name:"From",
+						value:"from_location_id",
+						display:"from_location_id_v",
+						column:"from_location_id",
+						table:"train",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:2
+					},
+					{
+						name:"To",
+						value:"to_location_id",
+						display:"to_location_id_v",
+						column:"to_location_id",
+						table:"train",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:2
+					},
+					{
+						name:"Active Days",
+						value:"active_days",
+						column:"active_days",
+						table:"train",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"AC(Y/N)",
+						value:"AC",
+						column:"AC",
+						table:"train",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"Price",
+						value:"price",
+						column:"price",
+						table:"service",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"Discount",
+						value:"discount",
+						column:"discount",
+						table:"service",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+				],
+				globalID:{
+					table:"train",
+					searchKey:"service_id",
+					searchValue:"service_id"
+				} 
+			};
+		}
+		else if($scope.curUser.uid.startsWith("AIR")){
+			$scope.currentServices.model={
+				type:"airline",
+				prefix:"FLI",
+				route:false,
+				newModel:[
+					{
+						type:0,
+						name:"From",
+						value:"from_city"
+					},
+					{
+						type:0,
+						name:"To",
+						value:"to_city"
+					},
+					{
+						name:"Departure",
+						value:"departure_time",
+						type:1
+					},
+					{
+						name:"Arrival",
+						value:"arrival_time",
+						type:1
+					},
+					{
+						type:0,
+						name:"Price",
+						value:"price"
+					},
+					{
+						type:0,
+						name:"Discount",
+						value:"discount"
+					}
+				],
+				routeModel:{},
+				header:{
+					name:"Service ID",
+					value:"service_id"
+				},
+				view:[
+					{
+						name:"service_id",
+						value:"service_id"
+					}
+				],
+				editable:[
+					{
+						name:"From",
+						value:"from_city",
+						column:"from_city",
+						table:"flight",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"To",
+						value:"to_city",
+						column:"to_city",
+						table:"flight",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"Departure",
+						value:"departure_time",
+						column:"departure_time",
+						table:"flight",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:3
+					},
+					{
+						name:"Arrival",
+						value:"arrival_time",
+						column:"arrival_time",
+						table:"flight",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:3
+					},
+					{
+						name:"Price",
+						value:"price",
+						column:"price",
+						table:"service",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"Discount",
+						value:"discount",
+						column:"discount",
+						table:"service",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+				],
+				globalID:{
+					table:"food_item",
+					searchKey:"service",
+					searchValue:"service_id"
+				} 
+			};
+		}
+		else if($scope.curUser.uid.startsWith("HOT")){
+			$scope.currentServices.model={
+				type:"hotel",
+				prefix:"ROO",
+				route:false,
+				newModel:[
+					{
+						name:"RoomType",
+						value:"room_type",
+						type:1
+					},
+					{
+						name:"Capacity",
+						value:"capacity",
+						type:0
+					},
+					{
+						type:0,
+						name:"Price",
+						value:"price"
+					},
+					{
+						type:0,
+						name:"Discount",
+						value:"discount"
+					}
+				],
+				routeModel:{},
+				header:{
+					name:"Service ID",
+					value:"service_id"
+				},
+				view:[
+					{
+						name:"service_id",
+						value:"service_id"
+					}
+				],
+				editable:[
+					{
+						name:"RoomType",
+						value:"room_type",
+						column:"room_type",
+						table:"room",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:1
+					},
+					{
+						name:"Capacity",
+						value:"capacity",
+						column:"capacity",
+						table:"room",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"Price",
+						value:"price",
+						column:"price",
+						table:"service",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"Discount",
+						value:"discount",
+						column:"discount",
+						table:"service",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+				],
+				globalID:{
+					table:"room",
+					searchKey:"service_id",
+					searchValue:"service_id"
+				} 
+			};
+		}
+		else if($scope.curUser.uid.startsWith("TAP")){
+			$scope.currentServices.model={
+				type:"taxi",
+				prefix:"TAX",
+				route:false,
+				newModel:[
+					{
+						name:"Car Name",
+						value:"car_name",
+						type:0
+					},
+					{
+						name:"Capacity",
+						value:"capacity",
+						type:0
+					},
+					{
+						name:"AC",
+						value:"AC",
+						type:0
+					},
+					{
+						type:0,
+						name:"Price",
+						value:"price"
+					},
+					{
+						type:0,
+						name:"Discount",
+						value:"discount"
+					}
+				],
+				routeModel:{},
+				header:{
+					name:"Service ID",
+					value:"service_id"
+				},
+				view:[
+					{
+						name:"service_id",
+						value:"service_id"
+					}
+				],
+				editable:[
+					{
+						name:"Car Name",
+						value:"car_name",
+						column:"car_name",
+						table:"taxi",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"Capacity",
+						value:"capacity",
+						column:"capacity",
+						table:"taxi",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"AC",
+						value:"AC",
+						column:"AC",
+						table:"taxi",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"Price",
+						value:"price",
+						column:"price",
+						table:"service",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"Discount",
+						value:"discount",
+						column:"discount",
+						table:"service",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+				],
+				globalID:{
+					table:"taxi",
+					searchKey:"service_id",
+					searchValue:"service_id"
+				} 
+			};
+		}
 		else{
 			$scope.currentServices.model={};
 		}
+		console.log($scope.currentServices.model);
 	}
 	$scope.initModel();
 	$scope.changeTab(0);

@@ -146,6 +146,7 @@ function runQuery(callback, query) {
             return;
         } else {
             console.log(result);
+            // console.log(callback);
             if(callback!=null)
             callback(result);
         }
@@ -166,7 +167,7 @@ function insertIntoTable(callback,table_name, data) {
             query += ', '
     }
     query += ');';
-    console.log(query);
+    // console.log('insert query:',query);
     runQuery(callback, query);
 }
 
@@ -490,6 +491,38 @@ function getBuses(callback,service_provider_id)
     s.service_provider_id like "`+service_provider_id+`")`;
     runQuery(callback,query);
 }
+function getTrains(callback,service_provider_id)
+{
+    query=`select s.*,tr.*,f.city as from_location_id_v,t.city as to_location_id_v
+    from service as s, train as tr,location as f,location as t
+    where(s.service_id=tr.service_id and f.location_id = tr.from_location_id and t.location_id=tr.to_location_id and
+    s.service_provider_id like "`+service_provider_id+`")`;
+    runQuery(callback,query);
+}
+function getFlight(callback,service_provider_id)
+{
+    query=`select s.*,f.*
+    from service as s, flight as f
+    where(s.service_id=f.service_id and
+    s.service_provider_id like "`+service_provider_id+`")`;
+    runQuery(callback,query);
+}
+function getRoom(callback,service_provider_id)
+{
+    query=`select s.*,r.*
+    from service as s, room as r
+    where(s.service_id=r.service_id and
+    s.service_provider_id like "`+service_provider_id+`")`;
+    runQuery(callback,query);
+}
+function getTaxi(callback,service_provider_id)
+{
+    query=`select s.*,t.*
+    from service as s, taxi as t
+    where(s.service_id=t.service_id and
+    s.service_provider_id like "`+service_provider_id+`")`;
+    runQuery(callback,query);
+}
 function getRoute(callback,service_id)
 {
     query=`select r.*,l.city as location_id_v
@@ -616,7 +649,11 @@ module.exports = {
         'deactivate_service_provider' : deactivate_service_provider,
         'getServices':getServices,
         'getBuses':getBuses,
+        'getTrains':getTrains,
+        'getFlight':getFlight,
         'getRoute' : getRoute,
+        'getRoom':getRoom,
+        'getTaxi':getTaxi
     },
     'tables' : tables,
     'createDatabase' : createDatabase,

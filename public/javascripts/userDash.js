@@ -2,6 +2,14 @@ var	angularApp = angular.module("dash", []);
 angularApp.controller("ngContent",function($scope,$http)
 {
 	$scope.tab=0;
+
+	$scope.service_request={}
+	$scope.service_request.status = "Pending";
+	$scope.service_request.data = [];
+	$scope.service_request.user_id = "";
+	$scope.service_request.sortOrder="0";
+	$scope.service_request.reviews={};
+
 	$scope.food={};
 	$scope.food.status="Pending";
 	$scope.food.data=[];
@@ -432,18 +440,18 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		if(tab == 0)
 		{
-			$scope.food.status="Pending";
+			$scope.service_request.status="Pending";
 			console.log("sent");
 			$http.get("/api/getData",{params:{
-				type:"service_request"
+				type:"service_request",
 				}}).then(
 				function(data, status, headers, config) {
 				// console.log(data);
-				$scope.food.data=data.data.content;
-				$scope.food.data.forEach(element => {
+				$scope.service_request.data=data.data.content;
+				$scope.service_request.data.forEach(element => {
 					element.showRev=false;
 				});
-				$scope.food.status="OK";
+				$scope.service_request.status="OK";
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -608,7 +616,6 @@ angularApp.controller("ngContent",function($scope,$http)
 	}
 	$scope.changeTab=function(newTab)
 	{
-		console.log("changed tabbb");
 		$scope.tab=newTab;
 		$scope.getData(newTab);
 		console.log("change Tab: "+newTab);

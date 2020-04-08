@@ -23,7 +23,7 @@ router.get('/getData', function(req, res, next) {
       }));
     }
   };
-  let prov="\".*\""
+  let prov="\"%\""
   if(req.query.service_provider_id)
   prov=req.query.service_provider_id;
   serverjs=req.app.get('dbHandler');
@@ -108,8 +108,30 @@ router.get('/getData', function(req, res, next) {
         }, req.query.tourist_spot_name, req.query.tourist_spot_city);   
     break;
     case "service_request":
-        serverjs.user.getServiceRequests(sendResponse,req.session.uname,
-        {});
+        serverjs.user.getTrips(function(result) {
+          console.log("here")
+          console.log(result);
+          trips = {}
+          for(i in result) {
+            trips[result[i].trip_id] = result[i];
+            trips[result[i].trip_id].service_requests = [];
+          }
+          serverjs.user.getServiceRequests(function(result) {
+            for(i in result) {
+              if(result[i].trip_id in trips) {
+                trips[result[i].trip_id].service_requests.push(result[i]);
+              }
+            }
+            result = []
+            for(trip_id in trips) {
+              result.push(trips[trip_id]);
+            }
+            sendResponse(result);
+          },req.session.uname, {});
+        }, {
+            user_id : "\"" + req.session.uname + "\"",
+          })
+        
     break;
     case "review":
       serverjs.user.getServiceReview(sendResponse,req.query.service_id);

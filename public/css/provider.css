@@ -22,7 +22,7 @@ button{
   flex:1;
 }
 .input-group-prepend {
-  width : 200px; /*adjust as needed*/
+  width : 250px; /*adjust as needed*/
   margin-bottom: 5px;
 }
 
@@ -32,4 +32,14 @@ button{
 } */
 label{
   margin: 10px;
+}
+.editCard{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.newCard{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

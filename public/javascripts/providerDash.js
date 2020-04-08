@@ -4,7 +4,6 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.statusLabels={0:"Pending", 1:"Accepted", 2:"Rejected", 3:"Completed", 4:"Paid"};
 	$scope.tab=0;
 	$scope.curUser={
-		name:document.getElementById("nmU").innerHTML,
 		uid:document.getElementById("idU").innerHTML
 	};
 	$scope.reqs={
@@ -15,7 +14,9 @@ angularApp.controller("ngContent",function($scope,$http)
 		data:{},
 		status:"Pending",
 		showNew:false,
-		newData:{},
+		newData:{
+			routeData:[]
+		},
 		createStatus:""
 	};
 	$scope.changeStatus=function(it)
@@ -79,7 +80,7 @@ angularApp.controller("ngContent",function($scope,$http)
 				console.log("error");
 			});
 	}
-	$scope.getData=function(tab)
+	$scope.getData=async function(tab)
 	{
 		if(tab == 0)
 		{
@@ -115,11 +116,49 @@ angularApp.controller("ngContent",function($scope,$http)
 						console.log("error");
 					});
 			}
+			else if($scope.curUser.uid.startsWith("BPR"))
+			{
+				try{
+					let res= await $http.get("/api/getData",{
+						params:{
+						type:'servicesByProvider',
+						func:"getBuses",
+						service_provider_id:$scope.curUser.uid
+						}
+					});
+					$scope.currentServices.data=res.data.content;
+					console.log($scope.currentServices.data);
+					$scope.currentServices.status="OK";
+					$scope.currentServices.data.forEach(async element => {
+						element.updateResult="";
+						element.routeData=[];
+					let routeData=await $http.get("/api/getData",{
+							params:
+							{
+							type: "route",
+							service_id:element.service_id
+							}
+						});
+					element.routeData=routeData.data.content;
+					});
+				}
+				catch(err) {
+					console.log(err);
+				  }
+			}
 		}
 		else if(tab==2)
 		{
 			
 		}
+	}
+	$scope.incrementRoute=function(it)
+	{
+		// console.log(it);
+		it.push({
+			arrival_time:"",
+			location_id_v:""
+		});
 	}
 	$scope.changeTab=function(newTab)
 	{
@@ -132,62 +171,152 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		$scope.currentServices.showNew=true;
 	}
-	$scope.createService=function()
+	$scope.createService=async function()
 	{
-		$scope.currentServices.createStatus="Sending";
-		reqBody={};
-		for(i in $scope.currentServices.model.newModel){
-			it=$scope.currentServices.model.newModel[i];
-			reqBody[it.value]=$scope.currentServices.newData[it.value];
+		try{
+			$scope.currentServices.createStatus="Sending";
+			reqBody={};
+			for(i in $scope.currentServices.model.newModel){
+				it=$scope.currentServices.model.newModel[i];
+				if(it.type==2)
+				{
+					let newLoc_ID= await $http.get("/api/getLocationID",{
+						params:{
+						city:$scope.currentServices.newData[it.value]
+						}
+					});
+					reqBody[it.value]=newLoc_ID.data.content;
+				}
+				else{
+					reqBody[it.value]=$scope.currentServices.newData[it.value];
+				}
+			}
+			console.log(reqBody);
+			reqBody.type=$scope.currentServices.model.type;
+			reqBody.prefix=$scope.currentServices.model.prefix;
+			reqBody.service_provider_id=$scope.curUser.uid;
+			console.log(reqBody);
+
+			addServiceResult=await $http.post('/api/addService',JSON.stringify(reqBody));
+
+			if($scope.currentServices.model.route==true)
+			{
+				insertData=[];
+				console.log($scope.currentServices.newData.routeData);
+				for(j in $scope.currentServices.newData.routeData)
+				{
+					it=$scope.currentServices.newData.routeData[j];
+					if(it.location_id!="" && it.arrival_time!="")
+					{
+						let newLoc_ID= await $http.get("/api/getLocationID",{
+							params:{
+							city:it.location_id_v
+							}
+						});
+						insertData.push({
+							location_id:newLoc_ID.data.content,
+							arrival_time:it.arrival_time,
+						})
+					}
+				}
+				console.log("sending Route Insert");
+				console.log(insertData);
+				insertState=await $http.post('/api/insertList',JSON.stringify({
+					type:'route',
+					service_id:addServiceResult.data,
+					arr:insertData
+				}));
+				$scope.currentServices.createStatus="Added New Service";
+				$scope.changeTab($scope.tab);
+				$scope.currentServices.showNew=false;
+				console.log(addServiceResult.data);
+			}
 		}
-		reqBody.type=$scope.currentServices.model.type;
-		reqBody.prefix=$scope.currentServices.model.prefix;
-		reqBody.service_provider_id=$scope.curUser.uid;
-		console.log(reqBody);
-		$http.post('/api/addService',JSON.stringify(reqBody))
-		.then(function(response){
-			console.log("got");
-			console.log(response);
-			$scope.currentServices.createStatus="Added New Service";
-			$scope.changeTab($scope.tab);
-			$scope.currentServices.showNew=false;
-		},function(response){
-			console.log("err");
-		});
-	}
-	$scope.updateService=function(it)
-	{
-		it.updateResult="Sending";
-		reqBody=[];
-		for(i in $scope.currentServices.model.editable)
+		catch(err)
 		{
-			reqBody.push({
-				table_name:$scope.currentServices.model.editable[i].table,
-				column_name:$scope.currentServices.model.editable[i].column,
-				newValue:it[$scope.currentServices.model.editable[i].value],
-				whereColumn:$scope.currentServices.model.editable[i].searchKey,
-				whereValue:it[$scope.currentServices.model.editable[i].searchValue]
-			})
+
 		}
-		console.log("send: ");
-		console.log(reqBody);
-		$http.put('/api/updateList',JSON.stringify(reqBody))
-		.then(function(response){
-			if(!response || !response.data.content)
+	}
+	$scope.updateService=async function(it)
+	{
+		try{
+			it.updateResult="Sending";
+			reqBody=[];
+			for(i in $scope.currentServices.model.editable)
 			{
-				it.updateResult="Data Not updated";
+				if($scope.currentServices.model.editable[i].type==2)
+				{
+					let newLoc_ID= await $http.get("/api/getLocationID",{
+						params:{
+						city:it[$scope.currentServices.model.editable[i].display]
+						}
+					});
+					// console.log(newLoc_ID);
+					it[$scope.currentServices.model.editable[i].value]=newLoc_ID.data.content;
+					// console.log("got location ID");
+					// console.log(newLoc_ID.data.content);
+					reqBody.push({
+						table_name:$scope.currentServices.model.editable[i].table,
+						column_name:$scope.currentServices.model.editable[i].column,
+						newValue:it[$scope.currentServices.model.editable[i].value],
+						whereColumn:$scope.currentServices.model.editable[i].searchKey,
+						whereValue:it[$scope.currentServices.model.editable[i].searchValue]
+					})
+				}
+				else{
+					reqBody.push({
+						table_name:$scope.currentServices.model.editable[i].table,
+						column_name:$scope.currentServices.model.editable[i].column,
+						newValue:it[$scope.currentServices.model.editable[i].value],
+						whereColumn:$scope.currentServices.model.editable[i].searchKey,
+						whereValue:it[$scope.currentServices.model.editable[i].searchValue]
+					});
+				}
 			}
-			else if(!response.data.content[0])
+			updateState=await $http.put('/api/updateList',JSON.stringify(reqBody));
+			if($scope.currentServices.model.route==true)
 			{
-				it.updateResult="Data Not updated";
+				console.log("sending Delet");
+				deleteState=await $http.post('/api/deleteData',JSON.stringify({
+					type:'route',
+					service_id:it[$scope.currentServices.model.globalID.searchKey]
+				}));
+				console.log("delet done");
+				insertData=[];
+				console.log(it.routeData);
+				for(j in it.routeData)
+				{
+					if(it.routeData[j].location_id_v!="" && it.routeData[j].arrival_time!="")
+					{
+						let newLoc_ID= await $http.get("/api/getLocationID",{
+							params:{
+							city:it.routeData[j].location_id_v
+							}
+						});
+						insertData.push({
+							location_id:newLoc_ID.data.content,
+							arrival_time:it.routeData[j].arrival_time,
+						})
+						console.log(insertData);
+					}
+				}
+				console.log("sending Route Insert");
+				console.log(insertData);
+				insertState=await $http.post('/api/insertList',JSON.stringify({
+					type:'route',
+					service_id:it[$scope.currentServices.model.globalID.searchKey],
+					arr:insertData
+				}));
+				console.log("Complete");
 			}
-			else{
-				it.updateResult="Data updated";
-			}
-			console.log(response);
-		},function(response){
-			console.log("err");
-		});
+			response=updateState.data;
+			it.updateResult="Data updated";
+			console.log(it);
+		}
+		catch(err)
+		{
+			it.updateResult="Data Not updated";
+		}
 	}
 	$scope.deleteService=function(it)
 	{
@@ -199,6 +328,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			$scope.currentServices.model={
 				type:"restaurant",
 				prefix:"FOO",
+				route:false,
 				newModel:[
 					{
 						type:0,
@@ -221,7 +351,6 @@ angularApp.controller("ngContent",function($scope,$http)
 						value:"discount"
 					}
 				],
-				route:false,
 				routeModel:{},
 				header:{
 					name:"Service ID",
@@ -276,14 +405,131 @@ angularApp.controller("ngContent",function($scope,$http)
 					searchKey:"service_id",
 					searchValue:"service_id"
 				} 
-			}
+			};
+		}
+		else if($scope.curUser.uid.startsWith("BPR")){
+			$scope.currentServices.model={
+				type:'bus',
+				prefix:"BUS",
+				route:true,
+				newModel:[
+					{
+						name:"From",
+						value:"from_location_id",
+						display:"from_location_id_v",
+						type:2
+					},
+					{
+						name:"To",
+						value:"to_location_id",
+						display:"to_location_id_v",
+						type:2
+					},
+					{
+						name:"Active Days",
+						value:"active_days",
+						type:0
+					},
+					{
+						name:"AC(Y/N)",
+						value:"AC",
+						type:0
+					},
+					{
+						name:"Price",
+						value:"price",
+						type:0
+					},
+					{
+						name:"Discount",
+						value:"discount",
+						type:0
+					},
+				],
+				routeModel:{
+
+				},
+				header:{
+					name:"Service ID",
+					value:"service_id"
+				},
+				view:[
+					{
+						name:"service_id",
+						value:"service_id"
+					}
+				],
+				editable:[
+					{
+						name:"From",
+						value:"from_location_id",
+						display:"from_location_id_v",
+						column:"from_location_id",
+						table:"bus",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:2
+					},
+					{
+						name:"To",
+						value:"to_location_id",
+						display:"to_location_id_v",
+						column:"to_location_id",
+						table:"bus",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:2
+					},
+					{
+						name:"Active Days",
+						value:"active_days",
+						column:"active_days",
+						table:"bus",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"AC(Y/N)",
+						value:"AC",
+						column:"AC",
+						table:"bus",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"Price",
+						value:"price",
+						column:"price",
+						table:"service",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"Discount",
+						value:"discount",
+						column:"discount",
+						table:"service",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+				],
+				globalID:{
+					table:"bus",
+					searchKey:"service_id",
+					searchValue:"service_id"
+				} 
+			};
 		}
 		else{
 			$scope.currentServices.model={};
 		}
 	}
-	$scope.changeTab(0);
 	$scope.initModel();
+	$scope.changeTab(0);
 	console.log("init Done");
 	// console.log($scope.tab);
 });

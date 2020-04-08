@@ -7,7 +7,7 @@ router.get('/getData', function(req, res, next) {
   sendResponse=function(result){
     if(result)
     {
-      console.log("got result",result)
+      // console.log("got result",result)
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({
         isRes:true,
@@ -23,7 +23,7 @@ router.get('/getData', function(req, res, next) {
       }));
     }
   };
-  let prov=".*"
+  let prov="\".*\""
   if(req.query.service_provider_id)
   prov=req.query.service_provider_id;
   serverjs=req.app.get('dbHandler');
@@ -63,7 +63,13 @@ router.get('/getData', function(req, res, next) {
         }, req.query.t_type, req.query.from, req.query.to, {
           AC: req.query.AC,
           service_provider_id: prov
-        });      
+        });
+    case 'noRoute_bus_train':
+      serverjs.user.getBusTrains(sendResponse,req.query.t_type, req.query.from, req.query.to, {
+        AC: req.query.AC,
+        service_provider_id: prov
+      });
+      break;      
     break;
     case 'taxi':
         serverjs.user.getTaxis(sendResponse, {
@@ -139,11 +145,12 @@ router.get('/getData', function(req, res, next) {
           approved : req.query.approved,
         });
     break;
-    case 'services':
-      serverjs.getServices(sendResponse,{
-
-      })
+    case 'servicesByProvider':
+      serverjs.service_provider[req.query.func](sendResponse,req.query.service_provider_id);
       break;
+    case 'route':
+        serverjs.service_provider.getRoute(sendResponse,req.query.service_id);
+        break;
     default:
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({msg:"Unknown Request sent"}))
@@ -168,6 +175,123 @@ router.put('/updateData', function(req, res, next) {
     }));
   },req.body);
 });
+router.post('/deleteData', function(req, res, next) {
+  // console.log("REQS");
+  sendResponse=function(result){
+    if(result)
+    {
+      // console.log("got result",result)
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({
+        isRes:true,
+        msg:"Query OK: sending result",
+        content:result
+      }));
+    }
+    else{
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({
+        isRes:false,
+        msg:"Unknown Request sent"
+      }));
+    }
+  };
+  console.log('DElete');
+  console.log(util.inspect(req.body, false,null,true));
+  serverjs=req.app.get('dbHandler');
+  switch(req.body.type){
+    case "route":
+      serverjs.deleteRoute(sendResponse,req.body.service_id);
+    break;
+    default:
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({
+        isRes:false,
+        msg:"Unknown Request sent"
+      }));
+      break;
+  }
+});
+router.get('/getLocationID',function(req,res,next){
+  console.log(util.inspect(req.query, false,null,true));
+  serverjs=req.app.get('dbHandler');
+  serverjs.getLocation(function(result){
+    if(result)
+    {
+      if(result.length!=0)
+      {
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({
+          isRes:true,
+          msg:"Query OK: sending result",
+          content:result[0].location_id
+        }));
+      }
+      else{
+        serverjs.count_table(function(res2){
+            serverjs.insertIntoTable(function(res3){
+              if(res3)
+              {
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify({
+                  isRes:true,
+                  msg:"Query OK: sending result",
+                  content:'LOC'+("00000" + res2[0]['cnt']).slice(-5)
+                }));
+              }
+              else{
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify({msg:"Unknown Request sent"}))
+              }
+            },'location',{
+              location_id:'LOC'+("00000" + res2[0]['cnt']).slice(-5),
+              locality:"DUMMY",
+              city:req.query.city,
+              state:"DUMMY",
+              country:"DUMMY",
+              pincode:"000000"
+            })
+        },'location');
+      }
+    }
+    else{
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({msg:"Unknown Request sent"}))
+    }
+  },req.query.city);
+});
+router.post('/insertList', function(req, res, next) {
+  sendResponse=function(result){
+    if(result)
+    {
+      // console.log("got result",result)
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({
+        isRes:true,
+        msg:"Query OK: sending result",
+        content:result
+      }));
+    }
+    else{
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({
+        isRes:false,
+        msg:"Unknown Request sent"
+      }));
+    }
+  };
+  console.log(util.inspect(req.body, false,null,true));
+  serverjs=req.app.get('dbHandler');
+  switch(req.body.type){
+    case "route":
+      serverjs.insertRoutes(sendResponse,req.body.service_id,req.body.arr);
+      break;
+    default:
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({msg:"Unknown Request sent"}))
+      break;
+  }
+});
 router.put('/updateList', function(req, res, next) {
   console.log("Update LIst");
   console.log(util.inspect(req.body, false,null,true));
@@ -185,7 +309,7 @@ router.post('/addService',function(req,res,next){
   sendResponse=function(result){
     if(result)
     {
-      console.log("got result",result)
+      // console.log("got result",result)
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({
         isRes:true,
@@ -205,7 +329,14 @@ router.post('/addService',function(req,res,next){
   serverjs=req.app.get('dbHandler');
   serverjs.count_table(function(result){
     req.body.service_id=req.body.prefix+("00000" + result[0]['cnt']).slice(-5);
-    serverjs.service_provider.register_service(sendResponse,req.body.type,req.body);
+    serverjs.service_provider.register_service(function(res2){
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({
+        isRes:true,
+        msg:"Query OK: sending result",
+        content:req.body.prefix+("00000" + result[0]['cnt']).slice(-5)
+      }));
+    },req.body.type,req.body);
   },'service');
 });
 module.exports = router;

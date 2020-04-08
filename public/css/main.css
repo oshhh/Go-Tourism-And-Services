@@ -183,6 +183,7 @@ table{
 }
 .container{
     margin-top: 75px;
+    width: 100%;
 }
 @media (max-width: 800px) {
     .navbar{

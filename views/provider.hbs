@@ -12,7 +12,7 @@
     <body ng-app="dash">
       <div class="navbar navbar-default fixed-top">
         <div class='n-item'>Service Provider Dashboard</div>
-        <div class='n-item'>Welcome <span id="nmU">{{name}}</span> (userID:<span id="idU">{{uid}}</span>)</div>
+        <div class='n-item'>Welcome userID:<span id="idU">{{uid}}</span></div>
         <a href="/logout"><button class='btn btn-outline-primary'>Logout</button></a>
       </div>
     <div class="container" ng-controller="ngContent">
@@ -92,21 +92,43 @@
             </div>
             <div ng-show="currentServices.showNew" class="rowElement card shadow p-4 mb-4 bg-white">
               <div>
-                  <div ng-repeat="e in currentServices.model.newModel" class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">\{{e.name}}</span>
-                      <input ng-model="currentServices.newData[e.value]" ng-show="e.type==0" type="text" class="form-control">
-                      <textarea ng-model="currentServices.newData[e.value]" ng-show="e.type==1" class="form-control"></textarea>
+                <div style="margin: 10px;" class="newCard">
+
+                  <div>
+                    <div ng-repeat="e in currentServices.model.newModel" class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">\{{e.name}}</span>
+                        <input ng-model="currentServices.newData[e.value]" ng-show="e.type==0" type="text" class="form-control">
+                        <textarea ng-model="currentServices.newData[e.value]" ng-show="e.type==1" class="form-control"></textarea>
+                        <input ng-show="e.type==2" ng-model="currentServices.newData[e.value]" type="text" class="form-control">
+                      </div>
                     </div>
                   </div>
+                  
+                  <div ng-show="currentServices.model.route==true" style="padding-right:20px;border-right: 1px solid #DDD;">
+                    <div style="text-align: center;">Route Definition: City Arrival Time</div>
+                    <br>
+                    <ul style="text-align: center;" class="list-group">
+                      <li ng-repeat="step in currentServices.newData.routeData" class="list-group-item">
+                        <div class="input-group-prepend">
+                          <input ng-model="step.location_id_v" type="text" class="form-control" value="\{{step.location_id_v}}">
+                          <input ng-model="step.arrival_time" type="text" class="form-control" value="\{{step.arrival_time}}">
+                        </div>
+                      </li>
+                      <li class="list-group-item"><button ng-click="incrementRoute(currentServices.newData.routeData)" class="btn btn-success">+</button></li>
+                    </ul>
+                  </div>  
+
+                </div>
+                  
                 <button ng-click="createService()" class="btn btn-success">Create</button>
 
               </div>
             </div>
             <div ng-repeat="it in currentServices.data" class="rowElement card shadow p-4 mb-4 bg-white">
               <div class="card-header text-center bg-white align-middle">\{{currentServices.model.header.name}} : \{{it[currentServices.model.header.value]}}</div>
-                <div  style="margin: 20px;" class="d-flex flex-row justify-content-between">
-                  <div>
+                <div style="margin: 10px;" class="editCard">
+                  <div style="border-right: 1px solid #DDD;padding-right:8px">
                   <h7>Edit Details</h7>
                   <br>
                   <label ng-repeat="v in currentServices.model.view">\{{v.name}} : \{{it[v.value]}}</label>
@@ -115,18 +137,33 @@
                       <span class="input-group-text">\{{e.name}}</span>
                       <input ng-model="it[e.value]" ng-show="e.type==0" type="text" class="form-control" value="\{{it[e.value]}}">
                       <textarea ng-model="it[e.value]" ng-show="e.type==1" class="form-control">\{{it[e.value]}}</textarea>
+                      <input ng-show="e.type==2" ng-model="it[e.display]" type="text" class="form-control" value="\{{it[e.display]}}">
                     </div>
                   </div>
 
-                  </div>                  
+                  </div> 
 
-                  <div class="d-flex flex-column justify-content-start">
+                  <div ng-show="currentServices.model.route==true" style="padding-right:20px;border-right: 1px solid #DDD;">
+                    <div style="text-align: center;">Route Definition: City Arrival Time</div>
+                    <br>
+                    <ul style="text-align: center;" class="list-group">
+                      <li ng-repeat="step in it.routeData" class="list-group-item">
+                        <div class="input-group-prepend">
+                          <input ng-model="step.location_id_v" type="text" class="form-control" value="\{{step.location_id_v}}">
+                          <input ng-model="step.arrival_time" type="text" class="form-control" value="\{{step.arrival_time}}">
+                        </div>
+                      </li>
+                      <li class="list-group-item"><button ng-click="incrementRoute(it.routeData)" class="btn btn-success">+</button></li>
+                    </ul>
+                  </div>                 
+
+                  <div class="d-flex flex-column justify-content-center">
                     <br>
                     <button ng-click="updateService(it)" class="btn btn-primary">Update</button>
                     <br>
                     <button ng-click="deleteService(it)" class="btn btn-danger">Delete</button>
                     <br>
-                    <h6>\{{it.updateResult}}</h6>
+                    <h6>\{{it['updateResult']}}</h6>
                   </div>
 
                 </div>

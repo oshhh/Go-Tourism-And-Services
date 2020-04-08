@@ -486,7 +486,29 @@ function getTrips(callback,user_id)
     ORDER BY t.departure_date;`
     runQuery(callback,query)
 }
-
+function getBuses(callback,service_provider_id)
+{
+    query=`select s.*,b.*,f.city as from_location_id_v,t.city as to_location_id_v
+    from service as s, bus as b,location as f,location as t
+    where(s.service_id=b.service_id and f.location_id = b.from_location_id and t.location_id=b.to_location_id and
+    s.service_provider_id like "`+service_provider_id+`")`;
+    runQuery(callback,query);
+}
+function getRoute(callback,service_id)
+{
+    query=`select r.*,l.city as location_id_v
+    from route as r, location as l
+    where(l.location_id=r.location_id and
+    r.service_id like "`+service_id+`")`;
+    runQuery(callback,query);
+}
+function deleteRoute(callback,service_id)
+{
+    query=`delete
+    from route
+    where service_id="`+service_id+`";`
+    runQuery(callback,query);
+}
 function updateOneColumn(callback,data)
 {
     query=`update `+data.table_name+`
@@ -502,6 +524,21 @@ function updateList(callback,data)
         ' set '+data[i].column_name+' = "'+data[i].newValue+
         '" where '+data[i].whereColumn+' = "'+data[i].whereValue+'";';
     }
+    runQuery(callback,query);
+}
+function insertRoutes(callback,service_id,data){
+    query='';
+    for(i in data){
+        query+='insert into route'+
+        ' VALUES("'+service_id+'","'+data[i].location_id+'","'+data[i].arrival_time +'");';
+    }
+    runQuery(callback,query);
+}
+function getLocation(callback,city_name)
+{
+    query=`select *
+    from location
+    where (city like "`+city_name+`")`;
     runQuery(callback,query);
 }
 function getServices(callback,data)
@@ -571,7 +608,9 @@ module.exports = {
         'login_service_provider' : login_service_provider,
         'register_service':register_service,
         'deactivate_service_provider' : deactivate_service_provider,
-        'getServices':getServices
+        'getServices':getServices,
+        'getBuses':getBuses,
+        'getRoute' : getRoute,
     },
     'tables' : tables,
     'createDatabase' : createDatabase,
@@ -584,5 +623,8 @@ module.exports = {
     'changeStatusOfServiceRequest' : changeStatusOfServiceRequest,
     'getServiceReview':getServiceReview,
     'updateOneColumn':updateOneColumn,
-    'updateList':updateList
+    'updateList':updateList,
+    'insertRoutes':insertRoutes,
+    'getLocation':getLocation,
+    'deleteRoute':deleteRoute
 }

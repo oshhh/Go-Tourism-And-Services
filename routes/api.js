@@ -176,6 +176,9 @@ router.get('/getData', function(req, res, next) {
     case 'servicesByProvider':
       serverjs.service_provider[req.query.func](sendResponse,req.query.service_provider_id);
       break;
+    case 'adminRequests':
+      serverjs.admin.allServiceRequest(sendResponse,req.query);
+      break;
     case 'route':
         serverjs.service_provider.getRoute(sendResponse,req.query.service_id);
         break;
@@ -231,6 +234,15 @@ router.post('/deleteData', function(req, res, next) {
     case "route":
       serverjs.deleteRoute(sendResponse,req.body.service_id);
     break;
+    case "administrator":
+      serverjs.deleteRow(sendResponse,'administrator',"admin_id",req.body.admin_id);
+    break;
+    case "user":
+      serverjs.deleteRow(sendResponse,'user',"user_id",req.body.user_id);
+      break;
+    case 'service_provider':
+      serverjs.deleteRow(sendResponse,'service_provider',"service_provider_id",req.body.service_provider_id);
+      break;
     default:
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({

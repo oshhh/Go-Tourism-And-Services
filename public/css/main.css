@@ -196,3 +196,9 @@ table{
         margin-top: 150px;
     }
 }
+.info-toast{
+    position: fixed;
+    bottom: 0px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}

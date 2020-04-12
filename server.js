@@ -393,6 +393,17 @@ function getServiceRequests(callback, user_id, attribute_values) {
     // }
     runQuery(callback, query);
 }
+function allServiceRequest(callback,filterData)
+{
+    query=`select r.*, u.name as uname, u.user_id as uid, p.name as pname
+    from service_request as r, user as u, trip as t, service_provider as p, service as s
+    where( r.trip_id=t.trip_id and t.user_id=u.user_id and 
+        r.service_id = s.service_id and p.service_provider_id=s.service_provider_id
+        and u.name REGEXP "`+filterData.user_id+`" 
+        and p.name REGEXP "`+filterData.pname+`"
+        and s.service_id REGEXP "`+filterData.service_id+`")`;
+    runQuery(callback,query);
+}
 function createTrip(callback, attribute_values) {
     query = 'insert into trip values ((select count(*) from trip), ' + attribute_values['user_id'] + ', ' + attribute_values['departure_date'] + ', ' + attribute_values['return_date'] + ', ' + attribute_values['destination_city'] + ');'
     runQuery(callback, query);
@@ -520,6 +531,13 @@ function deleteRoute(callback,service_id)
     where service_id="`+service_id+`";`
     runQuery(callback,query);
 }
+function deleteRow(callback,table_name,searchKey,searchValue)
+{
+    query=`delete
+    from `+table_name+`
+    where `+searchKey+`="`+searchValue+`";`
+    runQuery(callback,query);
+}
 // function getTrips(callback,user_id)
 // {
 //     query=`select distinct t.trip_id,u.user_id,t.departure_date,t.return_date,t.city
@@ -604,6 +622,7 @@ module.exports = {
         'getAdmins' : getAdmins,
         'getUsers' : getUsers,
         'getServiceProviders' : getServiceProviders,
+        'allServiceRequest':allServiceRequest
     },
     'service_provider' : {
         'register_service_provider' : register_service_provider,
@@ -632,5 +651,6 @@ module.exports = {
     'updateList':updateList,
     'insertRoutes':insertRoutes,
     'getLocation':getLocation,
-    'deleteRoute':deleteRoute
+    'deleteRoute':deleteRoute,
+    'deleteRow':deleteRow
 }

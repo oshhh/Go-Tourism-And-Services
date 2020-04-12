@@ -30,6 +30,38 @@ router.get('/getData', function(req, res, next) {
   switch(req.query.type)
   {
     // User
+    case "service_request":
+        serverjs.user.getTrips(function(result) {
+          console.log("here")
+          console.log(result);
+          trips = {}
+          for(i in result) {
+            trips[result[i].trip_id] = result[i];
+            trips[result[i].trip_id].service_requests = [];
+          }
+          serverjs.user.getServiceRequests(function(result) {
+            for(i in result) {
+              if(result[i].trip_id in trips) {
+                trips[result[i].trip_id].service_requests.push(result[i]);
+              }
+            }
+            result = []
+            for(trip_id in trips) {
+              result.push(trips[trip_id]);
+            }
+            sendResponse(result);
+          },req.session.uname, {});
+        }, {
+            user_id : "\"" + req.session.uname + "\"",
+          })
+    break;
+    case 'new_trip' :
+      serverjs.user.createTrip(sendResponse, {
+        user_id : req.query.user_id,
+        destination_city : req.query.destination_city,
+        departure_date : req.query.departure_date,
+        return_date : req.query.return_date,
+      })
     case 'flight':
         serverjs.user.getFlights(sendResponse,{
           from_city: req.query.from,
@@ -58,18 +90,13 @@ router.get('/getData', function(req, res, next) {
             for(i in result) {
               result[i] = result_[result[i].service_id]
             }
+            console.log(result);
             sendResponse(result);
           });
         }, req.query.t_type, req.query.from, req.query.to, {
           AC: req.query.AC,
           service_provider_id: prov
         });
-    case 'noRoute_bus_train':
-      serverjs.user.getBusTrains(sendResponse,req.query.t_type, req.query.from, req.query.to, {
-        AC: req.query.AC,
-        service_provider_id: prov
-      });
-      break;      
     break;
     case 'taxi':
         serverjs.user.getTaxis(sendResponse, {
@@ -86,7 +113,6 @@ router.get('/getData', function(req, res, next) {
           room_type: req.query.room_type,
           capacity: req.query.capacity,
           wifi_facility: req.query.wifi_facility,
-          service_provider_id: prov
         });      
     break;
     case 'food':
@@ -106,32 +132,6 @@ router.get('/getData', function(req, res, next) {
     case 'guide':
         serverjs.user.getGuides(sendResponse, {
         }, req.query.tourist_spot_name, req.query.tourist_spot_city);   
-    break;
-    case "service_request":
-        serverjs.user.getTrips(function(result) {
-          console.log("here")
-          console.log(result);
-          trips = {}
-          for(i in result) {
-            trips[result[i].trip_id] = result[i];
-            trips[result[i].trip_id].service_requests = [];
-          }
-          serverjs.user.getServiceRequests(function(result) {
-            for(i in result) {
-              if(result[i].trip_id in trips) {
-                trips[result[i].trip_id].service_requests.push(result[i]);
-              }
-            }
-            result = []
-            for(trip_id in trips) {
-              result.push(trips[trip_id]);
-            }
-            sendResponse(result);
-          },req.session.uname, {});
-        }, {
-            user_id : "\"" + req.session.uname + "\"",
-          })
-        
     break;
     case "review":
       serverjs.user.getServiceReview(sendResponse,req.query.service_id);
@@ -167,6 +167,12 @@ router.get('/getData', function(req, res, next) {
           approved : req.query.approved,
         });
     break;
+    case 'noRoute_bus_train':
+      serverjs.user.getBusTrains(sendResponse,req.query.t_type, req.query.from, req.query.to, {
+        AC: req.query.AC,
+        service_provider_id: prov
+      });
+    break;      
     case 'servicesByProvider':
       serverjs.service_provider[req.query.func](sendResponse,req.query.service_provider_id);
       break;

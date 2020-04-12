@@ -18,7 +18,7 @@ tables = {
     'route': ['service_id', 'location_id', 'arrival_time'],
     'tourist_spot': ['tourist_spot_id', 'name', 'location_id', 'type', 'entry_fee'],
     'guide': ['service_id','name', 'tourist_spot_id'],
-    'trip': ['trip_id','user_id','departure_date', 'arrival_date', 'city'],
+    'trip': ['trip_id','user_id','departure_date', 'return_date', 'destination_city'],
     'service_request': ['request_id', 'trip_id', 'service_id', 'timestamp', 'quantity', 'cost', 'status', 'user_rating', 'service_rating', 'comments'],
     'query': ['query_id', 'user_id', 'query']
 }
@@ -73,14 +73,14 @@ function createDatabase(onComplete) {
     runQuery(callback, 'create table if not exists route (service_id char(8),location_id char(8),arrival_time time,primary key (service_id, location_id),foreign key(service_id) references service(service_id),foreign key(location_id) references location(location_id));')
     runQuery(callback, 'create table if not exists tourist_spot (tourist_spot_id char(8) primary key,name varchar(100),location_id char(8),type varchar(100),entry_fee float,foreign key(location_id) references location(location_id));')
     runQuery(callback, 'create table if not exists guide (service_id char(8) primary key,name varchar(100),tourist_spot_id char(8),foreign key(service_id) references service(service_id),check (service_id like \"GUI%\"),foreign key(tourist_spot_id) references tourist_spot(tourist_spot_id));')
-    runQuery(callback, 'create table if not exists trip (trip_id char(8) primary key,user_id char(8),departure_date date,arrival_date date,city varchar(100),foreign key(user_id) references user(user_id));')
+    runQuery(callback, 'create table if not exists trip (trip_id char(8) primary key,user_id char(8),departure_date date,return_date date,destination_city varchar(100),foreign key(user_id) references user(user_id));')
     runQuery(callback, 'create table if not exists service_request (request_id char(8) primary key,trip_id char(8),service_id char(8) not null,timestamp datetime,quantity int not null,cost int not null,status varchar(15) not null,user_rating int,service_rating int,comments varchar(1000),foreign key(trip_id) references trip(trip_id),foreign key(service_id) references service(service_id),check (status in (\"Pending\", \"Accepted\", \"Rejected\", \"Completed\", \"Paid\")),check (user_rating >= 0 and user_rating <= 5),check (service_rating >= 0 and service_rating <= 5));')
     runQuery(callback, 'create table if not exists query (query_id char(8), user_id char(8), query varchar(100),foreign key(user_id) references user(user_id));')
     runQuery(callback, 'create table if not exists wishlist (user_id char(8), tourist_spot_id char(8), primary key(user_id, tourist_spot_id), foreign key(user_id) references user(user_id), foreign key(tourist_spot_id) references tourist_spot(tourist_spot_id))');
     runQuery(callback, 'create table if not exists visited (trip_id char(8), tourist_spot_id char(8), primary key(trip_id, tourist_spot_id), foreign key(trip_id) references trip(trip_id), foreign key(tourist_spot_id) references tourist_spot(tourist_spot_id))');
 
     runQuery(callback, 'INSERT INTO location VALUES(\'LOC00000\',\'pangong lake\',\'ladakh\',\'J&K\',\'India\',194101),(\'LOC00001\',\'Zanskar Valley\',\'ladakh\',\'J&K\',\'India\',194102),(\'LOC00002\',\'Tso Moriri\',\'ladakh\',\'J&K\',\'India\',194103),(\'LOC00003\',\'Ladakh\',\'ladakh\',\'J&K\',\'India\',194101),(\'LOC00004\',\'Leh\',\'Leh\',\'J&K\',\'India\',194104),(\'LOC00005\',\'Srinagar\',\'Srinagar\',\'J&K\',\'India\',190001),(\'LOC00006\',\'Dal Lake\',\'Srinagar\',\'J&K\',\'India\',190002),(\'LOC00007\',\'Shalimar Bagh\',\'Srinagar\',\'J&K\',\'India\',190003),(\'LOC00008\',\'Shimla\',\'Shimla\',\'Himachal Pradesh\',\'India\',171001),(\'LOC00009\',\'Rishikesh\',\'Dehradun\',\'Uttrakhand\',\'India\',249201),(\'LOC00010\',\'Badrinath\',\'Chamoli\',\'Uttrakhand\',\'India\',249202),(\'LOC00011\',\'Haridwar\',\'Haridwar\',\'Uttrakhand\',\'India\',249401),(\'LOC00012\',\'Amritsar\',\'Amritsar\',\'Punjab\',\'India\',143001),(\'LOC00013\',\'Golden Temple\',\'Amritsar\',\'Punjab\',\'India\',143002),(\'LOC00014\',\'Wagah Border\',\'Amritsar\',\'Punjab\',\'India\',143003),(\'LOC00015\',\'Delhi\',\'Delhi \',\'Delhi\',\'India\',110000),(\'LOC00016\',\'Red Fort\',\'Delhi \',\'Delhi\',\'India\',110011),(\'LOC00017\',\'Qutub Minar\',\'Delhi \',\'Delhi\',\'India\',110054),(\'LOC00018\',\'India Gate\',\'Delhi \',\'Delhi\',\'India\',110024),(\'LOC00019\',\'Jodhpur\',\'Jodhpur\',\'Rajasthan\',\'India\',342154),(\'LOC00020\',\'Agra\',\'Agra \',\'Uttar Pradesh\',\'India\',234142),(\'LOC00021\',\'Fatehpur Sikri\',\'Agra \',\'Uttar Pradesh\',\'India\',334192),(\'LOC00022\',\'Agra Fort\',\'Agra \',\'Uttar Pradesh\',\'India\',334182),(\'LOC00023\',\'Shivpui\',\'Shivpuri\',\'Madhya Pradesh\',\'India\',473551),(\'LOC00024\',\'Sanchi \',\'Raisen\',\'Madhya Pradesh\',\'India\',482164),(\'LOC00025\',\'Kanha National Park\',\'Balaghat\',\'Madhya Pradesh\',\'India\',481001),(\'LOC00026\',\'Mount Abu\',\'Sirohi\',\'Rajasthan\',\'India\',307501),(\'LOC00027\',\'Abu Road\',\'Sirohi\',\'Rajasthan\',\'India\',307530),(\'LOC00028\',\'Gir National Park\',\'Junagadh\',\'Gujrat\',\'India\',362001),(\'LOC00029\',\'Mumbai\',\'Mumbai\',\'Maharashtra\',\'India\',400001),(\'LOC00030\',\'Navi Mumbai\',\'Thane\',\'Maharashtra\',\'India\',400002),(\'LOC00031\',\'Marine Drive\',\'Mumbai\',\'Maharashtra\',\'India\',400003),(\'LOC00032\',\'Ellora Caves\',\'Aurangabad\',\'Maharashtra\',\'India\',472164),(\'LOC00033\',\'Ajanta Caves\',\'Aurangabad\',\'Maharashtra\',\'India\',472178),(\'LOC00034\',\'Panjim\',\'Goa\',\'Goa\',\'India\',403001),(\'LOC00035\',\'Calangute\',\'North Panji\',\'Goa\',\'India\',403213),(\'LOC00036\',\'Vijaypura\',\'Bijapur\',\'Karnataka\',\'India\',586101),(\'LOC00037\',\'Hampi\',\'Ballari\',\'Karnataka\',\'India\',588101),(\'LOC00038\',\'Hydrabad\',\'Hydrabad\',\'Telangana\',\'India\',500512),(\'LOC00039\',\'Vishakhapatnam\',\'Vishakhapatnam\',\'Andhra Pradesh\',\'India\',530612),(\'LOC00040\',\'Shillong\',\'Shillong\',\'Meghalaya\',\'India\',634514),(\'LOC00041\',\'Kaziranga\',\'Karbi Anglong\',\'Assam\',\'India\',612414),(\'LOC00042\',\'Chennai\',\'Chennai\',\'Tamil Nadu\',\'India\',600001),(\'LOC00043\',\'Vadodara\',\'Vadodara\',\'Gujarat\',\'India\',390007),(\'LOC00044\',\'Ahmedabad\',\'Ahmedabad\',\'Gujarat\',\'India\',380001),(\'LOC00045\',\'Bangalore\',\'Bangalore\',\'Karnataka\',\'India\',560008),(\'LOC00046\',\'Kolkata\',\'Kolkata\',\'West Bengal\',\'India\',700019),(\'LOC00047\',\'Pune\',\'Pune\',\'Maharashtra\',\'India\',411014),(\'LOC00048\',\'Hydrabad\',\'Hyderabad\',\'Telangana\',\'India\',500003),(\'LOC00049\',\'dadar\',\'Mumbai\',\'Maharashtra\',\'India\',400002),(\'LOC00050\',\'ambala\',\'haryana\',\'Haryana\',\'India\',400003),(\'LOC00051\',\'jalandahar\',\'punjab\',\'punjab\',\'India\',400008);')
-    runQuery(callback,('INSERT INTO neighbouring VALUES(\'LOC00000\',\'LOC00001\',5),(\'LOC00000\',\'LOC00002\',10),(\'LOC00000\',\'LOC00003\',15),(\'LOC00001\',\'LOC00004\',3),(\'LOC00001\',\'LOC00005\',8),(\'LOC00002\',\'LOC00006\',11),(\'LOC00004\',\'LOC00007\',51),(\'LOC00004\',\'LOC00008\',56),(\'LOC00004\',\'LOC00009\',61),(\'LOC00004\',\'LOC00010\',49),(\'LOC00005\',\'LOC00011\',81),(\'LOC00005\',\'LOC00012\',15),(\'LOC00005\',\'LOC00013\',9),(\'LOC00006\',\'LOC00014\',12),(\'LOC00008\',\'LOC00015\',75),(\'LOC00009\',\'LOC00016\',24),(\'LOC00009\',\'LOC00017\',13),(\'LOC00010\',\'LOC00018\',18),(\'LOC00012\',\'LOC00019\',6),(\'LOC00012\',\'LOC00020\',10),(\'LOC00013\',\'LOC00021\',12),(\'LOC00015\',\'LOC00022\',21),(\'LOC00015\',\'LOC00023\',31),(\'LOC00015\',\'LOC00024\',12),(\'LOC00016\',\'LOC00025\',24),(\'LOC00016\',\'LOC00026\',16),(\'LOC00017\',\'LOC00027\',31),(\'LOC00020\',\'LOC00028\',12),(\'LOC00020\',\'LOC00029\',8),(\'LOC00021\',\'LOC00030\',16),(\'LOC00023\',\'LOC00031\',48),(\'LOC00026\',\'LOC00032\',15),(\'LOC00029\',\'LOC00033\',20),(\'LOC00029\',\'LOC00034\',25),(\'LOC00030\',\'LOC00035\',18),(\'LOC00032\',\'LOC00036\',35),(\'LOC00034\',\'LOC00037\',16),(\'LOC00036\',\'LOC00038\',26);')
+    runQuery(callback, 'INSERT INTO neighbouring VALUES(\'LOC00000\',\'LOC00001\',5),(\'LOC00000\',\'LOC00002\',10),(\'LOC00000\',\'LOC00003\',15),(\'LOC00001\',\'LOC00004\',3),(\'LOC00001\',\'LOC00005\',8),(\'LOC00002\',\'LOC00006\',11),(\'LOC00004\',\'LOC00007\',51),(\'LOC00004\',\'LOC00008\',56),(\'LOC00004\',\'LOC00009\',61),(\'LOC00004\',\'LOC00010\',49),(\'LOC00005\',\'LOC00011\',81),(\'LOC00005\',\'LOC00012\',15),(\'LOC00005\',\'LOC00013\',9),(\'LOC00006\',\'LOC00014\',12),(\'LOC00008\',\'LOC00015\',75),(\'LOC00009\',\'LOC00016\',24),(\'LOC00009\',\'LOC00017\',13),(\'LOC00010\',\'LOC00018\',18),(\'LOC00012\',\'LOC00019\',6),(\'LOC00012\',\'LOC00020\',10),(\'LOC00013\',\'LOC00021\',12),(\'LOC00015\',\'LOC00022\',21),(\'LOC00015\',\'LOC00023\',31),(\'LOC00015\',\'LOC00024\',12),(\'LOC00016\',\'LOC00025\',24),(\'LOC00016\',\'LOC00026\',16),(\'LOC00017\',\'LOC00027\',31),(\'LOC00020\',\'LOC00028\',12),(\'LOC00020\',\'LOC00029\',8),(\'LOC00021\',\'LOC00030\',16),(\'LOC00023\',\'LOC00031\',48),(\'LOC00026\',\'LOC00032\',15),(\'LOC00029\',\'LOC00033\',20),(\'LOC00029\',\'LOC00034\',25),(\'LOC00030\',\'LOC00035\',18),(\'LOC00032\',\'LOC00036\',35),(\'LOC00034\',\'LOC00037\',16),(\'LOC00036\',\'LOC00038\',26);')
     runQuery(callback, 'INSERT INTO user VALUES(\'USR00000\',\'Neeraf \',\'Neeraf@432gmail.com.com\',\'Nera333\',\'138, Angappa Naicken St, Parrys Chennai, Tamil Nadu, 600001\',4425229885,\'LOC00042\',\'Y\'),(\'USR00001\',\'Ekambar \',\'Ekambar@109yahoo.com\',\'pyasf3333\',\'M 9, Part 1, Greater Kailash Delhi, Delhi, 110048\',1129234950,\'LOC00015\',\'Y\'),(\'USR00002\',\'Sankalpa \',\'Sankalpa@322yahoo.com\',\'pfasdre3333\',\'18/19, Alkapuri, 18/19, Alkapuri Vadodara, Gujarat, 390007\',2652337966,\'LOC00043\',\'Y\'),(\'USR00003\',\'Fatik \',\'Fatik@41gmail.com\',\'pyarsdfae33\',\'136, Narayan Dhuru Street, Masjid Bunder Mumbai, Maharashtra, 400003\',2223450058,\'LOC00029\',\'Y\'),(\'USR00004\',\'Shashimohan \',\'Shashimohan@12gmail.com\',\'pyargf3333\',\'Shop No 9, Stn, Nr Silky, Santacruz (west) Mumbai, Maharashtra, 400054\',2226052751,\'LOC00029\',\'Y\'),(\'USR00005\',\'Bhuvanesh\',\'Bhuvanesh@34gmail.com\',\'pyare33dsf33\',\'Shop No 6, D/14, Yogi Nagar, Eksar Road, Borivali (west) Mumbai, Maharashtra, 400091\',3222898524,\'LOC00029\',\'Y\'),(\'USR00006\',\'Tripurari \',\'Tripurari@24gmail.com\',\'pyare333dfs3\',\'21c, Pkt-3, Mig Flat, Mayur Vihar Delhi, Delhi, 110096\',1122615327,\'LOC00015\',\'Y\'),(\'USR00007\',\'Mangal \',\'mangal@238gmail.com\',\'pyare3fdsa333\',\'173, Sarvoday Comm Centre, Salapose Road, Nr Gpo, Ahmedabad, Gujarat, 380001\',7925504021,\'LOC00044\',\'Y\'),(\'USR00008\',\'Raghupati \',\'raghu@288gmail.com\',\'pyare3fd333\',\'36, 16th Cross C M H Road, Lakshmipuram, Ulsoor Bangalore, Karnataka, 560008\',4425575389,\'LOC00045\',\'Y\'),(\'USR00009\',\'Daiwik \',\'daiwik@277gmail.com\',\'pyare33df33\',\'Prasad Heights, 43 Somnath Nagar, Vadgaonsheri, Pune, Maharashtra, 411014\',9242703174,\'LOC00047\',\'Y\'),(\'USR00010\',\'Gagan\',\'gagan@266gmail.com\',\'pyare3df333\',\'167- P, Rashbehari Avenue, Ballygunj, Kolkata, West Bengal, 700019\',8489245681,\'LOC00046\',\'Y\'),(\'USR00011\',\'Jagadbandu \',\'jaga@254gmail.com\',\'jagaasasda\',\'84, Devloped Indl Estate, Perungudi, Chennai, Tamil Nadu, 600096\',2684405124,\'LOC00042\',\'Y\'),(\'USR00012\',\'Uday\',\'uday@244gmail.com\',\'uda234\',\'27, Heavy Water Colony, Chhani Jakat Naka, Vadodara, Gujarat, 390002\',3424961708,\'LOC00043\',\'Y\'),(\'USR00013\',\'Viswas \',\'viswas@2gmail.com\',\'viswasasdadada\',\'24 Temple Road, Agaram Chennai, Tamil Nadu, 600082\',3525378703,\'LOC00042\',\'Y\'),(\'USR00014\',\'Saket \',\'saket@21gmail.com\',\'saket67787777\',\'15 & 16, Richmond Town, Bangalore, Karnataka, 560025\',8022220296,\'LOC00045\',\'Y\'),(\'USR00015\',\'Jusal \',\'jusal@2454gmail.com\',\'jusal1231231\',\'5, 100 Ft Rd, Vysys Bank Colony, B T M Bangalore, Karnataka, 560076\',8726687005,\'LOC00045\',\'Y\'),(\'USR00016\',\'Kunjabihari \',\'kunj@2354gmail.com\',\'kunjklklklasdf\',\'22, Royapettah High Road, Royapettah, Chennai, Tamil Nadu, 600014\',9721623577,\'LOC00042\',\'Y\'),(\'USR00017\',\'Ottakoothan \',\'ottak@3435yahoo.com\',\'ottak1113\',\'1-8-303/69/3, S P Road, Hyderabad, Telangana, 500003\',4428114197,\'LOC00048\',\'Y\'),(\'USR00018\',\'Naval \',\'naval@234gmail.com\',\'naval1111\',\'1a Chirag Mansion, Khetwadi Back Rd, Khetwadi, Mumbai, Maharashtra, 400004\',4027849319,\'LOC00029\',\'Y\'),(\'USR00019\',\'Pyaremohan \',\'pyare@123gmail.com\',\'pyare3333\',\'420, Shri Ram Bhawan, Chandni Chowk Delhi, Delhi, 110006\',1123928452,\'LOC00015\',\'Y\');')
     runQuery(callback, 'INSERT INTO administrator VALUES(\'ADM00000\',\'vekine\',\'Admin\',\'vekine@gmail.com\',\'vekine123\'),(\'ADM00001\',\'Quest\',\'Service providers communications\',\'quet@gmail.com\',\'quet123\'),(\'ADM00002\',\'koneu\',\'Service providers communications\',\'koneu@gmail.com\',\'koeneu123\'),(\'ADM00003\',\'beqone\',\'Service providers communications\',\'bequone@gmail.com\',\'bequone123\'),(\'ADM00004\',\'Keao\',\'Statistician\',\'keao@gmail.com\',\'keao123\'),(\'ADM00005\',\'heotin\',\'Official Paperwork\',\'heotin@gmail.com\',\'heotin123\'),(\'ADM00006\',\'Joegit\',\'User Information handling\',\'joegit@gmail.com\',\'joegit123\'),(\'ADM00007\',\'vibege\',\'User Information handling\',\'vubege@gmail.com\',\'vubege123\'),(\'ADM00008\',\'lenyber\',\'Suggestions Implementation\',\'lenyber@gmail.com\',\'lenyber123\'),(\'ADM00009\',\'niceher\',\'Respondent for user queries\',\'niceher@gmail.com\',\'niceher123\'),(\'ADM00010\',\'sivepec\',\'Respondent for user queries\',\'sivepec@gmail.com\',\'sivepec123\'),(\'ADM00011\',\'jesotun\',\'Verification of guides\',\'jesotn@gmail.com\',\'jesotn123\'),(\'ADM00012\',\'pedakij\',\'Tourist Spots Verification\',\'pedakij@gmail.com\',\'pedakij123\'),(\'ADM00013\',\'zedart\',\'Tourist Spots Verification\',\'zedart0@gmail.com\',\'zedart0123\'),(\'ADM00014\',\'beqzasi\',\'Editor\',\'beqzasi1@gmail.com\',\'beqzasi1123\');')
     runQuery(callback, 'INSERT INTO service_provider VALUES(\'Y\',\'BPR00042\',\'kat\',\'kat345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00043\',\'tak\',\'tak345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00044\',\'sohail\',\'sohail345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00045\',\'mohan\',\'mohan345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00046\',\'sohan\',\'sohan345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00047\',\'rohan\',\'rohan345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00048\',\'bhol\',\'bhol345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00049\',\'dol\',\'dhol345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00050\',\'gol\',\'gol345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00051\',\'bol\',\'bol345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00052\',\'sop\',\'sop345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00053\',\'cop\',\'cop345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00054\',\'hanry\',\'hanry345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00055\',\'tom\',\'tom345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00056\',\'jerry\',\'jerry345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00057\',\'spider\',\'spider345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00058\',\'map\',\'map345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00059\',\'bat\',\'bat345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00060\',\'john\',\'john345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00061\',\'donu\',\'donu345\',\'Bus Provider\',\'Y\'),(\'Y\',\'BPR00062\',\'bonu\',\'bonu345\',\'Bus Provider\',\'Y\');')
@@ -256,19 +256,17 @@ function remove_administrator(service_provider_id) {
     runQuery(function(result){}, 'delete from service_provider where service_provider_id = ' + service_provider_id + ';');
 }
 
-// get locations matching the search
+// Location
 function getLocations(callback, attribute_values) {
     query= 'select distinct * from location ' + whereClause(attribute_values) + ';';
     console.log(query);
     runQuery(callback,query);
 }
-
-// add new location to the table
 function addLocation(callback,location) {
     insertIntoTable(callback,'location', location);
 }
 
-// Temporary function to supply the attributes
+// Helpers
 function assignAttributes(input_tables) {
     attribute_values = {}
     for(var j = 0; j < input_tables.length; ++ j) {
@@ -281,8 +279,6 @@ function assignAttributes(input_tables) {
     // console.log(attribute_values);
     return attribute_values;
 }
-
-// Make where clause condition statement from attribute values
 function whereClause(attribute_values) {
     query = '';
     var att_no = 0
@@ -297,7 +293,7 @@ function whereClause(attribute_values) {
 }
 
 
-// Get flights
+// User functions to display services according to filters
 async function getFlights(callback, attribute_values) {
     if(Object.keys(attribute_values).length == 0) {
         attribute_values = assignAttributes(['flight', 'service'])
@@ -305,8 +301,6 @@ async function getFlights(callback, attribute_values) {
     query = 'select distinct flight.service_id, service_provider_id, from_city, to_city, departure_time, arrival_time, price, discount, (SELECT distinct COALESCE(AVG(user_rating),0) FROM service_request as u where u.service_id=service.service_id)  as rating  from flight, service where ( service.service_id = flight.service_id) and (' + whereClause(attribute_values) + ');'
     return await runQuery(callback, query);
 }
-
-// Get busses and trains from one location to another
 function getBusTrains(callback, t_type, from, to, attribute_values) {
     console.log(t_type);
     if(Object.keys(attribute_values).length == 0) {
@@ -327,30 +321,24 @@ function getBusTrains(callback, t_type, from, to, attribute_values) {
     }
     runQuery(callback, query);
 }
-
 function getRoutes(callback) {
     query = 'select distinct * from route, location where route.location_id = location.location_id;'
     runQuery(callback, query);
 }
-
-// Get taxi
-async function getTaxis(callback, attribute_values) {
+function getTaxis(callback, attribute_values) {
     if(Object.keys(attribute_values).length == 0) {
         attribute_values = assignAttributes(['taxi', 'service'])
     }
     query = 'select distinct taxi.service_id, service_provider_id, car_name, capacity, AC, price, discount, (SELECT distinct COALESCE(AVG(user_rating),0) FROM service_request as u where u.service_id=service.service_id)  as rating  from taxi, service where ( service.service_id = taxi.service_id) and (' + whereClause(attribute_values) + ');'
-    return await runQuery(callback, query);
+    runQuery(callback, query);
 }
-
-// Get room
-async function getRooms(callback, attribute_values) {
+function getRooms(callback, attribute_values) {
     if(Object.keys(attribute_values).length == 0) {
         attribute_values = assignAttributes(['room', 'hotel', 'service'])
     }
     query = 'select distinct room.service_id, hotel.service_provider_id, locality, city, room_type, capacity, wifi_facility, price, discount, (SELECT distinct COALESCE(AVG(user_rating),0) FROM service_request as u where u.service_id=service.service_id)  as rating  from room, hotel, location, service where (service.service_id = room.service_id) and (hotel.service_provider_id = service.service_provider_id) and (location.location_id = hotel.location_id) and (' + whereClause(attribute_values) + ');'
-    return await runQuery(callback, query);
+    runQuery(callback, query);
 }
-
 function getFoodItems(callback,filters)
 {
     query=`
@@ -367,8 +355,6 @@ function getFoodItems(callback,filters)
     `
     runQuery(callback,query);
 }
-
-// Get a list of tourist spots that are in a city, only unvisited or both visited and unvisited
 function getTouristSpots(callback, attribute_values, city, unvisited = false) {
     if(Object.keys(attribute_values).length == 0) {
         attribute_values = assignAttributes(['tourist_spot'])
@@ -380,7 +366,6 @@ function getTouristSpots(callback, attribute_values, city, unvisited = false) {
     }
     runQuery(callback, query);
 }
-// Get a list of guides at a touirist spot or city
 function getGuides(callback, attribute_values, tourist_spot_name, tourist_spot_city) {
     if(Object.keys(attribute_values).length == 0) {
         attribute_values = assignAttributes(['guide', 'tourist_spot'])
@@ -388,25 +373,9 @@ function getGuides(callback, attribute_values, tourist_spot_name, tourist_spot_c
     query = 'select distinct * from guide, service, tourist_spot, location where (guide.service_id = service.service_id) and (guide.tourist_spot_id = tourist_spot.tourist_spot_id) and (tourist_spot.location_id = location.location_id and location.city like ' + tourist_spot_city + ' ) and ( tourist_spot.name like ' + tourist_spot_name + ');';
     runQuery(callback, query);
 }
-
-// Filter trips (based on user_id and other attributes)
 function getTrips(callback, attribute_values) {
     runQuery(callback, 'select distinct * from trip where ' + whereClause(attribute_values) + ';');
 }
-
-// Request service
-function requestService(service_request) {
-    insertIntoTable('service_request', service_request);
-}
-
-// Update status by service_provider
-function changeStatusOfServiceRequest(request_id, status) {
-    runQuery(function(result){}, 'update service_request set status = ' + status + ' where request_id = ' + request_id + ';');
-}
-
-// Filter service requests availed by user
-// Caller should make sure that user_id is the id of the user currently logged in 
-// to ensure no user can view the service requests of any other user
 function getServiceRequests(callback, user_id, attribute_values) {
     if(Object.keys(attribute_values).length == 0) {
         attribute_values = assignAttributes(['service_request']);
@@ -424,8 +393,21 @@ function getServiceRequests(callback, user_id, attribute_values) {
     // }
     runQuery(callback, query);
 }
+function createTrip(callback, attribute_values) {
+    query = 'insert into trip values ((select count(*) from trip), ' + attribute_values['user_id'] + ', ' + attribute_values['departure_date'] + ', ' + attribute_values['return_date'] + ', ' + attribute_values['destination_city'] + ');'
+    runQuery(callback, query);
+}
 
 
+// Request service
+function requestService(service_request) {
+    insertIntoTable('service_request', service_request);
+}
+
+// Update status by service_provider
+function changeStatusOfServiceRequest(request_id, status) {
+    runQuery(function(result){}, 'update service_request set status = ' + status + ' where request_id = ' + request_id + ';');
+}
 
 function getAdmins(callback, attribute_values) {
     if(attribute_values == null) {
@@ -475,14 +457,14 @@ function getServiceReview(callback,service_id)
     runQuery(callback,query);
 }
 
-function getTrips(callback,user_id)
-{
-    query=`select distinct t.trip_id,u.user_id,t.departure_date,t.arrival_date,t.city
-    from trip as t,user as u
-    where(u.user_id=t.user_id and u.user_id REGEXP "`+user_id+`")
-    ORDER BY t.departure_date;`
-    runQuery(callback,query)
-}
+// function getTrips(callback,user_id)
+// {
+//     query=`select distinct t.trip_id,u.user_id,t.departure_date,t.return_date,t.city
+//     from trip as t,user as u
+//     where(u.user_id=t.user_id and u.user_id REGEXP "`+user_id+`")
+//     ORDER BY t.departure_date;`
+//     runQuery(callback,query)
+// }
 function getBuses(callback,service_provider_id)
 {
     query=`select s.*,b.*,f.city as from_location_id_v,t.city as to_location_id_v
@@ -540,7 +522,7 @@ function deleteRoute(callback,service_id)
 }
 // function getTrips(callback,user_id)
 // {
-//     query=`select distinct t.trip_id,u.user_id,t.departure_date,t.arrival_date,t.city
+//     query=`select distinct t.trip_id,u.user_id,t.departure_date,t.return_date,t.city
 //     from trip as t,user as u
 //     where(u.user_id=t.user_id and u.user_id REGEXP "`+user_id+`")
 //     ORDER BY t.departure_date;`
@@ -590,28 +572,8 @@ async function main() {
     // createDatabase(function(){
     //     console.log('done Creation');
     // });
+    // runQuery(function(result) {console.log(result)}, "show tables;")
     console.log('done Connect');
-    // console.log(await getFlight(callback, '\'LOC00015\'', '\'LOC00029\''));
-    // getTouristSpots(function(result) {console.log(result)}, null, null, '\'Delhi\'', false);
-    // getGeneralServiceProviderAndService(function(result){console.log(result)});
-   
-    // getLocations(function(result){
-    //     console.log(result);
-    // },{city:["\"Delhi\""]})
-    // register_user(function(){
-    //     console.log("insert Done");
-    // },
-    // {
-    //     user_id:"USR00012",
-    //     name:"Sudhir", 
-    //     email:"asga@sd.com",
-    //     password:"zzzz",
-    //     address:"asag",
-    //     phone_no:"1234567891",
-    //     location_id:"LOC00001",
-    //     active:"Y"
-    // });
-    // getTouristSpots();
 }
 main();
 
@@ -631,6 +593,7 @@ module.exports = {
         'getGuides' : getGuides,
         'getTrips' : getTrips,
         'getServiceRequests' : getServiceRequests,
+        'createTrip' : createTrip,
         'getUserInfo':getUserInfo,
     },
     'admin' : {

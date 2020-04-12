@@ -98,7 +98,7 @@
                 <input ng-bind="trip.tcity" ng-model="trip.tcity" style="font-size: 0.8rem" class="marg" ng-model="tripcity" id="tcity" type="text" class="form-control" placeholder="City">
                 </div>                
                
-                <button class="btn btn-success" ng-click="addTrip()">Create</button>
+                <button class="btn btn-success" ng-click="createTrip()">Create</button>
 
               </div>
             </div>
@@ -109,7 +109,25 @@
 
       <div id="content" class="shadow p-4 mb-4 bg-white">
       
-        <div id="content_tab0" ng-show="tab==0">
+        <div id="content_tab0" ng-show="tab==0">    
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class = "input-group-text">Destination City</span>
+            </div>
+            <input ng-model="new_trip.destination" type="text" class="form-control" placeholder="Mumbai">
+            <div class="input-group-prepend">
+              <span class = "input-group-text">Departure Date</span>
+            </div>
+            <input ng-model="new_trip.departure_date" type="text" class="form-control" placeholder="25/04/2020">
+            <div class="input-group-prepend">
+              <span class = "input-group-text">Return Date</span>
+            </div>
+            <input ng-model="new_trip.return_date" type="text" class="form-control" placeholder="25/04/2020">
+            </div> 
+            <div class = "card-header text-center bg-white" style="text-align : center">
+            <button class="btn btn-success" ng-click="createTrip()" style = "width: 30%;">New Trip (+) </button>
+            </div>
+        </div>
           <div class="text-center d-flex flex-row justify-content-between align-middle">
             <label style="text-align:center">Showing \{{food.data.length}} Results</label>
           </div>

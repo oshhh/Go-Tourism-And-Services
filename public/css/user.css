@@ -17,4 +17,18 @@
 }
 .list-group{
   cursor: pointer;
+  height: 350px;
+  overflow-y: scroll;
 }
+.list-group::-webkit-scrollbar {
+  display: none;
+}
+.list-group {
+  -ms-overflow-style: none;
+}
+/* .datesVis{
+  display: none;
+}
+.datesVis:hover{
+  display: block;
+} */

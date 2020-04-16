@@ -74,8 +74,24 @@
             <div class="rowElement card shadow p-4 mb-4 bg-white">
             <ul class="list-group">
               <div ng-repeat="it in trip.data">
-                <li ng-show="it==trip.selected"  ng-click="selectTrip(it)" class="list-group-item list-group-item-action active">\{{it.city}} </li>
-                <li ng-hide="it==trip.selected"  ng-click="selectTrip(it)" class="list-group-item list-group-item-action">\{{it.city}} </li>
+                <li ng-show="it==trip.selected"  ng-click="selectTrip(it)" class="list-group-item list-group-item-action active">
+                  <div class="row">
+                    <div class="col-12">City: \{{it.city}}</div>  
+                  </div>
+                  <div class="row">
+                    <div class="col-12">Departure: \{{it.departure_date.substring(0,10);}}</div>
+                    <div class="col-12">Arrival: \{{it.arrival_date.substring(0,10);}}</div>
+                  </div>
+                </li>
+                <li ng-hide="it==trip.selected"  ng-click="selectTrip(it)" class="list-group-item list-group-item-action">
+                  <div class="row">
+                    <div class="col-12">City: \{{it.city}}</div>  
+                  </div>
+                  <div class="row datesVis">
+                    <div class="col-12">Departure: \{{it.departure_date.substring(0,10);}}</div>
+                    <div class="col-12">Arrival: \{{it.arrival_date.substring(0,10);}}</div>
+                  </div>
+                </li>
               </div>
             </ul>
             </div>

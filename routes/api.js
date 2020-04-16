@@ -32,8 +32,6 @@ router.get('/getData', function(req, res, next) {
     // User
     case "service_request":
         serverjs.user.getTrips(function(result) {
-          console.log("here")
-          console.log(result);
           trips = {}
           for(i in result) {
             trips[result[i].trip_id] = result[i];
@@ -72,6 +70,7 @@ router.get('/getData', function(req, res, next) {
         });       
     break;
     case 'bus_train':
+      console.log(req.query.t_type);
         serverjs.user.getBusTrains(function(result){
           routes = {}
           console.log("result");
@@ -136,9 +135,17 @@ router.get('/getData', function(req, res, next) {
     case "review":
       serverjs.user.getServiceReview(sendResponse,req.query.service_id);
       break;
-
     case 'trip':
-      serverjs.user.getTrips(sendResponse,req.query.user_id)
+      serverjs.user.getTrips(sendResponse, {
+        user_id : "\"" + req.session.uname + "\""
+      })
+      break;
+    case 'request':
+      // serverjs.count_table( function(result) {
+      //   serverjs.insertIntoTable(sendResponse, {
+      //     request_id : "RST000"
+      //   })
+      // } , "service_request");
       break;
     // Admin
     case 'admin':

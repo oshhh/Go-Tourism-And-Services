@@ -92,10 +92,9 @@ angularApp.controller("ngContent",function($scope,$http)
 	}
 
 	$scope.trip={
-		tdateStart:"",
-		tdateEnd:"",
-		tcity:"",
-		formStatus:0
+		status : "Pending",
+		data : [],
+		selected : ""
 	}
 	$scope.curUser={
 		name:document.getElementById("nmU").innerHTML,
@@ -140,8 +139,6 @@ angularApp.controller("ngContent",function($scope,$http)
 		}
 		else if(tab==1)
 		{
-			var newDate = new Date($scope.trip.tdateStart);
-			console.log(newDate.toUTCString());
 			$scope.flight.status="Pending";
 			// console.log("sent");
 			$http.get("/api/getData",{params:{
@@ -162,16 +159,14 @@ angularApp.controller("ngContent",function($scope,$http)
 		}
 		else if(tab==2)
 		{
-			var newDate = new Date($scope.trip.tdateStart);
-			console.log(newDate.toUTCString());
 			$scope.taxi.status="Pending";
 			// console.log("sent");
 			$http.get("/api/getData",{params:{
 				type:"bus_train",
-				t_type : ( $scope.bus_train.t_type == 0) ? ("\"%\"") : ($scope.bus_train.t_type == 1 ? "\"Y\"" : "\"N\"" ),
+				t_type : ( $scope.bus_train.t_type == 0) ? ("\"%\"") : ($scope.bus_train.t_type == 1 ? "B" : "T" ),
 				from: "\"%" + $scope.bus_train.from + "%\"",
 				to: "\"%" + $scope.bus_train.to + "%\"",
-				AC: ( $scope.bus_train.AC == 0) ? ("\"%\"") : ($scope.bus_train.AC == 1 ? "\"B\"" : "\"T\"" )
+				AC: ( $scope.bus_train.AC == 0) ? ("\"%\"") : ($scope.bus_train.AC == 1 ? "\"Y\"" : "\"N\"" )
 				}}).then(
 				function(data, status, headers, config) {
 					$scope.bus_train.data=data.data.content;
@@ -185,8 +180,6 @@ angularApp.controller("ngContent",function($scope,$http)
 		}
 		else if(tab==3)
 		{
-			var newDate = new Date($scope.trip.tdateStart);
-			console.log(newDate.toUTCString());
 			$scope.taxi.status="Pending";
 			// console.log("sent");
 			$http.get("/api/getData",{params:{
@@ -207,8 +200,6 @@ angularApp.controller("ngContent",function($scope,$http)
 		}
 		else if(tab==4)
 		{
-			var newDate = new Date($scope.trip.tdateStart);
-			console.log(newDate.toUTCString());
 			$scope.room.status="Pending";
 			// console.log("sent");
 			console.log("room!");
@@ -232,8 +223,6 @@ angularApp.controller("ngContent",function($scope,$http)
 		}
 		else if(tab==5)
 		{
-			var newDate = new Date($scope.trip.tdateStart);
-			console.log(newDate.toUTCString());
 			$scope.food.status="Pending";
 			// console.log("sent");
 			$http.get("/api/getData",{params:{
@@ -254,8 +243,6 @@ angularApp.controller("ngContent",function($scope,$http)
 		}
 		else if(tab==6)
 		{
-			var newDate = new Date($scope.trip.tdateStart);
-			console.log(newDate.toUTCString());
 			$scope.food.status="Pending";
 			// console.log("sent");
 			$http.get("/api/getData",{params:{
@@ -276,8 +263,6 @@ angularApp.controller("ngContent",function($scope,$http)
 		}
 		else if(tab==7)
 		{
-			var newDate = new Date($scope.trip.tdateStart);
-			console.log(newDate.toUTCString());
 			$scope.guide.status="Pending";
 			// console.log("sent");
 			$http.get("/api/getData",{params:{
@@ -288,6 +273,23 @@ angularApp.controller("ngContent",function($scope,$http)
 				function(data, status, headers, config) {
 				$scope.guide.data=data.data.content;
 				$scope.guide.data.forEach(element => {
+					element.showRev=false;
+				});
+				$scope.guide.status="OK";
+				},function(data, status, headers, config) {
+					console.log("error");
+				});
+		}
+		else if(tab==8)
+		{
+			$scope.guide.status="Pending";
+			// console.log("sent");
+			$http.get("/api/getData",{params:{
+				type: "trip",
+				}}).then(
+				function(data, status, headers, config) {
+				$scope.trip.data=data.data.content;
+				$scope.trip.data.forEach(element => {
 					element.showRev=false;
 				});
 				$scope.guide.status="OK";
@@ -346,6 +348,25 @@ angularApp.controller("ngContent",function($scope,$http)
 		});
 	}
 
+	$scope.request = function(it){
+		if($scope.trip.selected == "") {
+			alert("No trip selected! Can't request service.");
+			return;
+		}
+		$http.post('/api/request',JSON.stringify({
+			trip_id:$scope.trip.selected,
+			service_id:it.service_id,
+			cost : it.price,
+			quantity : 1,
+		}))
+		.then(function(response){
+			console.log("got");
+		},function(response){
+			console.log("err");
+		});
+		alert("requesting");
+		
+	}
 	$scope.food.order=function(it)
 	{
 		// alert(it.service_id);
@@ -671,12 +692,19 @@ angularApp.controller("ngContent",function($scope,$http)
 		$scope.trip.formStatus=0;
 		// console.log("Trip MEnu")
 	}
-	$scope.selectTrip=function(it)
+	$scope.selectTrip=function(trip_id)
 	{
+		$scope.trip.selected = trip_id;
 		alert("works");
 	}
 	console.log("init Done");
 	$scope.getTrips();
+	$scope.toggle_sidebar=function(){
+		$scope.getData(8);
+		sidebarDOM=document.getElementById("sidebar");
+		sidebarDOM.style.right=(sidebarDOM.style.right=="-380px")?("0px"):("-380px");
+		console.log("called toggle"+sidebarDOM.style.right);
+	}
 });
 var labels=["Bookings","Tra","All Hotels","All Food Items","Gui/tour"];
 function bs(current)
@@ -692,10 +720,4 @@ function bs(current)
 		all[i].id="act"
 		}	
 	}
-}
-function toggle_sidebar()
-{
-	sidebarDOM=document.getElementById("sidebar");
-	sidebarDOM.style.right=(sidebarDOM.style.right=="-380px")?("0px"):("-380px");
-	console.log("called toggle"+sidebarDOM.style.right);
 }

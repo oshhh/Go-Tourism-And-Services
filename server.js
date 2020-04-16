@@ -302,14 +302,12 @@ async function getFlights(callback, attribute_values) {
     return await runQuery(callback, query);
 }
 function getBusTrains(callback, t_type, from, to, attribute_values) {
-    console.log(t_type);
     if(Object.keys(attribute_values).length == 0) {
         attribute_values = assignAttributes(['bus', 'train'])
     }
-    query_bus = 'select distinct * from bus, route as r1, route as r2, location l1, location l2 where (bus.service_id = r1.service_id) and (bus.service_id = r2.service_id) and (r1.arrival_time < r2.arrival_time) and (r1.location_id = l1.location_id) and (l1.locality like ' + from + ') and (r2.location_id = l2.location_id) and (l2.locality like ' + to + ') and ( ' + whereClause(attribute_values) + ' )'
-    query_bus = 'select distinct * from bus, route as r1, route as r2, location l1, location l2, service where (service.service_id = bus.service_id) and (bus.service_id = r1.service_id) and (l1.location_id = r1.location_id) and (r2.service_id = bus.service_id) and (l2.location_id = r2.location_id) and (l1.locality like ' + from +') and (l2.locality like ' + to + ')';
-    query_train = 'select distinct * from train, route as r1, route as r2, location l1, location l2 where (train.service_id = r1.service_id) and (train.service_id = r2.service_id) and (r1.arrival_time < r2.arrival_time) and (r1.location_id = l1.location_id) and (l1.locality like ' + from + ') and (r2.location_id = l2.location_id) and (l2.locality like ' + to + ') and ( ' + whereClause(attribute_values) + ' )'
-    query_train = 'select distinct * from train, route as r1, route as r2, location l1, location l2, service where (service.service_id = train.service_id) and (train.service_id = r1.service_id) and (l1.location_id = r1.location_id) and (r2.service_id = train.service_id) and (l2.location_id = r2.location_id) and  (l1.locality like ' + from +') and (l2.locality like ' + to + ')';
+    query_bus = 'select distinct * from bus, route as r1, route as r2, location l1, location l2, service where (service.service_id = bus.service_id) and (bus.service_id = r1.service_id) and (l1.location_id = r1.location_id) and (r2.service_id = bus.service_id) and (l2.location_id = r2.location_id) and (l1.locality like ' + from +') and (l2.locality like ' + to + ') and (' + whereClause(attribute_values) + ')';
+    query_train = 'select distinct * from train, route as r1, route as r2, location l1, location l2, service where (service.service_id = train.service_id) and (train.service_id = r1.service_id) and (l1.location_id = r1.location_id) and (r2.service_id = train.service_id) and (l2.location_id = r2.location_id) and  (l1.locality like ' + from +') and (l2.locality like ' + to + ') and (' + whereClause(attribute_values) + ')';
+    console.log(t_type);
     if(t_type == 'B') {
         query = query_bus + ';';
     } else if(t_type == 'T') {

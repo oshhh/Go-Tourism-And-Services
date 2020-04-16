@@ -139,23 +139,21 @@ router.get('/getData', function(req, res, next) {
       serverjs.user.getTrips(sendResponse, {
         user_id : "\"" + req.session.uname + "\""
       })
-      break;
+    break;
     case 'request':
-      console.log("here");
       serverjs.count_table( function(result) {
-        console.log("here");
-        serverjs.insertIntoTable(sendResponse, {
+        serverjs.insertIntoTable(sendResponse, 'service_request', {
           request_id:"RST" + ("00000" + result[0]['cnt']).slice(-5),
           trip_id : req.query.trip_id,
           service_id : req.query.service_id,
-          timestamp : null,
+          timestamp : "2020-01-02",
           quantity : 1,
           cost : req.query.cost,
           status : "Pending",
-          user_rating : null,
-          service_rating : null,
-          comments : null,
-        }, 'service_request');
+          user_rating : 5,
+          service_rating : 5,
+          comments : "-",
+        });
       } , "service_request");
       break;
     // Admin

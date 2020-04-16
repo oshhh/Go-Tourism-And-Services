@@ -357,132 +357,17 @@ angularApp.controller("ngContent",function($scope,$http)
 			alert("No trip selected! Can't request service.");
 			return;
 		}
-		$http.post('/api/request',JSON.stringify({
+		$http.get('/api/getData',{params:{
+			type : 'request',
 			trip_id:$scope.trip.selected,
 			service_id:it.service_id,
 			cost : it.price,
-		}))
-		.then(function(response){
-			console.log("got");
-		},function(response){
-			console.log("err");
-		});
-		alert("requesting");
-		
+		}}).then(
+		function(data, status, headers, config) {
+			console.log(data.data.content);
+			alert("Request made. Please check trips tab for more info about request")
+			});
 	}
-	$scope.food.order=function(it)
-	{
-		// alert(it.service_id);
-		// console.log($http.post);
-		$http.post('/api/service_request',JSON.stringify({
-			user_id:$scope.curUser.uid,
-			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
-			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
-			service_id:it.service_id
-		}))
-		.then(function(response){
-			console.log("got");
-		},function(response){
-			console.log("err");
-		});
-	}
-	$scope.flight.order=function(it)
-	{
-		// alert(it.service_id);
-		// console.log($http.post);
-		$http.post('/api/service_request',JSON.stringify({
-			user_id:$scope.curUser.uid,
-			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
-			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
-			service_id:it.service_id
-		}))
-		.then(function(response){
-			console.log("got");
-		},function(response){
-			console.log("err");
-		});
-	}
-	$scope.bus_train.order=function(it)
-	{
-		// alert(it.service_id);
-		// console.log($http.post);
-		$http.post('/api/service_request',JSON.stringify({
-			user_id:$scope.curUser.uid,
-			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
-			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
-			service_id:it.service_id
-		}))
-		.then(function(response){
-			console.log("got");
-		},function(response){
-			console.log("err");
-		});
-	}
-	$scope.taxi.order=function(it)
-	{
-		// alert(it.service_id);
-		// console.log($http.post);
-		$http.post('/api/service_request',JSON.stringify({
-			user_id:$scope.curUser.uid,
-			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
-			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
-			service_id:it.service_id
-		}))
-		.then(function(response){
-			console.log("got");
-		},function(response){
-			console.log("err");
-		});
-	}
-	$scope.room.order=function(it)
-	{
-		// alert(it.service_id);
-		// console.log($http.post);
-		$http.post('/api/service_request',JSON.stringify({
-			user_id:$scope.curUser.uid,
-			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
-			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
-			service_id:it.service_id
-		}))
-		.then(function(response){
-			console.log("got");
-		},function(response){
-			console.log("err");
-		});
-	}
-	$scope.tourist_spot.order=function(it)
-	{
-		// alert(it.service_id);
-		// console.log($http.post);
-		$http.post('/api/service_request',JSON.stringify({
-			user_id:$scope.curUser.uid,
-			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
-			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
-			service_id:it.service_id
-		}))
-		.then(function(response){
-			console.log("got");
-		},function(response){
-			console.log("err");
-		});
-	}
-	$scope.guide.order=function(it)
-	{
-		// alert(it.service_id);
-		// console.log($http.post);
-		$http.post('/api/service_request',JSON.stringify({
-			user_id:$scope.curUser.uid,
-			depDate:$scope.trip.tdateStart.toISOString().slice(0, 19).replace('T', ' '),
-			arrDate:$scope.trip.tdateEnd.toISOString().slice(0, 19).replace('T', ' '),
-			service_id:it.service_id
-		}))
-		.then(function(response){
-			console.log("got");
-		},function(response){
-			console.log("err");
-		});
-	}
-
 
 	$scope.food.view=function(it)
 	{

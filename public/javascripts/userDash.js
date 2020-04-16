@@ -94,7 +94,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.trip={
 		status : "Pending",
 		data : [],
-		selected : ""
+		selected : {}
 	}
 	$scope.curUser={
 		name:document.getElementById("nmU").innerHTML,
@@ -282,17 +282,19 @@ angularApp.controller("ngContent",function($scope,$http)
 		}
 		else if(tab==8)
 		{
-			$scope.guide.status="Pending";
+			$scope.trip.status="Pending";
 			// console.log("sent");
 			$http.get("/api/getData",{params:{
 				type: "trip",
 				}}).then(
 				function(data, status, headers, config) {
 				$scope.trip.data=data.data.content;
-				$scope.trip.data.forEach(element => {
-					element.showRev=false;
-				});
-				$scope.guide.status="OK";
+				if($scope.trip.data || $scope.trip.data.length)
+				{
+					$scope.trip.selected=$scope.trip.data[0];
+				}
+				$scope.trip.status="OK";
+				console.log($scope.trip.data);
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -324,29 +326,30 @@ angularApp.controller("ngContent",function($scope,$http)
 	}
 
 	//update trip input boxes with most recent trip for the user
-	$scope.getTrips=function()
-	{
-		rest={};
-		$scope.putData('/api/getData',{type:'trip',user_id:$scope.curUser.uid},rest,
-		function(){
-			console.log("got trips");
-			console.log(rest);
-			if(rest.data[0])
-			{
-				let arrDate=new Date(rest.data[0].arrival_date);
-				let depDate=new Date(rest.data[0].departure_date);
-				$scope.trip.tdateEnd=arrDate;
-				$scope.trip.tdateStart=depDate;
-				$scope.trip.tcity=rest.data[0].city;
-			}
-			else{
-				currentTime = new Date();
-				$scope.trip.tdateStart=currentTime;
-				$scope.trip.tdateEnd=currentTime;
-				$scope.trip.tcity="-";
-			}
-		});
-	}
+	// $scope.getTrips=function()
+	// {
+	// 	rest={};
+	// 	$scope.putData('/api/getData',{type:'trip',user_id:$scope.curUser.uid},rest,
+	// 	function(){
+	// 		console.log("got trips");
+	// 		console.log(rest);
+	// 		$scope.trip
+	// 		if(rest.data[0])
+	// 		{
+	// 			let arrDate=new Date(rest.data[0].arrival_date);
+	// 			let depDate=new Date(rest.data[0].departure_date);
+	// 			$scope.trip.tdateEnd=arrDate;
+	// 			$scope.trip.tdateStart=depDate;
+	// 			$scope.trip.tcity=rest.data[0].city;
+	// 		}
+	// 		else{
+	// 			currentTime = new Date();
+	// 			$scope.trip.tdateStart=currentTime;
+	// 			$scope.trip.tdateEnd=currentTime;
+	// 			$scope.trip.tcity="-";
+	// 		}
+	// 	});
+	// }
 
 	$scope.request = function(it){
 		if($scope.trip.selected == "") {
@@ -692,13 +695,12 @@ angularApp.controller("ngContent",function($scope,$http)
 		$scope.trip.formStatus=0;
 		// console.log("Trip MEnu")
 	}
-	$scope.selectTrip=function(trip_id)
+	$scope.selectTrip=function(it)
 	{
-		$scope.trip.selected = trip_id;
-		alert("works");
+		$scope.trip.selected = it;
 	}
 	console.log("init Done");
-	$scope.getTrips();
+	$scope.getData(8);
 	$scope.toggle_sidebar=function(){
 		$scope.getData(8);
 		sidebarDOM=document.getElementById("sidebar");

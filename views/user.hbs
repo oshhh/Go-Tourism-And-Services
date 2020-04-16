@@ -71,13 +71,16 @@
         <div id="side-content">
           <h5 style="text-align: center;">Trip Selected</h5>
           <div class="trip-list">
-            <div ng-repeat="it in trip.data" class="rowElement card shadow p-4 mb-4 bg-white">
+            <div class="rowElement card shadow p-4 mb-4 bg-white">
             <ul class="list-group">
-              <li ng-click="selectTrip({{it.trip_id}})" class="list-group-item list-group-item-action" \{{it.city}} </li>
+              <div ng-repeat="it in trip.data">
+                <li ng-show="it==trip.selected"  ng-click="selectTrip(it)" class="list-group-item list-group-item-action active">\{{it.city}} </li>
+                <li ng-hide="it==trip.selected"  ng-click="selectTrip(it)" class="list-group-item list-group-item-action">\{{it.city}} </li>
+              </div>
             </ul>
             </div>
           </div>
-          <div class="card">
+          {{!-- <div class="card">
             <div class="card-body text-center">
               <button ng-click="openTripMenu()" class="btn btn-success">Plan New Trip</button>
               <div ng-show="trip.formStatus==1">
@@ -101,7 +104,7 @@
 
               </div>
             </div>
-          </div>
+          </div> --}}
 
         </div>
       </div>

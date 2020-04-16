@@ -73,7 +73,7 @@
           <div class="trip-list">
             <div ng-repeat="it in trip.data" class="rowElement card shadow p-4 mb-4 bg-white">
             <ul class="list-group">
-              <li ng-click="selectTrip({{it.trip_id}})" class="list-group-item list-group-item-action" \{{it.city}} </li>
+              <li ng-click="selectTrip(it.trip_id)" class="list-group-item list-group-item-action" \{{it.city}} </li>
             </ul>
             </div>
           </div>
@@ -195,7 +195,7 @@
                 <div class="cardText card-text">From: \{{it.from_city}} <br> To: \{{it.to_city}}</div>
                 <div class="cardText card-text">Departure Time: \{{it.departure_time}}<br> Arrival Time:  \{{it.arrival_time}}</div>
                 <div class="cardText card-text">Discount: \{{it.discount}}% </div>
-                <button ng-click="request({{it}})" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
+                <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
               </div>
               <div class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
                 <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
@@ -276,7 +276,7 @@
               <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
                 <div class="cardText card-text">AC: \{{it.AC}} </div>
                 <div class="cardText card-text">Active Days: \{{it.active_days}} </div>
-                <button ng-click="request({{it}})" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
+                <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
               </div>
               <label> <b>Route: </b></label>
               <div ng-repeat= 'it2 in it.route' >
@@ -355,7 +355,7 @@
                 <div class="cardText card-text">Car Name: \{{it.car_name}}</div>
                 <div class="cardText card-text">Capacity: \{{it.capacity}}</div>
                 <div class="cardText card-text">AC: \{{it.AC}} </div>
-                <button ng-click="request({{it}})" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
+                <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
               </div>
               <div class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
                 <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
@@ -440,7 +440,7 @@
                 <div class="cardText card-text">Hotel Name: \{{it.name}} <br> Hotel Locality: \{{it.locality}} <br> Hotel City: \{{it.city}}</div>
                 <div class="cardText card-text">Room Type: \{{it.room_type}} <br> Capacity: \{{it.capacity}} </div>
                 <div class="cardText card-text">Wifi: \{{it.wifi_facility}} </div>
-                <button ng-click="request({{it}})" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
+                <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
               </div>
               <div class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
                 <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
@@ -513,7 +513,7 @@
               <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
                 <div class="cardText card-text">\{{it.name}}<br>Delivery Available: \{{it.delivers}}</div>
                 <div class="cardText card-text">Discount: \{{it.discount}}%<br> Description:  \{{it.cuisine}}</div>
-                <button ng-click="request({{it}})" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
+                <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
               </div>
               <div class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
                 <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
@@ -652,7 +652,7 @@
                 <div class="cardText card-text">Name: \{{it.guide_name}} </div>
                 <div class="cardText card-text">Tourist Spot Name: \{{it.name}} </div>
                 <div class="cardText card-text">Locality: \{{it.locality}}<br> City:  \{{it.city}}</div>
-                <button ng-click="request({{it}})" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
+                <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
               </div>
               <div class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
                 <div class="cardText card-text">Rating: \{{it.rating}}/5</div>

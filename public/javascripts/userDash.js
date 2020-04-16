@@ -349,6 +349,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	}
 
 	$scope.request = function(it){
+		console.log(it);
 		if($scope.trip.selected == "") {
 			alert("No trip selected! Can't request service.");
 			return;
@@ -357,7 +358,6 @@ angularApp.controller("ngContent",function($scope,$http)
 			trip_id:$scope.trip.selected,
 			service_id:it.service_id,
 			cost : it.price,
-			quantity : 1,
 		}))
 		.then(function(response){
 			console.log("got");

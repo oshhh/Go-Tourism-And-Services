@@ -141,11 +141,22 @@ router.get('/getData', function(req, res, next) {
       })
       break;
     case 'request':
-      // serverjs.count_table( function(result) {
-      //   serverjs.insertIntoTable(sendResponse, {
-      //     request_id : "RST000"
-      //   })
-      // } , "service_request");
+      console.log("here");
+      serverjs.count_table( function(result) {
+        console.log("here");
+        serverjs.insertIntoTable(sendResponse, {
+          request_id:"RST" + ("00000" + result[0]['cnt']).slice(-5),
+          trip_id : req.query.trip_id,
+          service_id : req.query.service_id,
+          timestamp : null,
+          quantity : 1,
+          cost : req.query.cost,
+          status : "Pending",
+          user_rating : null,
+          service_rating : null,
+          comments : null,
+        }, 'service_request');
+      } , "service_request");
       break;
     // Admin
     case 'admin':

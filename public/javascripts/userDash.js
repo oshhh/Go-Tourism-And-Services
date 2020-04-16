@@ -359,7 +359,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		}
 		$http.get('/api/getData',{params:{
 			type : 'request',
-			trip_id:$scope.trip.selected,
+			trip_id:$scope.trip.selected.trip_id,
 			service_id:it.service_id,
 			cost : it.price,
 		}}).then(

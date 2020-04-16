@@ -4,90 +4,90 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.tab=0;
 
 	$scope.service_request={
-		status = "Pending",
-		data = [],
-		user_id = "",
-		sortOrder="0",
-		reviews={},
+		status : "Pending",
+		data : [],
+		user_id : "",
+		sortOrder:"0",
+		reviews:{},
 	}
 
 	$scope.new_trip={
-		destination_city = "",
-		departure_date = "",
-		return_date = "",
+		destination_city : "",
+		departure_date : "",
+		return_date : "",
 	}
 
 	$scope.food={
-		status="Pending",
-		data=[],
-		fname="",
-		rname="",
-		delivers="0",
-		sortOrder="0",
-		reviews={}
+		status:"Pending",
+		data:[],
+		fname:"",
+		rname:"",
+		delivers:"0",
+		sortOrder:"0",
+		reviews:{}
 	};
 
 	$scope.flight={
-		status = "Pending",
-		data = [],
-		from_city = "",
-		to_city = "",
-		departure_date = "",
-		sortOrder="0",
-		reviews={},
+		status : "Pending",
+		data : [],
+		from_city : "",
+		to_city : "",
+		departure_date : "",
+		sortOrder:"0",
+		reviews:{},
 	}
 
 	$scope.bus_train={
-		status = "Pending",
-		data = [],
-		route_data = [],
-		t_type = "0",
-		from = "",
-		to = "",
-		AC = "0",
-		sortOrder = "0",
-		reviews = {},
+		status : "Pending",
+		data : [],
+		route_data : [],
+		t_type : "0",
+		from : "",
+		to : "",
+		AC : "0",
+		sortOrder : "0",
+		reviews : {},
 	}
 
 	$scope.taxi={
-		status = "Pending",
-		data = [],
-		car_name = "",
-		capacity = "",
-		AC = "0",
-		sortOrder="0",
-		reviews={},
+		status : "Pending",
+		data : [],
+		car_name : "",
+		capacity : "",
+		AC : "0",
+		sortOrder:"0",
+		reviews:{},
 	}
 
 	$scope.room={
-		status = "Pending",
-		data = [],
-		name = "",
-		city = "",
-		room_type = "",
-		capacity = "",
-		wifi_facility = "0",
-		sortOrder="0",
-		reviews={},
+		status : "Pending",
+		data : [],
+		name : "",
+		city : "",
+		room_type : "",
+		capacity : "",
+		wifi_facility : "0",
+		sortOrder:"0",
+		reviews:{},
 	}
 
 	$scope.tourist_spot={
-		status = "Pending",
-		data = [],
-		name = "",
-		t_type = "",
-		city = "",
-		sortOrder="0",
-		reviews={},
+		status : "Pending",
+		data : [],
+		name : "",
+		t_type : "",
+		city : "",
+		sortOrder:"0",
+		reviews:{},
 	}
 
 	$scope.guide={
-		status = "Pending",
-		data = [],
-		tourist_spot_name = "",
-		tourist_spot_city = "",
-		sortOrder="0",
-		reviews={},
+		status : "Pending",
+		data : [],
+		tourist_spot_name : "",
+		tourist_spot_city : "",
+		sortOrder:"0",
+		reviews:{},
 
 	}
 

@@ -5090,8 +5090,6 @@ node_modules/yaml/examples/run.js
 node_modules/yaml/lib/yaml.js
 node_modules/yaml/LICENCE.txt
 node_modules/yaml/Makefile
-package-lock.json
-package.json
 node_modules/bignumber.js/bignumber.d.ts
 node_modules/bignumber.js/bignumber.js
 node_modules/bignumber.js/bignumber.min.js
@@ -5192,3 +5190,11 @@ node_modules/sqlstring/LICENSE
 node_modules/util-deprecate/browser.js
 node_modules/util-deprecate/LICENSE
 node_modules/util-deprecate/node.js
+node_modules/util-deprecate/package.json
+node_modules/sqlstring/package.json
+node_modules/process-nextick-args/package.json
+node_modules/mysql/package.json
+node_modules/mysql/node_modules/string_decoder/package.json
+node_modules/mysql/node_modules/readable-stream/package.json
+node_modules/mysql/node_modules/isarray/package.json
+node_modules/bignumber.js/package.json

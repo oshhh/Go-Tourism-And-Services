@@ -30,7 +30,7 @@ router.get('/getData', function(req, res, next) {
   switch(req.query.type)
   {
     // User
-    case "service_request":
+    case "my_trips":
         serverjs.user.getTrips(function(result) {
           trips = {}
           for(i in result) {
@@ -48,18 +48,28 @@ router.get('/getData', function(req, res, next) {
               result.push(trips[trip_id]);
             }
             sendResponse(result);
-          },req.session.uname, {});
+          },req.session.uname, {request_id : "\"%\""});
         }, {
             user_id : "\"" + req.session.uname + "\"",
           })
     break;
-    case 'new_trip' :
-      serverjs.user.createTrip(sendResponse, {
-        user_id : req.query.user_id,
-        destination_city : req.query.destination_city,
-        departure_date : req.query.departure_date,
-        return_date : req.query.return_date,
-      })
+    case "service_request":
+      serverjs.user.getServiceRequests(sendResponse,req.session.uname, {
+        status: "\"Completed\""
+      });
+
+    break;
+    case 'new_trip':
+      serverjs.count_table( function(result) {
+        serverjs.insertIntoTable(sendResponse, 'trip', {
+          trip_id:"\"TRP" + ("00000" + (result[0]['cnt'] + 1)).slice(-5) + "\"",
+          user_id: "\"" + req.session.uname + "\"",
+          destination_city : "\"" + req.query.destination_city + "\"",
+          departure_date : "\"" + req.query.departure_date + "\"",
+          return_date : "\"" + req.query.return_date + "\"",
+        });
+      } , "trip");
+    break;
     case 'flight':
         serverjs.user.getFlights(sendResponse,{
           from_city: req.query.from,
@@ -143,19 +153,19 @@ router.get('/getData', function(req, res, next) {
     case 'request':
       serverjs.count_table( function(result) {
         serverjs.insertIntoTable(sendResponse, 'service_request', {
-          request_id:"RST" + ("00000" + result[0]['cnt']).slice(-5),
-          trip_id : req.query.trip_id,
-          service_id : req.query.service_id,
-          timestamp : "2020-01-02",
-          quantity : 1,
-          cost : req.query.cost,
-          status : "Pending",
-          user_rating : 5,
-          service_rating : 5,
-          comments : "-",
+          request_id:"\"RST" + ("00000" + result[0]['cnt']).slice(-5) + "\"",
+          trip_id : "\"" + req.query.trip_id + "\"" ,
+          service_id : "\"" + req.query.service_id + "\"",
+          timestamp : "CURDATE()",
+          quantity : "1",
+          cost : "\"" + req.query.cost + "\"",
+          status : "\"Pending\"",
+          user_rating : "null",
+          service_rating : "null",
+          comments : "null",
         });
       } , "service_request");
-      break;
+    break;
     // Admin
     case 'admin':
       serverjs.admin.getAdmins(sendResponse, {

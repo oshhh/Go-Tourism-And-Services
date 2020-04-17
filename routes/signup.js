@@ -69,12 +69,12 @@ router.post('/',function(req,res,next){
           break;
       }
       data={
-        approved:"N",
-        service_provider_id:prefix+("00000" + resultSPR[0]['cnt']).slice(-5),
-        name:req.body.sname,
-        password:req.body.spass2,
-        domain:req.body.providerType,
-        active:"Y"
+        approved:"\"N\"",
+        service_provider_id: "\"" + prefix+("00000" + resultSPR[0]['cnt']).slice(-5) + "\"",
+        name: "\"" + req.body.sname + "\"",
+        password: "\"" + req.body.spass2 + "\"",
+        domain: "\"" + req.body.providerType + "\"",
+        active:"\"Y\""
       }
       serverjs.insertIntoTable(function(result){
         if(result)
@@ -100,12 +100,12 @@ router.post('/',function(req,res,next){
               {
                 serverjs.count_table(function(resultCount){
                   locData={
-                    location_id:"LOC"+("00000" + resultCount[0]['cnt']).slice(-5),
-                    locality:req.body.slocality,
-                    city:req.body.scity,
-                    state:req.body.sstate,
-                    country:"India",
-                    pincode:req.body.spin
+                    location_id:"\"LOC"+("00000" + resultCount[0]['cnt']).slice(-5) + "\"",
+                    locality:"\"" + req.body.slocality + "\"",
+                    city:"\"" + req.body.scity + "\"",
+                    state:"\"" + req.body.sstate + "\"",
+                    country:"\"India\"",
+                    pincode:"\"" + req.body.spin + "\""
                   }
                   serverjs.addLocation(function(result){
                     if(result)
@@ -113,10 +113,10 @@ router.post('/',function(req,res,next){
                       if(req.body.providerType=="hotel")
                       {
                         hData={
-                          service_provider_id:prefix+("00000" + resultSPR[0]['cnt']).slice(-5),
-                          name:req.body.sname,
-                          location_id:"LOC"+("0 0000" + resultCount[0]['cnt']).slice(-5),
-                          wifi_facility:(req.body.wifi)?("Y"):("N"),
+                          service_provider_id:"\"" + prefix+("00000" + resultSPR[0]['cnt']).slice(-5) + "\"",
+                          name:"\"" + req.body.sname + "\"",
+                          location_id:"\"LOC"+("0 0000" + resultCount[0]['cnt']).slice(-5) + "\"",
+                          wifi_facility:(req.body.wifi)?("\"Y\""):("\"N\""),
                         }
                         serverjs.insertIntoTable(function(resA){
                           if(resA)
@@ -134,11 +134,11 @@ router.post('/',function(req,res,next){
                       else if(req.body.providerType=="restaurant")
                       {
                         rData={
-                          service_provider_id:prefix+("00000" + resultSPR[0]['cnt']).slice(-5),
-                          name:req.body.sname,
-                          delivers:(req.body.delivery)?("Y"):("N"),
-                          location_id:"LOC"+("00000" + resultCount[0]['cnt']).slice(-5),
-                          cuisine:req.body.cuisine
+                          service_provider_id:"\"" + prefix+("00000" + resultSPR[0]['cnt']).slice(-5) + "\"",
+                          name:"\"" + req.body.sname + "\"",
+                          delivers:(req.body.delivery)?("\"Y\""):("\"N\""),
+                          location_id:"\"LOC"+("00000" + resultCount[0]['cnt']).slice(-5) + "\"",
+                          cuisine:"\"" + req.body.cuisine + "\""
                         }
                         serverjs.insertIntoTable(function(resA){
                           if(resA)
@@ -166,10 +166,10 @@ router.post('/',function(req,res,next){
                 {
                   // console.log("reached her");
                   hData={
-                    service_provider_id:prefix+("00000" + resultSPR[0]['cnt']).slice(-5),
-                    name:req.body.sname,
-                    location_id:oldLoc,
-                    wifi_facility:(req.body.wifi)?("Y"):("N"),
+                    service_provider_id:"\"" + prefix+("00000" + resultSPR[0]['cnt']).slice(-5) + "\"",
+                    name:"\"" + req.body.sname + "\"",
+                    location_id:"\"" + oldLoc + "\"",
+                    wifi_facility:(req.body.wifi)?("\"Y\""):("\"N\""),
                   }
                   serverjs.insertIntoTable(function(resA){
                     if(resA)
@@ -187,11 +187,11 @@ router.post('/',function(req,res,next){
                 else if(req.body.providerType=="restaurant")
                 {
                   rData={
-                    service_provider_id:prefix+("00000" + resultSPR[0]['cnt']).slice(-5),
-                    name:req.body.sname,
-                    delivers:(req.body.delivery)?("Y"):("N"),
-                    location_id:oldLoc,
-                    cuisine:req.body.cuisine
+                    service_provider_id:"\"" + prefix+("00000" + resultSPR[0]['cnt']).slice(-5) + "\"",
+                    name:"\"" + req.body.sname + "\"",
+                    delivers:(req.body.delivery)?("\"Y\""):("\"N\""),
+                    location_id:"\"" + oldLoc + "\"",
+                    cuisine:"\"" + req.body.cuisine + "\""
                   }
                   serverjs.insertIntoTable(function(resA){
                     if(resA)
@@ -225,14 +225,14 @@ router.post('/',function(req,res,next){
   else if(req.body.acc_type=='2'){
     serverjs.count_table(function(result){
       data={
-        user_id:'USR'+("00000" + result[0]['cnt']).slice(-5),
-        name:req.body.uname,
-        email:req.body.umail,
-        phone_no:req.body.utel,
-        password:req.body.upass2,
-        address:req.body.uadd,
-        location_id:"LOC00000",
-        active:"Y"
+        user_id:'\"USR'+("00000" + result[0]['cnt']).slice(-5) + "\"",
+        name:"\"" + req.body.uname + "\"",
+        email:"\"" + req.body.umail + "\"",
+        phone_no:"\"" + req.body.utel + "\"",
+        password:"\"" + req.body.upass2 + "\"",
+        address:"\"" + req.body.uadd + "\"",
+        location_id:"\"LOC00000\"",
+        active:"\"Y\""
       }
       serverjs.user.register_user(function(result){
         if(result)

@@ -3,6 +3,14 @@ angularApp.controller("ngContent",function($scope,$http)
 {
 	$scope.tab=0;
 
+	$scope.my_trips={
+		status : "Pending",
+		data : [],
+		user_id : "",
+		sortOrder:"0",
+		reviews:{},
+	}
+
 	$scope.service_request={
 		status : "Pending",
 		data : [],
@@ -121,23 +129,23 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		if(tab == 0)
 		{
-			$scope.service_request.status="Pending";
+			$scope.my_trips.status="Pending";
 			console.log("sent");
 			$http.get("/api/getData",{params:{
-				type:"service_request",
+				type:"my_trips",
 				}}).then(
 				function(data, status, headers, config) {
 				console.log(data.data.content);
-				$scope.service_request.data=data.data.content;
-				$scope.service_request.data.forEach(element => {
+				$scope.my_trips.data=data.data.content;
+				$scope.my_trips.data.forEach(element => {
 					element.showRev=false;
 				});
-				$scope.service_request.status="OK";
+				$scope.my_trips.status="OK";
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
 		}
-		else if(tab==1)
+		else if(tab==2)
 		{
 			$scope.flight.status="Pending";
 			// console.log("sent");
@@ -157,7 +165,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					console.log("error");
 				});
 		}
-		else if(tab==2)
+		else if(tab==3)
 		{
 			$scope.taxi.status="Pending";
 			// console.log("sent");
@@ -178,7 +186,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					console.log("error");
 				});
 		}
-		else if(tab==3)
+		else if(tab==4)
 		{
 			$scope.taxi.status="Pending";
 			// console.log("sent");
@@ -198,7 +206,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					console.log("error");
 				});
 		}
-		else if(tab==4)
+		else if(tab==5)
 		{
 			$scope.room.status="Pending";
 			// console.log("sent");
@@ -221,7 +229,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					console.log("error");
 				});
 		}
-		else if(tab==5)
+		else if(tab==6)
 		{
 			$scope.food.status="Pending";
 			// console.log("sent");
@@ -241,7 +249,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					console.log("error");
 				});
 		}
-		else if(tab==6)
+		else if(tab==7)
 		{
 			$scope.food.status="Pending";
 			// console.log("sent");
@@ -261,7 +269,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					console.log("error");
 				});
 		}
-		else if(tab==7)
+		else if(tab==8)
 		{
 			$scope.guide.status="Pending";
 			// console.log("sent");
@@ -280,7 +288,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					console.log("error");
 				});
 		}
-		else if(tab==8)
+		else if(tab==9)
 		{
 			$scope.trip.status="Pending";
 			// console.log("sent");
@@ -289,12 +297,7 @@ angularApp.controller("ngContent",function($scope,$http)
 				}}).then(
 				function(data, status, headers, config) {
 				$scope.trip.data=data.data.content;
-				if($scope.trip.data || $scope.trip.data.length)
-				{
-					$scope.trip.selected=$scope.trip.data[0];
-				}
 				$scope.trip.status="OK";
-				console.log($scope.trip.data);
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -311,12 +314,8 @@ angularApp.controller("ngContent",function($scope,$http)
 			return_date:$scope.new_trip.return_date,
 			}}).then(
 			function(data, status, headers, config) {
-			$scope.service_request.data=data.data.content;
-			$scope.service_request.data.forEach(element => {
-				element.showRev=false;
-			});
-			$scope.service_request.status="OK";
-			alert("trip created");
+			alert("Trip Created!")
+			$scope.my_trips.status="OK";
 			$scope.getData(0);
 			},function(data, status, headers, config) {
 				console.log("error");
@@ -353,7 +352,7 @@ angularApp.controller("ngContent",function($scope,$http)
 
 	$scope.request = function(it){
 		console.log(it);
-		if($scope.trip.selected == "") {
+		if($scope.trip.selected == {}) {
 			alert("No trip selected! Can't request service.");
 			return;
 		}
@@ -582,12 +581,13 @@ angularApp.controller("ngContent",function($scope,$http)
 	}
 	$scope.selectTrip=function(it)
 	{
+		console.log(it);
 		$scope.trip.selected = it;
 	}
 	console.log("init Done");
 	$scope.getData(8);
 	$scope.toggle_sidebar=function(){
-		$scope.getData(8);
+		$scope.getData(9);
 		sidebarDOM=document.getElementById("sidebar");
 		sidebarDOM.style.right=(sidebarDOM.style.right=="-380px")?("0px"):("-380px");
 		console.log("called toggle"+sidebarDOM.style.right);

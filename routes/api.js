@@ -30,7 +30,7 @@ router.get('/getData', function(req, res, next) {
   switch(req.query.type)
   {
     // User
-    case "service_request":
+    case "my_trips":
         serverjs.user.getTrips(function(result) {
           trips = {}
           for(i in result) {
@@ -48,15 +48,21 @@ router.get('/getData', function(req, res, next) {
               result.push(trips[trip_id]);
             }
             sendResponse(result);
-          },req.session.uname, {});
+          },req.session.uname, {request_id : "\"%\""});
         }, {
             user_id : "\"" + req.session.uname + "\"",
           })
     break;
+    case "service_request":
+      serverjs.user.getServiceRequests(sendResponse,req.session.uname, {
+        status: "\"Completed\""
+      });
+
+    break;
     case 'new_trip':
       serverjs.count_table( function(result) {
         serverjs.insertIntoTable(sendResponse, 'trip', {
-          trip_id:"\"TRP" + ("00000" + result[0]['cnt']).slice(-5) + "\"",
+          trip_id:"\"TRP" + ("00000" + (result[0]['cnt'] + 1)).slice(-5) + "\"",
           user_id: "\"" + req.session.uname + "\"",
           destination_city : "\"" + req.query.destination_city + "\"",
           departure_date : "\"" + req.query.departure_date + "\"",

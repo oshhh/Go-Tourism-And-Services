@@ -40,28 +40,32 @@
           <div  class="i_bar" id="act">
           <a ng-click="changeTab(0)" class="a_bar" href="javascript:bs(0)">My Trips</a>
           </div>
+          <div class="i_bar">
+          <a ng-click="changeTab(1)" class="a_bar" href="javascript:bs(1)">Requests</a>
+          </div>          
           <div class="rightDivider"><a class="a_bar"> </a></div>
           <div class="i_bar">
-          <a ng-click="changeTab(1)" class="a_bar" href="javascript:bs(1)">Flights</a>
+          <a ng-click="changeTab(2)" class="a_bar" href="javascript:bs(2)">Flights</a>
           </div>
           <div class="i_bar">
-          <a ng-click="changeTab(2)" class="a_bar" href="javascript:bs(2)">Buses And Trains</a>
+          <a ng-click="changeTab(3)" class="a_bar" href="javascript:bs(3)">Buses And Trains</a>
           </div>
           <div class="i_bar">
-          <a ng-click="changeTab(3)" class="a_bar" href="javascript:bs(3)">Taxis</a>
+          <a ng-click="changeTab(4)" class="a_bar" href="javascript:bs(4)">Taxis</a>
           </div>
           <div class="i_bar">
-          <a ng-click="changeTab(4)" class="a_bar" href="javascript:bs(4)">Hotels</a>
+          <a ng-click="changeTab(5)" class="a_bar" href="javascript:bs(5)">Hotels</a>
           </div>
           <div class="i_bar">
-          <a ng-click="changeTab(5)" class="a_bar" href="javascript:bs(5)">Restaurants</a>
+          <a ng-click="changeTab(6)" class="a_bar" href="javascript:bs(6)">Restaurants</a>
           </div>
           <div class="i_bar">
-          <a ng-click="changeTab(6)" class="a_bar" href="javascript:bs(6)">Tourist Spots</a>
+          <a ng-click="changeTab(7)" class="a_bar" href="javascript:bs(7)">Tourist Spots</a>
           </div>
           <div class="i_bar">
-          <a ng-click="changeTab(7)" class="a_bar" href="javascript:bs(7)">Guides</a>
-          </div>
+          <a ng-click="changeTab(8)" class="a_bar" href="javascript:bs(8)">Guides</a>
+          </div>          
+
         </div>
       </nav>
 
@@ -76,20 +80,20 @@
               <div ng-repeat="it in trip.data">
                 <li ng-show="it==trip.selected"  ng-click="selectTrip(it)" class="list-group-item list-group-item-action active">
                   <div class="row">
-                    <div class="col-12">City: \{{it.city}}</div>  
+                    <div class="col-12">City: \{{it.destination_city}}</div>  
                   </div>
                   <div class="row">
                     <div class="col-12">Departure: \{{it.departure_date.substring(0,10);}}</div>
-                    <div class="col-12">Arrival: \{{it.arrival_date.substring(0,10);}}</div>
+                    <div class="col-12">Arrival: \{{it.return_date.substring(0,10);}}</div>
                   </div>
                 </li>
                 <li ng-hide="it==trip.selected"  ng-click="selectTrip(it)" class="list-group-item list-group-item-action">
                   <div class="row">
-                    <div class="col-12">City: \{{it.city}}</div>  
+                    <div class="col-12">City: \{{it.destination_city}}</div>  
                   </div>
                   <div class="row datesVis">
                     <div class="col-12">Departure: \{{it.departure_date.substring(0,10);}}</div>
-                    <div class="col-12">Arrival: \{{it.arrival_date.substring(0,10);}}</div>
+                    <div class="col-12">Arrival: \{{it.return_date.substring(0,10);}}</div>
                   </div>
                 </li>
               </div>
@@ -149,24 +153,46 @@
             <label style="text-align:center">Showing \{{food.data.length}} Results</label>
           </div>
 
-          <div style="text-align: center;" class="rowsCont" ng-show="service_request.status=='Pending'">Loading Data</div>
+          <div style="text-align: center;" class="rowsCont" ng-show="my_trips.status=='Pending'">Loading Data</div>
+          <div id="table2" class="rowsCont card-rows">
+            <div ng-repeat="it in my_trips.data" class="rowElement card shadow p-4 mb-4 bg-white">
+              <div class="card-header text-center bg-white align-middle">Trip ID: \{{it.trip_id}}</div>
+              <label style="align-middle">Destination: \{{it.destination_city}}</label>
+              <label style="align-middle">Departure Date: \{{it.departure_date.substring(0,10)}}</label>
+              <label style="align-middle">Return Date: \{{it.return_date.substring(0,10)}}</label>
+                <div ng-repeat="it2 in it.service_requests" class="rowElement card shadow p-4 mb-4 bg-white">
+                  <label> Service Request: \{{it2.request_id}} </label>
+                  <label> Service ID: \{{it2.service_id}} </label>
+                  <label> Timestamp: \{{it2.timestamp.substring(0,10)}} \{{it2.timestamp.substring(11,19)}} </label>
+                  <label> Status: \{{it2.status}} </label>
+                </div>
+              </div>
+            </div>
+        </div>
+{{!-- 
+        <div id="content_tab1" ng-show="tab==1">    
+          <div class="text-center d-flex flex-row justify-content-between align-middle">
+            <label style="text-align:center">Showing \{{food.data.length}} Results</label>
+          </div>
+
+          <div style="text-align: center;" class="rowsCont" ng-show="my_trips.status=='Pending'">Loading Data</div>
           <div id="table2" class="rowsCont card-rows">
             <div ng-repeat="it in service_request.data" class="rowElement card shadow p-4 mb-4 bg-white">
               <div class="card-header text-center bg-white align-middle">Trip ID: \{{it.trip_id}}</div>
               <label style="align-middle">Destination: \{{it.destination_city}}</label>
               <label style="align-middle">Departure Date: \{{it.departure_date}}</label>
               <label style="align-middle">Return Date: \{{it.return_date}}</label>
-                <div ng-repeat="it2 in it.service_requests" class="rowElement card shadow p-4 mb-4 bg-white">
-                  <label> Service Request: \{{it2.request_id}} </label>
-                  <label> Service ID: \{{it2.service_id}} </label>
-                  <label> Timestamp: \{{it2.timestamp}} </label>
-                  <label> Status: \{{it2.status}} </label>
-                </div>
+              <div ng-repeat="it2 in it.my_tripss" class="rowElement card shadow p-4 mb-4 bg-white">
+                <label> Service Request: \{{it2.request_id}} </label>
+                <label> Service ID: \{{it2.service_id}} </label>
+                <label> Timestamp: \{{it2.timestamp}} </label>
+                <label> Status: \{{it2.status}} </label>
               </div>
             </div>
-        </div>
+          </div>
+        </div> --}}
 
-        <div id="content_tab1" ng-show="tab==1">
+        <div id="content_tab2" ng-show="tab==2">
             <h4>Available Filters for Flight</h4>
 
             <div class="input-group mb-3">
@@ -183,7 +209,7 @@
               </div>
               <input ng-model="flight.departure_date" id="departure_date" type="text" class="form-control" placeholder="2020-04-30">
               <div class="input-group-prepend">              
-              <button ng-click="getData(1)" class='btn btn-outline-primary'>Apply Filters</button>
+              <button ng-click="getData(2)" class='btn btn-outline-primary'>Apply Filters</button>
               </div>
             </div>
 
@@ -238,7 +264,7 @@
 
         </div>
 
-        <div id="content_tab2" ng-show="tab==2">
+        <div id="content_tab3" ng-show="tab==3">
             <h4>Available Filters for Buses And Trains</h4>
 
             <div class="input-group mb-3">
@@ -266,7 +292,7 @@
                   <option value="1">Yes</option>
                   <option value="2">No</option>
                 </select>
-              <button ng-click="getData(2)" class='btn btn-outline-primary'>Apply Filters</button>
+              <button ng-click="getData(3)" class='btn btn-outline-primary'>Apply Filters</button>
             </div>
 
           {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
@@ -322,7 +348,7 @@
           </div>
         </div>
 
-        <div id="content_tab3" ng-show="tab==3">
+        <div id="content_tab4" ng-show="tab==4">
             <h4>Available Filters for Taxis</h4>
             <b>Please note that Taxis are booked for the whole day (8:00 AM to 8:00 PM). The charges given are for the same. </b>
             <div class="input-group mb-3">
@@ -343,7 +369,7 @@
                   <option value="2">No</option>
                 </select>
               <div class="input-group-prepend">              
-              <button ng-click="getData(3)" class='btn btn-outline-primary'>Apply Filters</button>
+              <button ng-click="getData(4)" class='btn btn-outline-primary'>Apply Filters</button>
               </div>
             </div>
 
@@ -398,7 +424,7 @@
 
         </div>
 
-        <div id="content_tab4" ng-show="tab==4">
+        <div id="content_tab5" ng-show="tab==5">
             <h4>Available Filters for Hotel Rooms</h4>
 
             <div class="input-group mb-3">
@@ -427,7 +453,7 @@
                   <option value="2">No</option>
                 </select>
               <div class="input-group-prepend">              
-              <button ng-click="getData(4)" class='btn btn-outline-primary'>Apply Filters</button>
+              <button ng-click="getData(5)" class='btn btn-outline-primary'>Apply Filters</button>
               </div>
             </div>
 
@@ -482,7 +508,7 @@
 
         </div>
 
-        <div id="content_tab5" ng-show="tab==5">
+        <div id="content_tab6" ng-show="tab==6">
           
             <h4>Available Filters for Restaurants and Food</h4>
 
@@ -503,7 +529,7 @@
                   <option value="1">Yes</option>
                   <option value="2">No</option>
                 </select>
-              <button ng-click="getData(5)" class='btn btn-outline-primary'>Apply Filters</button>
+              <button ng-click="getData(6)" class='btn btn-outline-primary'>Apply Filters</button>
             </div>
 
           {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
@@ -556,7 +582,7 @@
 
         </div>
 
-        <div id="content_tab6" ng-show="tab==6">
+        <div id="content_tab7" ng-show="tab==7">
             <h4>Available Filters for Tourist Spots</h4>
 
             <div class="input-group mb-3">
@@ -573,7 +599,7 @@
               </div>
               <input ng-model="tourist_spot.city" id="city" type="text" class="form-control" placeholder="Ladakh">                
               <div class="input-group-prepend">              
-              <button ng-click="getData(6)" class='btn btn-outline-primary'>Apply Filters</button>
+              <button ng-click="getData(7)" class='btn btn-outline-primary'>Apply Filters</button>
               </div>
             </div>
 
@@ -627,7 +653,7 @@
 
         </div>
 
-        <div id="content_tab7" ng-show="tab==7">
+        <div id="content_tab8" ng-show="tab==8">
             <h4>Available Filters for Guides</h4>
 
             <div class="input-group mb-3">
@@ -640,7 +666,7 @@
               </div>
               <input ng-model="guide.tourist_spot_city" id="city" type="text" class="form-control" placeholder="Ladakh">                
               <div class="input-group-prepend">              
-              <button ng-click="getData(7)" class='btn btn-outline-primary'>Apply Filters</button>
+              <button ng-click="getData(8)" class='btn btn-outline-primary'>Apply Filters</button>
               </div>
             </div>
 

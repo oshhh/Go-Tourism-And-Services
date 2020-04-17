@@ -162,7 +162,7 @@ function runTransaction(callback,queries)
 function insertIntoTable(callback,table_name, data) {
     query = 'insert into '+table_name+' values ('
     for(i = 0; i <tables[table_name].length;i++) {
-        query += '\"'+data[tables[table_name][i]]+'\"';
+        query += data[tables[table_name][i]];
         if(i != tables[table_name].length - 1)
             query += ', '
     }
@@ -408,11 +408,6 @@ function createTrip(callback, attribute_values) {
 }
 
 
-// Request service
-function requestService(service_request) {
-    insertIntoTable('service_request', service_request);
-}
-
 // Update status by service_provider
 function changeStatusOfServiceRequest(request_id, status) {
     runQuery(function(result){}, 'update service_request set status = ' + status + ' where request_id = ' + request_id + ';');
@@ -585,9 +580,9 @@ function getServices(callback,data)
 async function main() {
     console.log('Start serverjs');
     await connect();
-    createDatabase(function(){
-        console.log('done Creation');
-    });
+    // createDatabase(function(){
+    //     console.log('done Creation');
+    // });
     // runQuery(function(result) {console.log(result)}, "show tables;")
     console.log('done Connect');
 }
@@ -642,7 +637,6 @@ module.exports = {
     'count_table':count_table,
     'getLocations' : getLocations,
     'addLocation' : addLocation,
-    'requestService' : requestService,
     'changeStatusOfServiceRequest' : changeStatusOfServiceRequest,
     'getServiceReview':getServiceReview,
     'updateOneColumn':updateOneColumn,

@@ -1,7 +1,7 @@
 var	angularApp = angular.module("dash", []);
 angularApp.controller("ngContent",function($scope,$http)
 {
-	$scope.statusLabels={0:"Pending", 1:"Accepted", 2:"Rejected", 3:"Completed", 4:"Paid"};
+	$scope.statusLabels={0:"Pending", 1:"Accepted", 2:"Rejected", 3:"Completed", 4:"Paid",5:"Completed"};
 	$scope.tab=0;
 	$scope.curUser={
 		uid:document.getElementById("idU").innerHTML
@@ -86,13 +86,23 @@ angularApp.controller("ngContent",function($scope,$http)
 		{
 			console.log("sending");
 			$scope.reqs.status="Pending";
-			$scope.putData('/api/getData',{type:'service_request'},$scope.reqs,function(){
+			try{
+				putState= await $http.get('/api/getData',{params:{type:'requestByProvider'}});
+				console.log(putState);
+				$scope.reqs.data=putState.data.content;
+				$scope.reqs.status="OK";
+				$scope.$digest();
 				$scope.reqs.data.forEach(element => {
 					element.updateResult="";
 				});
 				console.log('Got Everything');
 				console.log($scope.reqs);
-			})
+			}
+			catch(err)
+			{
+				console.error(err);
+			}
+
 		}
 		else if(tab==1)
 		{
@@ -112,6 +122,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					$scope.currentServices.data.forEach(element => {
 						element.updateResult="";
 					});
+					$scope.$digest();
 					},function(data, status, headers, config) {
 						console.log("error");
 					});
@@ -141,6 +152,7 @@ angularApp.controller("ngContent",function($scope,$http)
 						});
 					element.routeData=routeData.data.content;
 					});
+					$scope.$digest();
 				}
 				catch(err) {
 					console.log(err);
@@ -171,6 +183,7 @@ angularApp.controller("ngContent",function($scope,$http)
 						});
 					element.routeData=routeData.data.content;
 					});
+					$scope.$digest();
 				}
 				catch(err) {
 					console.log(err);
@@ -193,6 +206,7 @@ angularApp.controller("ngContent",function($scope,$http)
 						element.updateResult="";
 						element.routeData=[];
 					});
+					$scope.$digest();
 				}
 				catch(err) {
 					console.log(err);
@@ -215,6 +229,7 @@ angularApp.controller("ngContent",function($scope,$http)
 						element.updateResult="";
 						element.routeData=[];
 					});
+					$scope.$digest();
 				}
 				catch(err) {
 					console.log(err);
@@ -237,6 +252,30 @@ angularApp.controller("ngContent",function($scope,$http)
 						element.updateResult="";
 						element.routeData=[];
 					});
+					$scope.$digest();
+				}
+				catch(err) {
+					console.log(err);
+				  }
+			}
+			else if($scope.curUser.uid.startsWith("GUP"))
+			{
+				try{
+					let res= await $http.get("/api/getData",{
+						params:{
+						type:'servicesByProvider',
+						func:"getGuide",
+						service_provider_id:$scope.curUser.uid
+						}
+					});
+					$scope.currentServices.data=res.data.content;
+					console.log($scope.currentServices.data);
+					$scope.currentServices.status="OK";
+					$scope.currentServices.data.forEach(async element => {
+						element.updateResult="";
+						element.routeData=[];
+					});
+					$scope.$digest();
 				}
 				catch(err) {
 					console.log(err);
@@ -273,6 +312,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		try{
 			$scope.currentServices.createStatus="Sending";
 			reqBody={};
+			let flag=0;
 			for(i in $scope.currentServices.model.newModel){
 				it=$scope.currentServices.model.newModel[i];
 				if(it.type==2)
@@ -284,8 +324,35 @@ angularApp.controller("ngContent",function($scope,$http)
 					});
 					reqBody[it.value]=newLoc_ID.data.content;
 				}
+				if(it.type==4)
+				{
+					flag=1;
+				}
 				else{
 					reqBody[it.value]=$scope.currentServices.newData[it.value];
+				}
+			}
+			if(flag==1)
+			{
+
+				let newLoc_ID= await $http.get("/api/getLocationID",{
+					params:{
+					city:$scope.currentServices.newData.city
+					}
+				});
+				let t_spot_id= await $http.get("/api/getTouristSpotID",{
+					params:{
+						name:$scope.currentServices.newData.Tname,
+						type:$scope.currentServices.newData.type,
+						city:$scope.currentServices.newData.city,
+						location_id:newLoc_ID.data.content,
+						entry_fee:$scope.currentServices.newData.entry_fee
+					}
+				});
+				console.log('got tspot',t_spot_id);
+				if(t_spot_id.data.content && newLoc_ID.data.content)
+				{
+					reqBody.tourist_spot_id=t_spot_id.data.content;
 				}
 			}
 			console.log(reqBody);
@@ -339,6 +406,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		try{
 			it.updateResult="Sending";
 			reqBody=[];
+			let flag=0;
 			for(i in $scope.currentServices.model.editable)
 			{
 				if($scope.currentServices.model.editable[i].type==2)
@@ -370,6 +438,10 @@ angularApp.controller("ngContent",function($scope,$http)
 						whereValue:it[$scope.currentServices.model.editable[i].searchValue]
 					});
 				}
+				else if($scope.currentServices.model.editable[i].type==4)
+				{
+					flag=1;
+				}
 				else{
 					reqBody.push({
 						table_name:$scope.currentServices.model.editable[i].table,
@@ -379,6 +451,41 @@ angularApp.controller("ngContent",function($scope,$http)
 						whereValue:it[$scope.currentServices.model.editable[i].searchValue]
 					});
 				}
+			}
+			if(flag==1)
+			{
+				try{
+					let newLoc_ID= await $http.get("/api/getLocationID",{
+						params:{
+						city:it.city
+						}
+					});
+					let t_spot_id= await $http.get("/api/getTouristSpotID",{
+						params:{
+							name:it.name,
+							type:it.type,
+							city:it.city,
+							location_id:newLoc_ID.data.content,
+							entry_fee:it.entry_fee
+						}
+					});
+					console.log('got tspot',t_spot_id);
+					if(t_spot_id.data.content && newLoc_ID.data.content)
+					{
+						reqBody.push({
+							table_name:'guide',
+							column_name:"tourist_spot_id",
+							newValue:t_spot_id.data.content,
+							whereColumn:"service_id",
+							whereValue:it.service_id
+						});
+					}
+				}
+				catch(err)
+				{
+					console.error(err);
+				}
+
 			}
 			updateState=await $http.put('/api/updateList',JSON.stringify(reqBody));
 			if($scope.currentServices.model.route==true)
@@ -419,7 +526,8 @@ angularApp.controller("ngContent",function($scope,$http)
 			}
 			response=updateState.data;
 			it.updateResult="Data updated";
-			console.log(it);
+			$scope.$digest();
+			console.log("updated Data",response);
 		}
 		catch(err)
 		{
@@ -1036,6 +1144,136 @@ angularApp.controller("ngContent",function($scope,$http)
 				],
 				globalID:{
 					table:"taxi",
+					searchKey:"service_id",
+					searchValue:"service_id"
+				} 
+			};
+		}
+		else if($scope.curUser.uid.startsWith("GUP")){
+			$scope.currentServices.model={
+				isGuide:true,
+				type:"guide",
+				prefix:"GUI",
+				route:false,
+				newModel:[
+					{
+						name:"Guide Name",
+						value:"name",
+						type:0
+					},
+					{
+						name:"Tourist Spot",
+						value:"Tname",
+						type:4
+					},
+					{
+						name:"Spot Type",
+						value:"type",
+						type:4
+					},
+					{
+						name:"Entry Fee",
+						value:"entry_fee",
+						type:4
+					},
+					{
+						name:"Location City",
+						value:"city",
+						type:4
+					},
+					{
+						name:"Price",
+						value:"price",
+						type:0
+					},
+					{
+						name:"Discount",
+						value:"discount",
+						type:0
+					},
+				],
+				routeModel:{},
+				header:{
+					name:"Service ID",
+					value:"service_id"
+				},
+				view:[
+					{
+						name:"service_id",
+						value:"service_id"
+					}
+				],
+				editable:[
+					{
+						name:"Guide Name",
+						value:"gname",
+						column:"name",
+						table:"guide",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"Tourist Spot",
+						value:"name",
+						column:"name",
+						display:"name",
+						table:"tourist_spot",
+						searchKey:"tourist_spot_id",
+						searchValue:"tourist_spot_id",
+						type:4
+					},
+					{
+						name:"Spot Type",
+						value:"type",
+						column:"type",
+						display:"type",
+						table:"tourist_spot",
+						searchKey:"tourist_spot_id",
+						searchValue:"tourist_spot_id",
+						type:4
+					},
+					{
+						name:"Entry Fee",
+						value:"entry_fee",
+						column:"entry_fee",
+						display:"entry_fee",
+						table:"tourist_spot",
+						searchKey:"tourist_spot_id",
+						searchValue:"tourist_spot_id",
+						type:4
+					},
+					{
+						name:"Location City",
+						value:"location_id",
+						display:"city",
+						column:"location_id",
+						table:"tourist_spot",
+						searchKey:"tourist_spot_id",
+						searchValue:"tourist_spot_id",
+						type:4
+					},
+					{
+						name:"Price",
+						value:"price",
+						column:"price",
+						table:"service",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+					{
+						name:"Discount",
+						value:"discount",
+						column:"discount",
+						table:"service",
+						searchKey:"service_id",
+						searchValue:"service_id",
+						type:0
+					},
+				],
+				globalID:{
+					table:"guide",
 					searchKey:"service_id",
 					searchValue:"service_id"
 				} 

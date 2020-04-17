@@ -192,6 +192,9 @@ router.get('/getData', function(req, res, next) {
     case 'servicesByProvider':
       serverjs.service_provider[req.query.func](sendResponse,req.query.service_provider_id);
       break;
+    case 'requestByProvider':
+      serverjs.service_provider.providerGetRequests(sendResponse,req.session.uname);
+      break;
     case 'adminRequests':
       serverjs.admin.allServiceRequest(sendResponse,req.query);
       break;
@@ -315,6 +318,49 @@ router.get('/getLocationID',function(req,res,next){
       res.end(JSON.stringify({msg:"Unknown Request sent"}))
     }
   },req.query.city);
+});
+router.get('/getTouristSpotID',function(req,res,next){
+  console.log(util.inspect(req.query, false,null,true));
+  serverjs=req.app.get('dbHandler');
+  serverjs.getTouristSpot(function(result){
+    if(result)
+    {
+      if(result.length!=0)
+      {
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({
+          isRes:true,
+          msg:"Query OK: sending result",
+          content:result[0].tourist_spot_id
+        }));
+      }
+      else{
+        serverjs.count_table(function(res2){
+          serverjs.insertIntoTable(function(res3){
+            if(res3)
+            {
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({
+                isRes:true,
+                msg:"Query OK: sending result",
+                content:'TOR'+("00000" + res2[0]['cnt']).slice(-5)
+              }));
+            }
+          },'tourist_spot',{
+            tourist_spot_id:'TOR'+("00000" + res2[0]['cnt']).slice(-5),
+            name:req.query.name,
+            location_id:req.query.location_id,
+            type:req.query.type,
+            entry_fee:req.query.entry_fee
+          })
+        },'tourist_spot');
+      }
+    }
+    else{
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({msg:"Unknown Request sent"}))
+    }
+  },req.query.name,req.query.type,req.query.city);
 });
 router.post('/insertList', function(req, res, next) {
   sendResponse=function(result){

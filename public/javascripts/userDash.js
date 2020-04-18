@@ -11,7 +11,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		reviews:{},
 	}
 
-	$scope.service_request={
+	$scope.completed_unrated_request={
 		status : "Pending",
 		data : [],
 		user_id : "",
@@ -323,7 +323,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			}}).then(
 			function(data, status, headers, config) {
 			alert("Trip Created!")
-			$scope.my_trips.status="OK";
+			$scope.new_trip.status="OK";
 			$scope.getData(0);
 			$scope.$digest();
 			},function(data, status, headers, config) {
@@ -600,6 +600,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.getData(8);
 	$scope.toggle_sidebar=function(){
 		$scope.getData(9);
+		console.log($scope.trip.selected);
 		sidebarDOM=document.getElementById("sidebar");
 		sidebarDOM.style.right=(sidebarDOM.style.right=="-380px")?("0px"):("-380px");
 		console.log("called toggle"+sidebarDOM.style.right);

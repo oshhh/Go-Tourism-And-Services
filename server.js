@@ -336,7 +336,7 @@ function getRooms(callback, attribute_values) {
     if(Object.keys(attribute_values).length == 0) {
         attribute_values = assignAttributes(['room', 'hotel', 'service'])
     }
-    query = 'select distinct room.service_id, hotel.service_provider_id, locality, city, room_type, capacity, wifi_facility, price, discount, (SELECT distinct COALESCE(AVG(user_rating),0) FROM service_request as u where u.service_id=service.service_id)  as rating  from room, hotel, location, service where (service.service_id = room.service_id) and (hotel.service_provider_id = service.service_provider_id) and (location.location_id = hotel.location_id) and (' + whereClause(attribute_values) + ');'
+    query = 'select distinct room.service_id, hotel.service_provider_id, service_provider.name as name, locality, city, room_type, capacity, wifi_facility, price, discount, (SELECT distinct COALESCE(AVG(user_rating),0) FROM service_request as u where u.service_id=service.service_id)  as rating  from room, hotel, location, service, service_provider where (hotel.service_provider_id = service_provider.service_provider_id) and (service.service_id = room.service_id) and (hotel.service_provider_id = service.service_provider_id) and (location.location_id = hotel.location_id) and (' + whereClause(attribute_values) + ');'
     runQuery(callback, query);
 }
 function getFoodItems(callback,filters)
@@ -370,7 +370,7 @@ function getGuides(callback, attribute_values, tourist_spot_name, tourist_spot_c
     if(Object.keys(attribute_values).length == 0) {
         attribute_values = assignAttributes(['guide', 'tourist_spot'])
     }
-    query = 'select distinct * from guide, service, tourist_spot, location where (guide.service_id = service.service_id) and (guide.tourist_spot_id = tourist_spot.tourist_spot_id) and (tourist_spot.location_id = location.location_id and location.city like ' + tourist_spot_city + ' ) and ( tourist_spot.name like ' + tourist_spot_name + ');';
+    query = 'select distinct guide.name as guide_name, tourist_spot.name as tourist_spot_name, locality, city, state, pincode, guide.service_id, guide.tourist_spot_id, type, entry_fee, price, (SELECT distinct COALESCE(AVG(user_rating),0) FROM service_request as u where u.service_id=service.service_id)  as rating from guide, service, tourist_spot, location where (guide.service_id = service.service_id) and (guide.tourist_spot_id = tourist_spot.tourist_spot_id) and (tourist_spot.location_id = location.location_id and location.city like ' + tourist_spot_city + ' ) and ( tourist_spot.name like ' + tourist_spot_name + ');';
     runQuery(callback, query);
 }
 function getTrips(callback, attribute_values) {

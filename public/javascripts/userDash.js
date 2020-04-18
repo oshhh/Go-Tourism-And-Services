@@ -361,10 +361,12 @@ angularApp.controller("ngContent",function($scope,$http)
 
 	$scope.request = function(it){
 		console.log($scope.trip.selected);
-		if($scope.trip.selected == {}) {
+		if(!$scope.trip.selected.trip_id) {
 			// alert("No trip selected! Can't request service.");
-			$('#toast_msg').text("No trip selected! Can't request service.");
+			$('#toast_msg').text("No trip selected! Select A trip");
 			$('.toast').toast("show");
+			sidebarDOM=document.getElementById("sidebar");
+			sidebarDOM.style.right="0px";
 			return;
 		}
 		$http.get('/api/getData',{params:{

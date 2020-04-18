@@ -141,7 +141,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.my_trips.status="OK";
-				$scope.$digest();
+				// $scope.$digest();
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -162,7 +162,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.flight.status="OK";
-				$scope.$digest();
+				
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -184,7 +184,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.bus_train.status="OK";
-				$scope.$digest();
+				
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -205,7 +205,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.taxi.status="OK";
-				$scope.$digest();
+				
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -229,7 +229,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.room.status="OK";
-				$scope.$digest();
+				
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -250,7 +250,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.food.status="OK";
-				$scope.$digest();
+				
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -271,7 +271,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.tourist_spot.status="OK";
-				$scope.$digest();
+				
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -305,7 +305,7 @@ angularApp.controller("ngContent",function($scope,$http)
 				function(data, status, headers, config) {
 				$scope.trip.data=data.data.content;
 				$scope.trip.status="OK";
-				$scope.$digest();
+				
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -325,7 +325,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			alert("Trip Created!")
 			$scope.new_trip.status="OK";
 			$scope.getData(0);
-			$scope.$digest();
+			
 			},function(data, status, headers, config) {
 				console.log("error");
 			}
@@ -597,7 +597,8 @@ angularApp.controller("ngContent",function($scope,$http)
 		$scope.trip.selected = it;
 	}
 	console.log("init Done");
-	$scope.getData(8);
+	$scope.getData(9);
+	$scope.changeTab(0);
 	$scope.toggle_sidebar=function(){
 		$scope.getData(9);
 		console.log($scope.trip.selected);

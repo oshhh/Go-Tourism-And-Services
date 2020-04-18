@@ -141,6 +141,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.my_trips.status="OK";
+				$scope.$digest();
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -161,6 +162,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.flight.status="OK";
+				$scope.$digest();
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -182,6 +184,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.bus_train.status="OK";
+				$scope.$digest();
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -202,6 +205,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.taxi.status="OK";
+				$scope.$digest();
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -225,6 +229,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.room.status="OK";
+				$scope.$digest();
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -245,6 +250,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.food.status="OK";
+				$scope.$digest();
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -265,6 +271,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.tourist_spot.status="OK";
+				$scope.$digest();
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -298,6 +305,7 @@ angularApp.controller("ngContent",function($scope,$http)
 				function(data, status, headers, config) {
 				$scope.trip.data=data.data.content;
 				$scope.trip.status="OK";
+				$scope.$digest();
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -317,6 +325,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			alert("Trip Created!")
 			$scope.my_trips.status="OK";
 			$scope.getData(0);
+			$scope.$digest();
 			},function(data, status, headers, config) {
 				console.log("error");
 			}
@@ -351,9 +360,11 @@ angularApp.controller("ngContent",function($scope,$http)
 	// }
 
 	$scope.request = function(it){
-		console.log(it);
+		console.log($scope.trip.selected);
 		if($scope.trip.selected == {}) {
-			alert("No trip selected! Can't request service.");
+			// alert("No trip selected! Can't request service.");
+			$('#toast_msg').text("No trip selected! Can't request service.");
+			$('.toast').toast("show");
 			return;
 		}
 		$http.get('/api/getData',{params:{
@@ -364,7 +375,8 @@ angularApp.controller("ngContent",function($scope,$http)
 		}}).then(
 		function(data, status, headers, config) {
 			console.log(data.data.content);
-			alert("Request made. Please check trips tab for more info about request")
+			$('#toast_msg').text("Request made. Please check trips tab for more info about request");
+			$('.toast').toast("show");
 			});
 	}
 

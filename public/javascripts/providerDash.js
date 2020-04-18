@@ -30,14 +30,14 @@ angularApp.controller("ngContent",function($scope,$http)
 			whereValue:it.request_id
 		}))
 		.then(function(response){
+			console.log("respinse",response);
 			if(response || response.data.content.affectedRows==0)
 			{
-				it.updateResult="Data Not updated";
-			}
-			else{
 				it.updateResult="Data updated";
 			}
-			console.log(response);
+			else{
+				it.updateResult="Data Not updated";
+			}
 		},function(response){
 			console.log("err");
 		});
@@ -55,10 +55,10 @@ angularApp.controller("ngContent",function($scope,$http)
 		.then(function(response){
 			if(response || response.data.content.affectedRows==0)
 			{
-				it.updateResult="Data Not updated";
+				it.updateResult="Data updated";
 			}
 			else{
-				it.updateResult="Data updated";
+				it.updateResult="Data Not updated";
 			}
 			console.log(response);
 		},function(response){

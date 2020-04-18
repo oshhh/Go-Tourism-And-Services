@@ -143,7 +143,7 @@ router.get('/getData', function(req, res, next) {
         }, req.query.tourist_spot_name, req.query.tourist_spot_city);   
     break;
     case "review":
-      serverjs.user.getServiceReview(sendResponse,req.query.service_id);
+      serverjs.getServiceReview(sendResponse,req.query.service_id);
       break;
     case 'trip':
       serverjs.user.getTrips(sendResponse, {

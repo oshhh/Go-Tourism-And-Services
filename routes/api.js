@@ -41,6 +41,7 @@ router.get('/getData', function(req, res, next) {
             for(i in result) {
               if(result[i].trip_id in trips) {
                 trips[result[i].trip_id].service_requests.push(result[i]);
+                trips[result[i].trip_id].show_requests = false;
               }
             }
             result = []

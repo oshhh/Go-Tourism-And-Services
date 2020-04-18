@@ -78,7 +78,7 @@
             <div class="rowElement card shadow p-4 mb-4 bg-white">
             <ul class="list-group">
               <div ng-repeat="it in trip.data">
-                <li ng-show="it==trip.selected"  ng-click="selectTrip(it)" class="list-group-item list-group-item-action active">
+                <li ng-show="it.trip_id==trip.selected.trip_id"  ng-click="selectTrip(it)" class="list-group-item list-group-item-action active">
                   <div class="row">
                     <div class="col-12">City: \{{it.destination_city}}</div>  
                   </div>
@@ -87,7 +87,7 @@
                     <div class="col-12">Arrival: \{{it.return_date.substring(0,10);}}</div>
                   </div>
                 </li>
-                <li ng-hide="it==trip.selected"  ng-click="selectTrip(it)" class="list-group-item list-group-item-action">
+                <li ng-hide="it.trip_id==trip.selected.trip_id"  ng-click="selectTrip(it)" class="list-group-item list-group-item-action">
                   <div class="row">
                     <div class="col-12">City: \{{it.destination_city}}</div>  
                   </div>
@@ -160,12 +160,17 @@
               <label style="align-middle">Destination: \{{it.destination_city}}</label>
               <label style="align-middle">Departure Date: \{{it.departure_date.substring(0,10)}}</label>
               <label style="align-middle">Return Date: \{{it.return_date.substring(0,10)}}</label>
+              <button ng-show="!it.show_requests" ng-click="it.show_requests = !it.show_requests" class="btn" style="background-color: #B0BEC5;"> Show Service Requests of this Trip </button>
+              <button ng-show="it.show_requests" ng-click="it.show_requests = !it.show_requests" class="btn" style="background-color: #B0BEC5;"> Hide Service Requests of this Trip </button>
+              <div ng-show="it.show_requests">
                 <div ng-repeat="it2 in it.service_requests" class="rowElement card shadow p-4 mb-4 bg-white">
                   <label> Service Request: \{{it2.request_id}} </label>
                   <label> Service ID: \{{it2.service_id}} </label>
                   <label> Timestamp: \{{it2.timestamp.substring(0,10)}} \{{it2.timestamp.substring(11,19)}} </label>
                   <label> Status: \{{it2.status}} </label>
                 </div>
+              </div>
+              </div>
               </div>
             </div>
         </div>
@@ -625,7 +630,7 @@
           <div style="text-align: center;" class="rowsCont" ng-show="tourist_spot.status=='Pending'">Loading Data</div>
           <div id="table3" class="rowsCont card-rows">
             <div ng-repeat="it in tourist_spot.data" class="rowElement card shadow p-4 mb-4 bg-white">
-              <div class="card-header text-center bg-white align-middle">Tourist Spot ID: \{{it.service_id}}</div>
+              <div class="card-header text-center bg-white align-middle">Tourist Spot ID: \{{it.tourist_spot_id}}</div>
               <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
                 <div class="cardText card-text">Name: \{{it.name}} <br> Type: \{{it.type}}</div>
                 <div class="cardText card-text">Locality: \{{it.locality}}<br> City:  \{{it.city}}</div>
@@ -695,7 +700,7 @@
               <div class="card-header text-center bg-white align-middle">Guide ID: \{{it.service_id}}</div>
               <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
                 <div class="cardText card-text">Name: \{{it.guide_name}} </div>
-                <div class="cardText card-text">Tourist Spot Name: \{{it.name}} </div>
+                <div class="cardText card-text">Tourist Spot Name: \{{it.tourist_spot_name}} </div>
                 <div class="cardText card-text">Locality: \{{it.locality}}<br> City:  \{{it.city}}</div>
                 <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
               </div>

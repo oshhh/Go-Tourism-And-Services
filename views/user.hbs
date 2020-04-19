@@ -166,15 +166,8 @@
               <div class="card" ng-show="my_trips.rate_services" style="align-items: center; width=100%">
                 <div class="card-text">Request ID : \{{it.request_id}} Service ID : \{{it.service_id}}</div>
                 <div class="card-text">Service Name : \{{it.name}} Timestamp : \{{it.timestamp.substring(0,10)}} \{{it.timestamp.substring(11,19)}}</div>
-                <select ng-model="it.rating" class="custom-select" id="fSort">
-                  <option selected value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                </select>
-                <button ng-click="rate_service(it)">Rate</button>
+                <input type="range" class="custom-range" min="0" max="5" class="form-control" ng-model="it.rating" ng-bind="it.rating">
+                <button ng-click="rate_service(it)" class="btn" style="color:darkgrey;">Rate</button>
               </div>
             </div>
           </div>

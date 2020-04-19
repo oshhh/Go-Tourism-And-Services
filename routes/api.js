@@ -75,6 +75,9 @@ router.get('/getData', function(req, res, next) {
         });
       } , "trip");
     break;
+    case 'rate_service':
+      serverjs.user.rateService(sendResponse, req.query.request_id, req.query.rating);
+    break;
     case 'flight':
         serverjs.user.getFlights(sendResponse,{
           from_city: req.query.from,

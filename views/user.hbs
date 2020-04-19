@@ -1,27 +1,38 @@
 <html>
-    <head>
-        <title>{{title}}</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.js"></script>
-        <script src="../public/javascripts/userDash.js"></script>
-        <link type="text/css" rel="stylesheet" href="../public/css/main.css">
-        <link type="text/css" rel="stylesheet" href="../public/css/user.css">
-        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
+
+<head>
+  <title>{{title}}</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.js"></script>
+  <script src="../public/javascripts/userDash.js"></script>
+  <link type="text/css" rel="stylesheet" href="../public/css/main.css">
+  <link type="text/css" rel="stylesheet" href="../public/css/user.css">
+  <link href='https://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+    integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    </head>
-    <body ng-app="dash">
-      <div class="navbar navbar-default fixed-top">
-        <div class='n-item'>User Dashboard</div>
-        <div class='n-item'>Welcome <span id="nmU">{{name}}</span> (username:<span id="idU">{{uid}}</span>)</div>
-        <a href="/logout"><button class='btn btn-outline-primary'>Logout</button></a>
-      </div>
-    <div class="container" ng-controller="ngContent">
-      <div id="padder"></div>
-      {{!-- <div class="splitBar">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+  </script>
+  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body ng-app="dash">
+  <div class="navbar navbar-default fixed-top">
+    <div class='n-item'>User Dashboard</div>
+    <div class='n-item'>Welcome <span id="nmU">{{name}}</span> (username:<span id="idU">{{uid}}</span>)</div>
+    <a href="/logout"><button class='btn btn-outline-primary'>Logout</button></a>
+  </div>
+  <div class="container" ng-controller="ngContent">
+    <div id="padder"></div>
+    {{!-- <div class="splitBar">
         <div style="font-size: medium;">
           <label style="text-align: center;margin:auto 0">Organize your service requests into trips</label>
           <div class="input-group">
@@ -39,61 +50,64 @@
       </div> --}}
 
 
-      <nav class="l_bar" align="center">
-        <div id="togs">
-          <div  class="i_bar" id="act">
+    <nav class="l_bar" align="center">
+      <div id="togs">
+        <div class="i_bar" id="act">
           <a ng-click="changeTab(0)" class="a_bar" href="javascript:bs(0)">My Trips</a>
-          </div>
-          <div class="i_bar">
-          <a ng-click="changeTab(1)" class="a_bar" href="javascript:bs(1)">Requests</a>
-          </div>          
-          <div class="rightDivider"><a class="a_bar"> </a></div>
-          <div class="i_bar">
-          <a ng-click="changeTab(2)" class="a_bar" href="javascript:bs(2)">Flights</a>
-          </div>
-          <div class="i_bar">
-          <a ng-click="changeTab(3)" class="a_bar" href="javascript:bs(3)">Buses And Trains</a>
-          </div>
-          <div class="i_bar">
-          <a ng-click="changeTab(4)" class="a_bar" href="javascript:bs(4)">Taxis</a>
-          </div>
-          <div class="i_bar">
-          <a ng-click="changeTab(5)" class="a_bar" href="javascript:bs(5)">Hotels</a>
-          </div>
-          <div class="i_bar">
-          <a ng-click="changeTab(6)" class="a_bar" href="javascript:bs(6)">Restaurants</a>
-          </div>
-          <div class="i_bar">
-          <a ng-click="changeTab(7)" class="a_bar" href="javascript:bs(7)">Tourist Spots</a>
-          </div>
-          <div class="i_bar">
-          <a ng-click="changeTab(8)" class="a_bar" href="javascript:bs(8)">Guides</a>
-          </div>          
-
         </div>
-      </nav>
+        <div class="i_bar">
+          <a ng-click="changeTab(1)" class="a_bar" href="javascript:bs(1)">Requests</a>
+        </div>
+        <div class="rightDivider"><a class="a_bar"> </a></div>
+        <div class="i_bar">
+          <a ng-click="changeTab(2)" class="a_bar" href="javascript:bs(2)">Flights</a>
+        </div>
+        <div class="i_bar">
+          <a ng-click="changeTab(3)" class="a_bar" href="javascript:bs(3)">Buses And Trains</a>
+        </div>
+        <div class="i_bar">
+          <a ng-click="changeTab(4)" class="a_bar" href="javascript:bs(4)">Taxis</a>
+        </div>
+        <div class="i_bar">
+          <a ng-click="changeTab(5)" class="a_bar" href="javascript:bs(5)">Hotels</a>
+        </div>
+        <div class="i_bar">
+          <a ng-click="changeTab(6)" class="a_bar" href="javascript:bs(6)">Restaurants</a>
+        </div>
+        <div class="i_bar">
+          <a ng-click="changeTab(7)" class="a_bar" href="javascript:bs(7)">Tourist Spots</a>
+        </div>
+        <div class="i_bar">
+          <a ng-click="changeTab(8)" class="a_bar" href="javascript:bs(8)">Guides</a>
+        </div>
+
+      </div>
+    </nav>
 
 
-      <div id="sidebar">
-        <div ng-click="toggle_sidebar()" id="side-toggle"><strong>S</strong></div>
-        <div id="side-content">
-          <h5 style="text-align: center;">Trip Selected</h5>
-          <div class="trip-list">
-            <div class="rowElement card shadow p-4 mb-4 bg-white">
+    <div id="sidebar">
+      <div ng-click="toggle_sidebar()" id="side-toggle" style="padding-top:15px"><span id="toggleIcon"
+          class="fa fa-angle-double-right fa-lg"></span></div>
+      <div id="side-content">
+        <h5 style="text-align: center;">Trip Selected</h5>
+        <div class="trip-list">
+          <div class="rowElement card shadow p-4 mb-4 bg-white">
             <ul class="list-group">
               <div ng-repeat="it in trip.data">
-                <li ng-show="it.trip_id==trip.selected.trip_id"  ng-click="selectTrip(it)" class="list-group-item list-group-item-action active">
+                <li ng-show="it.trip_id==trip.selected.trip_id" ng-click="selectTrip(it)"
+                  class="list-group-item list-group-item-action active">
                   <div class="row">
-                    <div class="col-12">City: \{{it.destination_city}}</div>  
+                    <div class="col-12">City: \{{it.destination_city}}</div>
                   </div>
                   <div class="row">
                     <div class="col-12">Departure: \{{it.departure_date.substring(0,10);}}</div>
                     <div class="col-12">Arrival: \{{it.return_date.substring(0,10);}}</div>
                   </div>
                 </li>
-                <li ng-hide="it.trip_id==trip.selected.trip_id"  ng-click="selectTrip(it)" class="list-group-item list-group-item-action">
+                <li ng-hide="it.trip_id==trip.selected.trip_id" ng-click="selectTrip(it)"
+                  class="list-group-item list-group-item-action">
                   <div class="row">
-                    <div class="col-12">City: \{{it.destination_city}}</div>  
+                    <div class="col-12">City: \{{it.destination_city}}</div>
                   </div>
                   <div class="row datesVis">
                     <div class="col-12">Departure: \{{it.departure_date.substring(0,10);}}</div>
@@ -102,9 +116,9 @@
                 </li>
               </div>
             </ul>
-            </div>
           </div>
-          {{!-- <div class="card">
+        </div>
+        {{!-- <div class="card">
             <div class="card-body text-center">
               <button ng-click="openTripMenu()" class="btn btn-success">Plan New Trip</button>
               <div ng-show="trip.formStatus==1">
@@ -130,55 +144,57 @@
             </div>
           </div> --}}
 
+      </div>
+    </div>
+
+    <div id="content" class="shadow p-4 mb-4 bg-white">
+
+      <div id="content_tab0" ng-show="tab==0">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Destination City</span>
+          </div>
+          <input ng-model="new_trip.destination_city" type="text" class="form-control" placeholder="Mumbai">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Departure Date</span>
+          </div>
+          <input ng-model="new_trip.departure_date" type="text" class="form-control" placeholder="2020-04-30">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Return Date</span>
+          </div>
+          <input ng-model="new_trip.return_date" type="text" class="form-control" placeholder="2020-04-30">
+        </div>
+        <div class="card-header text-center bg-white" style="text-align : center">
+          <button class="btn btn-success" ng-click="createTrip()" style="width: 30%;">New Trip (+) </button>
+        </div>
+        <div class="text-center d-flex flex-row justify-content-between align-middle">
+          <label style="text-align:center">Showing \{{food.data.length}} Results</label>
+        </div>
+
+        <div style="text-align: center;" class="rowsCont" ng-show="my_trips.status=='Pending'">Loading Data</div>
+        <div id="table2" class="rowsCont card-rows">
+          <div ng-repeat="it in my_trips.data" class="rowElement card shadow p-4 mb-4 bg-white">
+            <div class="card-header text-center bg-white align-middle">Trip ID: \{{it.trip_id}}</div>
+            <label style="align-middle">Destination: \{{it.destination_city}}</label>
+            <label style="align-middle">Departure Date: \{{it.departure_date.substring(0,10)}}</label>
+            <label style="align-middle">Return Date: \{{it.return_date.substring(0,10)}}</label>
+            <button ng-show="!it.show_requests" ng-click="it.show_requests = !it.show_requests" class="btn"
+              style="background-color: #B0BEC5;"> Show Service Requests of this Trip </button>
+            <button ng-show="it.show_requests" ng-click="it.show_requests = !it.show_requests" class="btn"
+              style="background-color: #B0BEC5;"> Hide Service Requests of this Trip </button>
+            <div ng-show="it.show_requests">
+              <div ng-repeat="it2 in it.service_requests" class="rowElement card shadow p-4 mb-4 bg-white">
+                <label> Service Request: \{{it2.request_id}} </label>
+                <label> Service ID: \{{it2.service_id}} </label>
+                <label> Timestamp: \{{it2.timestamp.substring(0,10)}} \{{it2.timestamp.substring(11,19)}} </label>
+                <label> Status: \{{it2.status}} </label>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div id="content" class="shadow p-4 mb-4 bg-white">
-      
-        <div id="content_tab0" ng-show="tab==0">    
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class = "input-group-text">Destination City</span>
-            </div>
-            <input ng-model="new_trip.destination_city" type="text" class="form-control" placeholder="Mumbai">
-            <div class="input-group-prepend">
-              <span class = "input-group-text">Departure Date</span>
-            </div>
-            <input ng-model="new_trip.departure_date" type="text" class="form-control" placeholder="2020-04-30">
-            <div class="input-group-prepend">
-              <span class = "input-group-text">Return Date</span>
-            </div>
-            <input ng-model="new_trip.return_date" type="text" class="form-control" placeholder="2020-04-30">
-            </div> 
-            <div class = "card-header text-center bg-white" style="text-align : center">
-            <button class="btn btn-success" ng-click="createTrip()" style = "width: 30%;">New Trip (+) </button>
-            </div>
-          <div class="text-center d-flex flex-row justify-content-between align-middle">
-            <label style="text-align:center">Showing \{{food.data.length}} Results</label>
-          </div>
-
-          <div style="text-align: center;" class="rowsCont" ng-show="my_trips.status=='Pending'">Loading Data</div>
-          <div id="table2" class="rowsCont card-rows">
-            <div ng-repeat="it in my_trips.data" class="rowElement card shadow p-4 mb-4 bg-white">
-              <div class="card-header text-center bg-white align-middle">Trip ID: \{{it.trip_id}}</div>
-              <label style="align-middle">Destination: \{{it.destination_city}}</label>
-              <label style="align-middle">Departure Date: \{{it.departure_date.substring(0,10)}}</label>
-              <label style="align-middle">Return Date: \{{it.return_date.substring(0,10)}}</label>
-              <button ng-show="!it.show_requests" ng-click="it.show_requests = !it.show_requests" class="btn" style="background-color: #B0BEC5;"> Show Service Requests of this Trip </button>
-              <button ng-show="it.show_requests" ng-click="it.show_requests = !it.show_requests" class="btn" style="background-color: #B0BEC5;"> Hide Service Requests of this Trip </button>
-              <div ng-show="it.show_requests">
-                <div ng-repeat="it2 in it.service_requests" class="rowElement card shadow p-4 mb-4 bg-white">
-                  <label> Service Request: \{{it2.request_id}} </label>
-                  <label> Service ID: \{{it2.service_id}} </label>
-                  <label> Timestamp: \{{it2.timestamp.substring(0,10)}} \{{it2.timestamp.substring(11,19)}} </label>
-                  <label> Status: \{{it2.status}} </label>
-                </div>
-              </div>
-              </div>
-              </div>
-            </div>
-
-{{!-- 
+      {{!-- 
         <div id="content_tab1" ng-show="tab==1">    
           <div class="text-center d-flex flex-row justify-content-between align-middle">
             <label style="text-align:center">Showing \{{food.data.length}} Results</label>
@@ -201,535 +217,705 @@
           </div>
         </div> --}}
 
-        <div id="content_tab2" ng-show="tab==2">
-            <h4>Available Filters for Flight</h4>
+      <div id="content_tab2" ng-show="tab==2">
+        <h4>Available Filters for Flight</h4>
 
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-              <span class="input-group-text">From</span>
-              </div>
-              <input ng-model="flight.from_city" id="from" type="text" class="form-control" placeholder="Delhi">
-              <div class="input-group-prepend">
-              <span class="input-group-text">To</span>
-              </div>
-              <input ng-model="flight.to_city" id="to" type="text" class="form-control" placeholder="Mumbai">                
-              <div class="input-group-prepend">
-              <span class="input-group-text">Departure Date</span>
-              </div>
-              <input ng-model="flight.departure_date" id="departure_date" type="text" class="form-control" placeholder="2020-04-30">
-              <div class="input-group-prepend">              
-              <button ng-click="getData(2)" class='btn btn-outline-primary'>Apply Filters</button>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">From</span>
+          </div>
+          <input ng-model="flight.from_city" id="from" type="text" class="form-control" placeholder="Delhi">
+          <div class="input-group-prepend">
+            <span class="input-group-text">To</span>
+          </div>
+          <input ng-model="flight.to_city" id="to" type="text" class="form-control" placeholder="Mumbai">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Departure Date</span>
+          </div>
+          <input ng-model="flight.departure_date" id="departure_date" type="text" class="form-control"
+            placeholder="2020-04-30">
+          <div class="input-group-prepend">
+            <button ng-click="getData(2)" class='btn btn-outline-primary'>Apply Filters</button>
+          </div>
+        </div>
+
+        {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
+        {{!-- Filters End --}}
+
+
+        <div class="text-center d-flex flex-row justify-content-between align-middle">
+          <label style="text-align:center">Showing \{{food.data.length}} Results</label>
+          <div class="align-middle btn-group mb-3">
+            <div class="input-group-append">
+              <span class="input-group-text">Order By</span>
+            </div>
+            <select ng-model="flight.sortOrder" class="custom-select" id="fSort">
+              <option selected value="0">Increasing Price</option>
+              <option value="1">Decreasing Price</option>
+              <option value="2">Increasing Discount</option>
+              <option value="3">Decreasing Discount</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="text-align: center;" class="rowsCont" ng-show="flight.status=='Pending'">Loading Data</div>
+        <div id="table3" class="rowsCont card-rows">
+          <div ng-repeat="it in flight.data" class="rowElement card shadow p-4 mb-4 bg-white">
+            <div class="card-header text-center bg-white align-middle">Service ID: \{{it.service_id}}</div>
+            <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
+              <div class="cardText card-text">From: \{{it.from_city}} <br> To: \{{it.to_city}}</div>
+              <div class="cardText card-text">Departure Time: \{{it.departure_time}}<br> Arrival Time:
+                \{{it.arrival_time}}</div>
+              <div class="cardText card-text">Discount: \{{it.discount}}% </div>
+              <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
+            </div>
+            <div
+              class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
+              <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
+              <button ng-click="flight.view(it)" class="btn btn-outline-primary">Reviews</button>
+            </div>
+
+            <div ng-show="it.showRev"
+              class="card-body text-center d-flex flex-row justify-content-between align-middle">
+              <div ng-show="flight.reviews[it.service_id].status=='Pending'" class="comments"><br>Loading Please
+                Wait<br><br></div>
+              <div ng-show="flight.reviews[it.service_id].status=='OK'" class="comments card-rows">
+                <br>
+                <label style="text-align:center">Showing \{{flight.reviews[it.service_id].data.length}}
+                  Result(s)</label>
+                <div ng-repeat="rev in flight.reviews[it.service_id].data" class="rowElement card">
+                  <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on
+                    \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
+                  <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
+                </div>
               </div>
             </div>
 
-          {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
-            {{!-- Filters End --}}
-          
+          </div>
+        </div>
 
-          <div class="text-center d-flex flex-row justify-content-between align-middle">
-            <label style="text-align:center">Showing \{{food.data.length}} Results</label>
-            <div class="align-middle btn-group mb-3">
-              <div class="input-group-append">
-                <span class="input-group-text">Order By</span>
+      </div>
+
+      <div id="content_tab3" ng-show="tab==3">
+        <h4>Available Filters for Buses And Trains</h4>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Type</span>
+          </div>
+          <select ng-model="bus_train.t_type" class="custom-select" id="bus_train_type">
+            <option selected value="0">Both</option>
+            <option value="1">Bus</option>
+            <option value="2">Train</option>
+          </select>
+          <div class="input-group-prepend">
+            <span class="input-group-text">From</span>
+          </div>
+          <input ng-model="bus_train.from" id="transport_from" type="text" class="form-control"
+            placeholder="India Gate">
+          <div class="input-group-prepend">
+            <span class="input-group-text">To</span>
+          </div>
+          <input ng-model="bus_train.to" id="transport_to" type="text" class="form-control" placeholder="Lal Quila">
+          <div class="input-group-prepend">
+            <label class="input-group-text">AC</label>
+          </div>
+          <select ng-model="bus_train.AC" class="custom-select" id="bustrainAC">
+            <option selected value="0">Both</option>
+            <option value="1">Yes</option>
+            <option value="2">No</option>
+          </select>
+          <button ng-click="getData(3)" class='btn btn-outline-primary'>Apply Filters</button>
+        </div>
+
+        {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
+        {{!-- Filters End --}}
+
+
+        <div class="text-center d-flex flex-row justify-content-between align-middle">
+          <label style="text-align:center">Showing \{{food.data.length}} Results</label>
+          <div class="align-middle btn-group mb-3">
+            <div class="input-group-append">
+              <span class="input-group-text">Order By</span>
+            </div>
+            <select ng-model="food.sortOrder" class="custom-select" id="fSort">
+              <option selected value="0">Increasing Price</option>
+              <option value="1">Decreasing Price</option>
+              <option value="2">Increasing Discount</option>
+              <option value="3">Decreasing Discount</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="text-align: center;" class="rowsCont" ng-show="bus_train.status=='Pending'">Loading Data</div>
+        <div id="table3" class="rowsCont card-rows">
+          <div ng-repeat="it in bus_train.data" class="rowElement card shadow p-4 mb-4 bg-white">
+            <div class="card-header text-center bg-white align-middle">Service ID: \{{it.service_id}}</div>
+            <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
+              <div class="cardText card-text">AC: \{{it.AC}} </div>
+              <div class="cardText card-text">Active Days: \{{it.active_days}} </div>
+              <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
+            </div>
+            <label> <b>Route: </b></label>
+            <div ng-repeat='it2 in it.route'>
+              <span> \{{it2.location_id}} \{{it2.locality}} \{{it2.city}} | Time: \{{it2.arrival_time}} </span>
+            </div>
+            <div
+              class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
+              <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
+              <button ng-click="taxi.view(it)" class="btn btn-outline-primary">Reviews</button>
+            </div>
+
+            <div ng-show="it.showRev"
+              class="card-body text-center d-flex flex-row justify-content-between align-middle">
+              <div ng-show="taxi.reviews[it.service_id].status=='Pending'" class="comments"><br>Loading Please
+                Wait<br><br></div>
+              <div ng-show="taxi.reviews[it.service_id].status=='OK'" class="comments card-rows">
+                <br>
+                <label style="text-align:center">Showing \{{taxi.reviews[it.service_id].data.length}} Result(s)</label>
+                <div ng-repeat="rev in taxi.reviews[it.service_id].data" class="rowElement card">
+                  <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on
+                    \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
+                  <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
+                </div>
               </div>
-              <select ng-model="flight.sortOrder" class="custom-select" id="fSort">
-                <option selected value="0">Increasing Price</option>
-                <option value="1">Decreasing Price</option>
-                <option value="2">Increasing Discount</option>
-                <option value="3">Decreasing Discount</option>
-              </select>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div id="content_tab4" ng-show="tab==4">
+        <h4>Available Filters for Taxis</h4>
+        <b>Please note that Taxis are booked for the whole day (8:00 AM to 8:00 PM). The charges given are for the same.
+        </b>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Car Name</span>
+          </div>
+          <input ng-model="taxi.car_name" id="car_name" type="text" class="form-control" placeholder="swift">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Capacity</span>
+          </div>
+          <input ng-model="taxi.capacity" id="capacity" type="text" class="form-control" placeholder="4">
+          <div class="input-group-prepend">
+            <span class="input-group-text">AC</span>
+          </div>
+          <select ng-model="taxi.AC" class="custom-select" id="taxiAC">
+            <option selected value="0">Both</option>
+            <option value="1">Yes</option>
+            <option value="2">No</option>
+          </select>
+          <div class="input-group-prepend">
+            <button ng-click="getData(4)" class='btn btn-outline-primary'>Apply Filters</button>
+          </div>
+        </div>
+
+        {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
+        {{!-- Filters End --}}
+
+
+        <div class="text-center d-flex flex-row justify-content-between align-middle">
+          <label style="text-align:center">Showing \{{food.data.length}} Results</label>
+          <div class="align-middle btn-group mb-3">
+            <div class="input-group-append">
+              <span class="input-group-text">Order By</span>
+            </div>
+            <select ng-model="taxi.sortOrder" class="custom-select" id="fSort">
+              <option selected value="0">Increasing Price</option>
+              <option value="1">Decreasing Price</option>
+              <option value="2">Increasing Discount</option>
+              <option value="3">Decreasing Discount</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="text-align: center;" class="rowsCont" ng-show="taxi.status=='Pending'">Loading Data</div>
+        <div id="table3" class="rowsCont card-rows">
+          <div ng-repeat="it in taxi.data" class="rowElement card shadow p-4 mb-4 bg-white">
+            <div class="card-header text-center bg-white align-middle">Service ID: \{{it.service_id}} Service Provider
+              ID: \{{it.service_provider_id}}</div>
+            <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
+              <div class="cardText card-text">Car Name: \{{it.car_name}}</div>
+              <div class="cardText card-text">Capacity: \{{it.capacity}}</div>
+              <div class="cardText card-text">AC: \{{it.AC}} </div>
+              <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
+            </div>
+            <div
+              class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
+              <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
+              <button ng-click="taxi.view(it)" class="btn btn-outline-primary">Reviews</button>
+            </div>
+
+            <div ng-show="it.showRev"
+              class="card-body text-center d-flex flex-row justify-content-between align-middle">
+              <div ng-show="taxi.reviews[it.service_id].status=='Pending'" class="comments"><br>Loading Please
+                Wait<br><br></div>
+              <div ng-show="taxi.reviews[it.service_id].status=='OK'" class="comments card-rows">
+                <br>
+                <label style="text-align:center">Showing \{{taxi.reviews[it.service_id].data.length}} Result(s)</label>
+                <div ng-repeat="rev in taxi.reviews[it.service_id].data" class="rowElement card">
+                  <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on
+                    \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
+                  <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div id="content_tab5" ng-show="tab==5">
+        <h4>Available Filters for Hotel Rooms</h4>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Name</span>
+          </div>
+          <input ng-model="room.name" id="name" type="text" class="form-control" placeholder="Inactive">
+          <div class="input-group-prepend">
+            <span class="input-group-text">City</span>
+          </div>
+          <input ng-model="room.city" id="room_city" type="text" class="form-control" placeholder="Delhi">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Room Type</span>
+          </div>
+          <input ng-model="room.room_type" id="room_type" type="text" class="form-control" placeholder="double">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Capacity</span>
+          </div>
+          <input ng-model="room.capacity" id="capacity" type="text" class="form-control" placeholder="4">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Wifi</span>
+          </div>
+          <select ng-model="room.wifi_facility" class="custom-select" id="taxiAC">
+            <option selected value="0">Both</option>
+            <option value="1">Yes</option>
+            <option value="2">No</option>
+          </select>
+          <div class="input-group-prepend">
+            <button ng-click="getData(5)" class='btn btn-outline-primary'>Apply Filters</button>
+          </div>
+        </div>
+
+        {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
+        {{!-- Filters End --}}
+
+
+        <div class="text-center d-flex flex-row justify-content-between align-middle">
+          <label style="text-align:center">Showing \{{food.data.length}} Results</label>
+          <div class="align-middle btn-group mb-3">
+            <div class="input-group-append">
+              <span class="input-group-text">Order By</span>
+            </div>
+            <select ng-model="room.sortOrder" class="custom-select" id="fSort">
+              <option selected value="0">Increasing Price</option>
+              <option value="1">Decreasing Price</option>
+              <option value="2">Increasing Discount</option>
+              <option value="3">Decreasing Discount</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="text-align: center;" class="rowsCont" ng-show="room.status=='Pending'">Loading Data</div>
+        <div id="table3" class="rowsCont card-rows">
+          <div ng-repeat="it in room.data" class="rowElement card shadow p-4 mb-4 bg-white">
+            <div class="card-header text-center bg-white align-middle">Service ID: \{{it.service_id}} Service Provider
+              ID: \{{it.service_provider_id}}</div>
+            <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
+              <div class="cardText card-text"></div>
+              <div class="cardText card-text">Hotel Name: \{{it.name}} <br> Hotel Locality: \{{it.locality}} <br> Hotel
+                City: \{{it.city}}</div>
+              <div class="cardText card-text">Room Type: \{{it.room_type}} <br> Capacity: \{{it.capacity}} </div>
+              <div class="cardText card-text">Wifi: \{{it.wifi_facility}} </div>
+              <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
+            </div>
+            <div
+              class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
+              <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
+              <button ng-click="room.view(it)" class="btn btn-outline-primary">Reviews</button>
+            </div>
+            <div ng-show="it.showRev"
+              class="card-body text-center d-flex flex-row justify-content-between align-middle">
+              <div ng-show="room.reviews[it.service_id].status=='Pending'" class="comments"><br>Loading Please
+                Wait<br><br></div>
+              <div ng-show="room.reviews[it.service_id].status=='OK'" class="comments card-rows">
+                <br>
+                <label style="text-align:center">Showing \{{room.reviews[it.service_id].data.length}} Result(s)</label>
+                <div ng-repeat="rev in room.reviews[it.service_id].data" class="rowElement card">
+                  <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on
+                    \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
+                  <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div id="content_tab6" ng-show="tab==6">
+
+        <h4>Available Filters for Restaurants and Food</h4>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Food Item Name</span>
+          </div>
+          <input ng-model="food.fname" id="fname" type="text" class="form-control" placeholder="Name">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Restaurant Name</span>
+          </div>
+          <input ng-model="food.rname" id="rname" type="text" class="form-control" placeholder="Restaurant">
+          <div class="input-group-prepend">
+            <label class="input-group-text">Delivery</label>
+          </div>
+          <select ng-model="food.delivers" class="custom-select" id="fdelivery">
+            <option selected value="0">Both</option>
+            <option value="1">Yes</option>
+            <option value="2">No</option>
+          </select>
+          <button ng-click="getData(6)" class='btn btn-outline-primary'>Apply Filters</button>
+        </div>
+
+        {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
+        {{!-- Filters End --}}
+
+
+        <div class="text-center d-flex flex-row justify-content-between align-middle">
+          <label style="text-align:center">Showing \{{food.data.length}} Results</label>
+          <div class="align-middle btn-group mb-3">
+            <div class="input-group-append">
+              <span class="input-group-text">Order By</span>
+            </div>
+            <select ng-model="food.sortOrder" class="custom-select" id="fSort">
+              <option selected value="0">Increasing Price</option>
+              <option value="1">Decreasing Price</option>
+              <option value="2">Increasing Discount</option>
+              <option value="3">Decreasing Discount</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="text-align: center;" class="rowsCont" ng-show="food.status=='Pending'">Loading Data</div>
+        <div id="table4" class="rowsCont card-rows">
+          <div ng-repeat="it in food.data" class="rowElement card shadow p-4 mb-4 bg-white">
+            <div class="card-header text-center bg-white align-middle">Restaurant:
+              \{{it.res_name}},\{{it.locality}},\{{it.city}}</div>
+            <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
+              <div class="cardText card-text">\{{it.name}}<br>Delivery Available: \{{it.delivers}}</div>
+              <div class="cardText card-text">Discount: \{{it.discount}}%<br> Description: \{{it.cuisine}}</div>
+              <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
+            </div>
+            <div
+              class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
+              <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
+              <button ng-click="food.view(it)" class="btn btn-outline-primary">Reviews</button>
+            </div>
+
+            <div ng-show="it.showRev"
+              class="card-body text-center d-flex flex-row justify-content-between align-middle">
+              <div ng-show="food.reviews[it.service_id].status=='Pending'" class="comments"><br>Loading Please
+                Wait<br><br></div>
+              <div ng-show="food.reviews[it.service_id].status=='OK'" class="comments card-rows">
+                <br>
+                <label style="text-align:center">Showing \{{food.reviews[it.service_id].data.length}} Result(s)</label>
+                <div ng-repeat="rev in food.reviews[it.service_id].data" class="rowElement card">
+                  <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on
+                    \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
+                  <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div id="content_tab7" ng-show="tab==7">
+        <h4>Available Filters for Tourist Spots</h4>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Name</span>
+          </div>
+          <input ng-model="tourist_spot.name" id="name" type="text" class="form-control" placeholder="Pangong Lake">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Type</span>
+          </div>
+          <input ng-model="tourist_spot.t_type" id="type" type="text" class="form-control" placeholder="Lake">
+          <div class="input-group-prepend">
+            <span class="input-group-text">City</span>
+          </div>
+          <input ng-model="tourist_spot.city" id="city" type="text" class="form-control" placeholder="Ladakh">
+          <div class="input-group-prepend">
+            <button ng-click="getData(7)" class='btn btn-outline-primary'>Apply Filters</button>
+          </div>
+        </div>
+
+        {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
+        {{!-- Filters End --}}
+
+
+        <div class="text-center d-flex flex-row justify-content-between align-middle">
+          <label style="text-align:center">Showing \{{tourist_spot.data.length}} Results</label>
+          <div class="align-middle btn-group mb-3">
+            <div class="input-group-append">
+              <span class="input-group-text">Order By</span>
+            </div>
+            <select ng-model="tourist_spot.sortOrder" class="custom-select" id="fSort">
+              <option selected value="0">Increasing Price</option>
+              <option value="1">Decreasing Price</option>
+              <option value="2">Increasing Discount</option>
+              <option value="3">Decreasing Discount</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="text-align: center;" class="rowsCont" ng-show="tourist_spot.status=='Pending'">Loading Data</div>
+        <div id="table3" class="rowsCont card-rows">
+          <div ng-repeat="it in tourist_spot.data" class="rowElement card shadow p-4 mb-4 bg-white">
+            <div class="card-header text-center bg-white align-middle">Tourist Spot ID: \{{it.tourist_spot_id}}</div>
+            <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
+              <div class="cardText card-text">Name: \{{it.name}} <br> Type: \{{it.type}}</div>
+              <div class="cardText card-text">Locality: \{{it.locality}}<br> City: \{{it.city}}</div>
+              <div class="cardText card-text">Entry Fee: \{{it.entry_fee}} </div>
+            </div>
+            <div
+              class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
+              <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
+              <button ng-click="tourist_spot.view(it)" class="btn btn-outline-primary">Reviews</button>
+            </div>
+
+            <div ng-show="it.showRev"
+              class="card-body text-center d-flex flex-row justify-content-between align-middle">
+              <div ng-show="tourist_spot.reviews[it.service_id].status=='Pending'" class="comments"><br>Loading Please
+                Wait<br><br></div>
+              <div ng-show="tourist_spot.reviews[it.service_id].status=='OK'" class="comments card-rows">
+                <br>
+                <label style="text-align:center">Showing \{{tourist_spot.reviews[it.service_id].data.length}}
+                  Result(s)</label>
+                <div ng-repeat="rev in tourist_spot.reviews[it.service_id].data" class="rowElement card">
+                  <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on
+                    \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
+                  <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div id="content_tab8" ng-show="tab==8">
+        <h4>Available Filters for Guides</h4>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Tourist Spot Name</span>
+          </div>
+          <input ng-model="guide.tourist_spot_name" id="name" type="text" class="form-control"
+            placeholder="Pangong Lake">
+          <div class="input-group-prepend">
+            <span class="input-group-text">City</span>
+          </div>
+          <input ng-model="guide.tourist_spot_city" id="city" type="text" class="form-control" placeholder="Ladakh">
+          <div class="input-group-prepend">
+            <button ng-click="getData(8)" class='btn btn-outline-primary'>Apply Filters</button>
+          </div>
+        </div>
+
+        {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
+        {{!-- Filters End --}}
+
+
+        <div class="text-center d-flex flex-row justify-content-between align-middle">
+          <label style="text-align:center">Showing \{{guide.data.length}} Results</label>
+          <div class="align-middle btn-group mb-3">
+            <div class="input-group-append">
+              <span class="input-group-text">Order By</span>
+            </div>
+            <select ng-model="guide.sortOrder" class="custom-select" id="fSort">
+              <option selected value="0">Increasing Price</option>
+              <option value="1">Decreasing Price</option>
+              <option value="2">Increasing Discount</option>
+              <option value="3">Decreasing Discount</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="text-align: center;" class="rowsCont" ng-show="guide.status=='Pending'">Loading Data</div>
+        <div id="table3" class="rowsCont card-rows">
+          <div ng-repeat="it in guide.data" class="rowElement card shadow p-4 mb-4 bg-white">
+            <div class="card-header text-center bg-white align-middle">Guide ID: \{{it.service_id}}</div>
+            <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
+              <div class="cardText card-text">Name: \{{it.guide_name}} </div>
+              <div class="cardText card-text">Tourist Spot Name: \{{it.tourist_spot_name}} </div>
+              <div class="cardText card-text">Locality: \{{it.locality}}<br> City: \{{it.city}}</div>
+              <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
+            </div>
+            <div
+              class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
+              <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
+              <button ng-click="guide.view(it)" class="btn btn-outline-primary">Reviews</button>
+            </div>
+
+            <div ng-show="it.showRev"
+              class="card-body text-center d-flex flex-row justify-content-between align-middle">
+              <div ng-show="guide.reviews[it.service_id].status=='Pending'" class="comments"><br>Loading Please
+                Wait<br><br></div>
+              <div ng-show="guide.reviews[it.service_id].status=='OK'" class="comments card-rows">
+                <br>
+                <label style="text-align:center">Showing \{{guide.reviews[it.service_id].data.length}} Result(s)</label>
+                <div ng-repeat="rev in guide.reviews[it.service_id].data" class="rowElement card">
+                  <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on
+                    \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
+                  <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div id="startModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header shadow-sm p-3 mb-0 bg-white rounded">
+              <h5 class="modal-title" style="text-align: center;">Use Trip Planner</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">Benefits Of Trip Planner</div>
+              <div class="dflex align-items-center row justify-content-around">
+                <div>
+                  <div class="i_bar">
+                    <a class="a_bar" data-dismiss="modal" href="#" ng-click="openPlanner()">Open Trip Planner</a>
+                  </div>
+                  {{!-- <button class="btn btn-success">Plan New Trip</button> --}}
+                </div>
+                <div>OR</div>
+                <div>
+                  <div class="i_bar">
+                    <a class="a_bar" data-dismiss="modal" href="#">Plan Manually</a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div id="plannerModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+            <div class="modal-header shadow-sm p-3 mb-0 bg-white rounded">
+              <h5 class="modal-title" style="text-align: center;">Planner</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div id="planBody" class="modal-body">
 
-          <div style="text-align: center;" class="rowsCont" ng-show="flight.status=='Pending'">Loading Data</div>
-          <div id="table3" class="rowsCont card-rows">
-            <div ng-repeat="it in flight.data" class="rowElement card shadow p-4 mb-4 bg-white">
-              <div class="card-header text-center bg-white align-middle">Service ID: \{{it.service_id}}</div>
-              <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
-                <div class="cardText card-text">From: \{{it.from_city}} <br> To: \{{it.to_city}}</div>
-                <div class="cardText card-text">Departure Time: \{{it.departure_time}}<br> Arrival Time:  \{{it.arrival_time}}</div>
-                <div class="cardText card-text">Discount: \{{it.discount}}% </div>
-                <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
-              </div>
-              <div class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
-                <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
-                <button ng-click="flight.view(it)" class="btn btn-outline-primary">Reviews</button>
-              </div>
-
-              <div ng-show="it.showRev" class="card-body text-center d-flex flex-row justify-content-between align-middle">
-                <div ng-show="flight.reviews[it.service_id].status=='Pending'"class="comments"><br>Loading Please Wait<br><br></div>
-                <div ng-show="flight.reviews[it.service_id].status=='OK'" class="comments card-rows">
-                  <br>
-                  <label style="text-align:center">Showing \{{flight.reviews[it.service_id].data.length}} Result(s)</label>
-                  <div ng-repeat="rev in flight.reviews[it.service_id].data" class="rowElement card">
-                    <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
-                    <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
+              <div class="card">
+                <div class="card-header bg-white font-weight-bold">Step 1 - Specify Your Budget</div>
+                <div class="card-body">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Minimum</span>
+                    </div>
+                    <input ng-bind="planner.budget.min" value="\{{planner.budget.min}}" class="form-control"
+                      type="number" placeholder="Minimum">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Maximum</span>
+                    </div>
+                    <input ng-bind="planner.budget.max" value="\{{planner.budget.max}}" class="form-control"
+                      type="number" placeholder="Maximum">
                   </div>
                 </div>
               </div>
 
-            </div>
-          </div>
+              <div class="row">
 
-        </div>
+                <div class="col-6 card">
+                  <div class="card-header bg-white font-weight-bold">Step 2 - Enter Possible Destinations</div>
+                  <div class="card-body">
+                    <ul class="list-group" style="height: auto !important;">
+                      <li class="list-group-item" ng-repeat="it in planner.destinations">
+                        <div class="input-group mb-0">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">\{{$index}}</span>
+                          </div>
+                          <input ng-bind="it" value="\{{it.text}}" class="form-control" type="texts" placeholder="">
+                        </div>
+                      </li>
+                      <li class="list-group-item align-item-center">
+                        <div class="row">
+                          <div class="col text-center"><button ng-click="addDestination()"
+                              class="btn btn-success">+</button></div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
 
-        <div id="content_tab3" ng-show="tab==3">
-            <h4>Available Filters for Buses And Trains</h4>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Type</span>
-              </div>
-                <select ng-model="bus_train.t_type" class="custom-select" id="bus_train_type">
-                  <option selected value="0">Both</option>
-                  <option value="1">Bus</option>
-                  <option value="2">Train</option>
-                </select>
-              <div class="input-group-prepend">
-              <span class="input-group-text">From</span>
-              </div>
-              <input ng-model="bus_train.from" id="transport_from" type="text" class="form-control" placeholder="India Gate">
-              <div class="input-group-prepend">
-              <span class="input-group-text">To</span>
-              </div>
-              <input ng-model="bus_train.to" id="transport_to" type="text" class="form-control" placeholder="Lal Quila">
-              <div class="input-group-prepend">
-                <label class="input-group-text">AC</label>
-              </div>
-                <select ng-model="bus_train.AC" class="custom-select" id="bustrainAC">
-                  <option selected value="0">Both</option>
-                  <option value="1">Yes</option>
-                  <option value="2">No</option>
-                </select>
-              <button ng-click="getData(3)" class='btn btn-outline-primary'>Apply Filters</button>
-            </div>
-
-          {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
-            {{!-- Filters End --}}
-          
-
-          <div class="text-center d-flex flex-row justify-content-between align-middle">
-            <label style="text-align:center">Showing \{{food.data.length}} Results</label>
-            <div class="align-middle btn-group mb-3">
-              <div class="input-group-append">
-                <span class="input-group-text">Order By</span>
-              </div>
-              <select ng-model="food.sortOrder" class="custom-select" id="fSort">
-                <option selected value="0">Increasing Price</option>
-                <option value="1">Decreasing Price</option>
-                <option value="2">Increasing Discount</option>
-                <option value="3">Decreasing Discount</option>
-              </select>
-            </div>
-          </div>
-
-           <div style="text-align: center;" class="rowsCont" ng-show="bus_train.status=='Pending'">Loading Data</div>
-          <div id="table3" class="rowsCont card-rows">
-            <div ng-repeat="it in bus_train.data" class="rowElement card shadow p-4 mb-4 bg-white">
-              <div class="card-header text-center bg-white align-middle">Service ID: \{{it.service_id}}</div>
-              <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
-                <div class="cardText card-text">AC: \{{it.AC}} </div>
-                <div class="cardText card-text">Active Days: \{{it.active_days}} </div>
-                <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
-              </div>
-              <label> <b>Route: </b></label>
-              <div ng-repeat= 'it2 in it.route' >
-                <span> \{{it2.location_id}} \{{it2.locality}} \{{it2.city}} | Time: \{{it2.arrival_time}} </span>
-              </div>
-              <div class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
-                <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
-                <button ng-click="taxi.view(it)" class="btn btn-outline-primary">Reviews</button>
-              </div>
-
-              <div ng-show="it.showRev" class="card-body text-center d-flex flex-row justify-content-between align-middle">
-                <div ng-show="taxi.reviews[it.service_id].status=='Pending'"class="comments"><br>Loading Please Wait<br><br></div>
-                <div ng-show="taxi.reviews[it.service_id].status=='OK'" class="comments card-rows">
-                  <br>
-                  <label style="text-align:center">Showing \{{taxi.reviews[it.service_id].data.length}} Result(s)</label>
-                  <div ng-repeat="rev in taxi.reviews[it.service_id].data" class="rowElement card">
-                    <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
-                    <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
+                <div class="col-6 card">
+                  <div class="card-header bg-white font-weight-bold">Step 3 - Enter Keywords</div>
+                  <div class="card-body">
+                    <ul class="list-group" style="height: auto !important;">
+                      <li class="list-group-item" ng-repeat="it in planner.keywords">
+                        <div class="input-group mb-0">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">\{{$index}}</span>
+                          </div>
+                          <input ng-bind="it" value="\{{it.text}}" class="form-control" type="texts" placeholder="">
+                        </div>
+                      </li>
+                      <li class="list-group-item align-item-center">
+                        <div class="row">
+                          <div class="col text-center"><button ng-click="addKeyword()"
+                              class="btn btn-success">+</button></div>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
 
-            </div>
-          </div>
-        </div>
-
-        <div id="content_tab4" ng-show="tab==4">
-            <h4>Available Filters for Taxis</h4>
-            <b>Please note that Taxis are booked for the whole day (8:00 AM to 8:00 PM). The charges given are for the same. </b>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-              <span class="input-group-text">Car Name</span>
-              </div>
-              <input ng-model="taxi.car_name" id="car_name" type="text" class="form-control" placeholder="swift">
-              <div class="input-group-prepend">
-              <span class="input-group-text">Capacity</span>
-              </div>
-              <input ng-model="taxi.capacity" id="capacity" type="text" class="form-control" placeholder="4">                
-              <div class="input-group-prepend">
-              <span class="input-group-text">AC</span>
-              </div>
-                <select ng-model="taxi.AC" class="custom-select" id="taxiAC">
-                  <option selected value="0">Both</option>
-                  <option value="1">Yes</option>
-                  <option value="2">No</option>
-                </select>
-              <div class="input-group-prepend">              
-              <button ng-click="getData(4)" class='btn btn-outline-primary'>Apply Filters</button>
-              </div>
-            </div>
-
-          {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
-            {{!-- Filters End --}}
-          
-
-          <div class="text-center d-flex flex-row justify-content-between align-middle">
-            <label style="text-align:center">Showing \{{food.data.length}} Results</label>
-            <div class="align-middle btn-group mb-3">
-              <div class="input-group-append">
-                <span class="input-group-text">Order By</span>
-              </div>
-              <select ng-model="taxi.sortOrder" class="custom-select" id="fSort">
-                <option selected value="0">Increasing Price</option>
-                <option value="1">Decreasing Price</option>
-                <option value="2">Increasing Discount</option>
-                <option value="3">Decreasing Discount</option>
-              </select>
-            </div>
-          </div>
-
-          <div style="text-align: center;" class="rowsCont" ng-show="taxi.status=='Pending'">Loading Data</div>
-          <div id="table3" class="rowsCont card-rows">
-            <div ng-repeat="it in taxi.data" class="rowElement card shadow p-4 mb-4 bg-white">
-              <div class="card-header text-center bg-white align-middle">Service ID: \{{it.service_id}} Service Provider ID: \{{it.service_provider_id}}</div>
-              <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
-                <div class="cardText card-text">Car Name: \{{it.car_name}}</div>
-                <div class="cardText card-text">Capacity: \{{it.capacity}}</div>
-                <div class="cardText card-text">AC: \{{it.AC}} </div>
-                <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
-              </div>
-              <div class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
-                <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
-                <button ng-click="taxi.view(it)" class="btn btn-outline-primary">Reviews</button>
-              </div>
-
-              <div ng-show="it.showRev" class="card-body text-center d-flex flex-row justify-content-between align-middle">
-                <div ng-show="taxi.reviews[it.service_id].status=='Pending'"class="comments"><br>Loading Please Wait<br><br></div>
-                <div ng-show="taxi.reviews[it.service_id].status=='OK'" class="comments card-rows">
-                  <br>
-                  <label style="text-align:center">Showing \{{taxi.reviews[it.service_id].data.length}} Result(s)</label>
-                  <div ng-repeat="rev in taxi.reviews[it.service_id].data" class="rowElement card">
-                    <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
-                    <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
-                  </div>
+              <div class="row justify-content-center mt-4">
+                <div class="col-4 text-center">
+                  <button class="col btn btn-primary" ng-click="algorithm()">Calculate</button>
                 </div>
               </div>
 
-            </div>
-          </div>
-
-        </div>
-
-        <div id="content_tab5" ng-show="tab==5">
-            <h4>Available Filters for Hotel Rooms</h4>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-              <span class="input-group-text">Name</span>
-              </div>
-              <input ng-model="room.name" id="name" type="text" class="form-control" placeholder="Inactive">
-              <div class="input-group-prepend">
-              <span class="input-group-text">City</span>
-              </div>
-              <input ng-model="room.city" id="room_city" type="text" class="form-control" placeholder="Delhi">
-              <div class="input-group-prepend">
-              <span class="input-group-text">Room Type</span>
-              </div>
-              <input ng-model="room.room_type" id="room_type" type="text" class="form-control" placeholder="double">
-              <div class="input-group-prepend">
-              <span class="input-group-text">Capacity</span>
-              </div>
-              <input ng-model="room.capacity" id="capacity" type="text" class="form-control" placeholder="4">                
-              <div class="input-group-prepend">
-              <span class="input-group-text">Wifi</span>
-              </div>
-                <select ng-model="room.wifi_facility" class="custom-select" id="taxiAC">
-                  <option selected value="0">Both</option>
-                  <option value="1">Yes</option>
-                  <option value="2">No</option>
-                </select>
-              <div class="input-group-prepend">              
-              <button ng-click="getData(5)" class='btn btn-outline-primary'>Apply Filters</button>
-              </div>
-            </div>
-
-          {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
-            {{!-- Filters End --}}
-          
-
-          <div class="text-center d-flex flex-row justify-content-between align-middle">
-            <label style="text-align:center">Showing \{{food.data.length}} Results</label>
-            <div class="align-middle btn-group mb-3">
-              <div class="input-group-append">
-                <span class="input-group-text">Order By</span>
-              </div>
-              <select ng-model="room.sortOrder" class="custom-select" id="fSort">
-                <option selected value="0">Increasing Price</option>
-                <option value="1">Decreasing Price</option>
-                <option value="2">Increasing Discount</option>
-                <option value="3">Decreasing Discount</option>
-              </select>
-            </div>
-          </div>
-
-          <div style="text-align: center;" class="rowsCont" ng-show="room.status=='Pending'">Loading Data</div>
-          <div id="table3" class="rowsCont card-rows">
-            <div ng-repeat="it in room.data" class="rowElement card shadow p-4 mb-4 bg-white">
-              <div class="card-header text-center bg-white align-middle">Service ID: \{{it.service_id}} Service Provider ID: \{{it.service_provider_id}}</div>
-              <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
-                <div class="cardText card-text"></div>
-                <div class="cardText card-text">Hotel Name: \{{it.name}} <br> Hotel Locality: \{{it.locality}} <br> Hotel City: \{{it.city}}</div>
-                <div class="cardText card-text">Room Type: \{{it.room_type}} <br> Capacity: \{{it.capacity}} </div>
-                <div class="cardText card-text">Wifi: \{{it.wifi_facility}} </div>
-                <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
-              </div>
-              <div class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
-                <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
-                <button ng-click="room.view(it)" class="btn btn-outline-primary">Reviews</button>
-              </div>
-              <div ng-show="it.showRev" class="card-body text-center d-flex flex-row justify-content-between align-middle">
-                <div ng-show="room.reviews[it.service_id].status=='Pending'"class="comments"><br>Loading Please Wait<br><br></div>
-                <div ng-show="room.reviews[it.service_id].status=='OK'" class="comments card-rows">
-                  <br>
-                  <label style="text-align:center">Showing \{{room.reviews[it.service_id].data.length}} Result(s)</label>
-                  <div ng-repeat="rev in room.reviews[it.service_id].data" class="rowElement card">
-                    <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
-                    <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
-                  </div>
+              <div class="row justify-content-between mt-4">
+                <div class="col card">
+                  <div class="card-header bg-white font-weight-bold">Removal and finalizing</div>
+                  <ul class="list-group" style="height: auto !important;">
+                      <li class="list-group-item" ng-repeat="it in planner.output">
+                        <div class="row justify-content-around">
+                          <div class="col-10">\{{it.service_id}}</div>
+                          <button ng-click="removeOutput(it)" type="button" class="close text-right" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                      </li>
+                  </ul>
                 </div>
               </div>
 
+
             </div>
           </div>
-
         </div>
-
-        <div id="content_tab6" ng-show="tab==6">
-          
-            <h4>Available Filters for Restaurants and Food</h4>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Food Item Name</span>
-              </div>
-              <input ng-model="food.fname" id="fname" type="text" class="form-control" placeholder="Name">
-              <div class="input-group-prepend">
-              <span class="input-group-text">Restaurant Name</span>
-              </div>
-              <input ng-model="food.rname" id="rname" type="text" class="form-control" placeholder="Restaurant">
-              <div class="input-group-prepend">
-                <label class="input-group-text">Delivery</label>
-              </div>
-                <select ng-model="food.delivers" class="custom-select" id="fdelivery">
-                  <option selected value="0">Both</option>
-                  <option value="1">Yes</option>
-                  <option value="2">No</option>
-                </select>
-              <button ng-click="getData(6)" class='btn btn-outline-primary'>Apply Filters</button>
-            </div>
-
-          {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
-            {{!-- Filters End --}}
-          
-
-          <div class="text-center d-flex flex-row justify-content-between align-middle">
-            <label style="text-align:center">Showing \{{food.data.length}} Results</label>
-            <div class="align-middle btn-group mb-3">
-              <div class="input-group-append">
-                <span class="input-group-text">Order By</span>
-              </div>
-              <select ng-model="food.sortOrder" class="custom-select" id="fSort">
-                <option selected value="0">Increasing Price</option>
-                <option value="1">Decreasing Price</option>
-                <option value="2">Increasing Discount</option>
-                <option value="3">Decreasing Discount</option>
-              </select>
-            </div>
-          </div>
-
-          <div style="text-align: center;" class="rowsCont" ng-show="food.status=='Pending'">Loading Data</div>
-          <div id="table4" class="rowsCont card-rows">
-            <div ng-repeat="it in food.data" class="rowElement card shadow p-4 mb-4 bg-white">
-              <div class="card-header text-center bg-white align-middle">Restaurant: \{{it.res_name}},\{{it.locality}},\{{it.city}}</div>
-              <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
-                <div class="cardText card-text">\{{it.name}}<br>Delivery Available: \{{it.delivers}}</div>
-                <div class="cardText card-text">Discount: \{{it.discount}}%<br> Description:  \{{it.cuisine}}</div>
-                <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
-              </div>
-              <div class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
-                <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
-                <button ng-click="food.view(it)" class="btn btn-outline-primary">Reviews</button>
-              </div>
-
-              <div ng-show="it.showRev" class="card-body text-center d-flex flex-row justify-content-between align-middle">
-                <div ng-show="food.reviews[it.service_id].status=='Pending'"class="comments"><br>Loading Please Wait<br><br></div>
-                <div ng-show="food.reviews[it.service_id].status=='OK'" class="comments card-rows">
-                  <br>
-                  <label style="text-align:center">Showing \{{food.reviews[it.service_id].data.length}} Result(s)</label>
-                  <div ng-repeat="rev in food.reviews[it.service_id].data" class="rowElement card">
-                    <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
-                    <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-
-        <div id="content_tab7" ng-show="tab==7">
-            <h4>Available Filters for Tourist Spots</h4>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-              <span class="input-group-text">Name</span>
-              </div>
-              <input ng-model="tourist_spot.name" id="name" type="text" class="form-control" placeholder="Pangong Lake">
-              <div class="input-group-prepend">
-              <span class="input-group-text">Type</span>
-              </div>
-              <input ng-model="tourist_spot.t_type" id="type" type="text" class="form-control" placeholder="Lake">                
-              <div class="input-group-prepend">
-              <span class="input-group-text">City</span>
-              </div>
-              <input ng-model="tourist_spot.city" id="city" type="text" class="form-control" placeholder="Ladakh">                
-              <div class="input-group-prepend">              
-              <button ng-click="getData(7)" class='btn btn-outline-primary'>Apply Filters</button>
-              </div>
-            </div>
-
-          {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
-            {{!-- Filters End --}}
-          
-
-          <div class="text-center d-flex flex-row justify-content-between align-middle">
-            <label style="text-align:center">Showing \{{tourist_spot.data.length}} Results</label>
-            <div class="align-middle btn-group mb-3">
-              <div class="input-group-append">
-                <span class="input-group-text">Order By</span>
-              </div>
-              <select ng-model="tourist_spot.sortOrder" class="custom-select" id="fSort">
-                <option selected value="0">Increasing Price</option>
-                <option value="1">Decreasing Price</option>
-                <option value="2">Increasing Discount</option>
-                <option value="3">Decreasing Discount</option>
-              </select>
-            </div>
-          </div>
-
-          <div style="text-align: center;" class="rowsCont" ng-show="tourist_spot.status=='Pending'">Loading Data</div>
-          <div id="table3" class="rowsCont card-rows">
-            <div ng-repeat="it in tourist_spot.data" class="rowElement card shadow p-4 mb-4 bg-white">
-              <div class="card-header text-center bg-white align-middle">Tourist Spot ID: \{{it.tourist_spot_id}}</div>
-              <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
-                <div class="cardText card-text">Name: \{{it.name}} <br> Type: \{{it.type}}</div>
-                <div class="cardText card-text">Locality: \{{it.locality}}<br> City:  \{{it.city}}</div>
-                <div class="cardText card-text">Entry Fee: \{{it.entry_fee}} </div>
-              </div>
-              <div class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
-                <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
-                <button ng-click="tourist_spot.view(it)" class="btn btn-outline-primary">Reviews</button>
-              </div>
-
-              <div ng-show="it.showRev" class="card-body text-center d-flex flex-row justify-content-between align-middle">
-                <div ng-show="tourist_spot.reviews[it.service_id].status=='Pending'"class="comments"><br>Loading Please Wait<br><br></div>
-                <div ng-show="tourist_spot.reviews[it.service_id].status=='OK'" class="comments card-rows">
-                  <br>
-                  <label style="text-align:center">Showing \{{tourist_spot.reviews[it.service_id].data.length}} Result(s)</label>
-                  <div ng-repeat="rev in tourist_spot.reviews[it.service_id].data" class="rowElement card">
-                    <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
-                    <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-
-        <div id="content_tab8" ng-show="tab==8">
-            <h4>Available Filters for Guides</h4>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-              <span class="input-group-text">Tourist Spot Name</span>
-              </div>
-              <input ng-model="guide.tourist_spot_name" id="name" type="text" class="form-control" placeholder="Pangong Lake">
-              <div class="input-group-prepend">
-              <span class="input-group-text">City</span>
-              </div>
-              <input ng-model="guide.tourist_spot_city" id="city" type="text" class="form-control" placeholder="Ladakh">                
-              <div class="input-group-prepend">              
-              <button ng-click="getData(8)" class='btn btn-outline-primary'>Apply Filters</button>
-              </div>
-            </div>
-
-          {{!-- <label id="conten t_label">selected Filters:"\{{food.fname}}","\{{food.rname}}" slectBoxIndex:\{{food.delivery}}</label> --}}
-            {{!-- Filters End --}}
-          
-
-          <div class="text-center d-flex flex-row justify-content-between align-middle">
-            <label style="text-align:center">Showing \{{guide.data.length}} Results</label>
-            <div class="align-middle btn-group mb-3">
-              <div class="input-group-append">
-                <span class="input-group-text">Order By</span>
-              </div>
-              <select ng-model="guide.sortOrder" class="custom-select" id="fSort">
-                <option selected value="0">Increasing Price</option>
-                <option value="1">Decreasing Price</option>
-                <option value="2">Increasing Discount</option>
-                <option value="3">Decreasing Discount</option>
-              </select>
-            </div>
-          </div>
-
-          <div style="text-align: center;" class="rowsCont" ng-show="guide.status=='Pending'">Loading Data</div>
-          <div id="table3" class="rowsCont card-rows">
-            <div ng-repeat="it in guide.data" class="rowElement card shadow p-4 mb-4 bg-white">
-              <div class="card-header text-center bg-white align-middle">Guide ID: \{{it.service_id}}</div>
-              <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
-                <div class="cardText card-text">Name: \{{it.guide_name}} </div>
-                <div class="cardText card-text">Tourist Spot Name: \{{it.tourist_spot_name}} </div>
-                <div class="cardText card-text">Locality: \{{it.locality}}<br> City:  \{{it.city}}</div>
-                <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
-              </div>
-              <div class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
-                <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
-                <button ng-click="guide.view(it)" class="btn btn-outline-primary">Reviews</button>
-              </div>
-
-              <div ng-show="it.showRev" class="card-body text-center d-flex flex-row justify-content-between align-middle">
-                <div ng-show="guide.reviews[it.service_id].status=='Pending'"class="comments"><br>Loading Please Wait<br><br></div>
-                <div ng-show="guide.reviews[it.service_id].status=='OK'" class="comments card-rows">
-                  <br>
-                  <label style="text-align:center">Showing \{{guide.reviews[it.service_id].data.length}} Result(s)</label>
-                  <div ng-repeat="rev in guide.reviews[it.service_id].data" class="rowElement card">
-                    <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
-                    <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-        <div data-delay="3000" class="toast info-toast shadow p-3 mb-5 bg-white rounded">
+      </div>
+      <div data-delay="3000" class="toast info-toast shadow p-3 mb-5 bg-white rounded">
         <div style="font-size: 1.2em;" class="toast-header">
           Message
         </div>
@@ -737,9 +923,9 @@
           <div id="toast_msg">Action Done</div>
         </div>
       </div>
-      </div>
-
     </div>
-    </body>
+
+  </div>
+</body>
 
 </html>

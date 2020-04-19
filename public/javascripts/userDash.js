@@ -108,6 +108,46 @@ angularApp.controller("ngContent",function($scope,$http)
 		name:document.getElementById("nmU").innerHTML,
 		uid:document.getElementById("idU").innerHTML
 	};
+
+	$scope.planner={
+		budget:{
+			min:0,
+			max:20000
+		},
+		destinations:[{text:""}],
+		keywords:[{text:""}],
+		output:[
+			{
+				service_id:"TAX00001",
+				price:100,
+				quantity:1
+			},
+			{
+				service_id:"TAX00002",
+				price:100,
+				quantity:1
+			}
+		],
+		showOutput:false
+	};
+	$scope.addDestination = function()
+	{
+		$scope.planner.destinations.push({text:""});
+		console.log($scope.planner.destinations);
+	}
+	$scope.addKeyword = function()
+	{
+		$scope.planner.keywords.push({text:""});
+	}
+	$scope.removeOutput = function(it)
+	{
+		$scope.planner.output.splice($scope.planner.output.indexOf(it),1);
+	}
+	$scope.algorithm = function()
+	{
+		//use $scope.planner.budget/destination/keywords to output in this format:
+		//output - {service_id:"",quantity:1,price:10}
+	}
 	//sends get request with inputparams and put that data into destOBJ object
 	$scope.putData=function(sourceUrl,inputParams,destObj,callback)
 	{
@@ -322,7 +362,9 @@ angularApp.controller("ngContent",function($scope,$http)
 			return_date:$scope.new_trip.return_date,
 			}}).then(
 			function(data, status, headers, config) {
-			alert("Trip Created!")
+			// alert("Trip Created!")
+			$('#toast_msg').text("Trip Created!");
+			$('.toast').toast("show");
 			$scope.new_trip.status="OK";
 			$scope.getData(0);
 			
@@ -366,6 +408,12 @@ angularApp.controller("ngContent",function($scope,$http)
 			$('#toast_msg').text("No trip selected! Select A trip");
 			$('.toast').toast("show");
 			sidebarDOM=document.getElementById("sidebar");
+			if(sidebarDOM.style.right=="-380px")
+			{
+				sidebarDOM.style.right="0px";
+				$('#toggleIcon').removeClass("fa-angle-double-left");
+				$('#toggleIcon').addClass("fa-angle-double-right");
+			}
 			sidebarDOM.style.right="0px";
 			return;
 		}
@@ -598,16 +646,35 @@ angularApp.controller("ngContent",function($scope,$http)
 		console.log(it);
 		$scope.trip.selected = it;
 	}
-	console.log("init Done");
-	$scope.getData(9);
-	$scope.changeTab(0);
+	$scope.openStartModal=function()
+	{
+		$('#startModal').modal('show');
+	}
+	$scope.openPlanner = function()
+	{
+		$('#plannerModal').modal('show');
+	}
 	$scope.toggle_sidebar=function(){
 		$scope.getData(9);
 		console.log($scope.trip.selected);
 		sidebarDOM=document.getElementById("sidebar");
-		sidebarDOM.style.right=(sidebarDOM.style.right=="-380px")?("0px"):("-380px");
+		if(sidebarDOM.style.right=="-380px")
+		{
+			sidebarDOM.style.right="0px";
+			$('#toggleIcon').removeClass("fa-angle-double-left");
+			$('#toggleIcon').addClass("fa-angle-double-right");
+		}
+		else{
+			sidebarDOM.style.right="-380px";
+			$('#toggleIcon').removeClass("fa-angle-double-right");
+			$('#toggleIcon').addClass("fa-angle-double-left");
+		}
 		console.log("called toggle"+sidebarDOM.style.right);
 	}
+	console.log("init Done");
+	$scope.getData(9);
+	// $scope.changeTab(0);
+	$scope.openStartModal();
 });
 var labels=["Bookings","Tra","All Hotels","All Food Items","Gui/tour"];
 function bs(current)

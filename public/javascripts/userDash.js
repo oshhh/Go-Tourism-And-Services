@@ -6,14 +6,8 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.my_trips={
 		status : "Pending",
 		data : [],
-		user_id : "",
-		sortOrder:"0",
-		reviews:{},
-	}
-
-	$scope.completed_unrated_request={
-		status : "Pending",
-		data : [],
+		completed_requests : [],
+		rate_services : [],
 		user_id : "",
 		sortOrder:"0",
 		reviews:{},
@@ -129,6 +123,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		if(tab == 0)
 		{
+			console.log($scope.my_trips.completed_requests.length);
 			$scope.my_trips.status="Pending";
 			console.log("sent");
 			$http.get("/api/getData",{params:{
@@ -136,7 +131,8 @@ angularApp.controller("ngContent",function($scope,$http)
 				}}).then(
 				function(data, status, headers, config) {
 				console.log(data.data.content);
-				$scope.my_trips.data=data.data.content;
+				$scope.my_trips.data=data.data.content.result;
+				$scope.my_trips.completed_requests=data.data.content.completed_requests;
 				$scope.my_trips.data.forEach(element => {
 					element.showRev=false;
 				});

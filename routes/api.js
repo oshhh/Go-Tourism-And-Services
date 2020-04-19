@@ -38,7 +38,11 @@ router.get('/getData', function(req, res, next) {
             trips[result[i].trip_id].service_requests = [];
           }
           serverjs.user.getServiceRequests(function(result) {
+            completed_requests = []
             for(i in result) {
+              if((result[i].status == "Completed" || result[i].status == "Paid") && (result[i].service_rating == null)) {
+                completed_requests.push(result[i]);
+              }
               if(result[i].trip_id in trips) {
                 trips[result[i].trip_id].service_requests.push(result[i]);
                 trips[result[i].trip_id].show_requests = false;
@@ -48,7 +52,7 @@ router.get('/getData', function(req, res, next) {
             for(trip_id in trips) {
               result.push(trips[trip_id]);
             }
-            sendResponse(result);
+            sendResponse({result, completed_requests});
           },req.session.uname, {request_id : "\"%\""});
         }, {
             user_id : "\"" + req.session.uname + "\"",
@@ -70,6 +74,9 @@ router.get('/getData', function(req, res, next) {
           return_date : "\"" + req.query.return_date + "\"",
         });
       } , "trip");
+    break;
+    case 'rate_service':
+      serverjs.user.rateService(sendResponse, req.query.request_id, req.query.rating);
     break;
     case 'flight':
         serverjs.user.getFlights(sendResponse,{

@@ -6,14 +6,8 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.my_trips={
 		status : "Pending",
 		data : [],
-		user_id : "",
-		sortOrder:"0",
-		reviews:{},
-	}
-
-	$scope.completed_unrated_request={
-		status : "Pending",
-		data : [],
+		completed_requests : [],
+		rate_services : false,
 		user_id : "",
 		sortOrder:"0",
 		reviews:{},
@@ -169,6 +163,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		if(tab == 0)
 		{
+			console.log($scope.my_trips.completed_requests.length);
 			$scope.my_trips.status="Pending";
 			console.log("sent");
 			$http.get("/api/getData",{params:{
@@ -176,7 +171,8 @@ angularApp.controller("ngContent",function($scope,$http)
 				}}).then(
 				function(data, status, headers, config) {
 				console.log(data.data.content);
-				$scope.my_trips.data=data.data.content;
+				$scope.my_trips.data=data.data.content.result;
+				$scope.my_trips.completed_requests=data.data.content.completed_requests;
 				$scope.my_trips.data.forEach(element => {
 					element.showRev=false;
 				});
@@ -375,32 +371,6 @@ angularApp.controller("ngContent",function($scope,$http)
 
 	}
 
-	//update trip input boxes with most recent trip for the user
-	// $scope.getTrips=function()
-	// {
-	// 	rest={};
-	// 	$scope.putData('/api/getData',{type:'trip',user_id:$scope.curUser.uid},rest,
-	// 	function(){
-	// 		console.log("got trips");
-	// 		console.log(rest);
-	// 		$scope.trip
-	// 		if(rest.data[0])
-	// 		{
-	// 			let arrDate=new Date(rest.data[0].arrival_date);
-	// 			let depDate=new Date(rest.data[0].departure_date);
-	// 			$scope.trip.tdateEnd=arrDate;
-	// 			$scope.trip.tdateStart=depDate;
-	// 			$scope.trip.tcity=rest.data[0].city;
-	// 		}
-	// 		else{
-	// 			currentTime = new Date();
-	// 			$scope.trip.tdateStart=currentTime;
-	// 			$scope.trip.tdateEnd=currentTime;
-	// 			$scope.trip.tcity="-";
-	// 		}
-	// 	});
-	// }
-
 	$scope.request = function(it){
 		console.log($scope.trip.selected);
 		if(!$scope.trip.selected.trip_id) {
@@ -427,7 +397,21 @@ angularApp.controller("ngContent",function($scope,$http)
 			console.log(data.data.content);
 			$('#toast_msg').text("Request made. Please check trips tab for more info about request");
 			$('.toast').toast("show");
-			});
+		});
+	}
+
+	$scope.rate_service = function(it) {
+		$http.get('/api/getData',{params:{
+			type : 'rate_service',
+			request_id: "\"" + it.request_id + "\"",
+			rating: it.rating
+		}}).then(
+		function(data, status, headers, config) {
+			console.log(data.data.content);
+			$('#toast_msg').text("The service has been rated");
+			$('.toast').toast("show");
+			getData(0);
+		});
 	}
 
 	$scope.food.view=function(it)

@@ -219,6 +219,9 @@ router.get('/getData', function(req, res, next) {
     case 'route':
         serverjs.service_provider.getRoute(sendResponse,req.query.service_id);
         break;
+    case 'singleColumn':
+      serverjs.getAutoCorrectPredictions(sendResponse,req.query.table_name,req.query.column_name);
+      break;
     default:
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({msg:"Unknown Request sent"}))

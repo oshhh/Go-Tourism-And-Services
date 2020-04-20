@@ -92,7 +92,27 @@ angularApp.controller("ngContent",function($scope,$http)
 		reviews:{},
 
 	}
-
+	$scope.predictors={
+		data:[],
+		bindInput:async function(listName,table,column)
+		{
+			elementDOM = document.getElementById("predictionData");
+			var containerList = document.createElement("datalist");
+			dataState = await $http.get("/api/getData",{params:{
+				type:"singleColumn",
+				table_name:table,
+				column_name:column
+			}});
+			dataState.data.content.forEach(element => {
+				var elemDOM = document.createElement("option");
+				elemDOM.value=element.prediction;
+				containerList.appendChild(elemDOM);
+			});
+			elementDOM.appendChild(containerList);
+			containerList.id=listName;
+			console.log(containerList);
+		}
+	}
 	$scope.trip={
 		status : "Pending",
 		data : [],
@@ -108,7 +128,9 @@ angularApp.controller("ngContent",function($scope,$http)
 			min:0,
 			max:20000
 		},
-		destinations:[{text:""}],
+		destination:"",
+		numPeople:0,
+		duration:0,
 		keywords:[{text:""}],
 		output:[
 			{
@@ -610,7 +632,6 @@ angularApp.controller("ngContent",function($scope,$http)
 			it.showRev=false;
 		}
 	}
-
 	$scope.changeTab=function(newTab)
 	{
 		$scope.tab=newTab;
@@ -655,10 +676,15 @@ angularApp.controller("ngContent",function($scope,$http)
 		}
 		console.log("called toggle"+sidebarDOM.style.right);
 	}
+
 	console.log("init Done");
 	$scope.getData(9);
 	// $scope.changeTab(0);
 	$scope.openStartModal();
+
+	//bind prediction lists to some name use list attrib of input to use that list
+	$scope.predictors.bindInput("locs","location","city");
+
 });
 var labels=["Bookings","Tra","All Hotels","All Food Items","Gui/tour"];
 function bs(current)

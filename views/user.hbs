@@ -21,7 +21,6 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
   </script>
-  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
 <body ng-app="dash">
@@ -84,7 +83,9 @@
       </div>
     </nav>
 
-
+    <div style="display: none;" id="predictionData">
+      
+    </div>
     <div id="sidebar">
       <div ng-click="toggle_sidebar()" id="side-toggle" style="padding-top:15px"><span id="toggleIcon"
           class="fa fa-angle-double-right fa-lg"></span></div>
@@ -93,6 +94,7 @@
         <div class="trip-list">
           <div class="rowElement card shadow p-4 mb-4 bg-white">
             <ul class="list-group">
+              <li class="list-group-item list-group-item-action" ng-show="trip.data.length==0">No Trips Made Yet</li>
               <div ng-repeat="it in trip.data">
                 <li ng-show="it.trip_id==trip.selected.trip_id" ng-click="selectTrip(it)"
                   class="list-group-item list-group-item-action active">
@@ -146,6 +148,9 @@
 
       </div>
     </div>
+
+      <input list="locs" class="form-control">
+
 
       <div id="content" class="shadow p-4 mb-4 bg-white">
       
@@ -863,25 +868,27 @@
 
               <div class="row">
 
-                <div class="col-6 card">
-                  <div class="card-header bg-white font-weight-bold">Step 2 - Enter Possible Destinations</div>
+                <div class="col-12 card">
+                  <div class="card-header bg-white font-weight-bold">Step 2 - Enter Destinations</div>
                   <div class="card-body">
-                    <ul class="list-group" style="height: auto !important;">
-                      <li class="list-group-item" ng-repeat="it in planner.destinations">
-                        <div class="input-group mb-0">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">\{{$index}}</span>
-                          </div>
-                          <input ng-bind="it" value="\{{it.text}}" class="form-control" type="texts" placeholder="">
-                        </div>
-                      </li>
-                      <li class="list-group-item align-item-center">
-                        <div class="row">
-                          <div class="col text-center"><button ng-click="addDestination()"
-                              class="btn btn-success">+</button></div>
-                        </div>
-                      </li>
-                    </ul>
+                    <div class="input-group mb-0">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Enter Destination</span>
+                      </div>
+                      <input list="locs" ng-bind="planner.destination" value="\{{planner.destination}}" class="form-control" type="text" placeholder="">
+                    </div>
+                    <div class="input-group mb-0">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">No of people</span>
+                      </div>
+                      <input list="locs" ng-bind="planner.numPeople" value="\{{planner.numPeople}}" class="form-control" type="number" placeholder="">
+                    </div>
+                      <div class="input-group mb-0">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Duration (days)</span>
+                      </div>
+                      <input list="locs" ng-bind="planner.duration" value="\{{planner.duration}}" class="form-control" type="number" placeholder="">
+                    </div>
                   </div>
                 </div>
 
@@ -930,6 +937,11 @@
                 </div>
               </div>
 
+              <div class="row justify-content-center mt-4">
+                <div class="col-4 text-center">
+                  <button class="col btn btn-success" ng-click="addOutput()">Finalize</button>
+                </div>
+              </div>
 
             </div>
           </div>

@@ -552,7 +552,12 @@ function deleteRow(callback,table_name,searchKey,searchValue)
 //     ORDER BY t.departure_date;`
 //     runQuery(callback,query)
 // }
-
+function getAutoCorrectPredictions(callback,table_name,column_name)
+{
+    query=`select `+column_name+` as prediction
+    from `+table_name+``;   
+    runQuery(callback,query);
+}
 function updateOneColumn(callback,data)
 {
     query=`update `+data.table_name+`
@@ -722,6 +727,7 @@ module.exports = {
     'getLocation':getLocation,
     'deleteRoute':deleteRoute,
     'deleteRow':deleteRow,
-    'getTouristSpot':getTouristSpot
+    'getTouristSpot':getTouristSpot,
+    'getAutoCorrectPredictions':getAutoCorrectPredictions
 }
             

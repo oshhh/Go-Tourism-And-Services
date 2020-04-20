@@ -15,14 +15,14 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.list-group{
+/* .list-group{
   cursor: pointer;
   height: 350px;
   overflow-y: scroll;
 }
 .list-group::-webkit-scrollbar {
   display: none;
-}
+} */
 .list-group {
   -ms-overflow-style: none;
 }
@@ -51,4 +51,27 @@
 .steps{
   text-decoration: none;
   background-color: red;
+}
+.modal-body::-webkit-scrollbar{
+  width: 10px;
+  background: #BBB;
+}
+.modal-body::-webkit-scrollbar-track{
+  box-shadow: inset 0 0 5px grey;
+}
+.modal-body::-webkit-scrollbar-thumb{
+  background: #7fb5a4;
+}
+.list-group::-webkit-scrollbar{
+  width: 10px;
+  background: #BBB;
+}
+.list-group::-webkit-scrollbar-track{
+  box-shadow: inset 0 0 5px grey;
+}
+.list-group::-webkit-scrollbar-thumb{
+  background: #7fb5a4;
+}
+.toast{
+  z-index: -3;
 }

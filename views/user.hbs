@@ -309,8 +309,8 @@
             <div class="card-header text-center bg-white align-middle">Service ID: \{{it.service_id}}</div>
             <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
               <div class="cardText card-text">From: \{{it.from_city}} <br> To: \{{it.to_city}}</div>
-              <div class="cardText card-text">Departure Time: \{{it.departure_time}}<br> Arrival Time:
-                \{{it.arrival_time}}</div>
+              <div class="cardText card-text">Departure Time: \{{it.departure_time.substring(11,19)}}<br> Arrival Time:
+                \{{it.arrival_time.substring(11,19)}}</div>
               <div class="cardText card-text">Discount: \{{it.discount}}% </div>
               <button ng-click="request(it)" class="btn btn-outline-primary">Request (+\{{it.price}} Rs)"</button>
             </div>

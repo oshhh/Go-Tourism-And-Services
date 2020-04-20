@@ -166,7 +166,7 @@ router.get('/getData', function(req, res, next) {
           service_id : "\"" + req.query.service_id + "\"",
           timestamp : "CURDATE()",
           quantity : "1",
-          cost : "\"" + req.query.cost + "\"",
+          cost : "\"" + (req.query.cost * (1 - req.query.discount * 0.01)) + "\"",
           status : "\"Pending\"",
           user_rating : "null",
           service_rating : "null",

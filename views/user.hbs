@@ -84,7 +84,7 @@
     </nav>
 
     <div style="display: none;" id="predictionData">
-      
+
     </div>
     <div id="sidebar">
       <div ng-click="toggle_sidebar()" id="side-toggle" style="padding-top:15px"><span id="toggleIcon"
@@ -149,75 +149,95 @@
       </div>
     </div>
 
-      <input list="locs" class="form-control">
+    <input list="locs" class="form-control">
 
 
-      <div id="content" class="shadow p-4 mb-4 bg-white">
-      
-        <div id="content_tab0" ng-show="tab==0">  
-          <div class="card" style="align-items: center;">
-            <h5 style="text-align: center;">Create New Trip</h5>  
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class = "input-group-text">Destination City</span>
-              </div>
-              <input ng-model="new_trip.destination_city" type="text" class="form-control" placeholder="Mumbai">
-              <div class="input-group-prepend">
-                <span class = "input-group-text">Departure Date</span>
-              </div>
-              <input ng-model="new_trip.departure_date" type="text" class="form-control" placeholder="2020-04-30">
-              <div class="input-group-prepend">
-                <span class = "input-group-text">Return Date</span>
-              </div>
-              <input ng-model="new_trip.return_date" type="text" class="form-control" placeholder="2020-04-30">
+    <div id="content" class="shadow p-4 mb-4 bg-white">
+
+      <div id="content_tab0" ng-show="tab==0">
+        <div class="card pt-3" style="align-items: center;">
+          <h5 style="text-align: center;">Create New Trip</h5>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Destination City</span>
             </div>
-            <button class="btn" ng-click="createTrip()" style = "width: 30%; background-color:darkgrey;width:50%">New Trip (+) </button>
-            <label></label>
+            <input ng-model="new_trip.destination_city" type="text" class="form-control" placeholder="Mumbai">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Departure Date</span>
+            </div>
+            <input ng-model="new_trip.departure_date" type="text" class="form-control" placeholder="2020-04-30">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Return Date</span>
+            </div>
+            <input ng-model="new_trip.return_date" type="text" class="form-control" placeholder="2020-04-30">
           </div>
+          <button class="btn btn-primary mb-2" ng-click="createTrip()" style="width: 30%;">New Trip (+) </button>
           <label></label>
-          <div class="card" style="align-items: center;">
-            <h5 style="text-align: center;">Please rate all your completed service requests</h5>
-            <button ng-show="!my_trips.rate_services" ng-click="my_trips.rate_services = true" class="btn" style="background-color:darkgrey; text-align: center; width:50%">Rate Completed Service Requests</button>
-            <button ng-show="my_trips.rate_services" ng-click="my_trips.rate_services = false" class="btn" style="background-color:darkgrey; text-align: center; width:50%">Rate Remaining Later</button>
-            <label></label>
-            <label ng-show="(my_trips.rate_services)&&(my_trips.completed_requests.length==0)"> No pending Trips To Rate! </label>
-            <div ng-repeat="it in my_trips.completed_requests">
-              <div class="card" ng-show="my_trips.rate_services" style="align-items: center; width=100%">
-                <div class="card-text">Request ID : \{{it.request_id}} Service ID : \{{it.service_id}}</div>
-                <div class="card-text">Service Name : \{{it.name}} Timestamp : \{{it.timestamp.substring(0,10)}} \{{it.timestamp.substring(11,19)}}</div>
-                <input type="range" class="custom-range" min="0" max="5" class="form-control" ng-model="it.rating" ng-bind="it.rating">
-                <button ng-click="rate_service(it)" class="btn" style="color:darkgrey;">Rate</button>
+        </div>
+        <label></label>
+        <div class="rowElement card shadow p-4 mb-4 bg-white" style="align-items: center;">
+          <div class="card-header text-center bg-white align-middle">Please rate all your completed service requests
+          </div>
+          <div class="card-body" style="width: 100% !important;">
+            <div class="text-center mb-2">
+              <button ng-show="!my_trips.rate_services" ng-click="my_trips.rate_services = true" class="btn btn-light"
+                style="text-align: center; width:50%">Rate Completed Service Requests</button>
+              <button ng-show="my_trips.rate_services" ng-click="my_trips.rate_services = false" class="btn btn-primary"
+                style="text-align: center; width:50%">Rate Remaining Later</button>
+            </div>
+            <label ng-show="(my_trips.rate_services)&&(my_trips.completed_requests.length==0)"> No pending Trips To
+              Rate!
+            </label>
+            <div ng-show="my_trips.rate_services&&(my_trips.completed_requests.length!=0)" class="p-2" style="border: 1px solid #BBB;">
+              <div ng-repeat="it in my_trips.completed_requests">
+                <div class="rowElement card p-2" style="align-items: center">
+                  <div class="card-text">Request ID : \{{it.request_id}} Service ID : \{{it.service_id}}</div>
+                  <div class="card-text">Service Name : \{{it.name}} Timestamp : \{{it.timestamp.substring(0,10)}}
+                    \{{it.timestamp.substring(11,19)}}</div><br>
+                  <input type="range" class="custom-range" min="0" max="5" class="form-control" ng-model="it.rating"
+                    ng-bind="it.rating" style="width: 50%;"><br>
+                  <button ng-click="rate_service(it)" class="btn btn-primary">Rate</button>
+                </div>
               </div>
             </div>
           </div>
-          <label></label>
-          <div>
-            <h5 style="text-align: center;">Existing Trips</h5>   
-            <div class = "card-header text-center bg-white" style="text-align : center">
-            </div>
-            <div class="text-center d-flex flex-row justify-content-between align-middle">
-              <label style="text-align:center">Showing \{{food.data.length}} Results</label>
-            </div>
+        </div>
+        <label></label>
+        <div>
+          <h5 style="text-align: center;">Existing Trips</h5>
+          <div class="card-header text-center bg-white" style="text-align : center">
+          </div>
+          <div class="text-center d-flex flex-row justify-content-between align-middle">
+            <label style="text-align:center">Showing \{{food.data.length}} Results</label>
+          </div>
 
-            <div style="text-align: center;" class="rowsCont" ng-show="my_trips.status=='Pending'">Loading Data</div>
-            <div id="table2" class="rowsCont card-rows">
-              <div ng-repeat="it in my_trips.data" class="rowElement card shadow p-4 mb-4 bg-white" style="align-items: center;">
-                <div class="card-header text-center bg-white align-middle">Trip ID: \{{it.trip_id}}</div>
+          <div style="text-align: center;" class="rowsCont" ng-show="my_trips.status=='Pending'">Loading Data</div>
+          <div id="table2" class="rowsCont card-rows">
+            <div ng-repeat="it in my_trips.data" class="rowElement card shadow p-4 mb-4 bg-white"
+              style="align-items: center;">
+              <div class="card-header text-center bg-white align-middle">Trip ID: \{{it.trip_id}}</div>
+              <div class="card-body" style="width: 100% !important;">
                 <label>Destination: \{{it.destination_city}}</label>
-                <label>Departure Date: \{{it.departure_date.substring(0,10)}}  |  Return Date: \{{it.return_date.substring(0,10)}}</label>
-                <button ng-show="!it.show_requests" ng-click="it.show_requests = !it.show_requests" class="btn" style="background-color:darkgrey;width:50%;"> Show Service Requests of this Trip </button>
-                <button ng-show="it.show_requests" ng-click="it.show_requests = !it.show_requests" class="btn" style="background-color:darkgrey; width:50%;"> Hide Service Requests of this Trip </button>
-                <div ng-show="it.show_requests">
-                  <div ng-repeat="it2 in it.service_requests" class="rowElement card shadow p-4 mb-4 bg-white" style="align-items: center;">
-                    <label> Service Request: \{{it2.request_id}} | Service ID: \{{it2.service_id}}  </label>
+                <label>Departure Date: \{{it.departure_date.substring(0,10)}} | Return Date:
+                  \{{it.return_date.substring(0,10)}}</label>
+                <div class="text-center mb-2">
+                  <button ng-show="!it.show_requests" ng-click="it.show_requests = !it.show_requests"
+                    class="btn btn-light"> Show Service Requests of this Trip </button>
+                  <button ng-show="it.show_requests" ng-click="it.show_requests = !it.show_requests"
+                    class="btn btn-info" style="cursor: pointer;"> Hide Service Requests of this Trip </button>
+                </div>
+                <div class="p-1" ng-show="it.show_requests" style="border: 1px solid #BBB;">
+                  <div ng-repeat="it2 in it.service_requests" class="rowElement card p-2" style="align-items: center;">
+                    <label> Service Request: \{{it2.request_id}} | Service ID: \{{it2.service_id}} </label>
                     <label> Timestamp: \{{it2.timestamp.substring(0,10)}} \{{it2.timestamp.substring(11,19)}} </label>
                     <label>Status: \{{it2.status}}</label>
                   </div>
                 </div>
-                </div>
-                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
       {{!-- 
         <div id="content_tab1" ng-show="tab==1">    
@@ -875,19 +895,22 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">Enter Destination</span>
                       </div>
-                      <input list="locs" ng-bind="planner.destination" value="\{{planner.destination}}" class="form-control" type="text" placeholder="">
+                      <input list="locs" ng-bind="planner.destination" value="\{{planner.destination}}"
+                        class="form-control" type="text" placeholder="">
                     </div>
                     <div class="input-group mb-0">
                       <div class="input-group-prepend">
                         <span class="input-group-text">No of people</span>
                       </div>
-                      <input list="locs" ng-bind="planner.numPeople" value="\{{planner.numPeople}}" class="form-control" type="number" placeholder="">
+                      <input list="locs" ng-bind="planner.numPeople" value="\{{planner.numPeople}}" class="form-control"
+                        type="number" placeholder="">
                     </div>
-                      <div class="input-group mb-0">
+                    <div class="input-group mb-0">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Duration (days)</span>
                       </div>
-                      <input list="locs" ng-bind="planner.duration" value="\{{planner.duration}}" class="form-control" type="number" placeholder="">
+                      <input list="locs" ng-bind="planner.duration" value="\{{planner.duration}}" class="form-control"
+                        type="number" placeholder="">
                     </div>
                   </div>
                 </div>
@@ -925,14 +948,14 @@
                 <div class="col card">
                   <div class="card-header bg-white font-weight-bold">Removal and finalizing</div>
                   <ul class="list-group" style="height: auto !important;">
-                      <li class="list-group-item" ng-repeat="it in planner.output">
-                        <div class="row justify-content-around">
-                          <div class="col-10">\{{it.service_id}}</div>
-                          <button ng-click="removeOutput(it)" type="button" class="close text-right" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                      </li>
+                    <li class="list-group-item" ng-repeat="it in planner.output">
+                      <div class="row justify-content-around">
+                        <div class="col-10">\{{it.service_id}}</div>
+                        <button ng-click="removeOutput(it)" type="button" class="close text-right" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                    </li>
                   </ul>
                 </div>
               </div>

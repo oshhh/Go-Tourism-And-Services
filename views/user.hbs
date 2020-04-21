@@ -870,7 +870,6 @@
               </button>
             </div>
             <div id="planBody" class="modal-body">
-
               <div class="card">
                 <div class="card-header bg-white font-weight-bold">Step 1 - Specify Your Budget And Weights</div>
                 <div class="card-body">
@@ -881,7 +880,14 @@
                     <input ng-bind="planner.budget.max" value="\{{planner.budget.max}}" class="form-control"
                       type="number" placeholder="Maximum">
                   </div>
-                  
+                  <label class="mr-5">Give more weights to services more important to you</label>
+                  <div class="row justify-content-start">
+                      <div class="col m-2 text-center" ng-repeat="it in planner.weights">
+                        <label class="mr-5">\{{it.display}} (\{{it.value}})</label>
+                        {{!-- <input style="width: 150px;" ng-model="it.value" type="range" min="1" max="5" value="\{{it.value}}" class="form-control"> --}}
+                        <input style="width: 150px;" type="range" class="custom-range" min="0" max="5" class="form-control" ng-model="it.value" ng-bind="it.value">
+                      </div>
+                  </div>
                 </div>
               </div>
 

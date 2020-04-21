@@ -125,9 +125,45 @@ angularApp.controller("ngContent",function($scope,$http)
 
 	$scope.planner={
 		budget:{
-			min:0,
 			max:20000
 		},
+		weights:[
+			{
+				display:"flights",
+				value:3,
+				keyword:"flight"
+			},
+			{
+				display:"Buse/Train",
+				value:3,
+				keyword:"bus"
+			},
+			{
+				display:"Taxis",
+				value:3,
+				keyword:"taxi"
+			},
+			{
+				display:"Hotels",
+				value:3,
+				keyword:"hotel"
+			},
+			{
+				display:"Restaurant",
+				value:3,
+				keyword:"restaurant"
+			},
+			{
+				display:"Tourist Spots",
+				value:3,
+				keyword:"tourist_spot"
+			},
+			{
+				display:"Guides",
+				value:3,
+				keyword:"guide"
+			},
+		],
 		destination:"",
 		numPeople:0,
 		duration:0,

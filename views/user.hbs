@@ -208,7 +208,7 @@
           <div class="card-header text-center bg-white" style="text-align : center">
           </div>
           <div class="text-center d-flex flex-row justify-content-between align-middle">
-            <label style="text-align:center">Showing \{{food.data.length}} Results</label>
+            <label style="text-align:center">Showing \{{my_trips.data.length}} Results</label>
           </div>
 
           <div style="text-align: center;" class="rowsCont" ng-show="my_trips.status=='Pending'">Loading Data</div>
@@ -289,7 +289,7 @@
 
 
         <div class="text-center d-flex flex-row justify-content-between align-middle">
-          <label style="text-align:center">Showing \{{food.data.length}} Results</label>
+          <label style="text-align:center">Showing \{{flight.data.length}} Results</label>
           <div class="align-middle btn-group mb-3">
             <div class="input-group-append">
               <span class="input-group-text">Order By</span>
@@ -378,7 +378,7 @@
 
 
         <div class="text-center d-flex flex-row justify-content-between align-middle">
-          <label style="text-align:center">Showing \{{food.data.length}} Results</label>
+          <label style="text-align:center">Showing \{{bus_train.data.length}} Results</label>
           <div class="align-middle btn-group mb-3">
             <div class="input-group-append">
               <span class="input-group-text">Order By</span>
@@ -417,7 +417,7 @@
                 Wait<br><br></div>
               <div ng-show="taxi.reviews[it.service_id].status=='OK'" class="comments card-rows">
                 <br>
-                <label style="text-align:center">Showing \{{taxi.reviews[it.service_id].data.length}} Result(s)</label>
+                <label style="text-align:center">Showing \{{bus_train.reviews[it.service_id].data.length}} Result(s)</label>
                 <div ng-repeat="rev in taxi.reviews[it.service_id].data" class="rowElement card">
                   <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on
                     \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
@@ -461,7 +461,7 @@
 
 
         <div class="text-center d-flex flex-row justify-content-between align-middle">
-          <label style="text-align:center">Showing \{{food.data.length}} Results</label>
+          <label style="text-align:center">Showing \{{taxi.data.length}} Results</label>
           <div class="align-middle btn-group mb-3">
             <div class="input-group-append">
               <span class="input-group-text">Order By</span>
@@ -550,7 +550,7 @@
 
 
         <div class="text-center d-flex flex-row justify-content-between align-middle">
-          <label style="text-align:center">Showing \{{food.data.length}} Results</label>
+          <label style="text-align:center">Showing \{{room.data.length}} Results</label>
           <div class="align-middle btn-group mb-3">
             <div class="input-group-append">
               <span class="input-group-text">Order By</span>

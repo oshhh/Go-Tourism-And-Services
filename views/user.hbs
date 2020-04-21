@@ -145,7 +145,10 @@
               </div>
             </div>
           </div> --}}
-
+        <br>
+        <div class="i_bar">
+          <a class="a_bar" data-dismiss="modal" href="#" ng-click="openPlanner()">Open Trip Planner</a>
+        </div>
       </div>
     </div>
 
@@ -208,7 +211,7 @@
           <div class="card-header text-center bg-white" style="text-align : center">
           </div>
           <div class="text-center d-flex flex-row justify-content-between align-middle">
-            <label style="text-align:center">Showing \{{food.data.length}} Results</label>
+            <label style="text-align:center">Showing \{{my_trips.data.length}} Results</label>
           </div>
 
           <div style="text-align: center;" class="rowsCont" ng-show="my_trips.status=='Pending'">Loading Data</div>
@@ -461,7 +464,7 @@
 
 
         <div class="text-center d-flex flex-row justify-content-between align-middle">
-          <label style="text-align:center">Showing \{{food.data.length}} Results</label>
+          <label style="text-align:center">Showing \{{taxi.data.length}} Results</label>
           <div class="align-middle btn-group mb-3">
             <div class="input-group-append">
               <span class="input-group-text">Order By</span>
@@ -869,20 +872,16 @@
             <div id="planBody" class="modal-body">
 
               <div class="card">
-                <div class="card-header bg-white font-weight-bold">Step 1 - Specify Your Budget</div>
+                <div class="card-header bg-white font-weight-bold">Step 1 - Specify Your Budget And Weights</div>
                 <div class="card-body">
                   <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">Minimum</span>
-                    </div>
-                    <input ng-bind="planner.budget.min" value="\{{planner.budget.min}}" class="form-control"
-                      type="number" placeholder="Minimum">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Maximum</span>
                     </div>
                     <input ng-bind="planner.budget.max" value="\{{planner.budget.max}}" class="form-control"
                       type="number" placeholder="Maximum">
                   </div>
+                  
                 </div>
               </div>
 

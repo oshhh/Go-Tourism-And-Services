@@ -199,7 +199,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					element.showRev=false;
 				});
 				$scope.my_trips.status="OK";
-				// $scope.$digest();
+				$scope.$digest();
 				},function(data, status, headers, config) {
 					console.log("error");
 				});

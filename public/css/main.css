@@ -206,3 +206,13 @@ table{
 .redborder{
     border: 2px solid red !important;
 }
+html::-webkit-scrollbar{
+width: 10px;
+background: #BBB;
+}
+html::-webkit-scrollbar-track{
+box-shadow: inset 0 0 5px grey;
+}
+html::-webkit-scrollbar-thumb{
+background: #7fb5a4;
+}

@@ -162,11 +162,13 @@ router.get('/getData', function(req, res, next) {
       serverjs.count_table( function(result) {
         serverjs.insertIntoTable(sendResponse, 'service_request', {
           request_id:"\"RST" + ("00000" + result[0]['cnt']).slice(-5) + "\"",
-          trip_id : "\"" + req.query.trip_id + "\"" ,
-          service_id : "\"" + req.query.service_id + "\"",
+          trip_id : req.query.trip_id ,
+          service_id : req.query.service_id,
           timestamp : "CURDATE()",
-          quantity : "1",
-          cost : "\"" + (req.query.cost * (1 - req.query.discount * 0.01)) + "\"",
+          booking_date : req.query.booking_date,
+          number_of_days : req.query.number_of_days,
+          quantity : req.query.quantity,
+          cost : req.query.cost,
           status : "\"Pending\"",
           user_rating : "null",
           service_rating : "null",

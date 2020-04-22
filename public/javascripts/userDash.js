@@ -453,9 +453,12 @@ angularApp.controller("ngContent",function($scope,$http)
 		}
 		$http.get('/api/getData',{params:{
 			type : 'request',
-			trip_id:$scope.trip.selected.trip_id,
-			service_id:it.service_id,
-			cost : it.price,
+			trip_id: "\"" + $scope.trip.selected.trip_id + "\"",
+			service_id:  "\"" + it.service_id +  "\"",
+			booking_date : "\"2000-03-03\"",
+			number_of_days : "3",
+			quantity : "1",
+			cost : it.price * (1 - it.discount * 0.01),
 		}}).then(
 		function(data, status, headers, config) {
 			console.log(data.data.content);

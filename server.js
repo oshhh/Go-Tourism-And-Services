@@ -548,7 +548,7 @@ function deleteRow(callback,table_name,searchKey,searchValue)
 // }
 function getAutoCorrectPredictions(callback,table_name,column_name)
 {
-    query=`select `+column_name+` as prediction
+    query=`select distinct `+column_name+` as prediction
     from `+table_name+``;   
     runQuery(callback,query);
 }

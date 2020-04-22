@@ -93,7 +93,20 @@ angularApp.controller("ngContent",function($scope,$http)
 
 	}
 	$scope.predictors={
-		data:[],
+        data:[],
+        bindArray:function(listName,arr)
+        {
+            elementDOM = document.getElementById("predictionData");
+            var containerList = document.createElement("datalist");
+            arr.forEach(element => {
+				var elemDOM = document.createElement("option");
+				elemDOM.value=element;
+				containerList.appendChild(elemDOM);
+			});
+			elementDOM.appendChild(containerList);
+			containerList.id=listName;
+			console.log(containerList);
+        },
 		bindInput:async function(listName,table,column)
 		{
 			elementDOM = document.getElementById("predictionData");
@@ -112,7 +125,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			containerList.id=listName;
 			console.log(containerList);
 		}
-	}
+    }
 	$scope.trip={
 		status : "Pending",
 		data : [],
@@ -730,7 +743,11 @@ angularApp.controller("ngContent",function($scope,$http)
 
 	//bind prediction lists to some name use list attrib of input to use that list
 	$scope.predictors.bindInput("locs","location","city");
-
+	$scope.predictors.bindInput("carname","taxi","car_name");
+	$scope.predictors.bindInput("room_type","room","room_type");
+	$scope.predictors.bindInput("spotName","tourist_spot","name");
+	$scope.predictors.bindInput("spotType","tourist_spot","type");
+	$scope.predictors.bindArray("capacity",["1","2","3","4","5","6","7"]);
 });
 var labels=["Bookings","Tra","All Hotels","All Food Items","Gui/tour"];
 function bs(current)

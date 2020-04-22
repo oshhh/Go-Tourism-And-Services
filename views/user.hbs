@@ -149,7 +149,6 @@
       </div>
     </div>
 
-    <input list="locs" class="form-control">
 
 
     <div id="content" class="shadow p-4 mb-4 bg-white">
@@ -343,12 +342,12 @@
           <div class="input-group-prepend">
             <span class="input-group-text">From</span>
           </div>
-          <input ng-model="bus_train.from" id="transport_from" type="text" class="form-control"
+          <input list="locs" ng-model="bus_train.from" id="transport_from" type="text" class="form-control"
             placeholder="India Gate">
           <div class="input-group-prepend">
             <span class="input-group-text">To</span>
           </div>
-          <input ng-model="bus_train.to" id="transport_to" type="text" class="form-control" placeholder="Lal Quila">
+          <input list="locs" ng-model="bus_train.to" id="transport_to" type="text" class="form-control" placeholder="Lal Quila">
           <div class="input-group-prepend">
             <label class="input-group-text">AC</label>
           </div>
@@ -426,11 +425,11 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Car Name</span>
           </div>
-          <input ng-model="taxi.car_name" id="car_name" type="text" class="form-control" placeholder="swift">
+          <input list="carname" ng-model="taxi.car_name" id="car_name" type="text" class="form-control" placeholder="swift">
           <div class="input-group-prepend">
             <span class="input-group-text">Capacity</span>
           </div>
-          <input ng-model="taxi.capacity" id="capacity" type="text" class="form-control" placeholder="4">
+          <input list="capacity" ng-model="taxi.capacity" id="capacity" type="text" class="form-control" placeholder="4">
           <div class="input-group-prepend">
             <span class="input-group-text">AC</span>
           </div>
@@ -511,15 +510,15 @@
           <div class="input-group-prepend">
             <span class="input-group-text">City</span>
           </div>
-          <input ng-model="room.city" id="room_city" type="text" class="form-control" placeholder="Delhi">
+          <input list="locs" ng-model="room.city" id="room_city" type="text" class="form-control" placeholder="Delhi">
           <div class="input-group-prepend">
             <span class="input-group-text">Room Type</span>
           </div>
-          <input ng-model="room.room_type" id="room_type" type="text" class="form-control" placeholder="double">
+          <input list="room_type" ng-model="room.room_type" id="room_type" type="text" class="form-control" placeholder="double">
           <div class="input-group-prepend">
             <span class="input-group-text">Capacity</span>
           </div>
-          <input ng-model="room.capacity" id="capacity" type="text" class="form-control" placeholder="4">
+          <input list="capacity" ng-model="room.capacity" id="capacity" type="text" class="form-control" placeholder="4">
           <div class="input-group-prepend">
             <span class="input-group-text">Wifi</span>
           </div>
@@ -676,15 +675,15 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Name</span>
           </div>
-          <input ng-model="tourist_spot.name" id="name" type="text" class="form-control" placeholder="Pangong Lake">
+          <input list="spotName" ng-model="tourist_spot.name" id="name" type="text" class="form-control" placeholder="Pangong Lake">
           <div class="input-group-prepend">
             <span class="input-group-text">Type</span>
           </div>
-          <input ng-model="tourist_spot.t_type" id="type" type="text" class="form-control" placeholder="Lake">
+          <input list="spotType" ng-model="tourist_spot.t_type" id="type" type="text" class="form-control" placeholder="Lake">
           <div class="input-group-prepend">
             <span class="input-group-text">City</span>
           </div>
-          <input ng-model="tourist_spot.city" id="city" type="text" class="form-control" placeholder="Ladakh">
+          <input list="locs" ng-model="tourist_spot.city" id="city" type="text" class="form-control" placeholder="Ladakh">
           <div class="input-group-prepend">
             <button ng-click="getData(7)" class='btn btn-outline-primary'>Apply Filters</button>
           </div>
@@ -752,12 +751,12 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Tourist Spot Name</span>
           </div>
-          <input ng-model="guide.tourist_spot_name" id="name" type="text" class="form-control"
+          <input list="spotName" ng-model="guide.tourist_spot_name" id="name" type="text" class="form-control"
             placeholder="Pangong Lake">
           <div class="input-group-prepend">
             <span class="input-group-text">City</span>
           </div>
-          <input ng-model="guide.tourist_spot_city" id="city" type="text" class="form-control" placeholder="Ladakh">
+          <input list="locs" ng-model="guide.tourist_spot_city" id="city" type="text" class="form-control" placeholder="Ladakh">
           <div class="input-group-prepend">
             <button ng-click="getData(8)" class='btn btn-outline-primary'>Apply Filters</button>
           </div>

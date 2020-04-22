@@ -40,7 +40,40 @@ angularApp.controller("ngContent",function($scope, $http)
 		tdateEnd:"",
 		tcity:""
 	}
-
+	$scope.predictors={
+        data:[],
+        bindArray:function(listName,arr)
+        {
+            elementDOM = document.getElementById("predictionData");
+            var containerList = document.createElement("datalist");
+            arr.forEach(element => {
+				var elemDOM = document.createElement("option");
+				elemDOM.value=element;
+				containerList.appendChild(elemDOM);
+			});
+			elementDOM.appendChild(containerList);
+			containerList.id=listName;
+			console.log(containerList);
+        },
+		bindInput:async function(listName,table,column)
+		{
+			elementDOM = document.getElementById("predictionData");
+			var containerList = document.createElement("datalist");
+			dataState = await $http.get("/api/getData",{params:{
+				type:"singleColumn",
+				table_name:table,
+				column_name:column
+			}});
+			dataState.data.content.forEach(element => {
+				var elemDOM = document.createElement("option");
+				elemDOM.value=element.prediction;
+				containerList.appendChild(elemDOM);
+			});
+			elementDOM.appendChild(containerList);
+			containerList.id=listName;
+			console.log(containerList);
+		}
+    }
 	$scope.toastmsg="";
 
 	$scope.admin.updateRecord=async function(it)
@@ -313,6 +346,22 @@ angularApp.controller("ngContent",function($scope, $http)
 		console.log("change Tab: "+newTab);
 	}
 	$scope.changeTab($scope.tab);
+	$scope.predictors.bindArray("roles",[
+		"Admin","Service providers communications","Statistician",
+		"Official Paperwork","User Information handling","Suggestions Implementation",
+		"Respondent for user queries","Verification of guides","Tourist Spots Verification",
+		"Editor"])
+	$scope.predictors.bindArray("active",["Y","N"]);
+	$scope.predictors.bindArray("domain",["Airline","Bus Provider","Guide Provider","Hotel","Restaurant","Taxi Provider","Train Provider",]);
+	$scope.predictors.bindInput("locs","location","city");
+	$scope.predictors.bindInput("1name","user","name");
+	$scope.predictors.bindInput("umail","user","email");
+	$scope.predictors.bindInput("uid","user","user_id");
+	$scope.predictors.bindInput("uphone","user","phone_no");
+	$scope.predictors.bindInput("1provider","provider","name");
+	$scope.predictors.bindInput("1service_id","service","service_id");
+	$scope.predictors.bindInput("pid","service_provider","service_provider_id");
+	console.log("init Done");
 });
 function onStart()
 {

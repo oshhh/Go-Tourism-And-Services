@@ -22,7 +22,7 @@
     <a href="/logout"><button class='btn btn-outline-primary'>Logout</button></a>
   </div>
   <div class="container" ng-controller="ngContent">
-
+    <div style="display: none;" id="predictionData"></div>
     <nav class="l_bar" align="center">
       <div id="togs">
         <div class="i_bar" id="act">
@@ -51,18 +51,18 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Name(User)</span>
           </div>
-          <input ng-model="req.user_id" type="text" class="form-control" placeholder="Name(User)">
+          <input list="1name" ng-model="req.user_id" type="text" class="form-control" placeholder="Name(User)">
           <div class="input-group-prepend">
             <span class="input-group-text">Provider Name</span>
           </div>
-          <input ng-model="req.pname" type="text" class="form-control" placeholder="Provider Name">
+          <input list="1provider" ng-model="req.pname" type="text" class="form-control" placeholder="Provider Name">
           <div class="input-group-prepend">
             <span class="input-group-text">Service ID</span>
           </div>
-          <input ng-model="req.service_id" type="text" class="form-control" placeholder="Service ID">
+          <input list="1service_id" ng-model="req.service_id" type="text" class="form-control" placeholder="Service ID">
           <button ng-click="getData(0)" class='btn btn-outline-primary'>Apply Filters</button>
         </div>
-
+        <div style="display: none;" id="predictionData"></div>
         <div class="table-responsive">
           <table class="table">
             <thead>
@@ -99,7 +99,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text">ID</span>
           </div>
-          <input ng-model="admin.admin_id" type="text" class="form-control" placeholder="Name">
+          <input ng-model="admin.admin_id" type="text" class="form-control" placeholder="ID">
           <div class="input-group-prepend">
             <span class="input-group-text">Name</span>
           </div>
@@ -107,7 +107,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Role</span>
           </div>
-          <input ng-model="admin.role" type="text" class="form-control" placeholder="Role">
+          <input list="roles" ng-model="admin.role" type="text" class="form-control" placeholder="Role">
           <div class="input-group-prepend">
             <span class="input-group-text">Email</span>
           </div>
@@ -162,23 +162,23 @@
           <div class="input-group-prepend">
             <span class="input-group-text">ID</span>
           </div>
-          <input ng-model="user.user_id" type="text" class="form-control" placeholder="UserID">
+          <input list="uid" ng-model="user.user_id" type="text" class="form-control" placeholder="UserID">
           <div class="input-group-prepend">
             <span class="input-group-text">Name</span>
           </div>
-          <input ng-model="user.name" type="text" class="form-control" placeholder="Name">
+          <input list="1name" ng-model="user.name" type="text" class="form-control" placeholder="Name">
           <div class="input-group-prepend">
             <span class="input-group-text">Email</span>
           </div>
-          <input ng-model="user.email" type="text" class="form-control" placeholder="Email">
+          <input list="umail" ng-model="user.email" type="text" class="form-control" placeholder="Email">
           <div class="input-group-prepend">
             <span class="input-group-text">Phone No</span>
           </div>
-          <input ng-model="user.phone_no" type="text" class="form-control" placeholder="Phone No">
+          <input list="uphone" ng-model="user.phone_no" type="text" class="form-control" placeholder="Phone No">
           <div class="input-group-prepend">
             <span class="input-group-text">City</span>
           </div>
-          <input ng-model="user.city" type="text" class="form-control" placeholder="City">
+          <input list="locs" ng-model="user.city" type="text" class="form-control" placeholder="City">
           <button ng-click="getData(2)" class='btn btn-outline-primary'>Apply Filters</button>
         </div>
 
@@ -211,7 +211,7 @@
                 <td ng-show="it.editMode"><input ng-model="it.email" class="form-control" value="\{{it.email}}"></td>
                 <td ng-show="it.editMode"><input ng-model="it.phone_no" class="form-control" value="\{{it.phone_no}}">
                 </td>
-                <td ng-show="it.editMode"><input ng-model="it.city" class="form-control" value="\{{it.city}}"></td>
+                <td ng-show="it.editMode"><input list="locs" ng-model="it.city" class="form-control" value="\{{it.city}}"></td>
                 <td>
                   <button ng-hide="it.editMode" ng-click="it.editMode=true"
                     class="btn btn-outline-primary butTab">Edit</button>
@@ -232,20 +232,20 @@
           <div class="input-group-prepend">
             <span class="input-group-text">ID</span>
           </div>
-          <input ng-model="service_provider.service_provider_id" type="text" class="form-control"
+          <input list="pid" ng-model="service_provider.service_provider_id" type="text" class="form-control"
             placeholder="HOT00000">
           <div class="input-group-prepend">
             <span class="input-group-text">Name</span>
           </div>
-          <input ng-model="service_provider.name" type="text" class="form-control" placeholder="Taj">
+          <input list="1provider" ng-model="service_provider.name" type="text" class="form-control" placeholder="Taj">
           <div class="input-group-prepend">
             <span class="input-group-text">Domain</span>
           </div>
-          <input ng-model="service_provider.domain" type="text" class="form-control" placeholder="Hotel">
+          <input list="domain" ng-model="service_provider.domain" type="text" class="form-control" placeholder="Hotel">
           <div class="input-group-prepend">
             <span class="input-group-text">Active</span>
           </div>
-          <input ng-model="service_provider.active" type="text" class="form-control" placeholder="Y">
+          <input list="active" ng-model="service_provider.active" type="text" class="form-control" placeholder="Y">
           <div class="input-group-prepend">
             <button ng-click="getData(3)" class='btn btn-outline-primary'>Apply Filters</button>
           </div>

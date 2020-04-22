@@ -1282,7 +1282,23 @@ angularApp.controller("ngContent",function($scope,$http)
 		else{
 			$scope.currentServices.model={};
 		}
+
 		console.log($scope.currentServices.model);
+	}
+	$scope.toggle_sidebar=function(){
+		sidebarDOM=document.getElementById("sidebar");
+		if(sidebarDOM.style.right=="-380px")
+		{
+			sidebarDOM.style.right="0px";
+			$('#toggleIcon').removeClass("fa-angle-double-left");
+			$('#toggleIcon').addClass("fa-angle-double-right");
+		}
+		else{
+			sidebarDOM.style.right="-380px";
+			$('#toggleIcon').removeClass("fa-angle-double-right");
+			$('#toggleIcon').addClass("fa-angle-double-left");
+		}
+		console.log("called toggle"+sidebarDOM.style.right);
 	}
 	$scope.initModel();
 	$scope.changeTab(0);

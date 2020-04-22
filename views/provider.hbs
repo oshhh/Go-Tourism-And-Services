@@ -5,8 +5,13 @@
         <script src="../public/javascripts/providerDash.js"></script>
         <link type="text/css" rel="stylesheet" href="../public/css/main.css">
         <link type="text/css" rel="stylesheet" href="../public/css/provider.css">
+         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+    integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
         <link href='https://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+  </script>
           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
     <body ng-app="dash">
@@ -33,7 +38,8 @@
       </nav>
 
       <div id="sidebar">
-        <div onclick="toggle_sidebar()" ng-click="toggle_sidebar" id="side-toggle"><strong>S</strong></div>
+              <div ng-click="toggle_sidebar()" id="side-toggle" style="padding-top:15px"><span id="toggleIcon"
+          class="fa fa-angle-double-right fa-lg"></span></div>
         <div id="side-content">
           <h3 style="text-align: center;">Content SideBar</h3>
         </div>

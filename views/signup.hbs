@@ -2,18 +2,28 @@
 
 <head>
     <title>{{title}}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.js"></script>
     <script src="../public/javascripts/signup.js"></script>
     <link type="text/css" rel="stylesheet" href="../public/css/signup.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+    integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </head>
 
-<body onload="javascript:onStart();updateForm();">
-    <div id="container">
+<body onload="javascript:onStart();updateForm();" ng-app="dash">
+    <div id="container" ng-controller="ngContent">
         <h1 style="text-align:center;margin-top:20px;">TKG</h1>
+            <div style="display: none;" id="predictionData"></div>
         <div id="login-box">
-            <h3 style="text-align:center;margin-top:20px;">Make A new Account</h3>
+            <div class="row align-items-center">
+                <a class="col-3 text-center pt-3" style="text-decoration: none;" href="\login"><button class="btn btn-light"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                <h3 class="col" style="text-align:center;margin-top:20px;">Make A new Account</h3>
+            </div>
+            
             <label style="text-align:center;" for="acc-type">Select Type Of Account</label>
             <select onchange="selectOpt(this)" class="form-control" id="acc-type">
             <option>Admin</option>
@@ -38,7 +48,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">Role</span>
                 </div>
-                <input type="text" id="arole" class="form-control" placeholder="Role" aria-label="Role" aria-describedby="basic-addon1" name="arole">
+                <input list="roles" type="text" id="arole" class="form-control" placeholder="Role" aria-label="Role" aria-describedby="basic-addon1" name="arole">
                 </div>
 
                 <div class="input-group mb-3">
@@ -143,7 +153,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Location(City)</span>
                 </div>
-                <input required type="text" id="scity" class="form-control" placeholder="Enter City Name" name="scity">
+                <input list="locs" required type="text" id="scity" class="form-control" placeholder="Enter City Name" name="scity">
                 <div class="invalid-feedback">Cannot be empty</div>
                 </div>
 
@@ -223,7 +233,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Location(City)</span>
                 </div>
-                <input required type="text" id="ucity" class="form-control" placeholder="Enter City Name" name="ucity">
+                <input list="locs" required type="text" id="ucity" class="form-control" placeholder="Enter City Name" name="ucity">
                 <div class="invalid-feedback">Cannot be empty</div>
                 </div>
 

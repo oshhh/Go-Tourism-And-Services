@@ -152,11 +152,11 @@
 
 
     <div id="content" class="shadow p-4 mb-4 bg-white">
-      <div class="card pt-3 pr-2" style="align-items: center;">
-        <h5 class="modal-title" style="text-align: center;">Create New Trip</h5><br>
-        <button ng-click="openNewTripModal()" class="btn btn-primary mb-3">Add New Trip (+)</button>
-      </div>
       <div id="content_tab0" ng-show="tab==0">
+        <div class="card pt-3 pr-2" style="align-items: center;">
+          <h5 class="modal-title" style="text-align: center;">Create New Trip</h5><br>
+          <button ng-click="openNewTripModal()" class="btn btn-primary mb-3">Add New Trip (+)</button>
+        </div>
         <label></label>
         <div class="rowElement card shadow p-4 mb-4 bg-white" style="align-items: center;">
           <div class="card-header text-center bg-white align-middle">Please rate all your completed service requests
@@ -347,7 +347,8 @@
           <div class="input-group-prepend">
             <span class="input-group-text">To</span>
           </div>
-          <input list="locs" ng-model="bus_train.to" id="transport_to" type="text" class="form-control" placeholder="Lal Quila">
+          <input list="locs" ng-model="bus_train.to" id="transport_to" type="text" class="form-control"
+            placeholder="Lal Quila">
           <div class="input-group-prepend">
             <label class="input-group-text">AC</label>
           </div>
@@ -425,11 +426,13 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Car Name</span>
           </div>
-          <input list="carname" ng-model="taxi.car_name" id="car_name" type="text" class="form-control" placeholder="swift">
+          <input list="carname" ng-model="taxi.car_name" id="car_name" type="text" class="form-control"
+            placeholder="swift">
           <div class="input-group-prepend">
             <span class="input-group-text">Capacity</span>
           </div>
-          <input list="capacity" ng-model="taxi.capacity" id="capacity" type="text" class="form-control" placeholder="4">
+          <input list="capacity" ng-model="taxi.capacity" id="capacity" type="text" class="form-control"
+            placeholder="4">
           <div class="input-group-prepend">
             <span class="input-group-text">AC</span>
           </div>
@@ -514,11 +517,13 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Room Type</span>
           </div>
-          <input list="room_type" ng-model="room.room_type" id="room_type" type="text" class="form-control" placeholder="double">
+          <input list="room_type" ng-model="room.room_type" id="room_type" type="text" class="form-control"
+            placeholder="double">
           <div class="input-group-prepend">
             <span class="input-group-text">Capacity</span>
           </div>
-          <input list="capacity" ng-model="room.capacity" id="capacity" type="text" class="form-control" placeholder="4">
+          <input list="capacity" ng-model="room.capacity" id="capacity" type="text" class="form-control"
+            placeholder="4">
           <div class="input-group-prepend">
             <span class="input-group-text">Wifi</span>
           </div>
@@ -675,15 +680,18 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Name</span>
           </div>
-          <input list="spotName" ng-model="tourist_spot.name" id="name" type="text" class="form-control" placeholder="Pangong Lake">
+          <input list="spotName" ng-model="tourist_spot.name" id="name" type="text" class="form-control"
+            placeholder="Pangong Lake">
           <div class="input-group-prepend">
             <span class="input-group-text">Type</span>
           </div>
-          <input list="spotType" ng-model="tourist_spot.t_type" id="type" type="text" class="form-control" placeholder="Lake">
+          <input list="spotType" ng-model="tourist_spot.t_type" id="type" type="text" class="form-control"
+            placeholder="Lake">
           <div class="input-group-prepend">
             <span class="input-group-text">City</span>
           </div>
-          <input list="locs" ng-model="tourist_spot.city" id="city" type="text" class="form-control" placeholder="Ladakh">
+          <input list="locs" ng-model="tourist_spot.city" id="city" type="text" class="form-control"
+            placeholder="Ladakh">
           <div class="input-group-prepend">
             <button ng-click="getData(7)" class='btn btn-outline-primary'>Apply Filters</button>
           </div>
@@ -756,7 +764,8 @@
           <div class="input-group-prepend">
             <span class="input-group-text">City</span>
           </div>
-          <input list="locs" ng-model="guide.tourist_spot_city" id="city" type="text" class="form-control" placeholder="Ladakh">
+          <input list="locs" ng-model="guide.tourist_spot_city" id="city" type="text" class="form-control"
+            placeholder="Ladakh">
           <div class="input-group-prepend">
             <button ng-click="getData(8)" class='btn btn-outline-primary'>Apply Filters</button>
           </div>
@@ -942,7 +951,19 @@
                   </div>
                 </div>
               </div>
-
+              <div class="mt-2 ml-2">
+                <div class="custom-control custom-checkbox">
+                    <input ng-model="planner.fromHome" value="\{{planner.fromHome}}" type="checkbox" class="custom-control-input" id="fromHome">
+                    <label class="custom-control-label" for="fromHome">Source from Home</label>
+                </div>
+                <div class="input-group mb-0" ng-hide="planner.fromHome">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Enter Source</span>
+                  </div>
+                  <input list="locs" ng-bind="planner.sourceCity" ng-bind="planner.sourceCity" class="form-control"
+                    type="text" placeholder="">
+                </div>
+              </div>
               <div class="row justify-content-center mt-4">
                 <div class="col-4 text-center">
                   <button class="col btn btn-primary" ng-click="algorithm()">Calculate</button>

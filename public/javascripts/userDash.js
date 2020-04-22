@@ -137,6 +137,8 @@ angularApp.controller("ngContent",function($scope,$http)
 	};
 
 	$scope.planner={
+		fromHome:true,
+		sourceCity:"",
 		budget:{
 			max:20000
 		},

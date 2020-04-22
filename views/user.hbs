@@ -56,25 +56,25 @@
         </div>
         <div class="rightDivider"><a class="a_bar"> </a></div>
         <div class="i_bar">
-          <a ng-click="changeTab(2)" class="a_bar" href="javascript:bs(2)">Flights</a>
+          <a ng-click="changeTab(2)" class="a_bar" href="javascript:bs(1)">Flights</a>
         </div>
         <div class="i_bar">
-          <a ng-click="changeTab(3)" class="a_bar" href="javascript:bs(3)">Buses And Trains</a>
+          <a ng-click="changeTab(3)" class="a_bar" href="javascript:bs(2)">Buses And Trains</a>
         </div>
         <div class="i_bar">
-          <a ng-click="changeTab(4)" class="a_bar" href="javascript:bs(4)">Taxis</a>
+          <a ng-click="changeTab(4)" class="a_bar" href="javascript:bs(3)">Taxis</a>
         </div>
         <div class="i_bar">
-          <a ng-click="changeTab(5)" class="a_bar" href="javascript:bs(5)">Hotels</a>
+          <a ng-click="changeTab(5)" class="a_bar" href="javascript:bs(4)">Hotels</a>
         </div>
         <div class="i_bar">
-          <a ng-click="changeTab(6)" class="a_bar" href="javascript:bs(6)">Restaurants</a>
+          <a ng-click="changeTab(6)" class="a_bar" href="javascript:bs(5)">Restaurants</a>
         </div>
         <div class="i_bar">
-          <a ng-click="changeTab(7)" class="a_bar" href="javascript:bs(7)">Tourist Spots</a>
+          <a ng-click="changeTab(7)" class="a_bar" href="javascript:bs(6)">Tourist Spots</a>
         </div>
         <div class="i_bar">
-          <a ng-click="changeTab(8)" class="a_bar" href="javascript:bs(8)">Guides</a>
+          <a ng-click="changeTab(8)" class="a_bar" href="javascript:bs(7)">Guides</a>
         </div>
 
       </div>
@@ -256,11 +256,11 @@
           <div class="input-group-prepend">
             <span class="input-group-text">From</span>
           </div>
-          <input ng-model="flight.from_city" id="from" type="text" class="form-control" placeholder="Delhi">
+          <input list="locs" ng-model="flight.from_city" id="from" type="text" class="form-control" placeholder="Delhi">
           <div class="input-group-prepend">
             <span class="input-group-text">To</span>
           </div>
-          <input ng-model="flight.to_city" id="to" type="text" class="form-control" placeholder="Mumbai">
+          <input list="locs" ng-model="flight.to_city" id="to" type="text" class="form-control" placeholder="Mumbai">
           <div class="input-group-prepend">
             <span class="input-group-text">Departure Date</span>
           </div>

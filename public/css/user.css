@@ -73,5 +73,11 @@
   background: #7fb5a4;
 }
 .toast{
-  z-index: -3;
+  z-index: 2000;
+}
+.modal{
+  z-index: 4;
+}
+#sidebar{
+  z-index: 1000;
 }

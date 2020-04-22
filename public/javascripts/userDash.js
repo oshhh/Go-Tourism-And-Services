@@ -409,10 +409,12 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.createTrip = function() {
 		if($scope.new_trip.destination_city=="" || $scope.new_trip.departure_date=="" || $scope.new_trip.return_date=="")
 		{
+			console.log("trip field empty");
 			$('#toast_msg').text("Fill Details of trip");
 			$('.toast').toast("show");
 			return;
 		}
+		console.log("Start Adding Trip");
 		$scope.new_trip.status="Pending";
 		$http.get("/api/getData",{params:{
 			type:"new_trip",

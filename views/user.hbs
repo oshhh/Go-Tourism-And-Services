@@ -156,27 +156,10 @@
 
 
     <div id="content" class="shadow p-4 mb-4 bg-white">
-
+      <div class="card pt-3 pr-2" style="align-items: center;">
+        <button ng-click="openNewTripModal()" class="btn btn-primary">Add New Trip (+)</button>
+      </div>
       <div id="content_tab0" ng-show="tab==0">
-        <div class="card pt-3" style="align-items: center;">
-          <h5 style="text-align: center;">Create New Trip</h5>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Destination City</span>
-            </div>
-            <input ng-model="new_trip.destination_city" type="text" class="form-control" placeholder="Mumbai">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Departure Date</span>
-            </div>
-            <input ng-model="new_trip.departure_date" type="text" class="form-control" placeholder="2020-04-30">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Return Date</span>
-            </div>
-            <input ng-model="new_trip.return_date" type="text" class="form-control" placeholder="2020-04-30">
-          </div>
-          <button class="btn btn-primary mb-2" ng-click="createTrip()" style="width: 30%;">New Trip (+) </button>
-          <label></label>
-        </div>
         <label></label>
         <div class="rowElement card shadow p-4 mb-4 bg-white" style="align-items: center;">
           <div class="card-header text-center bg-white align-middle">Please rate all your completed service requests
@@ -189,11 +172,13 @@
                 style="text-align: center; width:50%">Rate Remaining Later</button>
             </div>
             <div style="text-align: center;">
-              <label style="text-align: center;" ng-show="(my_trips.rate_services)&&(my_trips.completed_requests.length==0)"> No pending Trips To Rate!
-              </label>              
+              <label style="text-align: center;"
+                ng-show="(my_trips.rate_services)&&(my_trips.completed_requests.length==0)"> No pending Trips To Rate!
+              </label>
             </div>
 
-            <div ng-show="my_trips.rate_services&&(my_trips.completed_requests.length!=0)" class="p-2" style="border: 1px solid #BBB;">
+            <div ng-show="my_trips.rate_services&&(my_trips.completed_requests.length!=0)" class="p-2"
+              style="border: 1px solid #BBB;">
               <div ng-repeat="it in my_trips.completed_requests">
                 <div class="rowElement card p-2" style="align-items: center">
                   <div class="card-text">Request ID : \{{it.request_id}} Service ID : \{{it.service_id}}</div>
@@ -222,7 +207,8 @@
               style="align-items: center;">
               <div class="card-header text-center bg-white align-middle">Trip ID: \{{it.trip_id}}</div>
               <div class="card-body" style="width: 100% !important; text-align:center">
-                <label>Destination: \{{it.destination_city}} | Departure Date: \{{it.departure_date.substring(0,10)}} | Return Date: \{{it.return_date.substring(0,10)}}</label>
+                <label>Destination: \{{it.destination_city}} | Departure Date: \{{it.departure_date.substring(0,10)}} |
+                  Return Date: \{{it.return_date.substring(0,10)}}</label>
                 <div class="text-center mb-2">
                   <button ng-show="!it.show_requests" ng-click="it.show_requests = !it.show_requests"
                     class="btn btn-light"> Show Service Requests of this Trip </button>
@@ -420,7 +406,8 @@
                 Wait<br><br></div>
               <div ng-show="taxi.reviews[it.service_id].status=='OK'" class="comments card-rows">
                 <br>
-                <label style="text-align:center">Showing \{{bus_train.reviews[it.service_id].data.length}} Result(s)</label>
+                <label style="text-align:center">Showing \{{bus_train.reviews[it.service_id].data.length}}
+                  Result(s)</label>
                 <div ng-repeat="rev in taxi.reviews[it.service_id].data" class="rowElement card">
                   <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on
                     \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
@@ -831,29 +818,44 @@
           </div>
         </div>
       </div>
-      <div id="startModal" class="modal fade" role="dialog">
+      <div id="newTripModal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header shadow-sm p-3 mb-0 bg-white rounded">
-              <h5 class="modal-title" style="text-align: center;">Use Trip Planner</h5>
+              <h5 class="modal-title" style="text-align: center;">Create New Trip</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <div class="mb-3">Benefits Of Trip Planner</div>
-              <div class="dflex align-items-center row justify-content-around">
-                <div>
-                  <div class="i_bar">
-                    <a class="a_bar" data-dismiss="modal" href="#" ng-click="openPlanner()">Open Trip Planner</a>
+              <div class="card pt-3 pr-2" style="align-items: center;">
+                <h5 style="text-align: center;">Plan Manually</h5>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Destination City</span>
                   </div>
-                  {{!-- <button class="btn btn-success">Plan New Trip</button> --}}
+                  <input ng-model="new_trip.destination_city" type="text" class="form-control" placeholder="Mumbai">
                 </div>
-                <div>OR</div>
-                <div>
-                  <div class="i_bar">
-                    <a class="a_bar" data-dismiss="modal" href="#">Plan Manually</a>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Departure Date</span>
                   </div>
+                  <input ng-model="new_trip.departure_date" type="text" class="form-control" placeholder="2020-04-30">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Return Date</span>
+                  </div>
+                  <input ng-model="new_trip.return_date" type="text" class="form-control" placeholder="2020-04-30">
+                </div>
+                <button class="btn btn-primary mb-2" ng-click="createTrip()" style="width: 30%;">New Trip (+) </button>
+                <label></label>
+              </div>
+              <div class="card pt-3" style="align-items: center;">
+                <h5 style="text-align: center;">Use automatic planner</h5>
+                <div class="mb-3 mt-3">Benefits Of Trip Planner</div>
+                <div class="i_bar">
+                  <a class="a_bar" data-dismiss="modal" href="#" ng-click="openPlanner()">Open Trip Planner</a>
                 </div>
               </div>
             </div>
@@ -882,11 +884,12 @@
                   </div>
                   <label class="mr-5">Give more weights to services more important to you</label>
                   <div class="row justify-content-start">
-                      <div class="col m-2 text-center" ng-repeat="it in planner.weights">
-                        <label class="mr-5">\{{it.display}} (\{{it.value}})</label>
-                        {{!-- <input style="width: 150px;" ng-model="it.value" type="range" min="1" max="5" value="\{{it.value}}" class="form-control"> --}}
-                        <input style="width: 150px;" type="range" class="custom-range" min="0" max="5" class="form-control" ng-model="it.value" ng-bind="it.value">
-                      </div>
+                    <div class="col m-2 text-center" ng-repeat="it in planner.weights">
+                      <label class="mr-5">\{{it.display}} (\{{it.value}})</label>
+                      {{!-- <input style="width: 150px;" ng-model="it.value" type="range" min="1" max="5" value="\{{it.value}}" class="form-control"> --}}
+                      <input style="width: 150px;" type="range" class="custom-range" min="0" max="5"
+                        class="form-control" ng-model="it.value" ng-bind="it.value">
+                    </div>
                   </div>
                 </div>
               </div>

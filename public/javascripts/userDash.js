@@ -696,9 +696,9 @@ angularApp.controller("ngContent",function($scope,$http)
 		console.log(it);
 		$scope.trip.selected = it;
 	}
-	$scope.openStartModal=function()
+	$scope.openNewTripModal=function()
 	{
-		$('#startModal').modal('show');
+		$('#newTripModal').modal('show');
 	}
 	$scope.openPlanner = function()
 	{
@@ -725,7 +725,6 @@ angularApp.controller("ngContent",function($scope,$http)
 	console.log("init Done");
 	$scope.getData(9);
 	// $scope.changeTab(0);
-	$scope.openStartModal();
 
 	//bind prediction lists to some name use list attrib of input to use that list
 	$scope.predictors.bindInput("locs","location","city");

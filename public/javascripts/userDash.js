@@ -34,7 +34,6 @@ angularApp.controller("ngContent",function($scope,$http)
 		data : [],
 		from_city : "",
 		to_city : "",
-		departure_date : "",
 		sortOrder:"0",
 		reviews:{},
 	}
@@ -240,7 +239,6 @@ angularApp.controller("ngContent",function($scope,$http)
 				type:"flight",
 				from: "\"%" + $scope.flight.from_city + "%\"",
 				to: "\"%" + $scope.flight.to_city + "%\"",
-				departure_time: "\"%" + $scope.flight.departure_date + "%\"" 
 				}}).then(
 				function(data, status, headers, config) {
 				$scope.flight.data=data.data.content;

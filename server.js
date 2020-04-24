@@ -106,13 +106,13 @@ function createDatabase(onComplete) {
 
 }
 
-var con = mysql.createConnection({
-  host: "remotemysql.com",
-  user: "lHyGk3wWaK",
-  password: "IAahckiJYJ",
-  database: "lHyGk3wWaK",
-  multipleStatements: true
-});
+db_config = {
+    host: "remotemysql.com",
+    user: "lHyGk3wWaK",
+    password: "IAahckiJYJ",
+    database: "lHyGk3wWaK",
+    multipleStatements: true
+}
 
 // var con = mysql.createConnection({
 //     host: "127.0.0.1",
@@ -122,14 +122,8 @@ var con = mysql.createConnection({
 //     database: "dbms_project"
 //   });
 
-async function connect() {
-    con.connect(function(err) {
-        if (err) throw err;
-        console.log('Connected!');
-    });
-}
 function handleDisconnect() {
-    connection = mysql.createConnection(db_config); // Recreate the connection, since
+    con = mysql.createConnection(db_config); // Recreate the connection, since
                                                     // the old one cannot be reused.
   
     connection.connect(function(err) {              // The server is either down
@@ -798,7 +792,7 @@ function planTrip(callback, trip) {
 
 async function main() {
     console.log('Start serverjs');
-    await connect();
+    await handleDisconnect();
     // createDatabase(function(){
     //     console.log('done Creation');
     // });

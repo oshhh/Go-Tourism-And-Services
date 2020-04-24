@@ -82,7 +82,6 @@ router.get('/getData', function(req, res, next) {
         serverjs.user.getFlights(sendResponse,{
           from_city: req.query.from,
           to_city: req.query.to,
-          departure_time: req.query.departure_time,
           service_provider_id: prov
           
         });       

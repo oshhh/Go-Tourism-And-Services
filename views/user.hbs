@@ -1,4 +1,4 @@
-<html>
+  <html>
 
 <head>
   <title>{{title}}</title>
@@ -340,12 +340,12 @@
           <div class="input-group-prepend">
             <span class="input-group-text">From</span>
           </div>
-          <input list="locs" ng-model="bus_train.from" id="transport_from" type="text" class="form-control"
+          <input list="locality" ng-model="bus_train.from" id="transport_from" type="text" class="form-control"
             placeholder="India Gate">
           <div class="input-group-prepend">
             <span class="input-group-text">To</span>
           </div>
-          <input list="locs" ng-model="bus_train.to" id="transport_to" type="text" class="form-control"
+          <input list="locality" ng-model="bus_train.to" id="transport_to" type="text" class="form-control"
             placeholder="Lal Quila">
           <div class="input-group-prepend">
             <label class="input-group-text">AC</label>
@@ -429,7 +429,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Capacity</span>
           </div>
-          <input list="capacity" ng-model="taxi.capacity" id="capacity" type="text" class="form-control"
+          <input list="capList" ng-model="taxi.capacity" id="capacity" type="text" class="form-control"
             placeholder="4">
           <div class="input-group-prepend">
             <span class="input-group-text">AC</span>
@@ -507,7 +507,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Name</span>
           </div>
-          <input ng-model="room.name" id="name" type="text" class="form-control" placeholder="Inactive">
+          <input list="hotelList" ng-model="room.name" id="name" type="text" class="form-control" placeholder="Inactive">
           <div class="input-group-prepend">
             <span class="input-group-text">City</span>
           </div>
@@ -515,12 +515,12 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Room Type</span>
           </div>
-          <input list="room_type" ng-model="room.room_type" id="room_type" type="text" class="form-control"
+          <input list="roomList" ng-model="room.room_type" id="room_type" type="text" class="form-control"
             placeholder="double">
           <div class="input-group-prepend">
             <span class="input-group-text">Capacity</span>
           </div>
-          <input list="capacity" ng-model="room.capacity" id="capacity" type="text" class="form-control"
+          <input list="capList" ng-model="room.capacity" id="capacity" type="text" class="form-control"
             placeholder="4">
           <div class="input-group-prepend">
             <span class="input-group-text">Wifi</span>
@@ -600,11 +600,11 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Food Item Name</span>
           </div>
-          <input ng-model="food.fname" id="fname" type="text" class="form-control" placeholder="Name">
+          <input list="foodList" ng-model="food.fname" id="fname" type="text" class="form-control" placeholder="Name">
           <div class="input-group-prepend">
             <span class="input-group-text">Restaurant Name</span>
           </div>
-          <input ng-model="food.rname" id="rname" type="text" class="form-control" placeholder="Restaurant">
+          <input list="restaurantList" ng-model="food.rname" id="rname" type="text" class="form-control" placeholder="Restaurant">
           <div class="input-group-prepend">
             <label class="input-group-text">Delivery</label>
           </div>

@@ -243,6 +243,9 @@ router.get('/getData', function(req, res, next) {
     case 'singleColumn':
       serverjs.getAutoCorrectPredictions(sendResponse,req.query.table_name,req.query.column_name);
       break;
+    case 'FilteredSingleColumn':
+      serverjs.getFilteredAutoCorrectPrediction(sendResponse,req.query);
+      break;
     default:
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({msg:"Unknown Request sent"}))

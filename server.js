@@ -566,6 +566,13 @@ function getAutoCorrectPredictions(callback,table_name,column_name)
     from `+table_name+``;   
     runQuery(callback,query);
 }
+function getFilteredAutoCorrectPrediction(callback,queryData)
+{
+    query=`select distinct `+queryData.target_column+` as prediction
+    from `+queryData.target_table+` as target, `+queryData.source_table+` as source
+    where ( target.`+queryData.searchKey+`= source.`+queryData.searchKey+`)`;   
+    runQuery(callback,query);
+}
 function updateOneColumn(callback,data)
 {
     query=`update `+data.table_name+`
@@ -865,6 +872,7 @@ module.exports = {
     'deleteRoute':deleteRoute,
     'deleteRow':deleteRow,
     'getTouristSpot':getTouristSpot,
-    'getAutoCorrectPredictions':getAutoCorrectPredictions
+    'getAutoCorrectPredictions':getAutoCorrectPredictions,
+    'getFilteredAutoCorrectPrediction':getFilteredAutoCorrectPrediction
 }
             

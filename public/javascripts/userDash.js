@@ -104,7 +104,27 @@ angularApp.controller("ngContent",function($scope,$http)
 		itinerary : {}
 	  }
 	$scope.predictors={
-        data:[],
+		data:[],
+		bindSpecialInput:async function(listName,finaltable,sourcetable,column,sameKey)
+		{
+			elementDOM = document.getElementById("predictionData");
+			var containerList = document.createElement("datalist");
+			dataState = await $http.get("/api/getData",{params:{
+				type:"FilteredSingleColumn",
+				target_column:column,
+				target_table:finaltable,
+				source_table:sourcetable,
+				searchKey:sameKey
+			}});
+			dataState.data.content.forEach(element => {
+				var elemDOM = document.createElement("option");
+				elemDOM.value=element.prediction;
+				containerList.appendChild(elemDOM);
+			});
+			elementDOM.appendChild(containerList);
+			containerList.id=listName;
+			// console.log(containerList);
+		},
         bindArray:function(listName,arr)
         {
             elementDOM = document.getElementById("predictionData");
@@ -721,10 +741,14 @@ angularApp.controller("ngContent",function($scope,$http)
 	//bind prediction lists to some name use list attrib of input to use that list
 	$scope.predictors.bindInput("locs","location","city");
 	$scope.predictors.bindInput("carname","taxi","car_name");
-	$scope.predictors.bindInput("room_type","room","room_type");
+	$scope.predictors.bindInput("roomList","room","room_type");
 	$scope.predictors.bindInput("spotName","tourist_spot","name");
+	$scope.predictors.bindArray("capList",["1","2","3","4","5","6","7"]);
 	$scope.predictors.bindInput("spotType","tourist_spot","type");
-	$scope.predictors.bindArray("capacity",["1","2","3","4","5","6","7"]);
+	$scope.predictors.bindInput("locality","location","locality");
+	$scope.predictors.bindSpecialInput("hotelList","service_provider","hotel","name","service_provider_id");
+	$scope.predictors.bindSpecialInput("restaurantList","service_provider","restaurant","name","service_provider_id");
+	$scope.predictors.bindInput("foodList","food_item","name");
 });
 var labels=["Bookings","Tra","All Hotels","All Food Items","Gui/tour"];
 function bs(current)

@@ -162,10 +162,9 @@ router.get('/getData', function(req, res, next) {
       serverjs.count_table( function(result) {
         serverjs.insertIntoTable(sendResponse, 'service_request', {
           request_id:"\"RST" + ("00000" + result[0]['cnt']).slice(-5) + "\"",
-          trip_id : req.query.trip_id ,
+          trip_id : req.query.trip_id,
           service_id : req.query.service_id,
           timestamp : "CURDATE()",
-          booking_date : req.query.booking_date,
           number_of_days : req.query.number_of_days,
           quantity : req.query.quantity,
           cost : req.query.cost,
@@ -173,6 +172,9 @@ router.get('/getData', function(req, res, next) {
           user_rating : "null",
           service_rating : "null",
           comments : "null",
+          service_required_date : req.query.service_required_date,
+          number_days: 1,
+          completion_time: "null",
         });
       } , "service_request");
     break;

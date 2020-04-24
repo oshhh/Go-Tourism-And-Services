@@ -215,8 +215,11 @@
                 <div class="p-1" ng-show="it.show_requests" style="border: 1px solid #BBB;">
                   <div ng-repeat="it2 in it.service_requests" class="rowElement card p-2" style="align-items: center;">
                     <label> Service Request: \{{it2.request_id}} | Service ID: \{{it2.service_id}} </label>
-                    <label> Timestamp: \{{it2.timestamp.substring(0,10)}} \{{it2.timestamp.substring(11,19)}} </label>
+                    <label> Reqest Timestamp: \{{it2.request_timestamp.substring(0,10)}} \{{it2.request_timestamp.substring(11,19)}} </label>
+                    <label> Service Required On : \{{it2.service_required_date.substring(0,10)}} </label>
+                    <label> Required for (Number of days) : \{{it2.number_days}} </label>
                     <label>Status: \{{it2.status}}</label>
+                    <label ng-show="it2.status='Completed' || it2.status='Paid'">Completion Date:\{{it2.completion_date.substring(0,10)}} </label>
                   </div>
                 </div>
               </div>

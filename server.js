@@ -18,7 +18,7 @@ tables = {
     'tourist_spot': ['tourist_spot_id', 'name', 'location_id', 'type', 'entry_fee'],
     'guide': ['service_id','name', 'tourist_spot_id'],
     'trip': ['trip_id','user_id','departure_date', 'return_date', 'destination_city'],
-    'service_request': ['request_id', 'trip_id', 'service_id', 'timestamp', 'quantity', 'cost', 'status', 'user_rating', 'service_rating', 'comments','booking_time','number_days','completion_time'],
+    'service_request': ['request_id', 'trip_id', 'service_id', 'request_timestamp', 'quantity', 'cost', 'status', 'user_rating', 'service_rating', 'comments','service_required_date','number_days','completion_date'],
     'query': ['query_id', 'user_id', 'query']
 }
 
@@ -68,7 +68,7 @@ function createDatabase(onComplete) {
     runQuery(callback, 'create table if not exists tourist_spot (tourist_spot_id char(8) primary key,name varchar(100),location_id char(8),type varchar(100),entry_fee float,foreign key(location_id) references location(location_id));')
     runQuery(callback, 'create table if not exists guide (service_id char(8) primary key,name varchar(100),tourist_spot_id char(8),foreign key(service_id) references service(service_id),check (service_id like \"GUI%\"),foreign key(tourist_spot_id) references tourist_spot(tourist_spot_id));')
     runQuery(callback, 'create table if not exists trip (trip_id char(8) primary key,user_id char(8),departure_date date,return_date date,destination_city varchar(100),foreign key(user_id) references user(user_id));')
-    runQuery(callback, 'create table if not exists service_request (request_id char(8) primary key,trip_id char(8),service_id char(8) not null,timestamp datetime,quantity int not null,cost int not null,status varchar(15) not null,user_rating int,service_rating int,comments varchar(1000),booking_time date,number_days int,completion_time datetime,foreign key(trip_id) references trip(trip_id),foreign key(service_id) references service(service_id),check (status in (\"Pending\", \"Accepted\", \"Rejected\", \"Completed\", \"Paid\")),check (user_rating >= 0 and user_rating <= 5),check (service_rating >= 0 and service_rating <= 5));')
+    runQuery(callback, 'create table if not exists service_request (request_id char(8) primary key,trip_id char(8),service_id char(8) not null,request_timestamp datetime,quantity int not null,cost int not null,status varchar(15) not null,user_rating int,service_rating int,comments varchar(1000),service_required_date date,number_days int,completion_date datetime,foreign key(trip_id) references trip(trip_id),foreign key(service_id) references service(service_id),check (status in (\"Pending\", \"Accepted\", \"Rejected\", \"Completed\", \"Paid\")),check (user_rating >= 0 and user_rating <= 5),check (service_rating >= 0 and service_rating <= 5));')
     runQuery(callback, 'create table if not exists query (query_id char(8), user_id char(8), query varchar(100),foreign key(user_id) references user(user_id));')
     runQuery(callback, 'create table if not exists wishlist (user_id char(8), tourist_spot_id char(8), primary key(user_id, tourist_spot_id), foreign key(user_id) references user(user_id), foreign key(tourist_spot_id) references tourist_spot(tourist_spot_id))');
     runQuery(callback, 'create table if not exists visited (trip_id char(8), tourist_spot_id char(8), primary key(trip_id, tourist_spot_id), foreign key(trip_id) references trip(trip_id), foreign key(tourist_spot_id) references tourist_spot(tourist_spot_id))');
@@ -126,14 +126,14 @@ function handleDisconnect() {
     con = mysql.createConnection(db_config); // Recreate the connection, since
                                                     // the old one cannot be reused.
   
-    connection.connect(function(err) {              // The server is either down
+    con.connect(function(err) {              // The server is either down
       if(err) {                                     // or restarting (takes a while sometimes).
         console.log('error when connecting to db:', err);
         setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
       }                                     // to avoid a hot loop, and to allow our node script to
 });                                     // process asynchronous requests in the meantime.
                                             // If you're also serving http, display a 503 error.
-connection.on('error', function(err) {
+con.on('error', function(err) {
     console.log('db error', err);
     if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
         handleDisconnect();                         // lost due to either server restart, or a

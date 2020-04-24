@@ -128,6 +128,7 @@ router.get('/getData', function(req, res, next) {
           // name: req.query.name,
           city: req.query.city,
           room_type: req.query.room_type,
+          name: req.query.name,
           capacity: req.query.capacity,
           wifi_facility: req.query.wifi_facility,
         });      

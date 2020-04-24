@@ -793,9 +793,9 @@ function planTrip(callback, trip) {
 async function main() {
     console.log('Start serverjs');
     await handleDisconnect();
-    createDatabase(function(){
-        console.log('done Creation');
-    });
+    // createDatabase(function(){
+    //     console.log('done Creation');
+    // });
     // runQuery(function(result) {console.log("service requests");console.log(result);}, "select * from service_request where service_id like \"ROO%\";")
     console.log('done Connect');
 

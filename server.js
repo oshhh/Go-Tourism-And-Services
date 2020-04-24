@@ -601,6 +601,15 @@ function getServices(callback,data)
 }
 
 function planTrip(callback, trip) {
+    console.log(trip);
+    trip.budget = parseInt(trip.budget);
+    trip.number_of_days = parseInt(trip.number_of_days);
+    trip.number_of_people = parseInt(trip.number_of_people);
+    trip.weightage.food = parseInt(trip.weightage.food);
+    trip.weightage.flight = parseInt(trip.weightage.flight);
+    trip.weightage.room = parseInt(trip.weightage.room);
+    trip.weightage.taxi = parseInt(trip.weightage.taxi);
+    trip.weightage.tourist_spot = parseInt(trip.weightage.tourist_spot);
     food_expense = [
         [200, trip.number_of_people * trip.number_of_days], 
         [500, trip.number_of_people * trip.number_of_days], 
@@ -612,9 +621,10 @@ function planTrip(callback, trip) {
     taxis = []
     rooms = []
     tourist_spots = []
-    trip.itinerary = {}
-    trip.itinerary.pleasure_value = 0;
-    trip.itinerary.status = "Budget too low!"
+    trip.itinerary = {
+        pleasure_value : 0,
+        status : "Budget Too Low!"
+    }
 
     // Possible options for rooms based on ratings
     room_query = {}
@@ -626,7 +636,7 @@ function planTrip(callback, trip) {
 
     user_city_query = "select city from user, location where user.location_id = location.location_id and user.user_id = " + trip.user_id;
     runQuery(function(result) {
-        if(trip.user_city == null) {
+        if(trip.from_home == false) {
             trip.user_city = "\"" + result[0].city + "\""; 
         }
         // Possible options for flights
@@ -636,7 +646,6 @@ function planTrip(callback, trip) {
             console.log(trip);
             if(result.length > 0) {
                 departure_flights.push([result[0], trip.number_of_people]);
-                return_flights.push([result[0], trip.number_of_people]);
             }
             return_flight_query = "select * from flight f1, service where f1.service_id = service.service_id and from_city = " + trip.destination_city + " and to_city = " + trip.user_city + " order by (price * (1 - discount * 0.01)) limit 1;"
             runQuery(function(result) {
@@ -695,8 +704,11 @@ function planTrip(callback, trip) {
                                                     if(taxis.length == 0) {
                                                         trip.itinerary.status = "No taxis found!"
                                                     }
-                                                    if(flights.length == 0) {
-                                                        trip.itinerary.status = "No flights found from departure to arrival city!"
+                                                    if(departure_flights.length == 0) {
+                                                        trip.itinerary.status = "No departure flights found to destination city!"
+                                                    }
+                                                    if(return_flights.length == 0) {
+                                                        trip.itinerary.status = "No return flights found from destination city!"
                                                     }
                                                     if(tourist_spots.length == 0) {
                                                         trip.itinerary.status = "No tourist spots found in city!"
@@ -712,24 +724,27 @@ function planTrip(callback, trip) {
                                                                         for(tor = 0; tor < tourist_spots.length; ++ tor) {
                                                                             total_cost = 0;
                                                                             total_cost += food_expense[foo][0] * food_expense[foo][1];
-                                                                            total_cost += (departure_flights[d_fli][0].price + return_flights[r_fli][0].price) * (1 - flights[d_fli][0].discount * 0.01) * flights[d_fli][1];
+                                                                            total_cost += (departure_flights[d_fli][0].price) * (1 - departure_flights[d_fli][0].discount * 0.01) * departure_flights[d_fli][1];
+                                                                            total_cost += (return_flights[r_fli][0].price) * (1 - return_flights[r_fli][0].discount * 0.01) * return_flights[r_fli][1];
                                                                             total_cost += taxis[tax][0].price * (1 - taxis[tax][0].discount * 0.01) * taxis[tax][1];
                                                                             total_cost += rooms[roo][0].price * (1 - rooms[roo][0].discount * 0.01) * rooms[roo][1];
                                                                             for(i = 0; i < tor; ++ i) {
                                                                                 total_cost += tourist_spots[i].entry_fee;
                                                                             }
                                                                             if(total_cost > trip.budget) continue;
+                                                                            console.log(Math.floor((trip.number_of_people + rooms[roo][0].capacity - 1)) + "/" + (rooms[roo][0].capacity) + " * " + trip.number_of_days);
                                                                             pleasure_value = 0
                                                                             pleasure_value += (1) * trip.weightage.flight;
                                                                             pleasure_value += (foo/3) * trip.weightage.food;
-                                                                            pleasure_value += (taxis[tax].AC == 'Y' ? 1 : 0) * trip.weightage.taxi;
-                                                                            pleasure_value += ((rooms[roo][0].rating + (rooms[roo].wifi == 'Y'? 1 : 0))/6) * trip.weightage.room ;
+                                                                            pleasure_value += (taxis[tax][0].AC == 'Y' ? 1 : 0) * trip.weightage.taxi;
+                                                                            pleasure_value += ((rooms[roo][0].rating + (rooms[roo][0].wifi == 'Y'? 1 : 0))/6) * trip.weightage.room ;
                                                                             pleasure_value += ((tor + 1)/(3 * trip.number_of_days)) * trip.weightage.tourist_spot;
                                                                             pleasure_value /= (trip.weightage.flight + trip.weightage.food + trip.weightage.taxi + trip.weightage.room + trip.weightage.tourist_spot);
                                                                             pleasure_value *= 10;
                                                                             if(trip.itinerary.pleasure_value <= pleasure_value) {
                                                                                 trip.itinerary.food_expense = food_expense[foo];
-                                                                                trip.itinerary.flight = flights[d_fli];
+                                                                                trip.itinerary.departure_flight = departure_flights[d_fli];
+                                                                                trip.itinerary.return_flight = return_flights[r_fli];
                                                                                 trip.itinerary.taxi = taxis[tax];
                                                                                 trip.itinerary.room = rooms[roo];
                                                                                 trip.itinerary.tourist_spots = tourist_spots.slice(0, tor);
@@ -743,6 +758,7 @@ function planTrip(callback, trip) {
                                                             }
                                                         }
                                                     }
+                                                    trip.itinerary.pleasure_value = Math.round(trip.itinerary.pleasure_value * 100) / 100
                                                     console.log(trip);
                                                     callback(trip);
                                                 } , room_query[5]);

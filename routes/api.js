@@ -177,6 +177,23 @@ router.get('/getData', function(req, res, next) {
         });
       } , "service_request");
     break;
+    case 'plan_trip':
+      serverjs.user.planTrip(sendResponse, {
+        user_id: req.query.user_id,
+        destination_city: req.query.destination_city ,
+        user_city: req.query.user_city,
+        number_of_people: req.query.number_of_people,
+        number_of_days: req.query.number_of_days,
+        budget: req.query.budget,
+        from_home: req.query.from_home,
+        weightage: { 
+          food: req.query.food_weightage, 
+          taxi: req.query.taxi_weightage, 
+          room: req.query.room_weightage, 
+          tourist_spot: req.query.tourist_spot_weightage, 
+          flight: req.query.flight_weightage, 
+        }});
+    break;
     // Admin
     case 'admin':
       serverjs.admin.getAdmins(sendResponse, {

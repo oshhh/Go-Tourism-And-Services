@@ -883,19 +883,33 @@
                 <div class="card-body">
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <span class="input-group-text">Maximum</span>
+                      <span class="input-group-text">Maximum Budget</span>
                     </div>
-                    <input ng-bind="planner.budget.max" value="\{{planner.budget.max}}" class="form-control"
+                    <input ng-bind="plan_trip.budget" value="\{{plan_trip.budget}}" class="form-control"
                       type="number" placeholder="Maximum">
                   </div>
                   <label class="mr-5">Give more weights to services more important to you</label>
                   <div class="row justify-content-start">
-                    <div class="col m-2 text-center" ng-repeat="it in planner.weights">
-                      <label class="mr-5">\{{it.display}} (\{{it.value}})</label>
-                      {{!-- <input style="width: 150px;" ng-model="it.value" type="range" min="1" max="5" value="\{{it.value}}" class="form-control"> --}}
-                      <input style="width: 150px;" type="range" class="custom-range" min="0" max="5"
-                        class="form-control" ng-model="it.value" ng-bind="it.value">
-                    </div>
+                      <div>
+                        <label class="mr-5">Flight (\{{plan_trip.weightage.flight}})</label>
+                        <input style="width: 150px;" type="range" class="custom-range" min="0" max="5" class="form-control" ng-model="plan_trip.weightage.flight" ng-bind="plan_trip.weightage.flight">
+                      </div>
+                      <div>
+                        <label class="mr-5">Hotel Room (\{{plan_trip.weightage.room}})</label>
+                        <input style="width: 150px;" type="range" class="custom-range" min="0" max="5" class="form-control" ng-model="plan_trip.weightage.room" ng-bind="plan_trip.weightage.room">
+                      </div>
+                      <div>
+                        <label class="mr-5">Taxi (\{{plan_trip.weightage.taxi}})</label>
+                        <input style="width: 150px;" type="range" class="custom-range" min="0" max="5" class="form-control" ng-model="plan_trip.weightage.taxi" ng-bind="plan_trip.weightage.taxi">
+                      </div>
+                      <div>
+                        <label class="mr-5">Tourist Spots (\{{plan_trip.weightage.tourist_spot}})</label>
+                        <input style="width: 150px;" type="range" class="custom-range" min="0" max="5" class="form-control" ng-model="plan_trip.weightage.tourist_spot" ng-bind="plan_trip.weightage.tourist_spot">
+                      </div>
+                      <div>
+                        <label class="mr-5">Food (\{{plan_trip.weightage.food}})</label>
+                        <input style="width: 150px;" type="range" class="custom-range" min="0" max="5" class="form-control" ng-model="plan_trip.weightage.food" ng-bind="plan_trip.weightage.food">
+                      </div>
                   </div>
                 </div>
               </div>
@@ -909,27 +923,27 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">Enter Destination</span>
                       </div>
-                      <input list="locs" ng-bind="planner.destination" value="\{{planner.destination}}"
+                      <input list="locs" ng-bind="plan_trip.destination_city" value="\{{plan_trip.destination_city}}"
                         class="form-control" type="text" placeholder="">
                     </div>
                     <div class="input-group mb-0">
                       <div class="input-group-prepend">
                         <span class="input-group-text">No of people</span>
                       </div>
-                      <input list="locs" ng-bind="planner.numPeople" value="\{{planner.numPeople}}" class="form-control"
+                      <input list="locs" ng-bind="plan_trip.number_of_people" value="\{{plan_trip.number_of_people}}" class="form-control"
                         type="number" placeholder="">
                     </div>
                     <div class="input-group mb-0">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Duration (days)</span>
                       </div>
-                      <input list="locs" ng-bind="planner.duration" value="\{{planner.duration}}" class="form-control"
+                      <input list="locs" ng-bind="plan_trip.number_of_days" value="\{{plan_trip.number_of_days}}" class="form-control"
                         type="number" placeholder="">
                     </div>
                   </div>
                 </div>
 
-                <div class="col-6 card">
+                {{!-- <div class="col-6 card">
                   <div class="card-header bg-white font-weight-bold">Step 3 - Enter Keywords</div>
                   <div class="card-body">
                     <ul class="list-group" style="height: auto !important;">
@@ -949,42 +963,118 @@
                       </li>
                     </ul>
                   </div>
-                </div>
+                </div> --}}
               </div>
               <div class="mt-2 ml-2">
                 <div class="custom-control custom-checkbox">
-                    <input ng-model="planner.fromHome" value="\{{planner.fromHome}}" type="checkbox" class="custom-control-input" id="fromHome">
-                    <label class="custom-control-label" for="fromHome">Source from Home</label>
+                    <input ng-model="plan_trip.from_home" value="\{{plan_trip.from_home}}" type="checkbox" class="custom-control-input" id="from_home">
+                    <label class="custom-control-label" for="from_home">Leave from Home</label>
                 </div>
-                <div class="input-group mb-0" ng-hide="planner.fromHome">
+                <div class="input-group mb-0" ng-hide="plan_trip.from_home">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Enter Source</span>
+                    <span class="input-group-text">Leave from City</span>
                   </div>
-                  <input list="locs" ng-bind="planner.sourceCity" ng-bind="planner.sourceCity" class="form-control"
+                  <input list="locs" ng-bind="plan_trip.user_city" ng-bind="plan_trip.user_city" class="form-control"
                     type="text" placeholder="">
                 </div>
               </div>
               <div class="row justify-content-center mt-4">
                 <div class="col-4 text-center">
-                  <button class="col btn btn-primary" ng-click="algorithm()">Calculate</button>
+                  <button class="col btn btn-primary" ng-click="planTrip()">Calculate</button>
                 </div>
+              </div>
+              <div ng-show="plan_trip.status == 'Calculating'">
+                <label>Loading Result</label>
+              </div>
+              <div ng-show="plan_trip.status == 'OK' && plan_trip.itinerary.status != 'itinerary created!'">
+                <h4>\{{plan_trip.itinerary.status}}</h4>
+              </div>
+              <div ng-show="plan_trip.status == 'OK' && plan_trip.itinerary.status == 'itinerary created!'">
+                <div>
+                  <h5>Pleasure Value: \{{plan_trip.itinerary.pleasure_value}}/10 <br> Total Cost: \{{plan_trip.itinerary.cost}}</h5>
+                </div>
+                <div class="row justify-content-between mt-4">
+                  <div class="col card">
+                    <div class="card-header bg-white font-weight-bold">Flights</div>
+                    <ul class="list-group" style="height: auto !important;">
+                      <li class="list-group-item">
+                        <div class="row justify-content-around">
+                          <div class="col-10">Service ID: \{{plan_trip.itinerary.departure_flight[0].service_id}} <br> From: \{{plan_trip.itinerary.departure_flight[0].from_city}} <br> To: \{{plan_trip.itinerary.departure_flight[0].to_city}} <br> Departure Time: \{{plan_trip.itinerary.departure_flight[0].departure_time}} <br> Arrival Time: \{{plan_trip.itinerary.departure_flight[0].arrival_time}} <br> Price: \{{plan_trip.itinerary.departure_flight[0].price}} <br> Discount: \{{plan_trip.itinerary.departure_flight[0].discount}} <br> Quantity: \{{plan_trip.itinerary.departure_flight[1]}} <br> Total Cost: \{{plan_trip.itinerary.departure_flight[0].price * (1 - plan_trip.itinerary.departure_flight[0].discount * 0.01) * plan_trip.itinerary.departure_flight[1]}} </div>
+                          <button ng-click="removeFlight(plan_trip.itinerary.departure_flight)" type="button" class="close text-right" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                      </li>
+                      <li class="list-group-item">                      
+                        <div class="row justify-content-around">
+                          <div class="col-10">Service ID: \{{plan_trip.itinerary.return_flight[0].service_id}} <br> From: \{{plan_trip.itinerary.return_flight[0].from_city}} <br> To: \{{plan_trip.itinerary.return_flight[0].to_city}} <br> Departure Time: \{{plan_trip.itinerary.return_flight[0].departure_time}} <br> Arrival Time: \{{plan_trip.itinerary.return_flight[0].arrival_time}} <br> Price: \{{plan_trip.itinerary.return_flight[0].price}} <br> Discount: \{{plan_trip.itinerary.return_flight[0].discount}} <br> Quantity: \{{plan_trip.itinerary.return_flight[1]}} <br> Total Cost: \{{plan_trip.itinerary.return_flight[0].price * (1 - plan_trip.itinerary.return_flight[0].discount * 0.01) * plan_trip.itinerary.return_flight[1]}} </div>
+                          <button ng-click="removeFlight(plan_trip.itinerary.return_flight)" type="button" class="close text-right" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row justify-content-between mt-4">
+                  <div class="col card">
+                    <div class="card-header bg-white font-weight-bold">Hotel Room</div>
+                    <ul class="list-group" style="height: auto !important;">
+                      <li class="list-group-item">
+                        <div class="row justify-content-around">
+                          <div class="col-10">Service ID: \{{plan_trip.itinerary.room[0].service_id}} <br> Hotel Name: \{{plan_trip.itinerary.room[0].name}} <br> Locality: \{{plan_trip.itinerary.room[0].locality}} <br> Room Type: \{{plan_trip.itinerary.room[0].room_type}} <br> Capacity: \{{plan_trip.itinerary.room[0].capacity}} <br> Wifi: \{{plan_trip.itinerary.room[0].wifi_facility}} <br> Price: \{{plan_trip.itinerary.room[0].price}} <br> Discount: \{{plan_trip.itinerary.room[0].discount}} <br> Quantity: \{{(plan_trip.itinerary.room[1]/plan_trip.number_of_days)}} <br> Number Of Days: \{{plan_trip.number_of_days}} <br> Total Cost: \{{plan_trip.itinerary.room[0].price * (1 - plan_trip.itinerary.room[0].discount * 0.01) * plan_trip.itinerary.room[1]}} </div>
+                          <button ng-click="removeFlight(plan_trip.itinerary.departure_flight)" type="button" class="close text-right" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row justify-content-between mt-4">
+                  <div class="col card">
+                    <div class="card-header bg-white font-weight-bold">Taxi</div>
+                    <ul class="list-group" style="height: auto !important;">
+                      <li class="list-group-item">
+                        <div class="row justify-content-around">
+                          <div class="col-10">Service ID: \{{plan_trip.itinerary.taxi[0].service_id}} <br> Car Name: \{{plan_trip.itinerary.taxi[0].car_name}} <br> Capacity: \{{plan_trip.itinerary.taxi[0].capacity}} <br> AC: \{{plan_trip.itinerary.taxi[0].AC}} <br> Price: \{{plan_trip.itinerary.taxi[0].price}} <br> Discount: \{{plan_trip.itinerary.taxi[0].discount}} <br> Quantity: \{{(plan_trip.itinerary.taxi[1]/plan_trip.number_of_days)}} <br> Number Of Days: \{{plan_trip.number_of_days}} <br> Total Cost: \{{plan_trip.itinerary.taxi[0].price * (1 - plan_trip.itinerary.taxi[0].discount * 0.01) * plan_trip.itinerary.taxi[1]}} </div>
+                          <button ng-click="removeFlight(plan_trip.itinerary.departure_flight)" type="button" class="close text-right" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row justify-content-between mt-4">
+                  <div class="col card">
+                    <div class="card-header bg-white font-weight-bold">Tourist Spots</div>
+                    <ul class="list-group" style="height: auto !important;">
+                      <li class="list-group-item" ng-repeat="it in plan_trip.itinerary.tourist_spots">
+                        <div class="row justify-content-around">
+                          <div class="col-10">Tourist Spot ID: \{{it.tourist_spot_id}} <br> Tourist Spot Name: \{{it.name}} <br> Entry Fee: \{{it.entry_fee}}</div>
+                          <button ng-click="removeTouristSpot(it)" type="button" class="close text-right" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row justify-content-between mt-4">
+                  <div class="col card">
+                    <div class="bg-white font-weight-bold">Food Budget</div>
+                    <ul class="list-group" style="height: auto !important;">
+                      <div class="row justify-content-around">
+                        <h6>Food Budget: \{{plan_trip.itinerary.food_expense[0]}} per person per day</h6>
+                        <h6>Total Food Expense: \{{plan_trip.itinerary.food_expense[0] * plan_trip.itinerary.food_expense[1]}} </h6>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+                
               </div>
 
-              <div class="row justify-content-between mt-4">
-                <div class="col card">
-                  <div class="card-header bg-white font-weight-bold">Removal and finalizing</div>
-                  <ul class="list-group" style="height: auto !important;">
-                    <li class="list-group-item" ng-repeat="it in planner.output">
-                      <div class="row justify-content-around">
-                        <div class="col-10">\{{it.service_id}}</div>
-                        <button ng-click="removeOutput(it)" type="button" class="close text-right" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
 
               <div class="row justify-content-center mt-4">
                 <div class="col-4 text-center">

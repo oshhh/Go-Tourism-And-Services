@@ -92,6 +92,18 @@ angularApp.controller("ngContent",function($scope,$http)
 		reviews:{},
 
 	}
+	$scope.plan_trip={
+		status:"Pending",
+		user_id: "USR00000",
+		destination_city: "Delhi",
+		user_city: "Mumbai",
+		number_of_people: 4,
+		number_of_days: 2,
+		budget: 200000,
+		from_home:true,
+		weightage: { food: 2, taxi: 3, room: 5, tourist_spot: 3, flight: 3 },
+		itinerary = {}
+	  }
 	$scope.predictors={
         data:[],
         bindArray:function(listName,arr)
@@ -136,67 +148,6 @@ angularApp.controller("ngContent",function($scope,$http)
 		uid:document.getElementById("idU").innerHTML
 	};
 
-	$scope.planner={
-		fromHome:true,
-		sourceCity:"",
-		budget:{
-			max:20000
-		},
-		weights:[
-			{
-				display:"flights",
-				value:3,
-				keyword:"flight"
-			},
-			{
-				display:"Buse/Train",
-				value:3,
-				keyword:"bus"
-			},
-			{
-				display:"Taxis",
-				value:3,
-				keyword:"taxi"
-			},
-			{
-				display:"Hotels",
-				value:3,
-				keyword:"hotel"
-			},
-			{
-				display:"Restaurant",
-				value:3,
-				keyword:"restaurant"
-			},
-			{
-				display:"Tourist Spots",
-				value:3,
-				keyword:"tourist_spot"
-			},
-			{
-				display:"Guides",
-				value:3,
-				keyword:"guide"
-			},
-		],
-		destination:"",
-		numPeople:0,
-		duration:0,
-		keywords:[{text:""}],
-		output:[
-			{
-				service_id:"TAX00001",
-				price:100,
-				quantity:1
-			},
-			{
-				service_id:"TAX00002",
-				price:100,
-				quantity:1
-			}
-		],
-		showOutput:false
-	};
 	$scope.addDestination = function()
 	{
 		$scope.planner.destinations.push({text:""});
@@ -210,10 +161,36 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		$scope.planner.output.splice($scope.planner.output.indexOf(it),1);
 	}
-	$scope.algorithm = function()
+	$scope.planTrip = function()
 	{
 		//use $scope.planner.budget/destination/keywords to output in this format:
 		//output - {service_id:"",quantity:1,price:10}
+		$scope.plan_trip.status = "Calculating"
+		console.log($scope.plan_trip.budget);
+		$http.get("/api/getData",{params:{
+			type:"plan_trip",
+			user_id: "\"" + $scope.plan_trip.user_id + "\"",
+			destination_city: "\"" + $scope.plan_trip.destination_city + "\"" ,
+			user_city: "\"" + $scope.plan_trip.user_city + "\"",
+			number_of_people: $scope.plan_trip.number_of_people,
+			number_of_days: $scope.plan_trip.number_of_days,
+			budget: $scope.plan_trip.budget,
+			from_home: $scope.plan_trip.from_home,
+			food_weightage : $scope.plan_trip.weightage.food,
+			taxi_weightage : $scope.plan_trip.weightage.taxi, 
+			room_weightage : $scope.plan_trip.weightage.room, 
+			tourist_spot_weightage : $scope.plan_trip.weightage.tourist_spot, 
+			flight_weightage: $scope.plan_trip.weightage.flight, 
+		}}).then(
+			function(data, status, headers, config) {
+			console.log(data.data.content);
+			$scope.plan_trip.itinerary=data.data.content.itinerary;
+			$scope.plan_trip.status="OK";
+			$scope.$digest();
+			},function(data, status, headers, config) {
+				console.log("error");
+			}
+		);
 	}
 	//sends get request with inputparams and put that data into destOBJ object
 	$scope.putData=function(sourceUrl,inputParams,destObj,callback)

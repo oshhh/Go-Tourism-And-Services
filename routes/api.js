@@ -174,7 +174,7 @@ router.get('/getData', function(req, res, next) {
           comments : "null",
           service_required_date : req.query.service_required_date,
           number_days: 1,
-          completion_time: "null",
+          completion_date: "null",
         });
       } , "service_request");
     break;

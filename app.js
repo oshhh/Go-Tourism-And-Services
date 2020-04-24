@@ -1,5 +1,5 @@
-const port=5000;
-// const port=process.env.PORT;
+// const port=5000;
+const port=process.env.PORT;
 var express =require('express');
 var path = require('path');
 var hbs = require('express-handlebars');

@@ -164,7 +164,7 @@ router.get('/getData', function(req, res, next) {
           request_id:"\"RST" + ("00000" + result[0]['cnt']).slice(-5) + "\"",
           trip_id : req.query.trip_id,
           service_id : req.query.service_id,
-          timestamp : "CURDATE()",
+          request_timestamp : "CURDATE()",
           number_of_days : req.query.number_of_days,
           quantity : req.query.quantity,
           cost : req.query.cost,

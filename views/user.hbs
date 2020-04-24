@@ -885,7 +885,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Maximum Budget</span>
                     </div>
-                    <input ng-bind="plan_trip.budget" value="\{{plan_trip.budget}}" class="form-control"
+                    <input ng-model="plan_trip.budget" value="\{{plan_trip.budget}}" class="form-control"
                       type="number" placeholder="Maximum">
                   </div>
                   <label class="mr-5">Give more weights to services more important to you</label>
@@ -923,21 +923,21 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">Enter Destination</span>
                       </div>
-                      <input list="locs" ng-bind="plan_trip.destination_city" value="\{{plan_trip.destination_city}}"
+                      <input list="locs" ng-model="plan_trip.destination_city" value="\{{plan_trip.destination_city}}"
                         class="form-control" type="text" placeholder="">
                     </div>
                     <div class="input-group mb-0">
                       <div class="input-group-prepend">
                         <span class="input-group-text">No of people</span>
                       </div>
-                      <input list="locs" ng-bind="plan_trip.number_of_people" value="\{{plan_trip.number_of_people}}" class="form-control"
+                      <input list="locs" ng-model="plan_trip.number_of_people" value="\{{plan_trip.number_of_people}}" class="form-control"
                         type="number" placeholder="">
                     </div>
                     <div class="input-group mb-0">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Duration (days)</span>
                       </div>
-                      <input list="locs" ng-bind="plan_trip.number_of_days" value="\{{plan_trip.number_of_days}}" class="form-control"
+                      <input list="locs" ng-model="plan_trip.number_of_days" value="\{{plan_trip.number_of_days}}" class="form-control"
                         type="number" placeholder="">
                     </div>
                   </div>
@@ -974,7 +974,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">Leave from City</span>
                   </div>
-                  <input list="locs" ng-bind="plan_trip.user_city" ng-bind="plan_trip.user_city" class="form-control"
+                  <input list="locs" ng-model="plan_trip.user_city" ng-bind="plan_trip.user_city" class="form-control"
                     type="text" placeholder="">
                 </div>
               </div>

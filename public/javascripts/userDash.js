@@ -95,14 +95,14 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.plan_trip={
 		status:"Pending",
 		user_id: "USR00000",
-		destination_city: "Delhi",
-		user_city: "Mumbai",
+		destination_city: "Goa",
+		user_city: "Aurangabad",
 		number_of_people: 4,
 		number_of_days: 2,
 		budget: 200000,
 		from_home:true,
 		weightage: { food: 2, taxi: 3, room: 5, tourist_spot: 3, flight: 3 },
-		itinerary = {}
+		itinerary : {}
 	  }
 	$scope.predictors={
         data:[],

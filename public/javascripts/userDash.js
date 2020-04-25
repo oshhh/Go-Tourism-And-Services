@@ -156,7 +156,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			containerList.id=listName;
 			console.log(containerList);
 		}
-    }
+	}
 	$scope.trip={
 		status : "Pending",
 		data : [],
@@ -446,8 +446,13 @@ angularApp.controller("ngContent",function($scope,$http)
 		);
 
 	}
-
-	$scope.request = function(it){
+	$scope.requestModal={
+		bookingDate:new Date(),
+		days:1,
+		isDate:false,
+		isDays:true,
+	}
+	$scope.openRequest = function(it,isNumDays,isBookDate){
 		console.log($scope.trip.selected);
 		if(!$scope.trip.selected.trip_id) {
 			// alert("No trip selected! Can't request service.");
@@ -463,12 +468,24 @@ angularApp.controller("ngContent",function($scope,$http)
 			sidebarDOM.style.right="0px";
 			return;
 		}
+		$('#requestModal').modal('show');
+		$scope.requestModal.days=1;
+		$scope.requestModal.bookingDate=new Date();
+		$scope.requestModal.isDays=isNumDays;
+		$scope.requestModal.isDate=isBookDate;
+		$scope.requestModal.service=it;
+		// console.log("Date",$scope.requestModal.bookingDate.toISOString().slice(0,10));
+		// $scope.request(it,$scope.requestModal.days,$scope.requestModal.bookingDate)
+	}
+	$scope.request = function(){
+		// dateString=$scope.requestModal.bookingDate.get
+		it=$scope.requestModal.service;
 		$http.get('/api/getData',{params:{
 			type : 'request',
 			trip_id: "\"" + $scope.trip.selected.trip_id + "\"",
 			service_id:  "\"" + it.service_id +  "\"",
-			service_required_date : "\"2000-03-03\"",
-			number_of_days : "3",
+			service_required_date : '"'+$scope.requestModal.bookingDate.toISOString().slice(0,10)+'"',
+			number_of_days : $scope.requestModal.days,
 			quantity : "1",
 			cost : it.price * (1 - it.discount * 0.01),
 		}}).then(
@@ -478,7 +495,6 @@ angularApp.controller("ngContent",function($scope,$http)
 			$('.toast').toast("show");
 		});
 	}
-
 	$scope.rate_service = function(it) {
 		$http.get('/api/getData',{params:{
 			type : 'rate_service',

@@ -225,9 +225,9 @@ input:-webkit-autofill:hover{
 }
 input:-webkit-autofill:focus{
     background-color: blue;
-} */
-/* Change autocomplete styles in WebKit */
-/* input:-webkit-autofill,
+} 
+ Change autocomplete styles in WebKit 
+ input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
@@ -236,8 +236,31 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  /* border: 1px solid green;
+   border: 1px solid green;
   -webkit-text-fill-color: green;
   -webkit-box-shadow: 0 0 0px 1000px #000 inset;
-  transition: background-color 5000s ease-in-out 0s; */
+  transition: background-color 5000s ease-in-out 0s; 
 } 
+ .btn-primary{
+    background-color: FFF !important;
+    border: 2px solid gray;
+    color : #111 !important;
+}
+.btn-primary:hover{
+    background-color: rgb(84, 207, 168) !important;
+    color : #111 !important;
+}
+.active{
+    background-color: #9DE1CC !important;
+    color : #111 !important;
+}
+.list-item{
+    cursor: pointer;
+}
+.btn-outline-primary{
+
+}
+.btn-outline-primary:hover{
+    background-color: #9DE1CC !important;
+    color : #111 !important;
+} */

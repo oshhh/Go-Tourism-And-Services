@@ -4,6 +4,7 @@ var express =require('express');
 var path = require('path');
 var hbs = require('express-handlebars');
 var session = require('express-session')
+var log4js = require('log4js');
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var signupRouter = require('./routes/signup');
@@ -12,6 +13,40 @@ var dbHandler = require('./server.js')
 const util = require('util');
 var app=express();
 var serv=require('http').Server(app);
+
+log4js.configure({
+  "appenders": {
+    "access": {
+        "type": "dateFile",
+        "filename": "logs/access.log",
+        "pattern": "-yyyy-MM-dd",
+        "category": "http"
+    },
+    "app": {
+        "type": "file",
+        "filename": "logs/app.log",
+        "maxLogSize": 10485760,
+        "numBackups": 3
+    },
+    "errorFile": {
+        "type": "file",
+        "filename": "logs/errors.log"
+    },
+    "errors": {
+        "type": "logLevelFilter",
+        "level": "ERROR",
+        "appender": "errorFile"
+    },
+    "out": {
+        "type": "stdout"
+    }
+},
+"categories": {
+    "default": { "appenders": [ "app", "errors", "out" ], "level": "DEBUG" },
+    "http": { "appenders": [ "access", "out" ], "level": "DEBUG" }
+}
+});
+app.use(log4js.connectLogger(log4js.getLogger("http"), { level: 'auto', format: ':method :status HTTP/:http-version :url' }));
 //Template Engine init.
 app.set('views', path.join(__dirname, 'views'));
 //connect to server.js

@@ -1,13 +1,16 @@
 var express = require('express');
 var router = express.Router();
 const util = require('util');
-
+const log4js = require('log4js');
+const logger = log4js.getLogger("API");
 router.get('/getData', function(req, res, next) {
-  console.log(util.inspect(req.query, false,null,true));
+  logger.error(req.query.type);
+  // console.log(util.inspect(req.query, false,null,true));
   sendResponse=function(result){
     if(result)
     {
       // console.log("got result",result)
+      logger.info(req.query.type);
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({
         isRes:true,
@@ -269,11 +272,13 @@ router.get('/getData', function(req, res, next) {
     case 'FilteredSingleColumn':
       serverjs.getFilteredAutoCorrectPrediction(sendResponse,req.query);
       break;
+    case 'queryFiltered':
+      serverjs.getFilteredQueries(sendResponse,req.session.uname);
+      break;
     default:
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({msg:"Unknown Request sent"}))
   }
-;
 });
 router.post('/service_request',function(req, res, next){
   console.log(util.inspect(req.body, false,null,true));

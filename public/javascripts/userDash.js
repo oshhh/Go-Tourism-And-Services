@@ -354,7 +354,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		}
 		else if(tab==3)
 		{
-			$scope.taxi.status="Pending";
+			$scope.bus_train.status="Pending";
 			// console.log("sent");
 			$http.get("/api/getData",{params:{
 				type:"bus_train",
@@ -826,7 +826,6 @@ angularApp.controller("ngContent",function($scope,$http)
 		$('#plannerModal').modal('show');
 	}
 	$scope.toggle_sidebar=function(){
-		$scope.getData(9);
 		console.log($scope.trip.selected);
 		sidebarDOM=document.getElementById("sidebar");
 		if(sidebarDOM.style.right=="-380px")
@@ -834,6 +833,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			sidebarDOM.style.right="0px";
 			$('#toggleIcon').removeClass("fa-angle-double-left");
 			$('#toggleIcon').addClass("fa-angle-double-right");
+			$scope.getData(9);
 		}
 		else{
 			sidebarDOM.style.right="-380px";
@@ -845,18 +845,19 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.initialize = async function()
 	{
 		//bind prediction lists to some name use list attrib of input to use that list
-		await $scope.predictors.bindInput("locs","location","city");
-		await $scope.predictors.bindInput("carname","taxi","car_name");
-		await $scope.predictors.bindInput("roomList","room","room_type");
-		await $scope.predictors.bindInput("spotName","tourist_spot","name");
-		await $scope.predictors.bindArray("capList",["1","2","3","4","5","6","7"]);
-		await $scope.predictors.bindInput("spotType","tourist_spot","type");
-		await $scope.predictors.bindInput("locality","location","locality");
-		await $scope.predictors.bindSpecialInput("hotelList","service_provider","hotel","name","service_provider_id");
-		await $scope.predictors.bindSpecialInput("restaurantList","service_provider","restaurant","name","service_provider_id");
-		await $scope.predictors.bindInput("foodList","food_item","name");
+		// await $scope.predictors.bindInput("locs","location","city");
+		// await $scope.predictors.bindInput("carname","taxi","car_name");
+		// await $scope.predictors.bindInput("roomList","room","room_type");
+		// await $scope.predictors.bindInput("spotName","tourist_spot","name");
+		// await $scope.predictors.bindArray("capList",["1","2","3","4","5","6","7"]);
+		// await $scope.predictors.bindInput("spotType","tourist_spot","type");
+		// await $scope.predictors.bindInput("locality","location","locality");
+		// await $scope.predictors.bindSpecialInput("hotelList","service_provider","hotel","name","service_provider_id");
+		// await $scope.predictors.bindSpecialInput("restaurantList","service_provider","restaurant","name","service_provider_id");
+		// await $scope.predictors.bindInput("foodList","food_item","name");
 		$scope.getData(9);
 		$scope.changeTab(0);
+		$scope.getData(3);
 		console.log("init Done");
 	}
 	$scope.initialize();	

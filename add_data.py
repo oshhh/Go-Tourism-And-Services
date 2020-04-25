@@ -5,7 +5,7 @@ def createCSV(data, nameOfFile):
 
 city = ['ladakh', 'Leh', 'Srinagar', 'Shimla', 'Dehradun', 'Chamoli', 'Haridwar', 'Amritsar', 'Delhi ', 'Jodhpur', 'Agra ', 'Shivpuri', 'Raisen', 'Balaghat', 'Sirohi', 'Junagadh', 'Mumbai', 'Thane', 'Aurangabad', 'Goa', 'North Panji', 'Bijapur', 'Ballari', 'Hydrabad', 'Vishakhapatnam', 'Shillong', 'Karbi Anglong', 'Chennai', 'Vadodara', 'Ahmedabad', 'Bangalore', 'Kolkata', 'Pune', 'Hyderabad', 'haryana', 'punjab', 'Varanasi', 'Nilgri', 'Tirupati', 'Madhurai', 'kerala', 'Bengal', 'Tamil Nadu', 'Bay of Bengal', 'Madhya Pradesh', 'Assam', 'Karnataka', 'Himachal Pradesh']
 
-char = 'abcdefghijklmnopqrstuvwxyz1234567890'
+char = 'abcdefghijklmnopqrstuvwxyz0123456789'
 
 import pandas as pd
 import csv
@@ -39,12 +39,14 @@ for i in range(50000):
 	l1 = locations[l1]
 	l2 = locations[l2]
 	flight = {
-		'from_city' : l1[0],
-		'to' : l2[0],
-		'departure_time' : char[randint(26, 28)] + char[randint(26, 35)] + ':' + char[randint(26, 32)] + char[randint(26, 35)] + ':' + char[randint(26, 32)] + char[randint(26, 35)],
-		'arrival_time' : char[randint(26, 28)] + char[randint(26, 35)] + ':' + char[randint(26, 32)] + char[randint(26, 35)] + ':' + char[randint(26, 32)] + char[randint(26, 35)],
+		'from_city' : l1[1],
+		'to_city' : l2[1],
+		'departure_time' : char[randint(26, 27)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)],
+		'arrival_time' : char[randint(26, 27)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)],
 		'price' : randint(2000, 15000),
 		'discount' : randint(0, 40)
 	}
+	if(flight['arrival_time'] < flight['departure_time']):
+		flight['arrival_time'], flight['departure_time'] = flight['departure_time'], flight['arrival_time']
 	flights.append(flight)
 print(flights)

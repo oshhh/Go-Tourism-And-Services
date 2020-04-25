@@ -33,9 +33,9 @@ locations = list(locations)
 for i in range(50000):
 	l1 = 0
 	l2 = 0
-	while l1 != l2:
-		l1 = randint(0, len(locations))
-		l2 = randint(0, len(locations))
+	while l1 == l2:
+		l1 = randint(0, len(locations) - 1)
+		l2 = randint(0, len(locations) - 1)
 	l1 = locations[l1]
 	l2 = locations[l2]
 	flight = {

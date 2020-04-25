@@ -1001,6 +1001,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.initialize = async function()
 	{
 		//bind prediction lists to some name use list attrib of input to use that list
+		$('#loadingCont').css('visibility', 'visible');
 		await $scope.predictors.bindInput("locs","location","city");
 		await $scope.predictors.bindInput("carname","taxi","car_name");
 		await $scope.predictors.bindInput("roomList","room","room_type");
@@ -1014,6 +1015,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		$scope.getData(9);
 		$scope.getData(0);
 		// $scope.getData(3);
+		$('#loadingCont').css('visibility', 'hidden');
 		console.log("init Done");
 	}
 	$scope.initialize();	

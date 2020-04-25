@@ -358,7 +358,7 @@ angularApp.controller("ngContent",function($scope, $http)
 	$scope.predictors.bindInput("umail","user","email");
 	$scope.predictors.bindInput("uid","user","user_id");
 	$scope.predictors.bindInput("uphone","user","phone_no");
-	$scope.predictors.bindInput("1provider","provider","name");
+	$scope.predictors.bindInput("1provider","service_provider","name");
 	$scope.predictors.bindInput("1service_id","service","service_id");
 	$scope.predictors.bindInput("pid","service_provider","service_provider_id");
 	console.log("init Done");

@@ -4,14 +4,14 @@ const util = require('util');
 const log4js = require('log4js');
 const logger = log4js.getLogger("API");
 router.get('/getData', function(req, res, next) {
-  logger.error(req.query.type);
+  // logger.error(req.query.type);
   // console.log(util.inspect(req.query, false,null,true));
   let savedRes=res;
   sendResponse=function(actRes,result){
     if(result)
     {
       // console.log("got result",result)
-      logger.info(req.query.type);
+      // logger.info(req.query.type);
       actRes.setHeader('Content-Type', 'application/json');
       actRes.end(JSON.stringify({
         isRes:true,

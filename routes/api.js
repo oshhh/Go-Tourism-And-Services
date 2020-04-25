@@ -6,21 +6,22 @@ const logger = log4js.getLogger("API");
 router.get('/getData', function(req, res, next) {
   logger.error(req.query.type);
   // console.log(util.inspect(req.query, false,null,true));
-  sendResponse=function(result){
+  let savedRes=res;
+  sendResponse=function(actRes,result){
     if(result)
     {
       // console.log("got result",result)
       logger.info(req.query.type);
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({
+      actRes.setHeader('Content-Type', 'application/json');
+      actRes.end(JSON.stringify({
         isRes:true,
         msg:"Query OK: sending result",
         content:result
       }));
     }
     else{
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({
+      actRes.setHeader('Content-Type', 'application/json');
+      actRes.end(JSON.stringify({
         isRes:false,
         msg:"Unknown Request sent"
       }));
@@ -55,21 +56,21 @@ router.get('/getData', function(req, res, next) {
             for(trip_id in trips) {
               result.push(trips[trip_id]);
             }
-            sendResponse({result, completed_requests});
+            sendResponse(res,{result, completed_requests});
           },req.session.uname, {request_id : "\"%\""});
         }, {
             user_id : "\"" + req.session.uname + "\"",
           })
     break;
     case "service_request":
-      serverjs.user.getServiceRequests(sendResponse,req.session.uname, {
+      serverjs.user.getServiceRequests(function(result){sendResponse(res,result);},req.session.uname, {
         status: "\"Completed\""
       });
 
     break;
     case 'new_trip':
       serverjs.count_table( function(result) {
-        serverjs.insertIntoTable(sendResponse, 'trip', {
+        serverjs.insertIntoTable(function(result){sendResponse(res,result);}, 'trip', {
           trip_id:"\"TRP" + ("00000" + (result[0]['cnt'] + 1)).slice(-5) + "\"",
           user_id: "\"" + req.session.uname + "\"",
           destination_city : "\"" + req.query.destination_city + "\"",
@@ -100,10 +101,10 @@ router.get('/getData', function(req, res, next) {
       } , "trip");
     break;
     case 'rate_service':
-      serverjs.user.rateService(sendResponse, req.query.request_id, req.query.rating);
+      serverjs.user.rateService(function(result){sendResponse(res,result);}, req.query.request_id, req.query.rating);
     break;
     case 'flight':
-        serverjs.user.getFlights(sendResponse,{
+        serverjs.user.getFlights(function(result){sendResponse(res,result);},{
           from_city: req.query.from,
           to_city: req.query.to,
           service_provider_id: prov
@@ -133,7 +134,7 @@ router.get('/getData', function(req, res, next) {
               result.push(result_[i])
             }
             console.log(result);
-            sendResponse(result);
+            sendResponse(res,result);
           });
         }, req.query.t_type, req.query.from, req.query.to, {
           AC: req.query.AC,
@@ -141,7 +142,7 @@ router.get('/getData', function(req, res, next) {
         });
     break;
     case 'taxi':
-        serverjs.user.getTaxis(sendResponse, {
+        serverjs.user.getTaxis(function(result){sendResponse(res,result);}, {
           car_name: req.query.car_name,
           capacity: req.query.capacity,
           AC: req.query.AC,
@@ -149,7 +150,7 @@ router.get('/getData', function(req, res, next) {
         });       
     break;
     case 'room':
-        serverjs.user.getRooms(sendResponse, {
+        serverjs.user.getRooms(function(result){sendResponse(res,result);}, {
           // name: req.query.name,
           city: req.query.city,
           room_type: req.query.room_type,
@@ -159,7 +160,7 @@ router.get('/getData', function(req, res, next) {
         });      
     break;
     case 'food':
-      serverjs.user.getFoodItems(sendResponse,{
+      serverjs.user.getFoodItems(function(result){sendResponse(res,result);},{
         name:(req.query.fname=="")?(".*"):(req.query.fname),
         rest:(req.query.rname=="")?(".*"):(req.query.rname),
         delivers: req.query.delivers,
@@ -167,26 +168,26 @@ router.get('/getData', function(req, res, next) {
       });
     break;
     case 'tourist_spot':
-        serverjs.user.getTouristSpots(sendResponse, {
+        serverjs.user.getTouristSpots(function(result){sendResponse(res,result);}, {
           name: req.query.name,
           type: req.query.t_type,
         }, req.query.city);   
     break;
     case 'guide':
-        serverjs.user.getGuides(sendResponse, {
+        serverjs.user.getGuides(function(result){sendResponse(res,result);}, {
         }, req.query.tourist_spot_name, req.query.tourist_spot_city);   
     break;
     case "review":
-      serverjs.getServiceReview(sendResponse,req.query.service_id);
+      serverjs.getServiceReview(function(result){sendResponse(res,result);},req.query.service_id);
       break;
     case 'trip':
-      serverjs.user.getTrips(sendResponse, {
+      serverjs.user.getTrips(function(result){sendResponse(res,result);}, {
         user_id : "\"" + req.session.uname + "\""
       })
     break;
     case 'request':
       serverjs.count_table( function(result) {
-        serverjs.insertIntoTable(sendResponse, 'service_request', {
+        serverjs.insertIntoTable(function(result){sendResponse(res,result);}, 'service_request', {
           request_id:"\"RST" + ("00000" + result[0]['cnt']).slice(-5) + "\"",
           trip_id : req.query.trip_id,
           service_id : req.query.service_id,
@@ -205,7 +206,7 @@ router.get('/getData', function(req, res, next) {
       } , "service_request");
     break;
     case 'plan_trip':
-      serverjs.user.planTrip(sendResponse, {
+      serverjs.user.planTrip(function(result){sendResponse(res,result);}, {
         user_id: req.query.user_id,
         destination_city: req.query.destination_city ,
         user_city: req.query.user_city,
@@ -223,7 +224,7 @@ router.get('/getData', function(req, res, next) {
     break;
     // Admin
     case 'admin':
-      serverjs.admin.getAdmins(sendResponse, {
+      serverjs.admin.getAdmins(function(result){sendResponse(res,result);}, {
         admin_id: req.query.admin_id,
         name: req.query.name,
         role: req.query.role,
@@ -231,7 +232,7 @@ router.get('/getData', function(req, res, next) {
       });
     break;
     case 'user':
-        serverjs.admin.getUsers(sendResponse, {
+        serverjs.admin.getUsers(function(result){sendResponse(res,result);}, {
           user_id : req.query.user_id,
           name : req.query.name,
           email : req.query.email,
@@ -240,7 +241,7 @@ router.get('/getData', function(req, res, next) {
         });
     break;
     case 'service_provider':
-        serverjs.admin.getServiceProviders(sendResponse, {
+        serverjs.admin.getServiceProviders(function(result){sendResponse(res,result);}, {
           service_provider_id : req.query.service_provider_id,
           name : req.query.name,
           domain : req.query.domain,
@@ -249,31 +250,31 @@ router.get('/getData', function(req, res, next) {
         });
     break;
     case 'noRoute_bus_train':
-      serverjs.user.getBusTrains(sendResponse,req.query.t_type, req.query.from, req.query.to, {
+      serverjs.user.getBusTrains(function(result){sendResponse(res,result);},req.query.t_type, req.query.from, req.query.to, {
         AC: req.query.AC,
         service_provider_id: prov
       });
     break;      
     case 'servicesByProvider':
-      serverjs.service_provider[req.query.func](sendResponse,req.query.service_provider_id);
+      serverjs.service_provider[req.query.func](function(result){sendResponse(res,result);},req.query.service_provider_id);
       break;
     case 'requestByProvider':
-      serverjs.service_provider.providerGetRequests(sendResponse,req.session.uname);
+      serverjs.service_provider.providerGetRequests(function(result){sendResponse(res,result);},req.session.uname);
       break;
     case 'adminRequests':
-      serverjs.admin.allServiceRequest(sendResponse,req.query);
+      serverjs.admin.allServiceRequest(function(result){sendResponse(res,result);},req.query);
       break;
     case 'route':
-        serverjs.service_provider.getRoute(sendResponse,req.query.service_id);
+        serverjs.service_provider.getRoute(function(result){sendResponse(res,result);},req.query.service_id);
         break;
     case 'singleColumn':
-      serverjs.getAutoCorrectPredictions(sendResponse,req.query.table_name,req.query.column_name);
+      serverjs.getAutoCorrectPredictions(function(result){sendResponse(res,result);},req.query.table_name,req.query.column_name);
       break;
     case 'FilteredSingleColumn':
-      serverjs.getFilteredAutoCorrectPrediction(sendResponse,req.query);
+      serverjs.getFilteredAutoCorrectPrediction(function(result){sendResponse(res,result);},req.query);
       break;
     case 'queryFiltered':
-      serverjs.getFilteredQueries(sendResponse,req.session.uname);
+      serverjs.getFilteredQueries(function(result){sendResponse(res,result);},req.session.uname);
       break;
     default:
       res.setHeader('Content-Type', 'application/json');
@@ -300,20 +301,20 @@ router.put('/updateData', function(req, res, next) {
 });
 router.post('/deleteData', function(req, res, next) {
   // console.log("REQS");
-  sendResponse=function(result){
+  sendResponse=function(actRes,result){
     if(result)
     {
       // console.log("got result",result)
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({
+      actRes.setHeader('Content-Type', 'application/json');
+      actRes.end(JSON.stringify({
         isRes:true,
         msg:"Query OK: sending result",
         content:result
       }));
     }
     else{
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({
+      actRes.setHeader('Content-Type', 'application/json');
+      actRes.end(JSON.stringify({
         isRes:false,
         msg:"Unknown Request sent"
       }));
@@ -324,16 +325,16 @@ router.post('/deleteData', function(req, res, next) {
   serverjs=req.app.get('dbHandler');
   switch(req.body.type){
     case "route":
-      serverjs.deleteRoute(sendResponse,req.body.service_id);
+      serverjs.deleteRoute(function(result){sendResponse(res,result);},req.body.service_id);
     break;
     case "administrator":
-      serverjs.deleteRow(sendResponse,'administrator',"admin_id",req.body.admin_id);
+      serverjs.deleteRow(function(result){sendResponse(res,result);},'administrator',"admin_id",req.body.admin_id);
     break;
     case "user":
-      serverjs.deleteRow(sendResponse,'user',"user_id",req.body.user_id);
+      serverjs.deleteRow(function(result){sendResponse(res,result);},'user',"user_id",req.body.user_id);
       break;
     case 'service_provider':
-      serverjs.deleteRow(sendResponse,'service_provider',"service_provider_id",req.body.service_provider_id);
+      serverjs.deleteRow(function(result){sendResponse(res,result);},'service_provider',"service_provider_id",req.body.service_provider_id);
       break;
     default:
       res.setHeader('Content-Type', 'application/json');
@@ -436,20 +437,20 @@ router.get('/getTouristSpotID',function(req,res,next){
   },req.query.name,req.query.type,req.query.city);
 });
 router.post('/insertList', function(req, res, next) {
-  sendResponse=function(result){
+  sendResponse=function(actRes,result){
     if(result)
     {
       // console.log("got result",result)
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({
+      actRes.setHeader('Content-Type', 'application/json');
+      actRes.end(JSON.stringify({
         isRes:true,
         msg:"Query OK: sending result",
         content:result
       }));
     }
     else{
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({
+      actRes.setHeader('Content-Type', 'application/json');
+      actRes.end(JSON.stringify({
         isRes:false,
         msg:"Unknown Request sent"
       }));
@@ -459,7 +460,7 @@ router.post('/insertList', function(req, res, next) {
   serverjs=req.app.get('dbHandler');
   switch(req.body.type){
     case "route":
-      serverjs.insertRoutes(sendResponse,req.body.service_id,req.body.arr);
+      serverjs.insertRoutes(function(result){sendResponse(res,result);},req.body.service_id,req.body.arr);
       break;
     default:
       res.setHeader('Content-Type', 'application/json');

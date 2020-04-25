@@ -852,20 +852,27 @@
                 </button>
               </div>
               <div class="modal-body">
-                <div ng-show="requestModal.isDate || requestModal.isDays" class="card pt-3 pr-2" style="align-items: center;">
+                <div class="card pt-3 pr-2" style="align-items: center;">
                   <div ng-show="requestModal.isDate" class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Booking date</span>
                     </div>
                     <input ng-model="requestModal.bookingDate"
-                      ng-bind="requestModal.bookingDate" type="date" class="form-control" placeholder="Mumbai">
+                      ng-bind="requestModal.bookingDate" type="date" class="form-control" placeholder="2020-04-25">
                   </div>
                   <div ng-show="requestModal.isDays"  class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">No of Days</span>
                     </div>
                     <input ng-model="requestModal.days" ng-bind="requestModal.days"
-                      type="number" class="form-control" placeholder="Mumbai">
+                      type="number" class="form-control" placeholder="1">
+                  </div>
+                   <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Quantity</span>
+                    </div>
+                    <input ng-model="requestModal.quantity" ng-bind="requestModal.quantity"
+                      type="number" class="form-control" placeholder="1">
                   </div>
                 </div>
                 <br>

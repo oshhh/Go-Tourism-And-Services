@@ -449,6 +449,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.requestModal={
 		bookingDate:new Date(),
 		days:1,
+		quantity:1,
 		isDate:false,
 		isDays:true,
 	}
@@ -486,7 +487,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			service_id:  "\"" + it.service_id +  "\"",
 			service_required_date : '"'+$scope.requestModal.bookingDate.toISOString().slice(0,10)+'"',
 			number_of_days : $scope.requestModal.days,
-			quantity : "1",
+			quantity : $scope.requestModal.quantity,
 			cost : it.price * (1 - it.discount * 0.01),
 		}}).then(
 		function(data, status, headers, config) {

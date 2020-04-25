@@ -34,6 +34,9 @@
           <div class="i_bar">
           <a ng-click="changeTab(2)" class="a_bar" href="javascript:bs(2)">User Queries</a>
           </div>
+          <div class="i_bar">
+          <a ng-click="changeTab(3)" class="a_bar" href="javascript:bs(3)">Analysis</a>
+          </div>        
         </div>
       </nav>
 
@@ -180,8 +183,18 @@
           </div>
         </div>
 
-        <div id="content_tab6" ng-show="tab==2">
+        <div id="content_tab2" ng-show="tab==2">
           <h3>Content2</h3>
+        </div>
+        <div id="content_tab3" ng-show="tab==3">
+          <h3>Analyse your business</h3>
+          <button class="btn btn-outline-primary btn-block">Competitor Analysis of maximum services requests</button>
+          <button class="btn btn-outline-primary btn-block">Competitor Analysis of rating</button>
+          <button class="btn btn-outline-primary btn-block">Competitor Analysis of fastest response to queries</button>
+          <button class="btn btn-outline-primary btn-block">Analysis of users serviced by region</button>
+          <button class="btn btn-outline-primary btn-block">Analysis of services requested per month</button>
+          <button class="btn btn-outline-primary btn-block">Analysis of services rejected/accepted</button>
+
         </div>
 
       </div>

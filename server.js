@@ -658,6 +658,7 @@ function planTrip(callback, trip) {
     tourist_spots = []
     trip.itinerary = {
         pleasure_value : 0,
+        cost : 0,
         status : "Budget Too Low!"
     }
 
@@ -776,7 +777,7 @@ function planTrip(callback, trip) {
                                                                             pleasure_value += ((tor + 1)/(3 * trip.number_of_days)) * trip.weightage.tourist_spot;
                                                                             pleasure_value /= (trip.weightage.flight + trip.weightage.food + trip.weightage.taxi + trip.weightage.room + trip.weightage.tourist_spot);
                                                                             pleasure_value *= 10;
-                                                                            if(trip.itinerary.pleasure_value <= pleasure_value) {
+                                                                            if(trip.itinerary.pleasure_value < pleasure_value || trip.itinerary.pleasure_value == pleasure_value && trip.itinerary.cost > total_cost) {
                                                                                 trip.itinerary.food_expense = food_expense[foo];
                                                                                 trip.itinerary.departure_flight = departure_flights[d_fli];
                                                                                 trip.itinerary.return_flight = return_flights[r_fli];

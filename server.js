@@ -135,7 +135,7 @@ function handleDisconnect() {
                                             // If you're also serving http, display a 503 error.
     con.on('error', function(err) {
         console.log('db error', err);
-        if(err.code == 'PROTOCOL_CONNECTION_LOST' | err.code == 'ECONNRESET') { // Connection to the MySQL server is usually
+        if(err.code == 'PROTOCOL_CONNECTION_LOST' || err.code == 'ECONNRESET') { // Connection to the MySQL server is usually
             handleDisconnect();                         // lost due to either server restart, or a
         } else {                                      // connnection idle timeout (the wait_timeout
             throw err;                                  // server variable configures this)
@@ -770,7 +770,7 @@ function planTrip(callback, trip) {
                                                                             console.log(Math.floor((trip.number_of_people + rooms[roo][0].capacity - 1)) + "/" + (rooms[roo][0].capacity) + " * " + trip.number_of_days);
                                                                             pleasure_value = 0
                                                                             pleasure_value += (1) * trip.weightage.flight;
-                                                                            pleasure_value += (foo/3) * trip.weightage.food;
+                                                                            pleasure_value += (food_expense[foo][0]/1500) * trip.weightage.food;
                                                                             pleasure_value += (taxis[tax][0].AC == 'Y' ? 1 : 0) * trip.weightage.taxi;
                                                                             pleasure_value += ((rooms[roo][0].rating + (rooms[roo][0].wifi == 'Y'? 1 : 0))/6) * trip.weightage.room ;
                                                                             pleasure_value += ((tor + 1)/(3 * trip.number_of_days)) * trip.weightage.tourist_spot;

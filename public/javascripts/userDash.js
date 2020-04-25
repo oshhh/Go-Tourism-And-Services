@@ -94,12 +94,12 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.plan_trip={
 		status:"Pending",
 		user_id: "USR00000",
-		destination_city: "Goa",
-		user_city: "Aurangabad",
+		destination_city: "Delhi",
+		user_city: "Mumbai",
 		depDate: new Date(),
 		number_of_people: 4,
 		number_of_days: 2,
-		budget: 200000,
+		budget: 50000,
 		from_home:true,
 		weightage: { food: 2, taxi: 3, room: 5, tourist_spot: 3, flight: 3 },
 		itinerary : {}
@@ -185,6 +185,19 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		$scope.planner.output.splice($scope.planner.output.indexOf(it),1);
 	}
+	$scope.order = function(domain) {
+
+	}
+	$scope.orderTouristSpot = function(domain) {
+		switch(domain.sortOrder) {
+			case 0:
+				domain.data.sort(function(a, b) {return a.entry_fee - b.entry_fee});
+			break;
+			case 1:
+					domain.data.sort(function(a, b) {return b.entry_fee - a.entry_fee});
+			break;
+		}
+	}
 	$scope.planTrip = function()
 	{
 		//use $scope.planner.budget/destination/keywords to output in this format:
@@ -215,6 +228,51 @@ angularApp.controller("ngContent",function($scope,$http)
 				console.log("error");
 			}
 		);
+	}
+	$scope.updatePlannedTrip = function(it) {
+		if(it != null) {
+			for(var tsp = 0; tsp < $scope.plan_trip.itinerary.tourist_spots.length; ++ tsp) {
+				if($scope.plan_trip.itinerary.tourist_spots[tsp].tourist_spot_id == it.tourist_spot_id) {
+					$scope.plan_trip.itinerary.tourist_spots.splice(tsp, 1);
+					break;
+				}
+			}
+		}
+		$scope.plan_trip.itinerary.cost = 0;
+		$scope.plan_trip.itinerary.pleasure_value = 0
+		if($scope.plan_trip.itinerary.food_expense != null) {
+			$scope.plan_trip.itinerary.cost += $scope.plan_trip.itinerary.food_expense[0] * $scope.plan_trip.itinerary.food_expense[1];
+			$scope.plan_trip.itinerary.pleasure_value += ($scope.plan_trip.itinerary.food_expense[0]/1500) * $scope.plan_trip.weightage.food;
+		}
+		console.log($scope.plan_trip.itinerary.pleasure_value);
+		if($scope.plan_trip.itinerary.departure_flight != null) {
+			$scope.plan_trip.itinerary.cost += ($scope.plan_trip.itinerary.departure_flight[0].price) * (1 - $scope.plan_trip.itinerary.departure_flight[0].discount * 0.01) * $scope.plan_trip.itinerary.departure_flight[1];
+			$scope.plan_trip.itinerary.pleasure_value += (0.5) * $scope.plan_trip.weightage.flight;
+		}
+		console.log($scope.plan_trip.itinerary.pleasure_value);
+		if($scope.plan_trip.itinerary.return_flight != null) {
+			$scope.plan_trip.itinerary.cost += ($scope.plan_trip.itinerary.return_flight[0].price) * (1 - $scope.plan_trip.itinerary.return_flight[0].discount * 0.01) * $scope.plan_trip.itinerary.return_flight[1];
+			$scope.plan_trip.itinerary.pleasure_value += (0.5) * $scope.plan_trip.weightage.flight;
+		}
+		console.log($scope.plan_trip.itinerary.pleasure_value);
+		if($scope.plan_trip.itinerary.taxi != null) {
+			$scope.plan_trip.itinerary.cost += $scope.plan_trip.itinerary.taxi[0].price * (1 - $scope.plan_trip.itinerary.taxi[0].discount * 0.01) * $scope.plan_trip.itinerary.taxi[1];
+			$scope.plan_trip.itinerary.pleasure_value += ($scope.plan_trip.itinerary.taxi[0].AC == 'Y' ? 1 : 0) * $scope.plan_trip.weightage.taxi;
+		}
+		console.log($scope.plan_trip.itinerary.pleasure_value);
+		if($scope.plan_trip.itinerary.room != null) {
+			$scope.plan_trip.itinerary.cost += $scope.plan_trip.itinerary.room[0].price * (1 - $scope.plan_trip.itinerary.room[0].discount * 0.01) * $scope.plan_trip.itinerary.room[1];
+			$scope.plan_trip.itinerary.pleasure_value += (($scope.plan_trip.itinerary.room[0].rating + ($scope.plan_trip.itinerary.room[0].wifi == 'Y'? 1 : 0))/6) * $scope.plan_trip.weightage.room ;
+		}
+		console.log($scope.plan_trip.itinerary.pleasure_value);
+		for(i = 0; i < $scope.plan_trip.itinerary.tourist_spots.length; ++ i) {
+			$scope.plan_trip.itinerary.cost += $scope.plan_trip.itinerary.tourist_spots[i].entry_fee;
+		}	
+		console.log($scope.plan_trip.itinerary.pleasure_value);
+		$scope.plan_trip.itinerary.pleasure_value += (($scope.plan_trip.itinerary.tourist_spots.length)/(3 * $scope.plan_trip.number_of_days)) * $scope.plan_trip.weightage.tourist_spot;
+		console.log($scope.plan_trip.itinerary.pleasure_value);
+		$scope.plan_trip.itinerary.pleasure_value /= (parseInt($scope.plan_trip.weightage.flight) + parseInt($scope.plan_trip.weightage.food) + parseInt($scope.plan_trip.weightage.taxi) + parseInt($scope.plan_trip.weightage.room) + parseInt($scope.plan_trip.weightage.tourist_spot));
+		$scope.plan_trip.itinerary.pleasure_value *= 10;	
 	}
 	$scope.finalizeTrip = async function()
 	{
@@ -346,11 +404,26 @@ angularApp.controller("ngContent",function($scope,$http)
 				$scope.flight.data.forEach(element => {
 					element.showRev=false;
 				});
+				switch($scope.flight.sortOrder) {
+					case "0":
+						$scope.flight.data.sort(function(a, b) {return a.price - b.price});
+					break;
+					case "1":
+							$scope.flight.data.sort(function(a, b) {return b.price - a.price});
+					break;
+					case "2":
+						$scope.flight.data.sort(function(a, b) {return a.discount - b.discount});
+					break;
+					case "3":
+						$scope.flight.data.sort(function(a, b) {return b.discount - a.discount});
+					break;
+				}	
 				$scope.flight.status="OK";
-				
+
 				},function(data, status, headers, config) {
 					console.log("error");
-				});
+				}
+			);
 		}
 		else if(tab==3)
 		{
@@ -368,11 +441,27 @@ angularApp.controller("ngContent",function($scope,$http)
 					$scope.bus_train.data.forEach(element => {
 					element.showRev=false;
 				});
+				console.log("sort order: " + $scope.bus_train.sortOrder)
+				switch($scope.bus_train.sortOrder) {
+					case "0":
+						$scope.bus_train.data.sort(function(a, b) {return a.price - b.price});
+					break;
+					case "1":
+							$scope.bus_train.data.sort(function(a, b) {return b.price - a.price});
+					break;
+					case "2":
+						$scope.bus_train.data.sort(function(a, b) {return a.discount - b.discount});
+					break;
+					case "3":
+						$scope.bus_train.data.sort(function(a, b) {return b.discount - a.discount});
+					break;
+				}				
 				$scope.bus_train.status="OK";
-				
+	
 				},function(data, status, headers, config) {
 					console.log("error");
-				});
+				}
+			);
 		}
 		else if(tab==4)
 		{
@@ -389,6 +478,20 @@ angularApp.controller("ngContent",function($scope,$http)
 				$scope.taxi.data.forEach(element => {
 					element.showRev=false;
 				});
+				switch($scope.taxi.sortOrder) {
+					case "0":
+						$scope.taxi.data.sort(function(a, b) {return a.price - b.price});
+					break;
+					case "1":
+							$scope.taxi.data.sort(function(a, b) {return b.price - a.price});
+					break;
+					case "2":
+						$scope.taxi.data.sort(function(a, b) {return a.discount - b.discount});
+					break;
+					case "3":
+						$scope.taxi.data.sort(function(a, b) {return b.discount - a.discount});
+					break;
+				}				
 				$scope.taxi.status="OK";
 				
 				},function(data, status, headers, config) {
@@ -413,8 +516,22 @@ angularApp.controller("ngContent",function($scope,$http)
 				$scope.room.data.forEach(element => {
 					element.showRev=false;
 				});
+				switch($scope.room.sortOrder) {
+					case "0":
+						$scope.room.data.sort(function(a, b) {return a.price - b.price});
+					break;
+					case "1":
+							$scope.room.data.sort(function(a, b) {return b.price - a.price});
+					break;
+					case "2":
+						$scope.room.data.sort(function(a, b) {return a.discount - b.discount});
+					break;
+					case "3":
+						$scope.room.data.sort(function(a, b) {return b.discount - a.discount});
+					break;
+				}				
 				$scope.room.status="OK";
-				
+
 				},function(data, status, headers, config) {
 					console.log("error");
 				});
@@ -434,11 +551,27 @@ angularApp.controller("ngContent",function($scope,$http)
 				$scope.food.data.forEach(element => {
 					element.showRev=false;
 				});
+				switch($scope.food.sortOrder) {
+					case "0":
+						$scope.food.data.sort(function(a, b) {return a.price - b.price});
+					break;
+					case "1":
+							$scope.food.data.sort(function(a, b) {return b.price - a.price});
+					break;
+					case "2":
+						$scope.food.data.sort(function(a, b) {return a.discount - b.discount});
+					break;
+					case "3":
+						$scope.food.data.sort(function(a, b) {return b.discount - a.discount});
+					break;
+				}				
 				$scope.food.status="OK";
+
 				
 				},function(data, status, headers, config) {
 					console.log("error");
-				});
+				}
+			);
 		}
 		else if(tab==7)
 		{
@@ -455,6 +588,14 @@ angularApp.controller("ngContent",function($scope,$http)
 				$scope.tourist_spot.data.forEach(element => {
 					element.showRev=false;
 				});
+				switch($scope.tourist_spot.sortOrder) {
+					case "0":
+						$scope.tourist_spot.data.sort(function(a, b) {return a.entry_fee - b.entry_fee});
+					break;
+					case "1":
+							$scope.tourist_spot.data.sort(function(a, b) {return b.entry_fee - a.entry_fee});
+					break;
+				}				
 				$scope.tourist_spot.status="OK";
 				
 				},function(data, status, headers, config) {
@@ -475,7 +616,22 @@ angularApp.controller("ngContent",function($scope,$http)
 				$scope.guide.data.forEach(element => {
 					element.showRev=false;
 				});
+				switch($scope.guide.sortOrder) {
+					case 0:
+						$scope.guide.data.sort(function(a, b) {return a.price - b.price});
+					break;
+					case 1:
+							$scope.guide.data.sort(function(a, b) {return b.price - a.price});
+					break;
+					case 2:
+						$scope.guide.data.sort(function(a, b) {return a.discount - b.discount});
+					break;
+					case 3:
+						$scope.guide.data.sort(function(a, b) {return a.discount - b.discount});
+					break;
+				}				
 				$scope.guide.status="OK";
+
 				},function(data, status, headers, config) {
 					console.log("error");
 				});

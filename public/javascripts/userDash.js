@@ -96,6 +96,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		user_id: "USR00000",
 		destination_city: "Goa",
 		user_city: "Aurangabad",
+		depDate: new Date(),
 		number_of_people: 4,
 		number_of_days: 2,
 		budget: 200000,
@@ -154,7 +155,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			});
 			elementDOM.appendChild(containerList);
 			containerList.id=listName;
-			console.log(containerList);
+			// console.log(containerList);
 		}
 	}
 	$scope.trip={
@@ -185,7 +186,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		//use $scope.planner.budget/destination/keywords to output in this format:
 		//output - {service_id:"",quantity:1,price:10}
 		$scope.plan_trip.status = "Calculating"
-		console.log($scope.plan_trip.budget);
+		// console.log($scope.plan_trip.budget);
 		$http.get("/api/getData",{params:{
 			type:"plan_trip",
 			user_id: "\"" + $scope.plan_trip.user_id + "\"",
@@ -210,6 +211,81 @@ angularApp.controller("ngContent",function($scope,$http)
 				console.log("error");
 			}
 		);
+	}
+	$scope.finalizeTrip = async function()
+	{
+		console.log($scope.plan_trip.itinerary);
+		//Insert Trip
+		departDate = $scope.plan_trip.depDate;
+		returnDate = new Date();
+		returnDate.setDate(departDate.getDate()+$scope.plan_trip.number_of_days);
+		tripStatus = await $http.get("/api/getData",{params:{
+			type:"new_trip_return_id",
+			user_id:$scope.curUser.uid,
+			destination_city:$scope.plan_trip.destination_city,
+			departure_date:departDate.toISOString().slice(0,10),
+			return_date:returnDate.toISOString().slice(0,10),
+			}});
+		newTripID="";
+		if(tripStatus.data.content)
+			newTripID=tripStatus.data.content.slice(1,-1);
+		else
+			return;
+		getCreatedTrip= await $http.get("/api/getData",{params:{type:"my_trips",}});
+		err=true;
+		console.log(newTripID)
+		console.log(getCreatedTrip);
+		$scope.my_trips.data=getCreatedTrip.data.content.result;
+		$scope.my_trips.completed_requests=getCreatedTrip.data.content.completed_requests;
+		$scope.my_trips.data.forEach(element => {
+		if(element.trip_id==newTripID)
+		{
+			console.log(element.trip_id);
+			err=false;
+			newTripID=element.trip_id;
+			$scope.trip.selected=element;
+		}
+		});
+		if(!err)
+		{
+			console.log($scope.trip.selected);
+			if($scope.plan_trip.itinerary.departure_flight!=null)
+			{
+				if($scope.plan_trip.itinerary.departure_flight[0]!=null)
+				{
+					await $scope.addPlannedRequest($scope.plan_trip.itinerary.departure_flight[0],departDate,1,1);
+				}
+			}
+			if($scope.plan_trip.itinerary.return_flight!=null)
+			{
+				if($scope.plan_trip.itinerary.return_flight[0]!=null)
+				{
+					await $scope.addPlannedRequest($scope.plan_trip.itinerary.return_flight[0],returnDate,1,1);
+				}
+			}
+			if($scope.plan_trip.itinerary.room!=null)
+			{
+				if($scope.plan_trip.itinerary.room[0]!=null)
+				{
+					await $scope.addPlannedRequest($scope.plan_trip.itinerary.room[0],departDate,$scope.plan_trip.number_of_days,$scope.plan_trip.number_of_people);
+				}
+			}
+			if($scope.plan_trip.itinerary.taxi!=null)
+			{
+				if($scope.plan_trip.itinerary.taxi[0]!=null)
+				{
+					await $scope.addPlannedRequest($scope.plan_trip.itinerary.taxi[0],departDate,$scope.plan_trip.number_of_days,1);
+				}
+			}
+			console.log("Added Everything");
+			$('#toast_msg').text("Trip Services Added");
+			$('.toast').toast("show");
+		}
+		else{
+			$('#toast_msg').text("There Was some error");
+			$('.toast').toast("show");
+		}
+		$('#plannerModal').modal('hide');
 	}
 	//sends get request with inputparams and put that data into destOBJ object
 	$scope.putData=function(sourceUrl,inputParams,destObj,callback)
@@ -478,6 +554,17 @@ angularApp.controller("ngContent",function($scope,$http)
 		// console.log("Date",$scope.requestModal.bookingDate.toISOString().slice(0,10));
 		// $scope.request(it,$scope.requestModal.days,$scope.requestModal.bookingDate)
 	}
+	$scope.addPlannedRequest = async function(it,requiredDate,numDays,quantity){
+		addState=await $http.get('/api/getData',{params:{
+			type : 'request',
+			trip_id: "\"" + $scope.trip.selected.trip_id + "\"",
+			service_id:  "\"" + it.service_id +  "\"",
+			service_required_date : '"'+requiredDate.toISOString().slice(0,10)+'"',
+			number_of_days : numDays,
+			quantity : quantity,
+			cost : it.price * (1 - it.discount * 0.01),
+		}});
+	}
 	$scope.request = function(){
 		// dateString=$scope.requestModal.bookingDate.get
 		it=$scope.requestModal.service;
@@ -722,7 +809,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	}
 	$scope.selectTrip=function(it)
 	{
-		console.log(it);
+		console.log(it.departure_date.slice(0,10));
 		$scope.trip.selected = it;
 	}
 	$scope.openNewTripModal=function()

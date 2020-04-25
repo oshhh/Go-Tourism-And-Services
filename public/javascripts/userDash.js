@@ -94,12 +94,12 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.plan_trip={
 		status:"Pending",
 		user_id: "USR00000",
-		destination_city: "Goa",
-		user_city: "Aurangabad",
+		destination_city: "Delhi",
+		user_city: "Mumbai",
 		depDate: new Date(),
 		number_of_people: 4,
 		number_of_days: 2,
-		budget: 200000,
+		budget: 50000,
 		from_home:true,
 		weightage: { food: 2, taxi: 3, room: 5, tourist_spot: 3, flight: 3 },
 		itinerary : {}
@@ -228,6 +228,51 @@ angularApp.controller("ngContent",function($scope,$http)
 				console.log("error");
 			}
 		);
+	}
+	$scope.updatePlannedTrip = function(it) {
+		if(it != null) {
+			for(var tsp = 0; tsp < $scope.plan_trip.itinerary.tourist_spots.length; ++ tsp) {
+				if($scope.plan_trip.itinerary.tourist_spots[tsp].tourist_spot_id == it.tourist_spot_id) {
+					$scope.plan_trip.itinerary.tourist_spots.splice(tsp, 1);
+					break;
+				}
+			}
+		}
+		$scope.plan_trip.itinerary.cost = 0;
+		$scope.plan_trip.itinerary.pleasure_value = 0
+		if($scope.plan_trip.itinerary.food_expense != null) {
+			$scope.plan_trip.itinerary.cost += $scope.plan_trip.itinerary.food_expense[0] * $scope.plan_trip.itinerary.food_expense[1];
+			$scope.plan_trip.itinerary.pleasure_value += ($scope.plan_trip.itinerary.food_expense[0]/1500) * $scope.plan_trip.weightage.food;
+		}
+		console.log($scope.plan_trip.itinerary.pleasure_value);
+		if($scope.plan_trip.itinerary.departure_flight != null) {
+			$scope.plan_trip.itinerary.cost += ($scope.plan_trip.itinerary.departure_flight[0].price) * (1 - $scope.plan_trip.itinerary.departure_flight[0].discount * 0.01) * $scope.plan_trip.itinerary.departure_flight[1];
+			$scope.plan_trip.itinerary.pleasure_value += (0.5) * $scope.plan_trip.weightage.flight;
+		}
+		console.log($scope.plan_trip.itinerary.pleasure_value);
+		if($scope.plan_trip.itinerary.return_flight != null) {
+			$scope.plan_trip.itinerary.cost += ($scope.plan_trip.itinerary.return_flight[0].price) * (1 - $scope.plan_trip.itinerary.return_flight[0].discount * 0.01) * $scope.plan_trip.itinerary.return_flight[1];
+			$scope.plan_trip.itinerary.pleasure_value += (0.5) * $scope.plan_trip.weightage.flight;
+		}
+		console.log($scope.plan_trip.itinerary.pleasure_value);
+		if($scope.plan_trip.itinerary.taxi != null) {
+			$scope.plan_trip.itinerary.cost += $scope.plan_trip.itinerary.taxi[0].price * (1 - $scope.plan_trip.itinerary.taxi[0].discount * 0.01) * $scope.plan_trip.itinerary.taxi[1];
+			$scope.plan_trip.itinerary.pleasure_value += ($scope.plan_trip.itinerary.taxi[0].AC == 'Y' ? 1 : 0) * $scope.plan_trip.weightage.taxi;
+		}
+		console.log($scope.plan_trip.itinerary.pleasure_value);
+		if($scope.plan_trip.itinerary.room != null) {
+			$scope.plan_trip.itinerary.cost += $scope.plan_trip.itinerary.room[0].price * (1 - $scope.plan_trip.itinerary.room[0].discount * 0.01) * $scope.plan_trip.itinerary.room[1];
+			$scope.plan_trip.itinerary.pleasure_value += (($scope.plan_trip.itinerary.room[0].rating + ($scope.plan_trip.itinerary.room[0].wifi == 'Y'? 1 : 0))/6) * $scope.plan_trip.weightage.room ;
+		}
+		console.log($scope.plan_trip.itinerary.pleasure_value);
+		for(i = 0; i < $scope.plan_trip.itinerary.tourist_spots.length; ++ i) {
+			$scope.plan_trip.itinerary.cost += $scope.plan_trip.itinerary.tourist_spots[i].entry_fee;
+		}	
+		console.log($scope.plan_trip.itinerary.pleasure_value);
+		$scope.plan_trip.itinerary.pleasure_value += (($scope.plan_trip.itinerary.tourist_spots.length)/(3 * $scope.plan_trip.number_of_days)) * $scope.plan_trip.weightage.tourist_spot;
+		console.log($scope.plan_trip.itinerary.pleasure_value);
+		$scope.plan_trip.itinerary.pleasure_value /= (parseInt($scope.plan_trip.weightage.flight) + parseInt($scope.plan_trip.weightage.food) + parseInt($scope.plan_trip.weightage.taxi) + parseInt($scope.plan_trip.weightage.room) + parseInt($scope.plan_trip.weightage.tourist_spot));
+		$scope.plan_trip.itinerary.pleasure_value *= 10;	
 	}
 	$scope.finalizeTrip = async function()
 	{

@@ -75,6 +75,27 @@ router.get('/getData', function(req, res, next) {
         });
       } , "trip");
     break;
+    case 'new_trip_return_id':
+      serverjs.count_table( function(result) {
+        serverjs.insertIntoTable(function(re1){
+          if(result)
+          {
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({
+              isRes:true,
+              msg:"Query OK: sending result",
+              content:"\"TRP" + ("00000" + (result[0]['cnt'] + 1)).slice(-5) + "\""
+            }));
+          }
+        }, 'trip', {
+          trip_id:"\"TRP" + ("00000" + (result[0]['cnt'] + 1)).slice(-5) + "\"",
+          user_id: "\"" + req.session.uname + "\"",
+          destination_city : "\"" + req.query.destination_city + "\"",
+          departure_date : "\"" + req.query.departure_date + "\"",
+          return_date : "\"" + req.query.return_date + "\"",
+        });
+      } , "trip");
+    break;
     case 'rate_service':
       serverjs.user.rateService(sendResponse, req.query.request_id, req.query.rating);
     break;

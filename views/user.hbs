@@ -142,7 +142,6 @@
               </div>
             </div>
           </div> --}}
-          <br>
           <div class="i_bar">
             <a class="a_bar" data-dismiss="modal" href="#" ng-click="openPlanner()">Open Trip Planner</a>
           </div>
@@ -1034,7 +1033,14 @@
                 </div> --}}
                 </div>
                 <div class="mt-2 ml-2">
-                  <div class="custom-control custom-checkbox">
+                  <div class="input-group mb-0" ng-hide="plan_trip.from_home">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Departure Date</span>
+                    </div>
+                    <input ng-model="plan_trip.depDate" ng-bind="plan_trip.depDate" class="form-control"
+                      type="date" placeholder="2020-04-25">
+                  </div>
+                  <div class="ml-3 mt-2 mb-2 custom-control custom-checkbox">
                     <input ng-model="plan_trip.from_home" value="\{{plan_trip.from_home}}" type="checkbox"
                       class="custom-control-input" id="from_home">
                     <label class="custom-control-label" for="from_home">Leave from Home</label>
@@ -1067,7 +1073,7 @@
                     <div class="col card">
                       <div class="card-header bg-white font-weight-bold">Flights</div>
                       <ul class="list-group" style="height: auto !important;">
-                        <li class="list-group-item">
+                        <li ng-show="plan_trip.itinerary.departure_flight[0]!=null" class="list-group-item">
                           <div class="row justify-content-around">
                             <div class="col-10">Service ID: \{{plan_trip.itinerary.departure_flight[0].service_id}} <br>
                               From: \{{plan_trip.itinerary.departure_flight[0].from_city}} <br> To:
@@ -1079,13 +1085,13 @@
                               \{{plan_trip.itinerary.departure_flight[1]}} <br> Total Cost:
                               \{{plan_trip.itinerary.departure_flight[0].price * (1 - plan_trip.itinerary.departure_flight[0].discount * 0.01) * plan_trip.itinerary.departure_flight[1]}}
                             </div>
-                            <button ng-click="removeFlight(plan_trip.itinerary.departure_flight)" type="button"
+                            <button ng-click="plan_trip.itinerary.departure_flight[0]=null" type="button"
                               class="close text-right" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
                         </li>
-                        <li class="list-group-item">
+                        <li ng-show="plan_trip.itinerary.return_flight[0]!=null" class="list-group-item">
                           <div class="row justify-content-around">
                             <div class="col-10">Service ID: \{{plan_trip.itinerary.return_flight[0].service_id}} <br>
                               From: \{{plan_trip.itinerary.return_flight[0].from_city}} <br> To:
@@ -1097,7 +1103,7 @@
                               \{{plan_trip.itinerary.return_flight[1]}} <br> Total Cost:
                               \{{plan_trip.itinerary.return_flight[0].price * (1 - plan_trip.itinerary.return_flight[0].discount * 0.01) * plan_trip.itinerary.return_flight[1]}}
                             </div>
-                            <button ng-click="removeFlight(plan_trip.itinerary.return_flight)" type="button"
+                            <button ng-click="plan_trip.itinerary.return_flight[0]=null" type="button"
                               class="close text-right" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -1110,7 +1116,7 @@
                     <div class="col card">
                       <div class="card-header bg-white font-weight-bold">Hotel Room</div>
                       <ul class="list-group" style="height: auto !important;">
-                        <li class="list-group-item">
+                        <li ng-show="plan_trip.itinerary.room[0]!=null" class="list-group-item">
                           <div class="row justify-content-around">
                             <div class="col-10">Service ID: \{{plan_trip.itinerary.room[0].service_id}} <br> Hotel Name:
                               \{{plan_trip.itinerary.room[0].name}} <br> Locality:
@@ -1124,7 +1130,7 @@
                               \{{plan_trip.number_of_days}} <br> Total Cost:
                               \{{plan_trip.itinerary.room[0].price * (1 - plan_trip.itinerary.room[0].discount * 0.01) * plan_trip.itinerary.room[1]}}
                             </div>
-                            <button ng-click="removeFlight(plan_trip.itinerary.departure_flight)" type="button"
+                            <button ng-click="plan_trip.itinerary.room[0]=null" type="button"
                               class="close text-right" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -1137,7 +1143,7 @@
                     <div class="col card">
                       <div class="card-header bg-white font-weight-bold">Taxi</div>
                       <ul class="list-group" style="height: auto !important;">
-                        <li class="list-group-item">
+                        <li ng-show="plan_trip.itinerary.taxi[0]!=null" class="list-group-item">
                           <div class="row justify-content-around">
                             <div class="col-10">Service ID: \{{plan_trip.itinerary.taxi[0].service_id}} <br> Car Name:
                               \{{plan_trip.itinerary.taxi[0].car_name}} <br> Capacity:
@@ -1148,7 +1154,7 @@
                               \{{plan_trip.number_of_days}} <br> Total Cost:
                               \{{plan_trip.itinerary.taxi[0].price * (1 - plan_trip.itinerary.taxi[0].discount * 0.01) * plan_trip.itinerary.taxi[1]}}
                             </div>
-                            <button ng-click="removeFlight(plan_trip.itinerary.departure_flight)" type="button"
+                            <button ng-click="plan_trip.itinerary.taxi[0]=null" type="button"
                               class="close text-right" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -1161,11 +1167,11 @@
                     <div class="col card">
                       <div class="card-header bg-white font-weight-bold">Tourist Spots</div>
                       <ul class="list-group" style="height: auto !important;">
-                        <li class="list-group-item" ng-repeat="it in plan_trip.itinerary.tourist_spots">
+                        <li class="list-group-item" ng-repeat="it in plan_trip.itinerary.tourist_spots" ng-show="it!=null">
                           <div class="row justify-content-around">
                             <div class="col-10">Tourist Spot ID: \{{it.tourist_spot_id}} <br> Tourist Spot Name:
                               \{{it.name}} <br> Entry Fee: \{{it.entry_fee}}</div>
-                            <button ng-click="removeTouristSpot(it)" type="button" class="close text-right"
+                            <button ng-click="it=null" type="button" class="close text-right"
                               aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -1192,7 +1198,7 @@
 
                 <div class="row justify-content-center mt-4">
                   <div class="col-4 text-center">
-                    <button class="col btn btn-success" ng-click="addOutput()">Finalize</button>
+                    <button class="col btn btn-success" ng-click="finalizeTrip()">Finalize</button>
                   </div>
                 </div>
 

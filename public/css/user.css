@@ -15,14 +15,14 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
-/* .list-group{
+.list-group{
   cursor: pointer;
   height: 350px;
   overflow-y: scroll;
-}
+} 
 .list-group::-webkit-scrollbar {
   display: none;
-} */
+} 
 .list-group {
   -ms-overflow-style: none;
 }
@@ -80,4 +80,5 @@
 }
 #sidebar{
   z-index: 1000;
+  /* overflow-y: scroll; */
 }

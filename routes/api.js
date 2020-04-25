@@ -103,8 +103,10 @@ router.get('/getData', function(req, res, next) {
                 result_[routes[i].service_id].route.push(routes[i]);
               }
             }
-            for(i in result) {
-              result[i] = result_[result[i].service_id]
+            result = []
+            for(i in result_) {
+              result_[i].route.sort(function(a, b) {return a.arrival_time.localeCompare(b.arrival_time)});
+              result.push(result_[i])
             }
             console.log(result);
             sendResponse(result);

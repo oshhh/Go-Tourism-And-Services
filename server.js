@@ -152,7 +152,7 @@ function runQuery(callback, query) {
             callback(null);
             return;
         } else {
-            console.log(result);
+            // console.log(result);
             // console.log(callback);
             if(callback!=null)
             callback(result);

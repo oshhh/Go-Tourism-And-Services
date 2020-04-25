@@ -576,8 +576,8 @@ function getFilteredAutoCorrectPrediction(callback,queryData)
 function updateOneColumn(callback,data)
 {
     query=`update `+data.table_name+`
-    set `+data.column_name+` = "`+data.newValue+`" 
-    where `+data.whereColumn+` = "`+data.whereValue+`";`;
+    set `+data.column_name+` = `+data.newValue+`
+    where `+data.whereColumn+` = `+data.whereValue+`;`;
     runQuery(callback,query);
 }
 function updateList(callback,data)

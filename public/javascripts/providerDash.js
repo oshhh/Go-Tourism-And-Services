@@ -25,9 +25,9 @@ angularApp.controller("ngContent",function($scope,$http)
 		$http.put('/api/updateData',JSON.stringify({
 			table_name:"service_request",
 			column_name:"status",
-			newValue:it.status,
+			newValue:"\"" + it.status + "\"",
 			whereColumn:"request_id",
-			whereValue:it.request_id
+			whereValue:"\"" + it.request_id + "\""
 		}))
 		.then(function(response){
 			console.log("respinse",response);
@@ -43,17 +43,12 @@ angularApp.controller("ngContent",function($scope,$http)
 		});
 		if(it.status == "Completed") {
 			it.updateResult="Sending";
-			var today = new Date();
-			console.log(today);
-			var dd = String(today.getDate()).padStart(2, '0');
-			var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-			var yyyy = today.getFullYear();
 			$http.put('/api/updateData',JSON.stringify({
 				table_name:"service_request",
 				column_name:"completion_date",
-				newValue: yyyy + "-" + mm + "-" + dd,
+				newValue: "CURDATE()",
 				whereColumn:"request_id",
-				whereValue:it.request_id
+				whereValue: "\"" + it.request_id + "\""
 			}))
 			.then(function(response){
 				console.log("respinse",response);
@@ -75,9 +70,9 @@ angularApp.controller("ngContent",function($scope,$http)
 		$http.put('/api/updateData',JSON.stringify({
 			table_name:"service_request",
 			column_name:"user_rating",
-			newValue:it.user_rating,
+			newValue:"\"" + it.user_rating + "\"",
 			whereColumn:"request_id",
-			whereValue:it.request_id
+			whereValue:"\"" + it.request_id + "\""
 		}))
 		.then(function(response){
 			if(response || response.data.content.affectedRows==0)

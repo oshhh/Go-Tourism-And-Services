@@ -264,3 +264,22 @@ select:-webkit-autofill:focus {
     background-color: #9DE1CC !important;
     color : #111 !important;
 } */
+#loadingCont{
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: 2px solid red; */
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    z-index: 9000;
+    pointer-events:none;
+    /* visibility: visible;   */
+}
+svg{
+    display: block;
+    margin: auto;
+}

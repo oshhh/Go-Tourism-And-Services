@@ -41,6 +41,33 @@ angularApp.controller("ngContent",function($scope,$http)
 		},function(response){
 			console.log("err");
 		});
+		if(it.status == "Completed") {
+			it.updateResult="Sending";
+			var today = new Date();
+			console.log(today);
+			var dd = String(today.getDate()).padStart(2, '0');
+			var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+			var yyyy = today.getFullYear();
+			$http.put('/api/updateData',JSON.stringify({
+				table_name:"service_request",
+				column_name:"completion_date",
+				newValue: yyyy + "-" + mm + "-" + dd,
+				whereColumn:"request_id",
+				whereValue:it.request_id
+			}))
+			.then(function(response){
+				console.log("respinse",response);
+				if(response || response.data.content.affectedRows==0)
+				{
+					it.updateResult="Data updated";
+				}
+				else{
+					it.updateResult="Data Not updated";
+				}
+			},function(response){
+				console.log("err");
+			});	
+		}
 	}
 	$scope.changeRating=function(it)
 	{

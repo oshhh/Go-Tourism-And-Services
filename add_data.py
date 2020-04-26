@@ -1,16 +1,10 @@
-def createCSV(data, nameOfFile):
-    with open(nameOfFile+'.csv', 'w') as csvFile:
-        writer = csv.writer(csvFile)
-        writer.writerows(data)
-
+cities = set(['leh', 'ladakh', 'goa', 'jaipur', 'hyderabad', 'kolkata', 'chennai', 'lucknow', 'shilong', 'jodhpur', 'jammu', 'kanpur', 'kasauli', 'lonavala', 'chandigarh', 'dekhradun', 'darjeeling', 'gurgaon', 'indore', 'ludhiana', 'corbett', 'mumbai', 'delhi'])
 char = 'abcdefghijklmnopqrstuvwxyz0123456789'
 
 import pandas as pd
 import csv
 from random import randint, shuffle
 from math import isnan
-loil=[]
-cities = set([])
 service_providers = []
 hotels = []
 services = []
@@ -24,15 +18,14 @@ locations = {}
 with open('hotel_room_data.csv') as file:
 	data = pd.read_csv(file).values
 	shuffle(data)
-	data = data[:500]
+	data = data[:1000]
 	for row in data:
 		name = row[0]
 		city = row[3]
 		country = 'India'
 		locality = row[5]
 		state = row[6]
-		
-		if type(locality) == float or type(city) == float or type(state) == float:
+		if type(locality) == float or type(city) == float or type(state) == float or city.lower() not in cities:
 			continue
 		locality = locality.lower()
 		state = state.lower()

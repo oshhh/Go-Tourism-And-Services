@@ -1,6 +1,6 @@
 property_name,room_count,room_type,city,country,locality,state
-Hotel Jivan Jyoti,9,Standard Room,Kalimpong,INDIA,Rishi Road-Highway 12,WestBengal
-OYO Premium Kalimati Road Jamshedpur,15,Premium Room,Jamshedpur,INDIA,,Jharkhand
+Hotel Jivan Jyoti,9,Standard Room,Delhi,INDIA,East Delhi-Kaushambi,Delhi
+OYO Premium Kalimati Road Jamshedpur,15,Premium Room,Delhi,INDIA,East Delhi-Kaushambi,Delhi
 OYO Rooms Bera Road,15,Standard Room AC,Jaisalmer,INDIA,,Rajasthan
 Grand Kakinada by GRT Hotels,85,Business Room,Kakinada,INDIA,Cinema Road,AndhraPradesh
 Hotel Gorakh Haveli,17,Deluxe,Jaisalmer,INDIA,Near Jaisalmer Golden Fort,Rajasthan
@@ -10,12 +10,12 @@ Hotel Gopi Nivas Grand,70,Standard Non A/c Room,Kanyakumari,INDIA,Near Vivekanan
 Polo Inn Guest House,0,AC Room,Jodhpur,INDIA,Paota,Rajasthan
 Hotel The Vaishnodevi,40,Royal Suite,Katra,INDIA,Reasi Road,JammuandKashmir
 Vista Rooms at Jaisalmer Fort,20,Standard Room AC,Jaisalmer,INDIA,Near Jaisalmer Golden Fort,Rajasthan
-Kumaran Guest House- Karaikal,19,Double Bed Room,Karaikal,INDIA,Dr. Ambedkar Street,TamilNadu
+Kumaran Guest House- Karaikal,19,Double Bed Room,Delhi,INDIA,East Delhi-Kaushambi,Delhi
 Manvar Desert Camp,40,Standard Camp,Jodhpur,INDIA,,Rajasthan
 The Blue House Guest House,21,Standard,Jodhpur,INDIA,Old City,Rajasthan
 Kavvayi Beach House,8,Deluxe Room Non AC,Kannur,INDIA,Payyannur,Kerala
 Sadhoo Inn,20,Deluxe Room,Kannur,INDIA,Kannur Railway Station,Kerala
-Hotel Prem Plaza,20,Executive Room,Karnal,INDIA,Near Railway Station,Haryana
+Hotel Prem Plaza,20,Executive Room,Delhi,INDIA,East Delhi-Kaushambi,Delhi
 Raman Palace,20,Economy Room,Jodhpur,INDIA,Ratanada Petrol Pump,Rajasthan
 Thai Resort,6,Standard Room Non AC,Kannur,INDIA,Near Parassinikadavu Sri Muthappan Temple,Kerala
 Hotel Manglam,9,Deluxe Room,Jaisalmer,INDIA,City Centre,Rajasthan
@@ -84,12 +84,12 @@ Hotel Parvathi Residency,21,Deluxe A/C  Room,Kanyakumari,INDIA,Near Nagercoil,Ta
 OYO Rooms Near Gandhi Chowk Jaisalmer,15,Standard Room AC,Jaisalmer,INDIA,City Centre,Rajasthan
 Himmatgarh Palace,40,Deluxe Room,Jaisalmer,INDIA,City Centre,Rajasthan
 Hotel Baboo Soorya,38,Double AC,Kanchipuram,INDIA,Gandhi Road,TamilNadu
-Hotel Panchshil,50,Deluxe AC Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Panchshil,50,Deluxe AC Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Hotel Green Park,15,Family Suite,Kodaikanal,INDIA,Convent Road,TamilNadu
 Les 3 Elephants,11,Standard Cottage,Kochi,INDIA,Cherai Beach,Kerala
 OYO Premium Sarat Bose Road,15,Standard Room AC,Kolkata,INDIA,Sarat Bose Road,WestBengal
 Kongu Residency,15,Super Deluxe,Kodaikanal,INDIA,Convent Road,TamilNadu
-Hotel Rajat Executive,27,Standard AC Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Rajat Executive,27,Standard AC Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 The Chardham Camp Guptkashi,25,Deluxe Tent,Kedarnath,INDIA,Guptkashi,Uttaranchal
 Hotel Laal's Inn,36,Standard Room AC,Kochi,INDIA,Vyttila,Kerala
 Palm Grove Service Villa,14,Standard Room AC,Kochi,INDIA,Kalamassery,Kerala
@@ -122,14 +122,14 @@ Hotel Stone Palace,14,Deluxe Room,Kodaikanal,INDIA,Naidupuram,TamilNadu
 Radisson Blu Kochi,150,Superior Room,Kochi,INDIA,MG Road,Kerala
 Hotel Kapoor Palace,20,four bedded room (a/c),Katra,INDIA,City Centre-Main Market,JammuandKashmir
 Hotel Jamuna Palace,20,Standard Non Ac Room,Katra,INDIA,City Centre-Main Market,JammuandKashmir
-Hotel K Square,24,Standard Ac Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel K Square,24,Standard Ac Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 OYO Rooms Howrah Railway Station,15,Standard Room AC,Kolkata,INDIA,Howrah,WestBengal
 Manakkil Hotel,22,Standard AC Room,Kochi,INDIA,MG Road,Kerala
 "Trident, Cochin",85,Superior Room,Kochi,INDIA,Willingdon Island,Kerala
 Happy Camper - Kitkat,17,Superior Room,Kochi,INDIA,Fort Kochi,Kerala
 Treebo Platinum,27,Standard A/C,Kolkata,INDIA,Salt Lake Sector 1,WestBengal
 GRT Nature Trails Kodaikanal,40,Rock Cabin,Kodaikanal,INDIA,Attuvampatty,TamilNadu
-Vista Rooms At Telephone Bhavan,31,Standard Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Vista Rooms At Telephone Bhavan,31,Standard Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 NexGen Guest House BL 135,5,Standard AC,Kolkata,INDIA,Salt Lake Sector 2,WestBengal
 Hotel Aashirwad,26,Super Deluxe Four Bedded Room,Katra,INDIA,Jammu Katra Highway,JammuandKashmir
 OYO Rooms Salt Lake Sector III IB Block,15,Standard Room AC,Kolkata,INDIA,Salt Lake Sector 3,WestBengal
@@ -154,7 +154,7 @@ OYO Rooms Taltala Kolkata,15,Standard Room,Kolkata,INDIA,AJC Bose Road,WestBenga
 OYO Rooms Ernakulam Broadway,0,Standard Room,Kochi,INDIA,MG Road,Kerala
 Sea Lagoon Health Resort,40,Suite Royal,Kochi,INDIA,Cherai Beach,Kerala
 OYO Premium Corporate Getaway Observatory Road,15,Standard Room,Kodaikanal,INDIA,Near Kodai Lake,TamilNadu
-STARiHOTELS Tararani Chowk Kolhapur,29,Luxury Ac,Kolhapur,INDIA,,Maharashtra
+STARiHOTELS Tararani Chowk Mumbai,29,Luxury Ac,Mumbai,INDIA,,Maharashtra
 Brunton Boatyard - A CGH Earth Group,26,Standard Sea Facing Room,Kochi,INDIA,Fort Kochi,Kerala
 OYO Premium Adlux Convention Centre Extension,15,Standard Room,Kochi,INDIA,Cochin International Airport,Kerala
 Hotel Parkash,15,Double Bedded Room - Non AC,Katra,INDIA,Near Banganga,JammuandKashmir
@@ -180,7 +180,7 @@ Hotel Walson,0,Deluxe,Kolkata,INDIA,Park Street and Vicinity,WestBengal
 The Kohli'S Inn,18,Deluxe Room AC,Katra,INDIA,Kashmir Road,JammuandKashmir
 Himalaya Darshan Resort,8,Deluxe Cottage,Kausani,INDIA,Kausani,Uttaranchal
 Riviera Suites,125,Standard Room,Kochi,INDIA,Ernakulam South Railway Station,Kerala
-K Tree Hotel,26,Deluxe Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+K Tree Hotel,26,Deluxe Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Guest Accomodation FE 229,5,Standard Room AC,Kolkata,INDIA,Salt Lake Sector 3,WestBengal
 Mirchi Bite B6 - 904 Service Apartment,0,Standard Room,Kolkata,INDIA,Kasba Zone,WestBengal
 Hotel Trinity Temple Towers,18,Deluxe Room,Kodaikanal,INDIA,Naidupuram,TamilNadu
@@ -199,7 +199,7 @@ Elphinstone Residency,8,Standard Room,Kochi,INDIA,Fort Kochi,Kerala
 OYO Rooms Airport Gate No 2,15,Standard Room AC,Kolkata,INDIA,Airport Zone,WestBengal
 Hotel Highway Garden,21,Superior Room,Kochi,INDIA,Vyttila,Kerala
 Hotel Atul Regency,47,Family Suite AC,Katra,INDIA,Jammu Road,JammuandKashmir
-Hotel Anugraha Deluxe,20,Deluxe Non AC Rooms,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Anugraha Deluxe,20,Deluxe Non AC Rooms,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Sarmila Residency,15,Deluxe Room,Kodaikanal,INDIA,Annasalai,TamilNadu
 Prakash Regency,15,Super Deluxe Room,Kinnaur,INDIA,Sangla,HimachalPradesh
 Hotel Swing High,47,Executive Double,Katra,INDIA,Jammu Road,JammuandKashmir
@@ -226,17 +226,17 @@ Hotel Rifaya,28,Deluxe Room,Kodaikanal,INDIA,Near Kodai Lake,TamilNadu
 Treebo Stay,14,Deluxe Room,Kolkata,INDIA,Salt Lake Sector 5,WestBengal
 Hotel Akash Deep,33,Deluxe Room,Kolkata,INDIA,Park Street and Vicinity,WestBengal
 OYO Rooms Lake Road,15,Standard Room AC,Kolkata,INDIA,Kalighat-Southern Avenue,WestBengal
-Hotel Atria,36,Executive Non AC,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Atria,36,Executive Non AC,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 OYO Apartments Ballygunge Hazra,15,Standard Room AC,Kolkata,INDIA,South Kolkata,WestBengal
 OYO Rooms Medical Hub Santoshpur,15,Standard Room,Kolkata,INDIA,Kasba Zone,WestBengal
 Vista Rooms at Edappally,21,Standard Room,Kochi,INDIA,Vyttila,Kerala
-Hotel Chalukya Deluxe,54,Non Ac Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Chalukya Deluxe,54,Non Ac Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Four Seasons Hotel Cochin,8,Standard Room,Kochi,INDIA,Fort Kochi,Kerala
 The Atrium On The Greens,61,Deluxe Room,Katra,INDIA,Railway Road,JammuandKashmir
 Sky Palace Homestay,4,Sea view room,Kochi,INDIA,MG Road,Kerala
 OYO Rooms Salt Lake Sector 1 AD Block,15,Standard Room AC,Kolkata,INDIA,Salt Lake Sector 1,WestBengal
 OYO Premium Airport Lake Town Road,15,Premium Room,Kolkata,INDIA,Airport Zone,WestBengal
-Hotel International,22,Non Ac Deluxe Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel International,22,Non Ac Deluxe Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Neemrana's The Tower House,14,Heritage Old World,Kochi,INDIA,Fort Kochi,Kerala
 Anifa Residency,10,Deluxe Room,Kodaikanal,INDIA,Convent Road,TamilNadu
 United 21 Grassland,18,Executive,Kaziranga,INDIA,Kaziranga National Park,Assam
@@ -245,7 +245,7 @@ OYO Apartments Salt Lake DL BLOCK,15,Standard Room AC,Kolkata,INDIA,Salt Lake Se
 Ramada Resort Cochin,42,Superior Room,Kochi,INDIA,Kumbalam South,Kerala
 Fort Garden Residency,4,Standard AC Room,Kochi,INDIA,Fort Kochi,Kerala
 Sailing Club House,2,Themara,Kochi,INDIA,Vyttila,Kerala
-Hotel Shri Pallavi Residency,21,AC Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Shri Pallavi Residency,21,AC Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Mercy Villa Home Stay - Diamond Class,8,Executive Room,Kochi,INDIA,Vyttila,Kerala
 Flora Airport Hotel,60,Flora Suite,Kochi,INDIA,Cochin International Airport,Kerala
 OYO Premium Rowland Road,15,Standard Room,Kolkata,INDIA,Park Street and Vicinity,WestBengal
@@ -253,7 +253,7 @@ Hotel Bhawani International,42,Deluxe A/C,Katra,INDIA,City Centre-Main Market,Ja
 Fort Muziris,6,SUPERIOR ROOM,Kochi,INDIA,Fort Kochi,Kerala
 Hotel Uttarakhand,13,Standard Room,Kausani,INDIA,Kausani,Uttaranchal
 Aquaria The Boutique Resort,24,Lake View,Kochi,INDIA,Vyttila,Kerala
-Vista Rooms At Tararani Chowk,38,Standard Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Vista Rooms At Tararani Chowk,38,Standard Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 OYO Premium Exotic Lake View Upper Lake Road,15,Standard Room,Kodaikanal,INDIA,Near Kodai Lake,TamilNadu
 Titans Holiday Home,15,Deluxe Room,Khandala,INDIA,Kune Village,Maharashtra
 Hotel Prince,0,Super Deluxe Room,Keonjhar,INDIA,Near Govt Bus Stand,Orissa
@@ -267,7 +267,7 @@ Hill Palace Hotel & Spa,40,Deluxe Room,Kochi,INDIA,Vyttila,Kerala
 H2O Serviced Apartment,3,3 Bedroom Luxury Apartment,Kochi,INDIA,Vyttila,Kerala
 Hotel Kurunji Meridian,30,Standard Room,Kodaikanal,INDIA,Lawsghat Road,TamilNadu
 Suman Guest House,8,Double Room,Katra,INDIA,Yatra Parchi Counter,JammuandKashmir
-OYO Rooms Near Shahu Market Yard Kolhapur,15,Standard Room AC,Kolhapur,INDIA,,Maharashtra
+OYO Rooms Near Shahu Market Yard Mumbai,15,Standard Room AC,Mumbai,INDIA,,Maharashtra
 Fort Heritage,12,Deluxe Room,Kochi,INDIA,Fort Kochi,Kerala
 Hotel Katra Residency,20,Deluxe AC Room,Katra,INDIA,Near Banganga,JammuandKashmir
 Cherai Beach Residency,6,AC Beach View Room (Ground Floor),Kochi,INDIA,Cherai Beach,Kerala
@@ -280,13 +280,13 @@ ILLAM Heritage Home,8,Family Room,Kochi,INDIA,MG Road,Kerala
 "R S Corporate Guest House, BC35",6,Deluxe Room,Kolkata,INDIA,Salt Lake Sector 1,WestBengal
 OYO Premium International Stadium Kaloor,15,Premium Room,Kochi,INDIA,Vyttila,Kerala
 Vista Rooms at MM Street,20,Standard Room Non AC,Kodaikanal,INDIA,Fern Hill Road,TamilNadu
-Hotel Vrishali Executive,57,Deluxe AC,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Vrishali Executive,57,Deluxe AC,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 The Buransh,18,Deluxe Room,Kausani,INDIA,Baijnath Road-Kausani,Uttaranchal
 Jai Ambe Maa Guest House,12,Executive AC,Kolkata,INDIA,South Kolkata,WestBengal
 OYO Premium Woodlands Junction,15,Premium Room,Kochi,INDIA,MG Road,Kerala
-Hotel Kohinoor Square,32,Sandard A/C,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Kohinoor Square,32,Sandard A/C,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 OYO Premium Cochin Airport,0,Standard Room,Kochi,INDIA,Cochin International Airport,Kerala
-Hotel Rasika Renaissance,35,Executive AC,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Rasika Renaissance,35,Executive AC,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Gautam Guest House,9,Standard Room,Khajjiar,INDIA,Khajjiar,HimachalPradesh
 Kochi Marriott Hotel,274,Deluxe Room,Kochi,INDIA,Kalamassery,Kerala
 Hotel Astoria,26,Double Room,Kodaikanal,INDIA,Annasalai,TamilNadu
@@ -296,7 +296,7 @@ Park Royale,25,Deluxe Room AC,Kochi,INDIA,MG Road,Kerala
 Medows Regency - Airport Hotel,28,Deluxe AC Room,Kochi,INDIA,Cochin International Airport,Kerala
 Radisson Jass Hotel,90,Deluxe Room,Khajuraho,INDIA,District Chhatarpur,MadhyaPradesh
 Mount Spice,1,Standard Room,Kodaikanal,INDIA,Chettiar Park,TamilNadu
-OYO Rooms Near Pitali Chowk Kolhapur,15,Standard Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+OYO Rooms Near Pitali Chowk Mumbai,15,Standard Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Athithi Homes,3,Deluxe Room Non AC,Kochi,INDIA,MG Road,Kerala
 Little Green Apartment - 401,2,Deluxe Room,Kolkata,INDIA,South Kolkata,WestBengal
 Hotel Golden Inn,0,Economy Non AC Room,Kolkata,INDIA,Airport Zone,WestBengal
@@ -331,7 +331,7 @@ OYO Rooms Near Jain Temple Road Khajuraho,15,Standard Room AC,Khajuraho,INDIA,,M
 Queen's Residency,32,Standard Non AC Room,Kochi,INDIA,MG Road,Kerala
 Fort Square Home Stay,5,Deluxe Room AC,Kochi,INDIA,Fort Kochi,Kerala
 Oval Retreat Palace,24,Standard A/c Room,Kochi,INDIA,Vyttila,Kerala
-OYO Premium Kadamwadi Road,15,Premium Room,Kolhapur,INDIA,,Maharashtra
+OYO Premium Kadamwadi Road,15,Premium Room,Mumbai,INDIA,,Maharashtra
 Airport Mansion - Airport Hotel,6,Deluxe Room,Kochi,INDIA,Cochin International Airport,Kerala
 Eurostar Inn,24,Standard Room Non AC,Khajuraho,INDIA,Airport Road Khajuraho,MadhyaPradesh
 OYO Apartments Salt Lake CKCL Park,15,Deluxe Room,Kolkata,INDIA,Salt Lake Sector 2,WestBengal
@@ -341,7 +341,7 @@ OYO Rooms Ernakulam North Railway Station,15,Standard Room AC,Kochi,INDIA,Ernaku
 OYO Rooms MG Road North End,15,Standard Room,Kochi,INDIA,MG Road,Kerala
 Princess Residency-Airport Hotel,22,Standard Non AC Room,Kochi,INDIA,Cochin International Airport,Kerala
 Sky Rathnam Homestay,10,Standard Room AC,Kochi,INDIA,Fort Kochi,Kerala
-Hotel Sri Sri Executive,15,Standard Non A/C Room,Kolhapur,INDIA,Kolhapur,Maharashtra
+Hotel Sri Sri Executive,15,Standard Non A/C Room,Mumbai,INDIA,Mumbai,Maharashtra
 Gama Heritage Residency,25,Deluxe Non AC,Kochi,INDIA,Fort Kochi,Kerala
 Riverside Heritage Homestay,4,Deluxe Room,Kochi,INDIA,Ernakulam South Railway Station,Kerala
 Anamitra Guest House,12,Deluxe Room AC,Kolkata,INDIA,Salt Lake Sector 3,WestBengal
@@ -359,18 +359,18 @@ The Poovath Heritage Hotel,10,Standard Room,Kochi,INDIA,Fort Kochi,Kerala
 Hotel AJ International,40,Deluxe Room Non A/C,Katra,INDIA,Kashmir Road,JammuandKashmir
 Hotel Parul,15,Deluxe Room,Khajjiar,INDIA,Khajjiar,HimachalPradesh
 Vista Rooms at Thevara,35,Standard Room,Kochi,INDIA,Ernakulam South Railway Station,Kerala
-Coronet Guest House,9,Baget Non AC,Kolhapur,INDIA,,Maharashtra
+Coronet Guest House,9,Baget Non AC,Mumbai,INDIA,,Maharashtra
 The Parrot Serviced Villa,5,Deluxe Villa Two Bed Room,Kochi,INDIA,Vyttila,Kerala
 Ecomantras Rivertrail Eco Camp,20,Superior Deluxe 2 Cabin Tent,Kolad,INDIA,Kolad,Maharashtra
 Hotel Vidya Residency,19,Deluxe AC Room,Katra,INDIA,Yatra Parchi Counter,JammuandKashmir
 OYO Rooms International Airport Kolkata,15,Standard Room AC,Kolkata,INDIA,Airport Zone,WestBengal
-Hotel Mangesh Plaza,18,Executive Non AC,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Mangesh Plaza,18,Executive Non AC,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Mishra Residency AH 142,2,Deluxe,Kolkata,INDIA,Salt Lake Sector 2,WestBengal
 Ramada Khajuraho,82,AC Superior Room,Khajuraho,INDIA,Airport Road Khajuraho,MadhyaPradesh
 OYO Rooms Shakespeare Sarani,15,Standard Room AC,Kolkata,INDIA,Park Street and Vicinity,WestBengal
 Mishra Residency BL 78,2,Deluxe,Kolkata,INDIA,Salt Lake Sector 2,WestBengal
 Sreeragam Luxury Villa Retreat,6,Deluxe Room,Kochi,INDIA,Vyttila,Kerala
-Vista Rooms At Dabholkar Corner,15,Superior Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Vista Rooms At Dabholkar Corner,15,Superior Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Syna Heritage Hotel Khajuraho,28,Deluxe,Khajuraho,INDIA,,MadhyaPradesh
 Thankam Tourist Home,38,AC Room,Kochi,INDIA,Ernakulam South Railway Station,Kerala
 STARiHOTELS Kharsia,10,AC Room,Kharsia,INDIA,,Chhattisgarh
@@ -382,16 +382,16 @@ Prashanti Cottage,6,Double Bed,Kaziranga,INDIA,Kaziranga National Park,Assam
 Hotel Hill Palace,25,Deluxe Room,Kausani,INDIA,Baijnath Road-Kausani,Uttaranchal
 Hotel Mount View International,70,Super Deluxe Room,Katra,INDIA,Jammu Road,JammuandKashmir
 Hotel Sheldon,18,Standard,Kolkata,INDIA,Science City,WestBengal
-Ambassador Lodge,21,Double Bed,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Ambassador Lodge,21,Double Bed,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Park View Residency,28,Deluxe 2 Bed Room Cottage,Kodaikanal,INDIA,Chettiar Park,TamilNadu
 The Peak Resort,26,Deluxe Room,Kodaikanal,INDIA,Chettiar Park,TamilNadu
 Hotel Apple Pie - Kalpa,10,Deluxe Room,Kinnaur,INDIA,Kalpa,HimachalPradesh
 Hotel Metropolis Inn,25,Deluxe,Kolkata,INDIA,Science City,WestBengal
-Ranjeet Hotel,20,Standard AC Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Ranjeet Hotel,20,Standard AC Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Hotel Oriental,41,Double Occupancy AC Room,Kolkata,INDIA,Park Street and Vicinity,WestBengal
 OYO Rooms Salt Lake Karunamoyee,15,Standard Room,Kolkata,INDIA,Salt Lake Sector 2,WestBengal
 The Samilton Hotel,34,Superior Room,Kolkata,INDIA,Sarat Bose Road,WestBengal
-Krishna Inn,28,Executive Ac Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Krishna Inn,28,Executive Ac Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Hotel Sunrise,42,Standard Non Ac Room,Katra,INDIA,City Bus Terminus,JammuandKashmir
 Hotel Aura,17,Studio Room,Kolkata,INDIA,Esplanade-New market,WestBengal
 OYO Premium Airport VIP Road Big Bazar,15,Standard Room AC,Kolkata,INDIA,Airport Zone,WestBengal
@@ -399,15 +399,15 @@ Ibiza Guest House,8,Standard Room AC,Kolkata,INDIA,Salt Lake Sector 5,WestBengal
 Hotel Green View,20,Executive Room,Kolkata,INDIA,Parkcircus Area,WestBengal
 Budget hotel,27,Bugdet Room,Khammam,INDIA,Gandhi Chowk,AndhraPradesh
 The Dunes,72,Deluxe Room,Kochi,INDIA,MG Road,Kerala
-Hotel Pearl,29,Non AC Deluxe Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Pearl,29,Non AC Deluxe Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Hotel Shree Krishna International,34,Deluxe Room,Kolkata,INDIA,Airport Zone,WestBengal
-Hotel Opal,23,Deluxe Room Non AC,Kolhapur,INDIA,Shivaji University,Maharashtra
+Hotel Opal,23,Deluxe Room Non AC,Mumbai,INDIA,Shivaji University,Maharashtra
 Hotel Sivapriya,68,Super Deluxe,Kodaikanal,INDIA,Convent Road,TamilNadu
 Najima Residency,24,Deluxe Room,Kodaikanal,INDIA,Naidupuram,TamilNadu
 WelcomHotel Khimsar Fort & Dunes- 90 Kms from Jodhpur,83,Preferred Room - Mini Break Package,Khimsar,INDIA,Khimsar,Rajasthan
 GG Residency,10,Suite Deluxe,Kochi,INDIA,Cochin International Airport,Kerala
 Hotel Villa Retreat,15,Furnished Apartment (2 Bed Room) City View,Kodaikanal,INDIA,Near Kodai Lake,TamilNadu
-Hotel Vrindavan Deluxe,47,Non AC Deluxe Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Vrindavan Deluxe,47,Non AC Deluxe Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Abban Residency,18,Royal Suite,Kodaikanal,INDIA,Lawsghat Road,TamilNadu
 Hotel Casa Di William Khajuraho,0,AC Room,Khajuraho,INDIA,Opposite Circuit House,MadhyaPradesh
 Mamma Mia The Boutique Hotel,5,Suite,Kochi,INDIA,Info Park-Kakkanad,Kerala
@@ -465,9 +465,9 @@ OYO Rooms Jessore Road,15,Standard Room AC,Kolkata,INDIA,Airport Zone,WestBengal
 Hotel Kanshi Vishwanath,20,Double Deluxe Non A/C,Katra,INDIA,Near Banganga,JammuandKashmir
 Lake Symphony Resort,6,Deluxe Room,Kochi,INDIA,Vyttila,Kerala
 Hotel Chirag International,40,Double Deluxe Room,Katra,INDIA,Jammu Road,JammuandKashmir
-OYO Premium Near Tarabai Park Kolhapur,15,Premium Room,Kolhapur,INDIA,,Maharashtra
+OYO Premium Near Tarabai Park Mumbai,15,Premium Room,Mumbai,INDIA,,Maharashtra
 Golden Tulip Kolkata,55,Deluxe Room,Kolkata,INDIA,Salt Lake City,WestBengal
-Vista Rooms at Kadamwadi Road,24,Standard Double,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Vista Rooms at Kadamwadi Road,24,Standard Double,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Treebo Saini Inn,21,Deluxe Room,Kolkata,INDIA,Diamond Harbour Road,WestBengal
 Timber Lake Hotel,10,Double Deluxe,Kodaikanal,INDIA,Lawsghat Road,TamilNadu
 David Homes,1,Standard Room,Kochi,INDIA,Fort Kochi,Kerala
@@ -479,7 +479,7 @@ Hotel Sharda,15,Standard Room Non AC,Khandala,INDIA,Opposite Kamath,Maharashtra
 OYO Rooms Rashbehari Avenue Near Triangular Park,15,Standard Room AC,Kolkata,INDIA,South Kolkata,WestBengal
 Tantraa Homestay,6,Deluxe Room,Kochi,INDIA,Fort Kochi,Kerala
 OYO Rooms Salt Lake BL Block,15,Standard Room AC,Kolkata,INDIA,Salt Lake Sector 2,WestBengal
-OYO Rooms Near Azad Chowk Kolhapur,15,Standard Room AC,Kolhapur,INDIA,,Maharashtra
+OYO Rooms Near Azad Chowk Mumbai,15,Standard Room AC,Mumbai,INDIA,,Maharashtra
 Vista Rooms at Laws Ghat Road,18,Standard Room Non AC,Kodaikanal,INDIA,Lawsghat Road,TamilNadu
 The Bungalow Heritage Homestay,2,Room Sao Gabriel,Kochi,INDIA,Vypin Island,Kerala
 Hotel Kabani International,29,Suite Room,Kochi,INDIA,Muvattupuzha,Kerala
@@ -496,14 +496,14 @@ Hotel Sunnys,18,Standard Room Non AC,Kochi,INDIA,Ernakulam South Railway Station
 Hotel Olive Regency,28,Deluxe Double Room AC,Kochi,INDIA,Ernakulam South Railway Station,Kerala
 Vista Rooms at Fern Hill Road,32,Standard Room Non AC,Kodaikanal,INDIA,Fern Hill Road,TamilNadu
 OYO Rooms Ruby EM By Pass,15,Standard Room AC,Kolkata,INDIA,New Town - Rajarhat,WestBengal
-Vista Rooms Near Kolhapur Railway Station,30,Standard Room,Kolhapur,INDIA,Kolhapur,Maharashtra
+Vista Rooms Near Mumbai Railway Station,30,Standard Room,Mumbai,INDIA,Mumbai,Maharashtra
 The Pearl Palace,35,Executive Suite,Kochi,INDIA,MG Road,Kerala
 Chevron Mountain Villa,12,Double Room,Kausani,INDIA,View Point,Uttaranchal
 Hotel Zen Khajuraho,30,Twin rooms,Khajuraho,INDIA,Temple Road,MadhyaPradesh
 Tourist Village-MPTDC,10,AC Room,Khajuraho,INDIA,Sevagram,MadhyaPradesh
 Hotel Grand Palace,41,Royal,Kodaikanal,INDIA,Convent Road,TamilNadu
 Vrindavan Retreat - Airport Hotel,4,Deluxe Room,Kochi,INDIA,Cochin International Airport,Kerala
-Hotel Sony Palace,28,Executive Rooms (AC),Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Sony Palace,28,Executive Rooms (AC),Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Mishra Residency FE 35,2,Deluxe,Kolkata,INDIA,Salt Lake Sector 2,WestBengal
 Hotel Rock Star Suites,30,Deluxe Ground Floor Room,Kolkata,INDIA,Maidan Metro Area,WestBengal
 Hotel Victoria Inn,25,Deluxe Room,Kolkata,INDIA,Alipore,WestBengal
@@ -548,7 +548,7 @@ OYO Rooms Kodaikanal Bus Stand Bazaar Road,15,Standard Room,Kodaikanal,INDIA,Ann
 OYO Premium Vytilla Bypass,15,Standard Room AC,Kochi,INDIA,Vyttila,Kerala
 Second House,0,Standard Room,Kolkata,INDIA,Kalighat-Southern Avenue,WestBengal
 The Edens Guest House,4,Deluxe Room,Kochi,INDIA,Fort Kochi,Kerala
-Hotel Dakkhan Lodging,12,AC Deluxe,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Dakkhan Lodging,12,AC Deluxe,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Narikulam Tharavad,2,Standard Room,Kochi,INDIA,Vypin Island,Kerala
 Kundalika Rafting Camp,20,Luxury Tent,Kolad,INDIA,,Maharashtra
 Hotel Kings Katra,26,Sup Dlx A/C Room,Katra,INDIA,City Centre-Main Market,JammuandKashmir
@@ -564,7 +564,7 @@ Hotel Airlink Castle,54,Deluxe Room,Kochi,INDIA,Cochin International Airport,Ker
 Hotel White House,20,Standard Non A/C,Kavali,INDIA,,AndhraPradesh
 Koder House,11,Junior Suite,Kochi,INDIA,Fort Kochi,Kerala
 Edassery Resorts,20,Suite Room,Kattappana,INDIA,Kattappana Town,Kerala
-Hotel Ashish Deluxe,63,Econimical Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Ashish Deluxe,63,Econimical Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Dwaraka Hotel,37,Deluxe AC Room,Kochi,INDIA,MG Road,Kerala
 OYO Rooms Kalighat Lake Market,15,Standard Room AC,Kolkata,INDIA,Kalighat-Southern Avenue,WestBengal
 OYO Elite Acropolis Mall Ruby,15,Standard Room,Kolkata,INDIA,Kasba Zone,WestBengal
@@ -593,7 +593,7 @@ Geeta Lodge,7,Standard Room,Katra,INDIA,Railway Road,JammuandKashmir
 Rampart Homestay,5,Standard Double Room,Kochi,INDIA,Fort Kochi,Kerala
 OYO Rooms New Alipore,15,Standard Room,Kolkata,INDIA,Alipore,WestBengal
 Orion Sky Wings,8,AC Deluxe Room with Balcony,Kochi,INDIA,Fort Kochi,Kerala
-OYO Rooms Near Station Road Kolhapur,15,Standard Room AC,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+OYO Rooms Near Station Road Mumbai,15,Standard Room AC,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 OYO Rooms Jatin Das Park Metro Station,15,Standard Room AC,Kolkata,INDIA,South Kolkata,WestBengal
 Hotel Indismart,76,Executive,Kolkata,INDIA,Salt Lake Sector 5,WestBengal
 Hotel Pan Asia Continental,28,Royale Room with Wifi Comp,Kolkata,INDIA,Sarat Bose Road,WestBengal
@@ -606,11 +606,11 @@ Resort Borgos,44,Executive Room,Kaziranga,INDIA,Kaziranga National Park,Assam
 Hotel Rolling Rang,8,Deluxe Room,Kinnaur,INDIA,Kalpa,HimachalPradesh
 Hotel Satya Shree,30,Double Bed Room,Katra,INDIA,Kashmir Road,JammuandKashmir
 The North Pride Hotel,32,Standard Room AC,Kochi,INDIA,Ernakulam South Railway Station,Kerala
-Digvijay Home Stay,5,Non AC Double,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Digvijay Home Stay,5,Non AC Double,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 36 Palms Cherai,5,Seaview Room,Kochi,INDIA,Cherai Beach,Kerala
 Hotel Jagdish Residency,27,Standard Non AC Room,Katra,INDIA,Kashmir Road,JammuandKashmir
-Hotel Greenland Elegant,31,Non AC Executive Deluxe Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
-OYO Rooms Old Pune Bangalore Road Kolhapur,15,Standard Room AC,Kolhapur,INDIA,Kolhapur,Maharashtra
+Hotel Greenland Elegant,31,Non AC Executive Deluxe Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
+OYO Rooms Old Pune Bangalore Road Mumbai,15,Standard Room AC,Mumbai,INDIA,Mumbai,Maharashtra
 OYO Rooms Ernakulam Railway Station,15,Standard Room,Kochi,INDIA,MG Road,Kerala
 OYO Apartments Near NBCC Newtown,15,Standard Room AC,Kolkata,INDIA,New Town - Rajarhat,WestBengal
 Royal Hotels,36,Royal Deluxe,Kodaikanal,INDIA,Lawsghat Road,TamilNadu
@@ -624,7 +624,7 @@ Hotel Harmony Khajuraho,35,Non AC Standard Room,Khajuraho,INDIA,Temple Road,Madh
 The Gokulam Park-Sarovar Group Hotel,65,Superior Room,Kochi,INDIA,MG Road,Kerala
 The Vrindavanam - Airport Hotel,2,Executive Room,Kochi,INDIA,Cochin International Airport,Kerala
 OYO Rooms Ballygunge,15,Standard Room AC,Kolkata,INDIA,South Kolkata,WestBengal
-Nisarg Resort,6,AC Cottage,Kolhapur,INDIA,Kolhapur,Maharashtra
+Nisarg Resort,6,AC Cottage,Mumbai,INDIA,Mumbai,Maharashtra
 OYO Premium Salt Lake Webel More,15,Standard Room AC,Kolkata,INDIA,Salt Lake Sector 5,WestBengal
 Simi International CF 400,10,Gold,Kolkata,INDIA,Salt Lake Sector 1,WestBengal
 St. Antony's Lodge,10,Standard Non AC,Kochi,INDIA,MG Road,Kerala
@@ -634,7 +634,7 @@ Ambadis Villas,5,Standard Room Non AC,Kochi,INDIA,Cherai Beach,Kerala
 Vista Rooms at Veli,12,Standard Room,Kochi,INDIA,Fort Kochi,Kerala
 The Nest Homestay,6,Deluxe Room Non AC,Kochi,INDIA,Fort Kochi,Kerala
 Hotel Royal Garden,38,Standard Room,Kolkata,INDIA,Park Street and Vicinity,WestBengal
-Hotel Woodland,39,AC Deluxe Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Woodland,39,AC Deluxe Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Indriya Sands,4,Double Rooms,Kochi,INDIA,Vypin Island,Kerala
 Hotel Shivay,15,Deluxe Room,Kausani,INDIA,Kausani,Uttaranchal
 Bolgatty Palace and Island Resort,58,Palace Suite,Kochi,INDIA,Bolgatty Island,Kerala
@@ -697,7 +697,7 @@ The Jagannath Hotel,10,Standard,Kolkata,INDIA,Airport Zone,WestBengal
 OYO Premium Park Street 1,15,Standard Room,Kolkata,INDIA,Esplanade-New market,WestBengal
 OYO Rooms Rowland Street,0,Standard Room AC,Kolkata,INDIA,South Kolkata,WestBengal
 Fort House Hotel,16,Standard,Kochi,INDIA,Fort Kochi,Kerala
-OYO Rooms Near Tararani Chowk Kolhapur,15,Standard Room AC,Kolhapur,INDIA,,Maharashtra
+OYO Rooms Near Tararani Chowk Mumbai,15,Standard Room AC,Mumbai,INDIA,,Maharashtra
 Chevron Eco lodge,12,Duplex,Kausani,INDIA,View Point,Uttaranchal
 Wetzlar Resorts,46,Standard Room AC,Kochi,INDIA,Kotamangalam,Kerala
 Cochin Palace,18,Deluxe Room,Kochi,INDIA,Vyttila,Kerala
@@ -706,7 +706,7 @@ United 21 Resort,31,Honeymoon Suite,Kodaikanal,INDIA,Annasalai,TamilNadu
 Broad Bean Hotels,49,Deluxe Room,Kochi,INDIA,Vyttila,Kerala
 The Hotel Chettungal,15,Standard AC,Kochi,INDIA,Cochin International Airport,Kerala
 Heritage Methanam,7,Deluxe Room,Kochi,INDIA,Eramalloor,Kerala
-Hotel Tourist,45,Non AC Economy Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Tourist,45,Non AC Economy Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Hotel Le Poshe By Sparsa,77,Standard Room,Kodaikanal,INDIA,Fern Hill Road,TamilNadu
 Chittoor Kottaram - A CGH Earth Group,3,Heritage Palace,Kochi,INDIA,MG Road,Kerala
 The Monk - Kalpa,22,Deluxe Room ( Hotel Accommodation ),Kinnaur,INDIA,Kalpa,HimachalPradesh
@@ -715,13 +715,13 @@ Coral Residency BE 136,9,Standard Room,Kolkata,INDIA,Salt Lake Sector 1,WestBeng
 OYO Premium Infopark Junction,15,Standard Room AC,Kochi,INDIA,Info Park-Kakkanad,Kerala
 OYO Rooms Salt Lake Bypass Kolkata,0,Deluxe Room,Kolkata,INDIA,Salt Lake Sector 4,WestBengal
 Hotel Sea Shell,3,AC Room,Kochi,INDIA,MG Road,Kerala
-Hotel Orient Crown,30,Suite Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Orient Crown,30,Suite Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Shree Shyam Guest House,20,Deluxe AC,Kolkata,INDIA,Airport Zone,WestBengal
 All Fresco Guest House,10,Deluxe Room,Kolkata,INDIA,Airport Zone,WestBengal
 OYO Rooms Salt Lake Sector 5,15,Standard Room,Kolkata,INDIA,Salt Lake Sector 5,WestBengal
 Fort Abode,6,Standard Room,Kochi,INDIA,Fort Kochi,Kerala
 Mishra Residency AE 240,2,Deluxe,Kolkata,INDIA,Salt Lake Sector 1,WestBengal
-Hotel Vishnupriya Grand,13,Non A/C Standard,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Vishnupriya Grand,13,Non A/C Standard,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Gaanam Hotels,77,Standard AC Room,Kochi,INDIA,Ernakulam South Railway Station,Kerala
 Michaels Land Resort,4,AC Room,Kochi,INDIA,Kumbalam South,Kerala
 Kausani Best inn,8,Deluxe Himalaya Facing,Kausani,INDIA,View Point,Uttaranchal
@@ -742,9 +742,9 @@ By The Lake - A Sterling Resort,102,Premiere Room,Kodaikanal,INDIA,Near Kodai La
 Hotel Shree Krishna,28,Super Deluxe Room,Kolkata,INDIA,Airport Zone,WestBengal
 Olive Downtown,92,Deluxe Room,Kochi,INDIA,Vyttila,Kerala
 Hotel Sudesh Tower,24,Junior Executive,Kolkata,INDIA,Sarat Bose Road,WestBengal
-The Pavilionn Hotel,30,Non AC Deluxe Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
-Hotel Kolhapur Residency,18,AC Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
-Hotel Ayodhya,38,DELUXE ROOM AC,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+The Pavilionn Hotel,30,Non AC Deluxe Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Mumbai Residency,18,AC Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Ayodhya,38,DELUXE ROOM AC,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Hotel Rukmini - Airport Hotel,26,Standard AC,Kochi,INDIA,Cochin International Airport,Kerala
 Hotel Maa Trinayani Palace,23,Double Superior Room,Katra,INDIA,Jammu Katra Highway,JammuandKashmir
 OYO Rooms MG Road Cochin Shipyard,0,Standard Room AC,Kochi,INDIA,MG Road,Kerala
@@ -766,12 +766,12 @@ Hotel Pleasant Stay - La Flora,38,Honeymoon Suite,Kodaikanal,INDIA,Near Kodai La
 Hotel SAAS Tower,72,Executive Room,Kochi,INDIA,MG Road,Kerala
 Hotel Grand Paradise Inn,42,Double Deluxe Room,Kodaikanal,INDIA,Lawsghat Road,TamilNadu
 OYO Rooms Rashbehari Manohar Pukur,15,Deluxe Room,Kolkata,INDIA,Sarat Bose Road,WestBengal
-Sayaji Hotel Kolhapur,120,Executive Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Sayaji Hotel Mumbai,120,Executive Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Kodai Sunshine Resort,34,Luxury Room,Kodaikanal,INDIA,Chettiar Park,TamilNadu
 Check In Check Out,24,Single Occupancy,Kolkata,INDIA,Alipore,WestBengal
-STARiHOTEL Raviwar Peth Kolhapur,0,Non Ac,Kolhapur,INDIA,,Maharashtra
+STARiHOTEL Raviwar Peth Mumbai,0,Non Ac,Mumbai,INDIA,,Maharashtra
 OYO Rooms Newtown Near DLF 1,15,Standard Room AC,Kolkata,INDIA,New Town - Rajarhat,WestBengal
-Hotel Haripriya Grand,17,AC Deluxe Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Haripriya Grand,17,AC Deluxe Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Hotel Diwans Court,23,Deluxe Room,Kochi,INDIA,Ernakulam South Railway Station,Kerala
 Bhammar's Inn,11,Deluxe,Kolkata,INDIA,South Kolkata,WestBengal
 OYO Premium Forest Escape Convent Road,15,Standard Room,Kodaikanal,INDIA,Convent Road,TamilNadu
@@ -796,7 +796,7 @@ Hotel Kaveri,22,Standard Room Non A/C,Khammam,INDIA,Balaji Nagar,AndhraPradesh
 OYO Premium Lansdowne,15,Standard Room,Kolkata,INDIA,Kalighat-Southern Avenue,WestBengal
 OYO Rooms Ruby Hospital Junction,15,Standard Room AC,Kolkata,INDIA,Kasba Zone,WestBengal
 Park Central,17,Deluxe Room,Kochi,INDIA,MG Road,Kerala
-OYO Premium Near Tararani Chowk,15,Premium Room,Kolhapur,INDIA,,Maharashtra
+OYO Premium Near Tararani Chowk,15,Premium Room,Mumbai,INDIA,,Maharashtra
 Arshatheeram Tourist Zone,5,AC Room,Kochi,INDIA,Kumbalam South,Kerala
 Kaziranga Florican Lodge,19,Executive Double,Kaziranga,INDIA,Kaziranga National Park,Assam
 Hotel Jem Valley,40,Standard Room,Kodaikanal,INDIA,Naidupuram,TamilNadu
@@ -824,7 +824,7 @@ P J Princess Regency,30,Executive Room,Kochi,INDIA,Vypin Island,Kerala
 Park Prime Kolkata,62,Prime Executive,Kolkata,INDIA,Park Street and Vicinity,WestBengal
 Hotel Aramana,12,Deluxe AC Room,Kochi,INDIA,Cochin International Airport,Kerala
 Hotel Kashmir Residency,40,Executive A/C Room,Katra,INDIA,Jammu Road,JammuandKashmir
-Hotel Yatri Niwas Kolhapur,25,Deluxe Non AC,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Yatri Niwas Mumbai,25,Deluxe Non AC,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Hotel Embassy,36,Three Bedded Room,Kochi,INDIA,MG Road,Kerala
 Golf View Hotels and Suites - Airport Hotel,42,Deluxe,Kochi,INDIA,Cochin International Airport,Kerala
 Simi International CF 216,4,Standard,Kolkata,INDIA,Salt Lake Sector 1,WestBengal
@@ -880,11 +880,11 @@ Hotel Rock View Sangla,11,Super Deluxe Room 3 Bedded,Kinnaur,INDIA,Sangla,Himach
 Hotel Spring Valley,22,Deluxe Room,Kodaikanal,INDIA,Lawsghat Road,TamilNadu
 Imperial Hotel,27,Super Deluxe Room,Katra,INDIA,Railway Road,JammuandKashmir
 Hotel Aiswarya,70,Executive Deluxe Non AC,Kochi,INDIA,MG Road,Kerala
-Hotel Perfect Residency,10,AC Deluxe Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Perfect Residency,10,AC Deluxe Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 OYO Premium Convent Road BSNL Junction,15,Standard Room,Kodaikanal,INDIA,Convent Road,TamilNadu
 Mishra Residency FE 50,2,Deluxe,Kolkata,INDIA,Salt Lake Sector 3,WestBengal
 OYO Rooms Near Behala Flying Club,15,Standard Room AC,Kolkata,INDIA,South Kolkata,WestBengal
-Hotel Rajpurush,8,Non AC Deluxe,Kolhapur,INDIA,,Maharashtra
+Hotel Rajpurush,8,Non AC Deluxe,Mumbai,INDIA,,Maharashtra
 Le Monarch,2,Suite Room,Kochi,INDIA,Cherai Beach,Kerala
 The Taj Gateway Hotel EM Bypass,197,Superior Room,Kolkata,INDIA,Near Ruby Hospital,WestBengal
 Hotel Isabel Palace,14,Standard Non AC,Khajuraho,INDIA,Airport Road Khajuraho,MadhyaPradesh
@@ -900,7 +900,7 @@ Comfotel- The Boutique Hotel,26,Deluxe Room AC,Kolkata,INDIA,Sarat Bose Road,Wes
 Anns Residency,8,Deluxe Room,Kochi,INDIA,Fort Kochi,Kerala
 Sonnetta Residency,6,Family Room,Kochi,INDIA,Fort Kochi,Kerala
 Karthika Residency,28,Deluxe Room AC,Kochi,INDIA,Ernakulam South Railway Station,Kerala
-Hotel Samrat,40,Budget Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Samrat,40,Budget Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Saj Homestay,6,Standard AC,Kochi,INDIA,Fort Kochi,Kerala
 Rupin River View,15,Deluxe Room,Kinnaur,INDIA,Sangla,HimachalPradesh
 Hotel Galaxy,11,Double Room,Katra,INDIA,Kashmir Road,JammuandKashmir
@@ -914,11 +914,11 @@ Sealine Beach Resort,10,Deluxe AC Sea Facing Room,Kochi,INDIA,Cherai Beach,Keral
 The Oberoi Grand,213,Deluxe Room,Kolkata,INDIA,Esplanade-New market,WestBengal
 Nanda Inn,28,AC Room,Kochi,INDIA,MG Road,Kerala
 Sonav Guest House,13,Double AC Room,Katra,INDIA,Jammu Road,JammuandKashmir
-Citrus Hotel Kolhapur,38,Deluxe Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Citrus Hotel Mumbai,38,Deluxe Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 West Wind Homez,2,Water View AC Room,Kochi,INDIA,Kumbalam South,Kerala
 Nature's Valley Resort,15,Luxury Room,Kausani,INDIA,Baijnath Road-Kausani,Uttaranchal
 Spring Valley Residency,3,Royal Suite,Kodaikanal,INDIA,Lawsghat Road,TamilNadu
-Vista Rooms at Shahu Market,35,Superior Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Vista Rooms at Shahu Market,35,Superior Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 OYO Premium JOS Junction,15,Premium Room,Kochi,INDIA,MG Road,Kerala
 OYO Rooms Near Western Temple Road Khajuraho,15,Standard Room AC,Khajuraho,INDIA,,MadhyaPradesh
 Vasco Homestay,2,Standard Non AC Room,Kochi,INDIA,Fort Kochi,Kerala
@@ -945,10 +945,10 @@ Beith Hotel - 20 km from COK Airport,15,Standard Room,Kochi,INDIA,Kalamassery,Ke
 Hotel Aston,16,Deluxe,Kolkata,INDIA,Sarat Bose Road,WestBengal
 Shivalik Valley Resort,78,Deluxe Room,Kedarnath,INDIA,Sitapur,Uttaranchal
 Hotel Beckbagan,19,Standard,Kolkata,INDIA,Minto Park Area,WestBengal
-Hotel Chaitali,24,Deluxe Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Chaitali,24,Deluxe Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Atithi Inn,24,Deluxe Room,Kolkata,INDIA,Airport Zone,WestBengal
 Hotel Apple Pie - Sangla,8,Deluxe Double Bed,Kinnaur,INDIA,Sangla,HimachalPradesh
-Hotel Vishwa,22,AC Executive Suite,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Vishwa,22,AC Executive Suite,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Hotel Valley View Inn,40,Super Deluxe Double,Kodaikanal,INDIA,Near Kodai Lake,TamilNadu
 Hotel IMA House,86,Studio Apartments,Kochi,INDIA,MG Road,Kerala
 OYO Elite Salt Lake Sector 5,15,Standard Room AC,Kolkata,INDIA,Salt Lake Sector 5,WestBengal
@@ -961,20 +961,20 @@ The Taj Gateway Hotel Marine Drive Ernakulam,108,Superior View Room,Kochi,INDIA,
 Hotel Holiday,29,Double Bedded Room,Katra,INDIA,City Centre-Main Market,JammuandKashmir
 The Centre Point,30,Superior Room,Kochi,INDIA,MG Road,Kerala
 Old Lighthouse Bristow,11,Garden View Room,Kochi,INDIA,Fort Kochi,Kerala
-Hotel Classic Mid Town,21,Classic AC Rooms,Kolhapur,INDIA,,Maharashtra
+Hotel Classic Mid Town,21,Classic AC Rooms,Mumbai,INDIA,,Maharashtra
 OYO Rooms Medical Hub Ruby Hospital,15,Standard Room,Kolkata,INDIA,Science City,WestBengal
 OYO Premium Cochin Airport Extension,15,Standard Room,Kochi,INDIA,Cochin International Airport,Kerala
 Hotel Tirupati International,18,Super Deluxe Room,Kolkata,INDIA,Airport Zone,WestBengal
 OYO Rooms National Highway 6 Near Alampur Crossing,15,Standard Room AC,Kolkata,INDIA,Kolkata Suburb,WestBengal
 Transit Inn Guest House,11,Standard,Kolkata,INDIA,Airport Zone,WestBengal
-Hotel Girija Residency,21,Non Ac Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Girija Residency,21,Non Ac Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Hotel Hill View,45,Suite Room,Kochi,INDIA,Info Park-Kakkanad,Kerala
 Middleton Inn,18,Executive Deluxe Room,Kolkata,INDIA,Maidan Metro Area,WestBengal
 Edassery Mookkannoor Village Retreat,14,AC Deluxe Room,Kochi,INDIA,Cochin International Airport,Kerala
 OYO Premium Vyttila Junction,15,Standard Room AC,Kochi,INDIA,Vyttila,Kerala
 Treebo Globe International,24,Deluxe Room Single,Kolkata,INDIA,Kalighat-Southern Avenue,WestBengal
 Maxx Cochin Heritage,14,Deluxe Room,Kochi,INDIA,Vyttila,Kerala
-Vista Rooms At Chandan Menon Road,31,Standard AC,Kolhapur,INDIA,Shivaji University,Maharashtra
+Vista Rooms At Chandan Menon Road,31,Standard AC,Mumbai,INDIA,Shivaji University,Maharashtra
 Mermaid Hotel,83,Deluxe Room,Kochi,INDIA,Vyttila,Kerala
 OYO Rooms Theatre Road,15,Standard Room AC,Kolkata,INDIA,Park Street and Vicinity,WestBengal
 Hilltop Towers,26,Honeymoon Suite,Kodaikanal,INDIA,Near Kodai Lake,TamilNadu
@@ -986,7 +986,7 @@ Transit Inn,7,Standard,Kolkata,INDIA,Airport Zone,WestBengal
 The Renai Cochin,47,Superior Room,Kochi,INDIA,Vyttila,Kerala
 OYO Rooms Ballygunge Lansdowne,15,Standard Room AC,Kolkata,INDIA,South Kolkata,WestBengal
 Hotel Blue Bayou,8,Superior Room,Kohima,INDIA,War Cemetry,Nagaland
-Hotel Maratha Regency,30,AC Deluxe Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Maratha Regency,30,AC Deluxe Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Fort Beach Service Apartment,3,Crystal Room,Kochi,INDIA,Fort Kochi,Kerala
 Costa Gama Homestay,8,Standard Single Non A/c,Kochi,INDIA,Fort Kochi,Kerala
 Neeranand Regency-Pure Vegetarian,0,Deluxe,Kolkata,INDIA,Sarat Bose Road,WestBengal
@@ -1004,12 +1004,12 @@ The PGS Vedanta Hotel,40,Executive Room,Kochi,INDIA,MG Road,Kerala
 OYO Premium Harish Mukherjee Road,15,Standard Room AC,Kolkata,INDIA,AJC Bose Road,WestBengal
 Royal Residency,57,Executive AC Room,Kochi,INDIA,Info Park-Kakkanad,Kerala
 Suba Krishmaa Residency,15,Deluxe Room,Kodaikanal,INDIA,Lawsghat Road,TamilNadu
-Karkare Holiday Home,4,Standard Room Non AC,Kolhapur,INDIA,Shivaji University,Maharashtra
+Karkare Holiday Home,4,Standard Room Non AC,Mumbai,INDIA,Shivaji University,Maharashtra
 Hotel Mount View,27,Deluxe Room,Kodaikanal,INDIA,Lawsghat Road,TamilNadu
 Simi International FD 339,9,Standard,Kolkata,INDIA,Salt Lake Sector 3,WestBengal
-Vista Rooms At Station Road,16,Standard Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Vista Rooms At Station Road,16,Standard Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Angel Garden Beach Homestay,5,Deluxe Non A/c Room,Kochi,INDIA,Cherai Beach,Kerala
-Hotel Jotiba,24,Ac Deluxe Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Jotiba,24,Ac Deluxe Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Hotel Rudraksha Palace,7,Machan Room,Kausani,INDIA,Baijnath Road-Kausani,Uttaranchal
 Spice Heritage,15,Deluxe Room,Kochi,INDIA,Fort Kochi,Kerala
 The Classik Fort,15,Classic Deluxe Room,Kochi,INDIA,Vyttila,Kerala
@@ -1029,9 +1029,9 @@ Adams Wood House,6,Standard Double Room A/C,Kochi,INDIA,Fort Kochi,Kerala
 Mishra Residency FF 10,24,Standard AC Room,Kolkata,INDIA,Salt Lake Sector 3,WestBengal
 Kimansion,7,AC Regular Room,Kochi,INDIA,Fort Kochi,Kerala
 Hotel Eden Garden,22,Royal Suite,Kochi,INDIA,Chottanikkara,Kerala
-Vista Rooms At Shivaji Park,22,Standard Room,Kolhapur,INDIA,Shivaji University,Maharashtra
+Vista Rooms At Shivaji Park,22,Standard Room,Mumbai,INDIA,Shivaji University,Maharashtra
 Holiday Hotel Cherai,20,Deluxe Room AC,Kochi,INDIA,Cherai Beach,Kerala
-OYO Rooms Near Kolhapur Railway Station,15,Standard Room AC,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+OYO Rooms Near Mumbai Railway Station,15,Standard Room AC,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 The West Face Lake Side,5,Suite Room,Kochi,INDIA,MG Road,Kerala
 Greenland Villas,19,Standard Room,Kodaikanal,INDIA,Lawsghat Road,TamilNadu
 Malabar Illam,15,Standard Non AC Room,Kochi,INDIA,MG Road,Kerala
@@ -1049,7 +1049,7 @@ Gokulam Park Hotel & Convention Center,39,Superior Room,Kochi,INDIA,MG Road,Kera
 Akshay Homestay,0,AC Room,Kochi,INDIA,Fort Kochi,Kerala
 Ceylon Bake House - MG Road,30,Standard AC Room,Kochi,INDIA,MG Road,Kerala
 Fort Khejarla,39,Royal Chamber,Khejarla,INDIA,Khejarla,Rajasthan
-Hotel Landmark,10,Standard Room,Kolhapur,INDIA,New Shahupuri/Station Road,Maharashtra
+Hotel Landmark,10,Standard Room,Mumbai,INDIA,New Shahupuri/Station Road,Maharashtra
 Mishra Residency BH 123,2,Deluxe,Kolkata,INDIA,Salt Lake Sector 2,WestBengal
 Hotel Krishna Mountview,35,Himalyan Suite,Kausani,INDIA,Kausani,Uttaranchal
 OYO Rooms Diamond Harbour Road,15,Standard Room AC,Kolkata,INDIA,South Kolkata,WestBengal
@@ -1083,10 +1083,10 @@ Vista Rooms at Warrium Rd,64,Superior Room,Kochi,INDIA,MG Road,Kerala
 OYO Premium Nibav Road Kodaikanal,15,Standard Room,Kodaikanal,INDIA,Convent Road,TamilNadu
 NM Royale County,28,Executive Room,Kochi,INDIA,Vyttila,Kerala
 The Lagoona Resort-An ECOTEL Hotel,68,Deluxe Room,Lonavala,INDIA,Tungarli,Maharashtra
-Ladakh View Home Stay,3,Standard Room,Leh,INDIA,Old Road,JammuandKashmir
-Hotel Namra,24,Deluxe Room,Leh,INDIA,Tingmosgang,JammuandKashmir
+Ladakh View Home Stay,3,Standard Room,Ladakh,INDIA,Old Road,JammuandKashmir
+Hotel Namra,24,Deluxe Room,Ladakh,INDIA,Tingmosgang,JammuandKashmir
 STARiHOTELS Taluka Maval Lonavala,0,Deluxe AC,Lonavala,INDIA,,Maharashtra
-Hotel Royal Palace,36,Deluxe Room,Leh,INDIA,Sheynam,JammuandKashmir
+Hotel Royal Palace,36,Deluxe Room,Ladakh,INDIA,Sheynam,JammuandKashmir
 Novotel Kolkata Hotel and Residences,340,Deluxe Suite King Bed,Kolkata,INDIA,New Town - Rajarhat,WestBengal
 Sea Flower Beach Resort,7,Standard Non AC,Kovalam,INDIA,Light House Beach,Kerala
 STARiHOTELS Bus Stand Katghora,0,Standard,Korba,INDIA,Transport Nagar,Chhattisgarh
@@ -1098,7 +1098,7 @@ Hotel Sonar Bangla,0,Non AC Deluxe,kolaghat,INDIA,Dhulagarh,WestBengal
 Hotel Green Park,33,Standard Room Non AC,Kumbakonam,INDIA,Near Bus Terminus,TamilNadu
 Kanjirakkattu Heritage Home,2,AC Heritage Suite,Kottayam,INDIA,Near Kottayam Railway Station,Kerala
 JC Hotel,35,Deluxe 3 Bedded Room,Lucknow,INDIA,Nirala Nagar,UttarPradesh
-The Apricot Tree Hotel,21,Deluxe Room,Leh,INDIA,Narula,JammuandKashmir
+The Apricot Tree Hotel,21,Deluxe Room,Ladakh,INDIA,Narula,JammuandKashmir
 Westway Hotel,60,Westway Club,Kozhikode,INDIA,Near Calicut Railway Station,Kerala
 Surya Continental Hotel,21,Super Deluxe Room,Lucknow,INDIA,Airport Zone,UttarPradesh
 Hotel Trinca Residency,15,Standard Room,Lucknow,INDIA,Gomti Nagar,UttarPradesh
@@ -1112,7 +1112,7 @@ Hotel Amber,70,Executive Room,Lucknow,INDIA,Railway Station Charbagh,UttarPrades
 OVM Resorts,30,Suite,Kumbakonam,INDIA,,TamilNadu
 Hotel Gemini Continental,60,Superior Double Room,Lucknow,INDIA,Hazratganj,UttarPradesh
 Hotel Silvete,27,Deluxe Room,Lucknow,INDIA,Hazratganj,UttarPradesh
-Hotel Ladakh Heaven,18,Standard Double Room,Leh,INDIA,Old Fort Road,JammuandKashmir
+Hotel Ladakh Heaven,18,Standard Double Room,Ladakh,INDIA,Old Fort Road,JammuandKashmir
 OYO Rooms Newtown AI Market,15,Standard Room,Kolkata,INDIA,New Town - Rajarhat,WestBengal
 Hotel Edesia,11,Executive Room,Lucknow,INDIA,Gomti Nagar,UttarPradesh
 Hotel Buddha Residency,24,Deluxe Room,Lucknow,INDIA,Vidhan Sabha Marg,UttarPradesh
@@ -1145,7 +1145,7 @@ Goldrop Camps Sissu,30,Royal Tent,Lahaul and Spiti,INDIA,Sissu,HimachalPradesh
 Apple Valley Resorts,36,Cedar Super Deluxe,Kullu,INDIA,Mohal,HimachalPradesh
 Varsha International Residency,22,Deluxe Suite,Kottayam,INDIA,Near Kottayam Railway Station,Kerala
 Sereniity Resort,50,Deluxe Room,Lonavala,INDIA,Tungarli,Maharashtra
-Hotel Himalaya Villa,8,Standard Room,Leh,INDIA,Sankar Road,JammuandKashmir
+Hotel Himalaya Villa,8,Standard Room,Ladakh,INDIA,Sankar Road,JammuandKashmir
 STARiHOTELS Kurukshetra,12,AC Deluxe Room,Kurukshetra,INDIA,Railway Road,Haryana
 Passage To India,4,Sea View Deluxe A/c Room,Kovalam,INDIA,Light House Beach,Kerala
 Guest Accomodation CK 140,5,Standard Room AC,Kolkata,INDIA,Salt Lake Sector 2,WestBengal
@@ -1197,32 +1197,32 @@ Shanti Raj Hill View Resort,9,Standard Room,Lansdowne,INDIA,Dhora Village,Uttara
 The Fern Residency Kolkata,48,Winter Green,Kolkata,INDIA,Airport Zone,WestBengal
 Hotel Snow Cliff,8,Deluxe Room,Lansdowne,INDIA,Goomkhal,Uttaranchal
 The Broadstreet Broadway,33,Deluxe,Kolkata,INDIA,South Kolkata,WestBengal
-Dorje Guest House,16,Super Deluxe Room,Leh,INDIA,Upper Tukcha Road,JammuandKashmir
+Dorje Guest House,16,Super Deluxe Room,Ladakh,INDIA,Upper Tukcha Road,JammuandKashmir
 OYO Rooms Vivek Khand,15,Standard Room AC,Lucknow,INDIA,Gomti Nagar,UttarPradesh
 Hotel Kumar Palace - Punaloor,19,Executive Room,Kollam,INDIA,Kollam Beach,Kerala
 The Aodhi Hotel Kumbhalgarh,26,Deluxe  Room,Kumbhalgarh,INDIA,kumbhalgarh,Rajasthan
 Ideal Ayurvedic Resort,25,Pool View AC Room,Kovalam,INDIA,Chowara Beach,Kerala
 The Kumbha Bagh,32,Semi Suite,Kumbhalgarh,INDIA,kumbhalgarh,Rajasthan
 The Premier Hotel,28,Suite Room,Kota,INDIA,Near City Mall,Rajasthan
-Lotus Hotel,19,Deluxe Room,Leh,INDIA,Upper Karzo Road,JammuandKashmir
+Lotus Hotel,19,Deluxe Room,Ladakh,INDIA,Upper Karzo Road,JammuandKashmir
 Hotel Park Palace Lachung,15,Deluxe Room,Lachung,INDIA,Lachung,Sikkim
-Hotel Ladakh Continental,18,Deluxe Room,Leh,INDIA,Old Road,JammuandKashmir
+Hotel Ladakh Continental,18,Deluxe Room,Ladakh,INDIA,Old Road,JammuandKashmir
 Vinayak Resort,6,Double Bed Room,Lansdowne,INDIA,Deriya Khal,Uttaranchal
 Hotel Rangoli,20,A.C Room,Lucknow,INDIA,Railway Station Charbagh,UttarPradesh
 Meridian Bay Resort & Spa,52,Club Room,Kundapura,INDIA,Kodi Beach,Karnataka
 Hotel Viraat International,27,Deluxe A.C Room,Lucknow,INDIA,Railway Station Charbagh,UttarPradesh
 The Lake Village Heritage Backwater Resort,57,Deluxe Cottage,Kottayam,INDIA,Near Kottayam Railway Station,Kerala
-Desert Oasis Camp,15,Standard Room Non A/C,Leh,INDIA,Hunder,JammuandKashmir
+Desert Oasis Camp,15,Standard Room Non A/C,Ladakh,INDIA,Hunder,JammuandKashmir
 OYO Premium Pakhowal Road,15,Standard Room,Ludhiana,INDIA,Link Road,Punjab
 Orchid Residency,41,Super Deluxe Room,Kottayam,INDIA,Near Kottayam Railway Station,Kerala
 Hotel Green Palms,18,Semi Deluxe Room,Lansdowne,INDIA,Deriya Khal,Uttaranchal
 Diamond Resort & Club,50,Deluxe AC Room,Lucknow,INDIA,Airport Zone,UttarPradesh
 The Grand JBR,25,Deluxe Room,Lucknow,INDIA,Gomti Nagar,UttarPradesh
 The Renaissance,32,Non AC Executive,Kozhikode,INDIA,Near Calicut Railway Station,Kerala
-The Grand Dragon Ladakh,52,Deluxe Room,Leh,INDIA,Sheynam,JammuandKashmir
-The Auspicious Hotel,22,Comfort Room,Leh,INDIA,Old Road,JammuandKashmir
+The Grand Dragon Ladakh,52,Deluxe Room,Ladakh,INDIA,Sheynam,JammuandKashmir
+The Auspicious Hotel,22,Comfort Room,Ladakh,INDIA,Old Road,JammuandKashmir
 Hotel Ananya,27,Superior Room,Kolkata,INDIA,Salt Lake Sector 1,WestBengal
-Hotel Cho Palace,28,Deluxe Room,Leh,INDIA,Skara Village,JammuandKashmir
+Hotel Cho Palace,28,Deluxe Room,Ladakh,INDIA,Skara Village,JammuandKashmir
 Hotel VIP International,46,Semi Deluxe Room,Kolkata,INDIA,Park Street and Vicinity,WestBengal
 OYO Rooms Mumbai Pune Highway Lonavala,15,Standard Room AC,Lonavala,INDIA,Lonavala,Maharashtra
 Shirleys Beach Hotel,16,Standard Non Ac,Kovalam,INDIA,Light House Beach,Kerala
@@ -1232,7 +1232,7 @@ Crown Inn Lucknow,10,Deluxe Room,Lucknow,INDIA,Gomti Nagar,UttarPradesh
 Hotel Arya International,14,Executive Room,Kolkata,INDIA,Elgin Zone,WestBengal
 Hotel Tekarees Inn,20,Super Deluxe Room,Lucknow,INDIA,Hazratganj,UttarPradesh
 OYO Rooms Kota Junction,15,Standard Room AC,Kota,INDIA,Station Road,Rajasthan
-The Driftwood Thongsal,24,Deluxe Room,Leh,INDIA,Yurthung Road,JammuandKashmir
+The Driftwood Thongsal,24,Deluxe Room,Ladakh,INDIA,Yurthung Road,JammuandKashmir
 Hotel Aroma Cottage,10,Deluxe Room,Lonavala,INDIA,Tungarli,Maharashtra
 Star Regency Lonavala,20,Super Deluxe Room,Lonavala,INDIA,Lonavala Bus Stand,Maharashtra
 OYO Premium Station Road,15,Standard AC Room,Lucknow,INDIA,Railway Station Charbagh,UttarPradesh
@@ -1241,7 +1241,7 @@ Fortune Select Dasve,60,Standard Room,Lavasa,INDIA,Taluka Mulshi,Maharashtra
 Parthasarathy Luxury Houseboats,6,Two Bedroom Independent Luxury AC Houseboat,Kumarakom,INDIA,Vembanad Lake,Kerala
 Hotel Bagga Palace,15,Double Bed Room,Lucknow,INDIA,Aminabad,UttarPradesh
 Temple Stays,18,Executive Suite,Kumbakonam,INDIA,Near Bus Terminus,TamilNadu
-WoodyVu Stok House,5,Suite,Leh,INDIA,Loksya House Village,JammuandKashmir
+WoodyVu Stok House,5,Suite,Ladakh,INDIA,Loksya House Village,JammuandKashmir
 The Park Kolkata,149,Luxury Premium Room King Bed,Kolkata,INDIA,Park Street and Vicinity,WestBengal
 Gulab Paradise,10,Deluxe Room,Lonavala,INDIA,NH-4,Maharashtra
 Hotel Sartaj,38,Deluxe Room,Ludhiana,INDIA,Clock Tower-Near Railway Station,Punjab
@@ -1249,7 +1249,7 @@ OYO Premium Ballygunge Lovelock Street,15,Standard Room AC,Kolkata,INDIA,Sarat B
 OYO Rooms Kumbakonam Railway Station,15,Standard Room,Kumbakonam,INDIA,Near Bus Terminus,TamilNadu
 Half Moon Residency,10,Economy Ac Room,Kozhikode,INDIA,Mavoor Road,Kerala
 Hotel Heera Holiday Inn,23,Semi Suite AC,Kolkata,INDIA,Park Street and Vicinity,WestBengal
-Ladakh Himalayan Retreat,19,Deluxe Room,Leh,INDIA,Old Fort Road,JammuandKashmir
+Ladakh Himalayan Retreat,19,Deluxe Room,Ladakh,INDIA,Old Fort Road,JammuandKashmir
 Hardy's World,15,Deluxe Double Room,Ludhiana,INDIA,GT Road,Punjab
 Hotel Mahay Palace,10,Standard Room,Leh,INDIA,Upper Tukcha Road,JammuandKashmir
 Highland Resort,32,A/C Deluxe Room,Lonavala,INDIA,NH-4,Maharashtra

@@ -586,7 +586,7 @@ function planTrip(callback, trip) {
     // Possible options for rooms based on ratings
     room_query = {}
     for(var i in [0, 1, 2, 3, 4, 5]) {
-        room_query[i] = "select * from room, hotel, location, service where room.service_id = service.service_id and service.service_provider_id = hotel.service_provider_id and location.location_id = hotel.location_id and city = " + trip.destination_city + " and " + i + " in (select avg(service_rating) from service_request where service_id = room.service_id) order by price * (1 - discount * 0.01) * floor((capacity + " + trip.number_of_people + " - 1)/capacity) limit 1;";
+        room_query[i] = "select * from room, hotel, location, service where room.service_id = service.service_id and service.service_provider_id = hotel.service_provider_id and location.location_id = hotel.location_id and city = " + trip.destination_city + " and star = " + i + " order by price * (1 - discount * 0.01) * floor((capacity + " + trip.number_of_people + " - 1)/capacity) limit 1;";
         // room_query[i] = "select * from room, hotel, location, service where room.service_id = service.service_id and service.service_provider_id = hotel.service_provider_id and location.location_id = hotel.location_id and city = " + trip.destination_city + " limit 1;";
     }
 
@@ -667,9 +667,9 @@ function planTrip(callback, trip) {
                                                     if(return_flights.length == 0) {
                                                         trip.itinerary.status = "No return flights found from destination city!"
                                                     }
-                                                    if(tourist_spots.length == 0) {
-                                                        trip.itinerary.status = "No tourist spots found in city!"
-                                                    }
+                                                    // if(tourist_spots.length == 0) {
+                                                    //     trip.itinerary.status = "No tourist spots found in city!"
+                                                    // }
                                                             
                                                     trip.itinerary.pleasure_value = 0
                                                     
@@ -678,14 +678,14 @@ function planTrip(callback, trip) {
                                                             for(r_fli = 0; r_fli < return_flights.length; ++ r_fli) {
                                                                 for(tax = 0; tax < taxis.length; ++ tax) {
                                                                     for(roo = 0; roo < rooms.length; ++ roo) {
-                                                                        for(tor = 0; tor < tourist_spots.length; ++ tor) {
+                                                                        for(tor = 0; tor <= tourist_spots.length; ++ tor) {
                                                                             total_cost = 0;
                                                                             total_cost += food_expense[foo][0] * food_expense[foo][1];
                                                                             total_cost += (departure_flights[d_fli][0].price) * (1 - departure_flights[d_fli][0].discount * 0.01) * departure_flights[d_fli][1];
                                                                             total_cost += (return_flights[r_fli][0].price) * (1 - return_flights[r_fli][0].discount * 0.01) * return_flights[r_fli][1];
                                                                             total_cost += taxis[tax][0].price * (1 - taxis[tax][0].discount * 0.01) * taxis[tax][1];
                                                                             total_cost += rooms[roo][0].price * (1 - rooms[roo][0].discount * 0.01) * rooms[roo][1];
-                                                                            for(i = 0; i < tor; ++ i) {
+                                                                            for(i = 0; i < tor - 1; ++ i) {
                                                                                 total_cost += (tourist_spots[i].entry_fee) * (trip.number_of_people);
                                                                             }
                                                                             if(total_cost > trip.budget) continue;

@@ -191,13 +191,117 @@
         </div>
         <div id="content_tab3" ng-show="tab==3">
           <h3>Analyse your business</h3>
-          <button class="btn btn-outline-primary btn-block">Competitor Analysis of maximum services requests</button>
-          <button class="btn btn-outline-primary btn-block">Competitor Analysis of rating</button>
-          <button class="btn btn-outline-primary btn-block">Competitor Analysis of fastest response to queries</button>
-          <button class="btn btn-outline-primary btn-block">Analysis of users serviced by region</button>
-          <button class="btn btn-outline-primary btn-block">Analysis of services requested per month</button>
-          <button class="btn btn-outline-primary btn-block">Analysis of services rejected/accepted</button>
-
+          <div class="mt-2">
+            <button class="btn btn-outline-primary btn-block" ng-show="!a1" ng-click="a1=true;analyseMaxServiceRequests();">Competitor Analysis of maximum services requests</button>
+            <button class="btn btn-outline-primary btn-block" ng-show="a1" ng-click="a1=false;">Close Analysis</button>
+            <h4 ng-show="a1">Competitor Analysis of maximum services requests</h4>
+            <table ng-show="a1" class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Rank</th>
+                  <th scope="col">Service Provider ID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Count</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ng-repeat="it in analyse_max_service_requests.data"> 
+                  <th> \{{it.rank_}} </th>
+                  <th> \{{it.service_provider_id}} </th>
+                  <th> \{{it.name}} </th>
+                  <th> \{{it.count}} </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mt-2">
+            <button class="btn btn-outline-primary btn-block" ng-show="!a2" ng-click="a2=true;analyseMaxRating();">Competitor Analysis of rating</button>
+            <button class="btn btn-outline-primary btn-block" ng-show="a2" ng-click="a2=false;">Close Analysis</button>
+            <h4 ng-show="a2">Competitor Analysis of average rating given by Users to services</h4>
+            <table ng-show="a2" class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Rank</th>
+                  <th scope="col">Service Provider ID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Average Rating</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ng-repeat="it in analyse_max_rating.data"> 
+                  <th> \{{it.rank_}} </th>
+                  <th> \{{it.service_provider_id}} </th>
+                  <th> \{{it.name}} </th>
+                  <th> \{{it.rating}} </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mt-2">
+            <button class="btn btn-outline-primary btn-block" ng-show="!a3" ng-click="a3=true;analyseMinQueryResponseTime();">Competitor Analysis of fastest response to queries</button>
+            <button class="btn btn-outline-primary btn-block" ng-show="a3" ng-click="a3=false;">Close Analysis</button>
+            <h4 ng-show="a3">Competitor Analysis of fastest response to queries</h4>
+            <table ng-show="a3" class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Rank</th>
+                  <th scope="col">Service Provider ID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Average Response Time (hours)</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ng-repeat="it in analyse_min_query_response_time.data"> 
+                  <th> \{{it.rank_}} </th>
+                  <th> \{{it.service_provider_id}} </th>
+                  <th> \{{it.name}} </th>
+                  <th> \{{it.response_time}} </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>          
+          <div class="mt-2">
+            <button class="btn btn-outline-primary btn-block" ng-show="!a4" ng-click="a4=true;analyseUserByRegion();"> Analysis of Users Serviced by Region (User home city) </button>
+            <button class="btn btn-outline-primary btn-block" ng-show="a4" ng-click="a4=false;">Close Analysis</button>
+            <h4 ng-show="a4">Analysis of Users Serviced by Region (User home city)</h4>
+            <table ng-show="a4" class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Rank</th>
+                  <th scope="col">City</th>
+                  <th scope="col">Count</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ng-repeat="it in analyse_user_by_region.data"> 
+                  <th> \{{it.rank_}} </th>
+                  <th> \{{it.city}} </th>
+                  <th> \{{it.count}} </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>  
+          <div class="mt-2">
+            <button class="btn btn-outline-primary btn-block" ng-show="!a5" ng-click="a5=true;analyseStatusOfRequests();"> Analysis of Requests by Status </button>
+            <button class="btn btn-outline-primary btn-block" ng-show="a5" ng-click="a5=false;">Close Analysis</button>
+            <h4 ng-show="a5">Analysis of Requests by Status</h4>
+            <table ng-show="a5" class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Rank</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Count</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr ng-repeat="it in analyse_status_of_requests.data"> 
+                  <th> \{{it.rank_}} </th>
+                  <th> \{{it.status}} </th>
+                  <th> \{{it.count}} </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>          
         </div>
 
       </div>

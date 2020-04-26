@@ -276,9 +276,25 @@ router.get('/getData', function(req, res, next) {
     case 'allQueries':
       serverjs.getFilteredQueries(function(result){sendResponse(res,result);},req.query.uid,req.query.pid);
       break;
+    case 'analyseMaxServiceRequests':
+      serverjs.service_provider.analyseMaxServiceRequests(function(result){sendResponse(res,result);}, req.query.domain);
+      break;
+    case 'analyseMaxRating':
+      serverjs.service_provider.analyseMaxRating(function(result){sendResponse(res,result);}, req.query.domain);
+      break;
+    case 'analyseMinQueryResponseTime':
+      serverjs.service_provider.analyseMinQueryResponseTime(function(result){sendResponse(res,result);}, req.query.domain);
+      break;
+    case 'analyseUserByRegion':
+      serverjs.service_provider.analyseUserByRegion(function(result){sendResponse(res,result);}, req.query.service_provider_id);
+      break;
+    case 'analyseStatusOfRequests':
+      serverjs.service_provider.analyseStatusOfRequests(function(result){sendResponse(res,result);}, req.query.service_provider_id);
+      break;
     default:
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({msg:"Unknown Request sent"}))
+
   }
 });
 router.post('/service_request',function(req, res, next){

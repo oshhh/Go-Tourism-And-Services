@@ -826,6 +826,28 @@ function planTrip(callback, trip) {
     }, user_city_query);
 }
 
+function analyseMaxServiceRequests(callback, domain) {
+    query = 'select (rank() over(order by count(*) desc)) as rank_, service.service_provider_id as service_provider_id, name, count(*) as count from service_request, service, service_provider where service_request.service_id = service.service_id and service.service_provider_id = service_provider.service_provider_id and domain = ' + domain + ' group by service.service_provider_id;'
+    runQuery(callback, query)
+}
+function analyseMaxRating(callback, domain) {
+    query = 'select (rank() over(order by avg(service_rating) desc)) as rank_, service.service_provider_id as service_provider_id, name, avg(service_rating) as rating from service_request, service, service_provider where service_request.service_id = service.service_id and service.service_provider_id = service_provider.service_provider_id and domain = ' + domain + ' group by service.service_provider_id;'
+    runQuery(callback, query)
+}
+function analyseMinQueryResponseTime(callback, domain) {
+    query = ""
+    runQuery(callback, query)
+}
+function analyseUserByRegion(callback, service_provider_id) {
+    query = "select (rank() over(order by count(*) desc)) as rank_, city, count(*) as count from service_request, service, trip, user, location where service_request.service_id = service.service_id and service.service_provider_id = " + service_provider_id + " and service_request.trip_id = trip.trip_id and trip.user_id = user.user_id and user.location_id = location.location_id group by (city);"
+    runQuery(callback, query);
+}
+
+function analyseStatusOfRequests(callback, service_provider_id) {
+    query = "select (rank() over(order by count(*) desc)) as rank_, status, count(*) as count from service_request, service where service_request.service_id = service.service_id and service.service_provider_id = " + service_provider_id + " group by (status);"
+    runQuery(callback, query);
+}
+
 
 async function main() {
     console.log('Start serverjs');
@@ -836,7 +858,7 @@ async function main() {
     // runQuery(function(result){console.log(result);}, "select distinct city from location");
     // runQuery(function(result) {console.log("service requests");console.log(result);}, "select * from service_request where service_id like \"ROO%\";")
     console.log('done Connect');
-
+    // analyseMaxServiceRequests(function(result){console.log(result)}, '"hotel"')
     // planTrip(function(result) {console.log(result)}, {user_id : "\"USR00000\"", destination_city : "\"Delhi\"", user_city: "\"Mumbai\"", number_of_people : 4, number_of_days : 2, budget : 40000, weightage : {food : 2, taxi : 3, room : 5, tourist_spot : 3, flight : 3}});
 }
 main();
@@ -885,7 +907,12 @@ module.exports = {
         'getRoom':getRoom,
         'getTaxi':getTaxi,
         'getGuide':getGuide,
-        'providerGetRequests':providerGetRequests
+        'providerGetRequests':providerGetRequests,
+        'analyseMaxServiceRequests' : analyseMaxServiceRequests,
+        'analyseMaxRating' : analyseMaxRating,
+        'analyseMinQueryResponseTime' : analyseMinQueryResponseTime,
+        'analyseUserByRegion' : analyseUserByRegion,
+        'analyseStatusOfRequests' : analyseStatusOfRequests,
     },
     'tables' : tables,
     'createDatabase' : createDatabase,

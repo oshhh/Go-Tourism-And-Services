@@ -780,7 +780,7 @@ function planTrip(callback, trip) {
                                                                             total_cost += taxis[tax][0].price * (1 - taxis[tax][0].discount * 0.01) * taxis[tax][1];
                                                                             total_cost += rooms[roo][0].price * (1 - rooms[roo][0].discount * 0.01) * rooms[roo][1];
                                                                             for(i = 0; i < tor; ++ i) {
-                                                                                total_cost += tourist_spots[i].entry_fee;
+                                                                                total_cost += (tourist_spots[i].entry_fee) * (trip.number_of_people);
                                                                             }
                                                                             if(total_cost > trip.budget) continue;
                                                                             console.log(Math.floor((trip.number_of_people + rooms[roo][0].capacity - 1)) + "/" + (rooms[roo][0].capacity) + " * " + trip.number_of_days);

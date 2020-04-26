@@ -272,7 +272,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		}
 		console.log($scope.plan_trip.itinerary.pleasure_value);
 		for(i = 0; i < $scope.plan_trip.itinerary.tourist_spots.length; ++ i) {
-			$scope.plan_trip.itinerary.cost += $scope.plan_trip.itinerary.tourist_spots[i].entry_fee;
+			$scope.plan_trip.itinerary.cost += ($scope.plan_trip.itinerary.tourist_spots[i].entry_fee) * ($scope.plan_trip.number_of_people);
 		}	
 		console.log($scope.plan_trip.itinerary.pleasure_value);
 		$scope.plan_trip.itinerary.pleasure_value += (($scope.plan_trip.itinerary.tourist_spots.length)/(3 * $scope.plan_trip.number_of_days)) * $scope.plan_trip.weightage.tourist_spot;

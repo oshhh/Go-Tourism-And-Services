@@ -7,7 +7,7 @@ char = 'abcdefghijklmnopqrstuvwxyz0123456789'
 
 import pandas as pd
 import csv
-from random import randint
+from random import randint, shuffle
 from math import isnan
 loil=[]
 cities = set([])
@@ -18,12 +18,13 @@ rooms = []
 hotel_types = {1 : 1000, 2 : 2000, 3 :3000, 4 : 4000, 5 : 7000}
 room_types = [['single', 1, 500], ['double', 2, 1000], ['triple', 3, 1000], ['family suite', 4, 1500], ['executive', 4, 2000], ['deluxe', 4, 2000], ['economy', 4, 1500], ['business', 2, 3000]]
 location_id_offset = 71
-service_provider_id_offset = 45
-service_id_offset = 45
+service_provider_id_offset = 0
+service_id_offset = 0
 locations = {}
 with open('hotel_room_data.csv') as file:
 	data = pd.read_csv(file).values
-	data = data[:10000]
+	shuffle(data)
+	data = data[:500]
 	for row in data:
 		name = row[0]
 		city = row[3]
@@ -31,7 +32,7 @@ with open('hotel_room_data.csv') as file:
 		locality = row[5]
 		state = row[6]
 		
-		if type(locality) == float:
+		if type(locality) == float or type(city) == float or type(state) == float:
 			continue
 		
 		if (locality, city, state, country) not in locations:
@@ -60,7 +61,7 @@ with open('hotel_room_data.csv') as file:
 			active = 'Y'
 		else:
 			active = 'N'
-		if randint(0, 1) > 0:
+		if randint(0, 5 * star) > 0:
 			AC = 'Y'
 		else:
 			AC = 'N'
@@ -69,22 +70,18 @@ with open('hotel_room_data.csv') as file:
 		for i in range(randint(3, 10)):
 			password += char[randint(0, 35)]
 		service_provider = {
-			'service_provider_id' : service_provider_id,
-			'approved' : approved,
-			'name' : name,
-			'password' : password,
-			'domain' : 'hotel',
-			'active' : active,
-			'location_id' : locations[(locality, city, state, country)],
-			'wifi_facility' : wifi_facility,
-			'star' : star,
-			'rooms' : []
+			'service_provider_id' : '"' + service_provider_id + '"',
+			'approved' : '"' + approved + '"',
+			'name' : '"' + name + '"',
+			'password' : '"' + password + '"',
+			'domain' : '"hotel"',
+			'active' : '"' + active + '"',
 		}
 		hotel = {
-			'service_provider_id' : service_provider_id,
-			'location_id' : locations[(locality, city, state, country)],
-			'wifi_facility' : wifi_facility,
-			'star' : star,
+			'service_provider_id' : '"' + service_provider_id + '"',
+			'location_id' : '"' + locations[(locality, city, state, country)] + '"',
+			'wifi_facility' : '"' + wifi_facility + '"',
+			'star' : str(star),
 		}
 		for room in room_types:
 			AC = None
@@ -95,63 +92,27 @@ with open('hotel_room_data.csv') as file:
 			else:
 				AC = 'N'
 			service = {
-				'service_id' : service_id,
-				'service_provider_id' : service_provider_id,
-				'price' : room[2] + randint(hotel_types[star] - 1000, hotel_types[star] + 1000),
-				'discount' : randint(0,40)		
+				'service_id' : '"' + service_id + '"',
+				'service_provider_id' : '"' + service_provider_id + '"',
+				'price' : str(room[2] + randint(hotel_types[star] - 1000, hotel_types[star] + 1000)),
+				'discount' : str(randint(0,40))		
 			}
 			room = {
-				'service_id' : service_id,
-				'room_type' : room[0],
-				'capacity' : room[1],
-				'AC' : AC
+				'service_id' : '"' + service_id + '"',
+				'room_type' : '"' + room[0] + '"',
+				'capacity' : str(room[1]),
+				'AC' : '"' + AC + '"',
 			}
-			services.append(str(service))
-			rooms.append(str(room))
-		service_providers.append(str(service_provider))
-		hotels.append(str(hotel))
-lopad=""
-count=0
-for logic in services:
-    if(count==0):
-        lopad+="INSERT INTO service VALUES"
-        count+=1
-    else:
-        lopad+=logic
-loil.append(lopad)
-lopad1=""
-count1=0
-for logic1 in rooms:
-    if(count1==0):
-        lopad1+="INSERT INTO room VALUES"
-        count1+=1
-    else:
-        lopad1+=logic1
-loil.append(lopad1)
-lopad2=""
-count2=0
-for logic2 in services:
-    if(count2==0):
-        lopad2+="INSERT INTO service_privider VALUES"
-        count2+=1
-    else:
-        lopad2+=logic2
-loil.append(lopad2)
-lopad3=""
-count3=0
-for logic3 in services:
-    if(count3==0):
-        lopad3+="INSERT INTO hotel VALUES"
-        count3+=1
-    else:
-        lopad3+=logic3
-loil.append(lopad3)
-print(loil)
-flights = []
+			services.append(service)
+			rooms.append(room)
+		service_providers.append(service_provider)
+		hotels.append(hotel)
+
 cities = list(cities)
+flights = []
+service_id_offset = 21
 service_provider_id_offset = 23
-service_id_offset = 24
-for i in range(50000):
+for i in range(1000):
 	l1 = 0
 	l2 = 0
 	while l1 == l2:
@@ -166,29 +127,67 @@ for i in range(50000):
 	service_id_offset += 1
 
 	service = {
-		'service_id' : service_id,
-		'service_provider_id' : service_provider_id,
-		'price' : randint(2000, 15000),
-		'discount' : randint(0, 40)
+		'service_id' : '"' + service_id + '"',
+		'service_provider_id' : '"' + service_provider_id + '"',
+		'price' : str(randint(2000, 15000)),
+		'discount' : str(randint(0, 40))
 	}
 	flight = {
-		'service_id' : service_id,
-		'from_city' : l1,
-		'to_city' : l2,
-		'departure_time' : char[randint(26, 27)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)],
-		'arrival_time' : char[randint(26, 27)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)],
+		'service_id' : '"' + service_id + '"',
+		'from_city' : '"' + l1 + '"',
+		'to_city' : '"' + l2 + '"',
+		'departure_time' : '"' + char[randint(26, 27)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)] + '"',
+		'arrival_time' : '"' + char[randint(26, 27)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)] + '"',
 	}
 	if(flight['arrival_time'] < flight['departure_time']):
 		flight['arrival_time'], flight['departure_time'] = flight['departure_time'], flight['arrival_time']
 	services.append(service)
 	flights.append(flight)
 
-print(service_providers, file = open('service_providers.txt', mode = 'w'))
-print(services, file = open('services.txt', mode = 'w'))
-print(hotels, file = open('hotels.txt', mode = 'w'))
-print(rooms, file = open('rooms.txt', mode = 'w'))
-print(locations, file = open('locations.txt', mode = 'w'))
-print(flights, file = open('flights.txt', mode = 'w'))
-print('hotels : ', len(hotels))
-print('locations : ', len(locations), 'distinct cities : ', len(cities))
-print('flights : ', len(flights))
+service_provider_query = ["INSERT INTO service_provider VALUES "]
+for service_provider in service_providers:
+	service_provider_query.append('(' + service_provider['approved'] + ', ' + service_provider['service_provider_id'] + ', ' + service_provider['name'] + ', ' + service_provider['password'] + ', ' + service_provider['domain'] + ', ' + service_provider['active'] + ')')
+	if service_provider != service_providers[-1]:
+		service_provider_query += ', '
+service_provider_query = ''.join(i for i in service_provider_query)
+
+service_query = ["INSERT INTO service VALUES "]
+for service in services:
+	service_query.append('(' + service['service_id'] + ', ' + service['service_provider_id'] + ', ' + service['price'] + ', ' + service['discount'] + ')')
+	if service != services[-1]:
+		service_query += ', '
+service_query = ''.join(i for i in service_query)
+
+hotel_query = ["INSERT INTO hotel VALUES "]
+for hotel in hotels:
+	hotel_query.append('(' + hotel['service_provider_id'] + ', ' + hotel['location_id'] + ', ' + hotel['wifi_facility'] + ', ' + hotel['star'] + ')')
+	if hotel != hotels[-1]:
+		hotel_query += ', '
+hotel_query = ''.join(i for i in hotel_query)
+
+room_query = ["INSERT INTO room VALUES "]
+for room in rooms:
+	room_query.append('(' + room['service_id'] + ', ' + room['room_type'] + ', ' + room['capacity'] + ', ' + room['AC'] + ')')
+	if room != rooms[-1]:
+		room_query += ', '
+room_query = ''.join(i for i in room_query)
+
+location_query = ["INSERT INTO location VALUES "]
+for location in locations:
+	location_query.append('("' + locations[location] + '", "' + location[0] + '", "' + location[1] + '", "' + location[2] + '", "' + location[3] + '"), ')
+location_query = ''.join(i for i in location_query)
+
+flight_query = ["INSERT INTO flight VALUES "]
+for flight in flights:
+	flight_query.append('(' + flight['service_id'] + ', ' + flight['from_city'] + ', ' + flight['to_city'] + ', ' + flight['departure_time'] + ', ' + flight['arrival_time'] + ')')
+	if flight != flights[-1]:
+		flight_query += ', '
+flight_query = ''.join(i for i in flight_query)
+
+
+print(service_provider_query, file = open('service_providers.txt', mode = 'w'))
+print(service_query, file = open('services.txt', mode = 'w'))
+print(hotel_query, file = open('hotels.txt', mode = 'w'))
+print(room_query, file = open('rooms.txt', mode = 'w'))
+print(location_query, file = open('locations.txt', mode = 'w'))
+print(flight_query, file = open('flights.txt', mode = 'w'))

@@ -1257,12 +1257,12 @@
               <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">Chat With \{{chat.pName}}</h5>
               <a class="chatToggler" ng-click="closeChat()"><i class="fa fa-times" aria-hidden="true"></i></a>
           </div>
-            <div class="card-body chatArea">
-              <h5 ng-show="chat.status=='Pending'" style="text-align: center;">Loading Chat</h5>
+            <div class="card-body chatArea scrollable">
               <div class="row shadow pb-3 mb-5 rounded justify-content-around">
                 <input class="col-7 form-control" ng-bind="chat.newData" ng-model="chat.newData" placeholder="your message">
                 <button class="col-3 btn btn-light" ng-click="sendMessage()">Send</button>
               </div>
+              <h5 ng-show="chat.status=='Pending'" style="text-align: center;">Loading Chat</h5>
               <div class="row" ng-repeat="msg in chat.data">
                 <div ng-if="msg.side=='U'" class="col-6 ml-4 shadow p-3 mb-3 bg-light rounded">You : \{{msg.query}} (posted at \{{msg.timestamp}})</div>
                 <div style="margin-left:50%!important" ng-if="msg.side=='S'" class="col-5 ml-4 shadow p-3 mb-3 bg-light rounded">\{{msg.pname}} : \{{msg.query}} (posted at \{{msg.timestamp}})</div>

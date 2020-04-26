@@ -92,9 +92,9 @@
   z-index: 10000;
   box-shadow: 0 0 5px #000000;
 }
-#chatArea{
-  box-shadow: inset 0 0 5px #000000;
-  overflow-y: scroll;
+.chatArea{
+  /* box-shadow: inset 0 0 5px #000000; */
+  overflow: scroll;
 }
 /* #chatArea::-webkit-scrollbar {
   display: none;

@@ -754,7 +754,8 @@ angularApp.controller("ngContent",function($scope,$http)
 		if(dataState.data.content)
 			$scope.chat.data=dataState.data.content;
 		console.log(dataState.data);
-		$scope.chat.status="Pending";
+		$scope.chat.status="OK";
+		$scope.$digest();
 		$('#toast_msg').text("Opening Chat");
 		$('.toast').toast("show");
 	}

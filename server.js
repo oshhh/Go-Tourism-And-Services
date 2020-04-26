@@ -103,19 +103,19 @@ function createDatabase(onComplete) {
     runQuery(callback,'INSERT INTO query VALUES(\'QRY00000\',\'USR00000\',\'HOT00001\',\'2020-01-02 10:10:10\',\'is there any smoking room In hotel ?\',\'U\'),(\'QRY00001\',\'USR00001\',\'RES00004\',\'2020-01-02 10:10:10\',\'Can you make sea food on special demand ?\',\'U\'),(\'QRY00002\',\'USR00002\',\'AIR00017\',\'2020-01-02 10:10:10\',\'What is the last time we can report before the flight ?\',\'U\'),(\'QRY00003\',\'USR00003\',\'AIR00017\',\'2020-01-02 10:10:10\',\'Can I change my destination 2 times ?\',\'U\'),(\'QRY00004\',\'USR00004\',\'AIR00017\',\'2020-01-02 10:10:10\',\'Can I book more than 2 seats on one identity card? \',\'U\'),(\'QRY00005\',\'USR00005\',\'AIR00017\',\'2020-01-02 10:10:10\',\'Can I travel with my pet dog ?\',\'U\'),(\'QRY00006\',\'USR00006\',\'GUP00001\',\'2020-01-02 10:10:10\',\'Is there any female guide ?\',\'U\'),(\'QRY00007\',\'USR00007\',\'HOT00001\',\'2020-01-02 10:10:10\',\'Will there be 2 bathroom ?\',\'U\'),(\'QRY00008\',\'USR00008\',\'HOT00001\',\'2020-01-02 10:10:10\',\'Whether they use garlic or not ?\',\'U\'),(\'QRY00009\',\'USR00009\',\'HOT00001\',\'2020-01-02 10:10:10\',\'is there swimming pool in your hotel ?\',\'U\'),(\'QRY00010\',\'USR00010\',\'HOT00001\',\'2020-01-02 10:10:10\',\'do you accept online payment ?\',\'U\'),(\'QRY00011\',\'USR00011\',\'RES00001\',\'2020-01-02 10:10:10\',\'Can you make food on special demands ?\',\'U\');')
     runQuery(callback,'INSERT INTO train VALUES(\'TRA00000\',\'LOC00005\',\'LOC00036\',\'YNYYNYY\',\'Y\'),(\'TRA00001\',\'LOC00009\',\'LOC00032\',\'YYNNYYY\',\'Y\'),(\'TRA00002\',\'LOC00004\',\'LOC00015\',\'YNYYNYY\',\'Y\'),(\'TRA00003\',\'LOC00011\',\'LOC00001\',\'YNYNYNY\',\'N\'),(\'TRA00004\',\'LOC00021\',\'LOC00002\',\'YNYNYNY\',\'Y\'),(\'TRA00005\',\'LOC00022\',\'LOC00033\',\'YNYNYNY\',\'Y\'),(\'TRA00006\',\'LOC00025\',\'LOC00002\',\'YNYNYNY\',\'N\'),(\'TRA00007\',\'LOC00035\',\'LOC00001\',\'YNYNYNY\',\'N\'), (\'TRA00008\',\'LOC00036\',\'LOC00015\',\'YNYNYNY\',\'N\'),(\'TRA00009\',\'LOC00037\',\'LOC00016\',\'YNYNYNY\',\'Y\'),(\'TRA00010\',\'LOC00001\',\'LOC00033\',\'YNYNYNY\',\'N\'),(\'TRA00011\',\'LOC00011\',\'LOC00020\',\'YNYNYNY\',\'N\'),(\'TRA00012\',\'LOC00001\',\'LOC00025\',\'YNYNYNY\',\'N\'),(\'TRA00013\',\'LOC00002\',\'LOC00034\',\'YNYNYNY\',\'N\'),(\'TRA00014\',\'LOC00025\',\'LOC00004\',\'YNYNYNY\',\'Y\'),(\'TRA00015\',\'LOC00015\',\'LOC00023\',\'YNYNYNY\',\'Y\');')
     runQuery(callback,'INSERT INTO bus VALUES(\'BUS00000\',\'LOC00031\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00001\',\'LOC00032\',\'LOC00007\',\'YYYNYNY\',\'Y\'),(\'BUS00002\',\'LOC00035\',\'LOC00005\',\'YNNNYNY\',\'Y\'),(\'BUS00003\',\'LOC00015\',\'LOC00030\',\'YNYYYNY\',\'Y\'),(\'BUS00004\',\'LOC00015\',\'LOC00026\',\'YNYNNNY\',\'Y\'),(\'BUS00005\',\'LOC00019\',\'LOC00030\',\'YNYNNYY\',\'Y\'),(\'BUS00006\',\'LOC00029\',\'LOC00033\',\'YNYNYNY\',\'Y\'),(\'BUS00007\',\'LOC00001\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00008\',\'LOC00018\',\'LOC00023\',\'YNYNYNY\',\'N\'),(\'BUS00009\',\'LOC00015\',\'LOC00001\',\'YNYNYNY\',\'Y\'),(\'BUS00010\',\'LOC00016\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00011\',\'LOC00017\',\'LOC00011\',\'YNYNYNY\',\'Y\'),(\'BUS00012\',\'LOC00018\',\'LOC00003\',\'YNYNYNY\',\'N\'),(\'BUS00013\',\'LOC00015\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00014\',\'LOC00018\',\'LOC00001\',\'YNYNYNY\',\'Y\'),(\'BUS00015\',\'LOC00033\',\'LOC00001\',\'YNYNYNY\',\'Y\'),(\'BUS00016\',\'LOC00029\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00017\',\'LOC00008\',\'LOC00036\',\'YNYNYNY\',\'N\'),(\'BUS00018\',\'LOC00015\',\'LOC00005\',\'YNYNYNY\',\'Y\'),(\'BUS00019\',\'LOC00003\',\'LOC00037\',\'YNYNYNY\',\'N\'),(\'BUS00020\',\'LOC00009\',\'LOC00038\',\'YNYNYNY\',\'Y\');')
-    // CREATE NONCLUSTERED INDEX a1 ON location(city ASC);
-    // CREATE NONCLUSTERED INDEX a2 ON service_provider(domain ASC);
-    // CREATE NONCLUSTERED INDEX a3 ON service(service_provider_id ASC);
-    // CREATE NONCLUSTERED INDEX a4 ON hotel(location_id ASC);
-    // CREATE NONCLUSTERED INDEX a5 ON room(room_type ASC);
-    // CREATE NONCLUSTERED INDEX a6 ON restaurant(location_id ASC);
-    // CREATE NONCLUSTERED INDEX a7 ON food_item(name ASC);
-    // CREATE NONCLUSTERED INDEX a8 ON flight(from_city,to_city ASC);
-    // CREATE NONCLUSTERED INDEX a9 ON taxi(car_name ASC);
-    // CREATE NONCLUSTERED INDEX a10 ON tourist_spot(name,location_id ASC);
-    // CREATE NONCLUSTERED INDEX a11 ON guide(tourist_spot_id ASC);
-    // CREATE NONCLUSTERED INDEX a12 ON trip(trip ASC);
-    // CREATE NONCLUSTERED INDEX a13 ON service_request(trip_id ASC);
+    runQuery(callback, 'CREATE NONCLUSTERED INDEX a1 ON location(city ASC);')
+    runQuery(callback, 'CREATE NONCLUSTERED INDEX a2 ON service_provider(domain ASC);')
+    runQuery(callback, 'CREATE NONCLUSTERED INDEX a3 ON service(service_provider_id ASC);')
+    runQuery(callback, 'CREATE NONCLUSTERED INDEX a4 ON hotel(location_id ASC);')
+    runQuery(callback, 'CREATE NONCLUSTERED INDEX a5 ON room(room_type ASC);')
+    runQuery(callback, 'CREATE NONCLUSTERED INDEX a6 ON restaurant(location_id ASC);')
+    runQuery(callback, 'CREATE NONCLUSTERED INDEX a7 ON food_item(name ASC);')
+    runQuery(callback, 'CREATE NONCLUSTERED INDEX a8 ON flight(from_city,to_city ASC);')
+    runQuery(callback, 'CREATE NONCLUSTERED INDEX a9 ON taxi(car_name ASC);')
+    runQuery(callback, 'CREATE NONCLUSTERED INDEX a10 ON tourist_spot(name,location_id ASC);')
+    runQuery(callback, 'CREATE NONCLUSTERED INDEX a11 ON guide(tourist_spot_id ASC);')
+    runQuery(callback, 'CREATE NONCLUSTERED INDEX a12 ON trip(trip ASC);')
+    runQuery(callback, 'CREATE NONCLUSTERED INDEX a13 ON service_request(trip_id ASC);')
 }
 
 db_config = {
@@ -585,16 +585,18 @@ function getFilteredAutoCorrectPrediction(callback,queryData)
     where ( target.`+queryData.searchKey+`= source.`+queryData.searchKey+`)`;   
     runQuery(callback,query);
 }
-function getFilteredQueries(callback,uid,pid)
+function getFilteredQueries(callback,userName)
 {
     query="";
     if(userName.startsWith("USR"))
     {
-        query=`select * 
-        from query
-        where (user_id REGEXP "`+uid+`"
-        and service_provider_id REGEXP `+pid+`")`;
+        query=`select distinct `+queryData.target_column+` as prediction
+        from `+queryData.target_table+` as target, `+queryData.source_table+` as source
+        where ( target.`+queryData.searchKey+`= source.`+queryData.searchKey+`)`;
+    }
+    else{
 
+    }   
     runQuery(callback,query);
 }
 function updateOneColumn(callback,data)
@@ -668,6 +670,7 @@ function planTrip(callback, trip) {
     tourist_spots = []
     trip.itinerary = {
         pleasure_value : 0,
+        cost : 0,
         status : "Budget Too Low!"
     }
 
@@ -786,7 +789,7 @@ function planTrip(callback, trip) {
                                                                             pleasure_value += ((tor + 1)/(3 * trip.number_of_days)) * trip.weightage.tourist_spot;
                                                                             pleasure_value /= (trip.weightage.flight + trip.weightage.food + trip.weightage.taxi + trip.weightage.room + trip.weightage.tourist_spot);
                                                                             pleasure_value *= 10;
-                                                                            if(trip.itinerary.pleasure_value <= pleasure_value) {
+                                                                            if(trip.itinerary.pleasure_value < pleasure_value || trip.itinerary.pleasure_value == pleasure_value && trip.itinerary.cost > total_cost) {
                                                                                 trip.itinerary.food_expense = food_expense[foo];
                                                                                 trip.itinerary.departure_flight = departure_flights[d_fli];
                                                                                 trip.itinerary.return_flight = return_flights[r_fli];
@@ -827,6 +830,7 @@ async function main() {
     // createDatabase(function(){
     //     console.log('done Creation');
     // });
+    runQuery(function(result){console.log(result);}, "select distinct city from location");
     // runQuery(function(result) {console.log("service requests");console.log(result);}, "select * from service_request where service_id like \"ROO%\";")
     console.log('done Connect');
 

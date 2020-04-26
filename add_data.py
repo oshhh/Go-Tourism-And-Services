@@ -75,10 +75,6 @@ with open('hotel_room_data.csv') as file:
 			'password' : password,
 			'domain' : 'hotel',
 			'active' : active,
-			'location_id' : locations[(locality, city, state, country)],
-			'wifi_facility' : wifi_facility,
-			'star' : star,
-			'rooms' : []
 		}
 		hotel = {
 			'service_provider_id' : service_provider_id,

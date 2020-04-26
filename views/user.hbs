@@ -74,7 +74,7 @@
             <a ng-click="changeTab(7)" class="a_bar" href="javascript:bs(6)">Tourist Spots <i class="fa fa-flask" aria-hidden="true"></i></a>
           </div>
           <div class="i_bar">
-            <a ng-click="changeTab(8)" class="a_bar" href="javascript:bs(7)">Guides <i class="fa fa-hand-lizard-o" aria-hidden="true"></i></a>
+            <a ng-click="changeTab(8)" class="a_bar" href="javascript:bs(7)">Guides <i class="fa fa-user" aria-hidden="true"></i></a>
           </div>
 
         </div>
@@ -301,7 +301,10 @@
           <div style="text-align: center;" class="rowsCont" ng-show="flight.status=='Pending'">Loading Data</div>
           <div id="table3" class="rowsCont card-rows">
             <div ng-repeat="it in flight.data" class="rowElement card shadow p-4 mb-4 bg-white">
-              <div class="card-header text-center bg-white align-middle">Service ID: \{{it.service_id}}</div>
+              <div class="card-header text-center bg-white align-middle">
+                <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">Service ID: \{{it.service_id}}</h5>
+                <a class="chatToggler" ng-click="startChat(it.service_provider_id,it.service_provider_id)"><i class="fa fa-comments" aria-hidden="true"></i></a>
+                </div>
               <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
                 <div class="cardText card-text">From: \{{it.from_city}} <br> To: \{{it.to_city}}</div>
                 <div class="cardText card-text">Departure Time: \{{it.departure_time.substring(11,19)}}<br> Arrival
@@ -393,7 +396,10 @@
           <div style="text-align: center;" class="rowsCont" ng-show="bus_train.status=='Pending'">Loading Data</div>
           <div id="table3" class="rowsCont card-rows">
             <div ng-repeat="it in bus_train.data" class="rowElement card shadow p-4 mb-4 bg-white">
-              <div class="card-header text-center bg-white align-middle">Service ID: \{{it.service_id}}</div>
+              <div class="card-header text-center bg-white align-middle">
+                <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">Service ID: \{{it.service_id}}</h5>
+                <a class="chatToggler" ng-click="startChat(it.service_provider_id,it.service_provider_id)"><i class="fa fa-comments" aria-hidden="true"></i></a>
+              </div>
               <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
                 <div class="cardText card-text">AC: \{{it.AC}} </div>
                 <div class="cardText card-text">Active Days: \{{it.active_days}} </div>
@@ -481,8 +487,11 @@
           <div style="text-align: center;" class="rowsCont" ng-show="taxi.status=='Pending'">Loading Data</div>
           <div id="table3" class="rowsCont card-rows">
             <div ng-repeat="it in taxi.data" class="rowElement card shadow p-4 mb-4 bg-white">
-              <div class="card-header text-center bg-white align-middle">Service ID: \{{it.service_id}} Service Provider
-                ID: \{{it.service_provider_id}}</div>
+              <div class="card-header text-center bg-white align-middle">
+                <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">Service ID: \{{it.service_id}} Service Provider
+                ID: \{{it.service_provider_id}}</h5>
+                <a class="chatToggler" ng-click="startChat(it.service_provider_id,it.service_provider_id)"><i class="fa fa-comments" aria-hidden="true"></i></a>
+              </div>
               <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
                 <div class="cardText card-text">Car Name: \{{it.car_name}}</div>
                 <div class="cardText card-text">Capacity: \{{it.capacity}}</div>
@@ -597,8 +606,11 @@
           <div style="text-align: center;" class="rowsCont" ng-show="room.status=='Pending'">Loading Data</div>
           <div id="table3" class="rowsCont card-rows">
             <div ng-repeat="it in room.data" class="rowElement card shadow p-4 mb-4 bg-white">
-              <div class="card-header text-center bg-white align-middle">Service ID: \{{it.service_id}} Service Provider
-                ID: \{{it.service_provider_id}}</div>
+              <div class="card-header text-center bg-white align-middle">
+                <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">Service ID: \{{it.service_id}} Service Provider
+                ID: \{{it.service_provider_id}}</h5>
+                <a class="chatToggler" ng-click="startChat(it.service_provider_id,it.service_provider_id)"><i class="fa fa-comments" aria-hidden="true"></i></a>
+              </div>
               <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
                 <div class="cardText card-text"></div>
                 <div class="cardText card-text">Hotel Name: \{{it.name}} <br> Hotel Locality: \{{it.locality}} <br>
@@ -837,7 +849,10 @@
           <div style="text-align: center;" class="rowsCont" ng-show="guide.status=='Pending'">Loading Data</div>
           <div id="table3" class="rowsCont card-rows">
             <div ng-repeat="it in guide.data" class="rowElement card shadow p-4 mb-4 bg-white">
-              <div class="card-header text-center bg-white align-middle">Guide ID: \{{it.service_id}}</div>
+              <div class="card-header text-center bg-white align-middle">
+                <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">Guide ID: \{{it.service_id}}</h5>
+                <a class="chatToggler" ng-click="startChat(it.service_provider_id,it.service_provider_id)"><i class="fa fa-comments" aria-hidden="true"></i></a>
+                </div>
               <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
                 <div class="cardText card-text">Name: \{{it.guide_name}} </div>
                 <div class="cardText card-text">Tourist Spot Name: \{{it.tourist_spot_name}} </div>

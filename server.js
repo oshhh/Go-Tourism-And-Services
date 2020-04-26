@@ -816,7 +816,6 @@ module.exports = {
         'analyseStatusOfRequests' : analyseStatusOfRequests,
     },
     'tables' : tables,
-    'createDatabase' : createDatabase,
     'insertIntoTable' : insertIntoTable,
     'selectAllFromTable' : selectAllFromTable,
     'count_table':count_table,

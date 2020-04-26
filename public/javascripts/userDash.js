@@ -68,6 +68,8 @@ angularApp.controller("ngContent",function($scope,$http)
 		room_type : "",
 		capacity : "",
 		wifi_facility : "0",
+		star : "",
+		AC : "",
 		sortOrder:"0",
 		reviews:{},
 	}
@@ -515,7 +517,9 @@ angularApp.controller("ngContent",function($scope,$http)
 				city: "\"%" + $scope.room.city + "%\"",
 				room_type: "\"%" + $scope.room.room_type + "%\"",
 				capacity:  ($scope.room.capacity == "" ? "\"%\"" : $scope.room.capacity) ,
-				wifi_facility: ( $scope.room.wifi_facility == 0) ? ("\"%\"") : ($scope.room.wifi_facility == 1 ? "\"Y\"" : "\"N\"" )
+				wifi_facility: ( $scope.room.wifi_facility == 0) ? ("\"%\"") : ($scope.room.wifi_facility == 1 ? "\"Y\"" : "\"N\"" ),
+				AC: ( $scope.room.AC == 0) ? ("\"%\"") : ($scope.room.AC == 1 ? "\"Y\"" : "\"N\"" ),
+				star: ( $scope.room.star == 0) ? ("\"%\"") : $scope.room.star
 				}}).then(
 				function(data, status, headers, config) {
 				$scope.room.data=data.data.content;

@@ -157,6 +157,8 @@ router.get('/getData', function(req, res, next) {
           name: req.query.name,
           capacity: req.query.capacity,
           wifi_facility: req.query.wifi_facility,
+          AC: req.query.AC,
+          star: req.query.star,
         });      
     break;
     case 'food':

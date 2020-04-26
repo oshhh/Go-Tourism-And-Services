@@ -202,7 +202,8 @@ angularApp.controller("ngContent",function($scope,$http)
 	}
 	$scope.planTrip = function()
 	{
-		if(!$("#plannerForm").valid())
+		console.log()
+		if($("#plannerForm").hasClass("ng-invalid"))
 		{
 			$('#toast_msg').text("Please Fill Correct parameters");
 			$('.toast').toast("show");

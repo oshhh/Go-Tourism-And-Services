@@ -1,5 +1,5 @@
 input.ng-invalid ,textarea.ng-invalid{
-    border:1px solid rgb(233, 152, 152) !important; 
+    border:3px solid rgb(233, 152, 152) !important; 
     border-radius: 2px !important;
 }
 body{
@@ -286,4 +286,26 @@ select:-webkit-autofill:focus {
 svg{
     display: block;
     margin: auto;
+}
+.chatToggler{
+    text-decoration: none;
+    float:right;
+    padding: 10px;
+    border: 2px solid white;
+    border-radius: 20px;
+    transition: border-color 1s;
+}
+.chatToggler:hover{
+    text-decoration: none;
+    float:right;
+    /* border-radius: 2px; */
+    border-color: #9DE1CC;
+    padding: 10px;
+}
+.chatBox{
+    box-shadow: inset 0 0 5px #000000;
+    /* padding: 10px; */
+}
+.msg{
+    box-shadow: 0 0 5px #000000;
 }

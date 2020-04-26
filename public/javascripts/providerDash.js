@@ -19,6 +19,11 @@ angularApp.controller("ngContent",function($scope,$http)
 		},
 		createStatus:""
 	};
+	$scope.query={
+		data:{},
+		status:"Pending",
+		newData:{}
+	}
 	$scope.changeStatus=function(it)
 	{
 		it.updateResult="Sending";
@@ -307,7 +312,13 @@ angularApp.controller("ngContent",function($scope,$http)
 		}
 		else if(tab==2)
 		{
-			
+			$scope.query.status="Pending";
+			dataState = await $http.get("/api/getData",{params:{
+				type:"allQueries",
+				uid:".*",
+				pid:$scope.curUser.uid
+			}});
+			$scope.query.status="OK";
 		}
 	}
 	$scope.incrementRoute=function(it)

@@ -273,8 +273,8 @@ router.get('/getData', function(req, res, next) {
     case 'FilteredSingleColumn':
       serverjs.getFilteredAutoCorrectPrediction(function(result){sendResponse(res,result);},req.query);
       break;
-    case 'queryFiltered':
-      serverjs.getFilteredQueries(function(result){sendResponse(res,result);},req.session.uname);
+    case 'allQueries':
+      serverjs.getFilteredQueries(function(result){sendResponse(res,result);},req.query.uid,req.query.pid);
       break;
     default:
       res.setHeader('Content-Type', 'application/json');

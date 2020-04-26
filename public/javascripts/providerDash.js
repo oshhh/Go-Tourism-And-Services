@@ -342,6 +342,16 @@ angularApp.controller("ngContent",function($scope,$http)
 	}
 	$scope.createService=async function()
 	{
+		// var form = $("#newModelFrom");
+		// form.validate();
+		// console.log($("#newModelFrom").hasClass("ng-invalid"));
+		if($("#newModelFrom").hasClass("ng-invalid"))
+		{
+			console.log("showing toast")
+			$('#toast_msg').text("Please Fill correct details");
+			$('.toast').toast("show");
+			return;
+		}
 		try{
 			$scope.currentServices.createStatus="Sending";
 			reqBody={};
@@ -434,8 +444,17 @@ angularApp.controller("ngContent",function($scope,$http)
 
 		}
 	}
-	$scope.updateService=async function(it)
+	$scope.updateService=async function(it,index)
 	{
+		console.log("#editForm_"+index.toString());
+		console.log($("#editForm_"+index.toString()).hasClass("ng-invalid"));
+		if($("#editForm_"+index.toString()).hasClass("ng-invalid"))
+		{
+			console.log("showing toast")
+			$('#toast_msg').text("Please Fill correct details");
+			$('.toast').toast("show");
+			return;
+		}
 		try{
 			it.updateResult="Sending";
 			reqBody=[];
@@ -1317,21 +1336,6 @@ angularApp.controller("ngContent",function($scope,$http)
 		}
 
 		console.log($scope.currentServices.model);
-	}
-	$scope.toggle_sidebar=function(){
-		sidebarDOM=document.getElementById("sidebar");
-		if(sidebarDOM.style.right=="-380px")
-		{
-			sidebarDOM.style.right="0px";
-			$('#toggleIcon').removeClass("fa-angle-double-left");
-			$('#toggleIcon').addClass("fa-angle-double-right");
-		}
-		else{
-			sidebarDOM.style.right="-380px";
-			$('#toggleIcon').removeClass("fa-angle-double-right");
-			$('#toggleIcon').addClass("fa-angle-double-left");
-		}
-		console.log("called toggle"+sidebarDOM.style.right);
 	}
 	$scope.initModel();
 	$scope.changeTab(0);

@@ -43,3 +43,7 @@ label{
   flex-direction: row;
   justify-content: space-between;
 }
+input.ng-dirty.ng-invalid {
+  border:1px solid red !important; 
+  border-radius: 2px !important;
+}

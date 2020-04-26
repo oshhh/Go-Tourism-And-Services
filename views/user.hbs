@@ -1258,6 +1258,7 @@
               <a class="chatToggler" ng-click="closeChat()"><i class="fa fa-times" aria-hidden="true"></i></a>
           </div>
             <div class="card-body chatArea">
+              <h5 ng-show="chat.status=='Pending'" style="text-align: center;">Loading Chat</h5>
               <div class="row shadow pb-3 mb-5 rounded justify-content-around">
                 <input class="col-7 form-control" ng-bind="chat.newData" ng-model="chat.newData" placeholder="your message">
                 <button class="col-3 btn btn-light" ng-click="sendMessage()">Send</button>

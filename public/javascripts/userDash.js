@@ -703,7 +703,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	}
 	$scope.chat={
 		pName:"",
-		data:{},
+		data:[],
 		newData:"",
 		hide:true,
 		provider_id:"",
@@ -745,6 +745,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		$scope.chat.provider_id=service_provider_id;
 		$scope.chat.newData="";
 		$scope.chat.status="Pending";
+		$scope.chat.data=[];
 		dataState = await $http.get("/api/getData",{params:{
 			type:"allQueries",
 			uid:$scope.curUser.uid,
@@ -753,6 +754,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		if(dataState.data.content)
 			$scope.chat.data=dataState.data.content;
 		console.log(dataState.data);
+		$scope.chat.status="Pending";
 		$('#toast_msg').text("Opening Chat");
 		$('.toast').toast("show");
 	}

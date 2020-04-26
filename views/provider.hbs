@@ -1,18 +1,28 @@
 <html>
     <head>
         <title>{{title}}</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.js"></script>
-        <script src="../public/javascripts/providerDash.js"></script>
         <link type="text/css" rel="stylesheet" href="../public/css/main.css">
         <link type="text/css" rel="stylesheet" href="../public/css/provider.css">
+            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+      <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+      
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.js"></script>
          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
     integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
         <link href='https://fonts.googleapis.com/css?family=Roboto:100,300' rel='stylesheet' type='text/css'>
-  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-  </script>
-          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+        <script src="../public/javascripts/providerDash.js"></script>
     </head>
     <body ng-app="dash">
       <div class="navbar navbar-default fixed-top">
@@ -40,13 +50,6 @@
         </div>
       </nav>
 
-      <div id="sidebar">
-              <div ng-click="toggle_sidebar()" id="side-toggle" style="padding-top:15px"><span id="toggleIcon"
-          class="fa fa-angle-double-right fa-lg"></span></div>
-        <div id="side-content">
-          <h3 style="text-align: center;">Content SideBar</h3>
-        </div>
-      </div>
 
       {{!-- <h3 style="text-align: center;">Current Tab:\{{tab}}</h3> --}}
       <div id="mainC" class="shadow p-4 mb-4 bg-white">
@@ -102,33 +105,32 @@
             <div ng-show="currentServices.showNew" class="rowElement card shadow p-4 mb-4 bg-white">
               <div>
                 <div style="margin: 10px;" class="newCard">
-
+                  <form id="newModelFrom">
                   <div>
                     <div ng-repeat="e in currentServices.model.newModel" class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">\{{e.name}}</span>
-                        <input ng-model="currentServices.newData[e.value]" ng-show="e.type==0" type="text" class="form-control">
-                        <textarea ng-model="currentServices.newData[e.value]" ng-show="e.type==1" class="form-control"></textarea>
-                        <input ng-show="e.type==2" ng-model="currentServices.newData[e.value]" type="text" class="form-control">
-                        <input ng-show="e.type==4" ng-model="currentServices.newData[e.value]" type="text" class="form-control">
+                        <input required ng-model="currentServices.newData[e.value]" ng-show="e.type==0" type="text" class="form-control">
+                        <textarea required ng-model="currentServices.newData[e.value]" ng-show="e.type==1" class="form-control"></textarea>
+                        <input required ng-show="e.type==2" ng-model="currentServices.newData[e.value]" type="text" class="form-control">
+                        <input required ng-show="e.type==4" ng-model="currentServices.newData[e.value]" type="text" class="form-control">
                       </div>
                     </div>
                   </div>
-                  
                   <div ng-show="currentServices.model.route==true" style="padding-right:20px;border-right: 1px solid #DDD;">
                     <div style="text-align: center;">Route Definition: City Arrival Time</div>
                     <br>
                     <ul style="text-align: center;" class="list-group">
                       <li ng-repeat="step in currentServices.newData.routeData" class="list-group-item">
                         <div class="input-group-prepend">
-                          <input ng-model="step.location_id_v" type="text" class="form-control" value="\{{step.location_id_v}}">
-                          <input ng-model="step.arrival_time" type="text" class="form-control" value="\{{step.arrival_time}}">
+                          <input required ng-model="step.location_id_v" type="text" class="form-control" value="\{{step.location_id_v}}">
+                          <input required ng-model="step.arrival_time" type="text" class="form-control" value="\{{step.arrival_time}}">
                         </div>
                       </li>
                       <li class="list-group-item"><button ng-click="incrementRoute(currentServices.newData.routeData)" class="btn btn-success">+</button></li>
                     </ul>
                   </div>  
-
+                </form>
                 </div>
                   
                 <button ng-click="createService()" class="btn btn-success">Create</button>
@@ -137,32 +139,33 @@
             </div>
             <div ng-repeat="it in currentServices.data" class="rowElement card shadow p-4 mb-4 bg-white">
               <div class="card-header text-center bg-white align-middle">\{{currentServices.model.header.name}} : \{{it[currentServices.model.header.value]}}</div>
+                <form id="editForm_\{{$index}}">
                 <div style="margin: 10px;" class="editCard">
-                  <div style="border-right: 1px solid #DDD;padding-right:8px">
+                  <div style="padding-right:8px">
                   <h7>Edit Details</h7>
                   <br>
                   <label ng-repeat="v in currentServices.model.view">\{{v.name}} : \{{it[v.value]}}</label>
                   <div ng-repeat="e in currentServices.model.editable" class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">\{{e.name}}</span>
-                      <input ng-model="it[e.value]" ng-show="e.type==0" type="text" class="form-control" value="\{{it[e.value]}}">
-                      <textarea ng-model="it[e.value]" ng-show="e.type==1" class="form-control">\{  {it[e.value]}}</textarea>
-                      <input ng-show="e.type==2" ng-model="it[e.display]" type="text" class="form-control" value="\{{it[e.display]}}">
-                      <input type="text" class="form-control" ng-model="it[e.value]" ng-show="e.type==3" value="\{{it[e.value]}}">
-                      <input ng-show="e.type==4" ng-model="it[e.display]" type="text" class="form-control" value="\{{it[e.display]}}">
+                      <input required ng-model="it[e.value]" ng-if="e.type==0" type="text" class="form-control" value="\{{it[e.value]}}">
+                      <textarea required ng-model="it[e.value]" ng-if="e.type==1" class="form-control">\{  {it[e.value]}}</textarea>
+                      <input required ng-if="e.type==2" ng-model="it[e.display]" type="text" class="form-control" value="\{{it[e.display]}}">
+                      <input required type="text" class="form-control" ng-model="it[e.value]" ng-if="e.type==3" value="\{{it[e.value]}}">
+                      <input required ng-if="e.type==4" ng-model="it[e.display]" type="text" class="form-control" value="\{{it[e.display]}}">
                     </div>
                   </div>
 
                   </div> 
 
-                  <div ng-show="currentServices.model.route==true" style="padding-right:20px;border-right: 1px solid #DDD;">
+                  <div ng-if="currentServices.model.route==true" style="padding-right:20px">
                     <div style="text-align: center;">Route Definition: City Arrival Time</div>
                     <br>
                     <ul style="text-align: center;" class="list-group">
                       <li ng-repeat="step in it.routeData" class="list-group-item">
                         <div class="input-group-prepend">
-                          <input ng-model="step.location_id_v" type="text" class="form-control" value="\{{step.location_id_v}}">
-                          <input ng-model="step.arrival_time" type="text" class="form-control" value="\{{step.arrival_time}}">
+                          <input required ng-model="step.location_id_v" type="text" class="form-control" value="\{{step.location_id_v}}">
+                          <input required ng-model="step.arrival_time" type="text" class="form-control" value="\{{step.arrival_time}}">
                         </div>
                       </li>
                       <li class="list-group-item"><button ng-click="incrementRoute(it.routeData)" class="btn btn-success">+</button></li>
@@ -171,14 +174,14 @@
 
                   <div class="d-flex flex-column justify-content-center">
                     <br>
-                    <button ng-click="updateService(it)" class="btn btn-primary">Update</button>
-                    <br>
-                    <button ng-click="deleteService(it)" class="btn btn-danger">Delete</button>
+                    <button ng-click="updateService(it,$index)" class="btn btn-primary mb-2">Update</button>
+                    <button ng-click="deleteService(it)" class="btn btn-danger mt-2">Delete</button>
                     <br>
                     <h6>\{{it['updateResult']}}</h6>
                   </div>
 
                 </div>
+                </form>
             </div>
           </div>
         </div>
@@ -199,7 +202,15 @@
 
       </div>
       
-
+        <div data-delay="3000" class="toast info-toast shadow p-3 mb-5 bg-white rounded">
+          <div style="font-size: 1.2em;" class="toast-header">
+            Message
+          </div>
+          <div class="toast-body">
+            <div id="toast_msg">Action Done</div>
+          </div>
+        </div>
+    {{!-- Div controller end --}}
     </div>
     </body>
 

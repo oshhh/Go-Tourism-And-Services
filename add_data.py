@@ -13,6 +13,7 @@ from random import randint
 from math import isnan
 
 locations = set([])
+cities = set([])
 with open('hotel_room_data.csv') as file:
 	data = pd.read_csv(file).values
 	data = data[:10000]
@@ -27,20 +28,20 @@ with open('hotel_room_data.csv') as file:
 		if type(locality) == float:
 			continue
 		locations.add((locality, city, state, country))
-
+		cities.add(city)
 flights = []
-locations = list(locations)
+cities = list(cities)
 for i in range(50000):
 	l1 = 0
 	l2 = 0
 	while l1 == l2:
-		l1 = randint(0, len(locations) - 1)
-		l2 = randint(0, len(locations) - 1)
-	l1 = locations[l1]
-	l2 = locations[l2]
+		l1 = randint(0, len(cities) - 1)
+		l2 = randint(0, len(cities) - 1)
+	l1 = cities[l1]
+	l2 = cities[l2]
 	flight = {
-		'from_city' : l1[1],
-		'to_city' : l2[1],
+		'from_city' : l1,
+		'to_city' : l2,
 		'departure_time' : char[randint(26, 27)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)],
 		'arrival_time' : char[randint(26, 27)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)],
 		'price' : randint(2000, 15000),

@@ -1,4 +1,4 @@
-cities = set(['leh', 'ladakh', 'goa', 'jaipur', 'hyderabad', 'kolkata', 'chennai', 'lucknow', 'shilong', 'jodhpur', 'jammu', 'kanpur', 'kasauli', 'lonavala', 'chandigarh', 'dekhradun', 'darjeeling', 'gurgaon', 'indore', 'ludhiana', 'corbett', 'mumbai', 'delhi'])
+cities = {'leh' : [], 'ladakh' : [], 'goa' : [], 'jaipur' : [], 'hyderabad' : [], 'kolkata' : [], 'chennai' : [], 'lucknow' : [], 'shillong' : [], 'jodhpur' : [], 'jammu' : [], 'kanpur' : [], 'kasauli' : [], 'lonavala' : [], 'chandigarh' : [], 'dehradun' : [], 'darjeeling' : [], 'gurgaon':[], 'indore':[], 'ludhiana':[], 'corbett':[], 'mumbai':[], 'delhi':[]}
 char = 'abcdefghijklmnopqrstuvwxyz0123456789'
 
 import pandas as pd
@@ -15,23 +15,22 @@ location_id_offset = 71
 service_provider_id_offset = 0
 service_id_offset = 0
 locations = {}
+cities_2 = set({})
 with open('hotel_room_data.csv') as file:
 	data = pd.read_csv(file).values
-	shuffle(data)
-	data = data[:1000]
 	for row in data:
 		name = row[0]
 		city = row[3]
 		country = 'India'
 		locality = row[5]
 		state = row[6]
-		if type(locality) == float or type(city) == float or type(state) == float or city.lower() not in cities:
+		if type(locality) == float or type(city) == float or type(state) == float or city.lower() not in cities or len(cities[city.lower()]) > 10:
 			continue
 		locality = locality.lower()
 		state = state.lower()
 		city = city.lower()
+		cities_2.add(city)
 		country = country.lower()
-		
 		if (locality, city, state, country) not in locations:
 			locations[(locality, city, state, country)] = 'LOC' + '0' * (5 - len(str(location_id_offset))) + str(location_id_offset)
 			location_id_offset += 1
@@ -39,7 +38,6 @@ with open('hotel_room_data.csv') as file:
 		service_provider_id = 'HOT' + '0' * (5 - len(str(service_provider_id_offset))) + str(service_provider_id_offset)
 		service_provider_id_offset += 1
 		
-		cities.add(city)
 		star = randint(1, 5)
 		
 		wifi_facility = None
@@ -104,6 +102,7 @@ with open('hotel_room_data.csv') as file:
 			rooms.append(room)
 		service_providers.append(service_provider)
 		hotels.append(hotel)
+		cities[city].append(hotel)
 
 cities = list(cities)
 flights = []
@@ -218,3 +217,4 @@ print('cities', len(cities))
 print('hotels', len(hotels))
 print('rooms', len(rooms))
 print('flights', len(flights))
+print('cities2', cities_2)

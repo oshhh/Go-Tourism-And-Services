@@ -259,7 +259,7 @@ function getRooms(callback, attribute_values) {
     if(Object.keys(attribute_values).length == 0) {
         attribute_values = assignAttributes(['room', 'hotel', 'service'])
     }
-    query = 'select distinct room.service_id, hotel.service_provider_id, service_provider.name as name, locality, city, room_type, capacity, wifi_facility, price, discount, (SELECT distinct COALESCE(AVG(service_rating),0) FROM service_request as u where u.service_id=service.service_id)  as rating  from room, hotel, location, service, service_provider where (hotel.service_provider_id = service_provider.service_provider_id) and (service.service_id = room.service_id) and (hotel.service_provider_id = service.service_provider_id) and (location.location_id = hotel.location_id) and (' + whereClause(attribute_values) + ');'
+    query = 'select distinct room.service_id, hotel.service_provider_id, service_provider.name as name, locality, city, room_type, capacity, wifi_facility, AC, star, price, discount, (SELECT distinct COALESCE(AVG(service_rating),0) FROM service_request as u where u.service_id=service.service_id)  as rating  from room, hotel, location, service, service_provider where (hotel.service_provider_id = service_provider.service_provider_id) and (service.service_id = room.service_id) and (hotel.service_provider_id = service.service_provider_id) and (location.location_id = hotel.location_id) and (' + whereClause(attribute_values) + ');'
     runQuery(callback, query);
 }
 function getFoodItems(callback,filters)

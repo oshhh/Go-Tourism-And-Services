@@ -310,6 +310,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		{
 			$('#toast_msg').text("Write Something");
 			$('.toast').toast("show");
+			return;
 		}
 		msgString=$scope.query.newData[uid];
 		$scope.query.data[uid].unshift({

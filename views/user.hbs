@@ -52,29 +52,29 @@
       <nav class="l_bar" align="center">
         <div id="togs">
           <div class="i_bar" id="act">
-            <a ng-click="changeTab(0)" class="a_bar" href="javascript:bs(0)">My Trips</a>
+            <a ng-click="changeTab(0)" class="a_bar" href="javascript:bs(0)">My Trips <i class="fa fa-address-card" aria-hidden="true"></i></a>
           </div>
           <div class="rightDivider"><a class="a_bar"> </a></div>
           <div class="i_bar">
-            <a ng-click="changeTab(2)" class="a_bar" href="javascript:bs(1)">Flights</a>
+            <a ng-click="changeTab(2)" class="a_bar" href="javascript:bs(1)">Flights <i class="fa fa-plane" aria-hidden="true"></i></a>
           </div>
           <div class="i_bar">
-            <a ng-click="changeTab(3)" class="a_bar" href="javascript:bs(2)">Buses And Trains</a>
+            <a ng-click="changeTab(3)" class="a_bar" href="javascript:bs(2)">Buses And Trains <i class="fa fa-subway" aria-hidden="true"></i></a>
           </div>
           <div class="i_bar">
-            <a ng-click="changeTab(4)" class="a_bar" href="javascript:bs(3)">Taxis</a>
+            <a ng-click="changeTab(4)" class="a_bar" href="javascript:bs(3)">Taxis <i class="fa fa-taxi" aria-hidden="true"></i></a>
           </div>
           <div class="i_bar">
-            <a ng-click="changeTab(5)" class="a_bar" href="javascript:bs(4)">Hotels</a>
+            <a ng-click="changeTab(5)" class="a_bar" href="javascript:bs(4)">Hotels <i class="fa fa-bed" aria-hidden="true"></i></a>
           </div>
           <div class="i_bar">
-            <a ng-click="changeTab(6)" class="a_bar" href="javascript:bs(5)">Restaurants</a>
+            <a ng-click="changeTab(6)" class="a_bar" href="javascript:bs(5)">Restaurants <i class="fa fa-building" aria-hidden="true"></i></a>
           </div>
           <div class="i_bar">
-            <a ng-click="changeTab(7)" class="a_bar" href="javascript:bs(6)">Tourist Spots</a>
+            <a ng-click="changeTab(7)" class="a_bar" href="javascript:bs(6)">Tourist Spots <i class="fa fa-flask" aria-hidden="true"></i></a>
           </div>
           <div class="i_bar">
-            <a ng-click="changeTab(8)" class="a_bar" href="javascript:bs(7)">Guides</a>
+            <a ng-click="changeTab(8)" class="a_bar" href="javascript:bs(7)">Guides <i class="fa fa-hand-lizard-o" aria-hidden="true"></i></a>
           </div>
 
         </div>
@@ -682,8 +682,11 @@
           <div style="text-align: center;" class="rowsCont" ng-show="food.status=='Pending'">Loading Data</div>
           <div id="table4" class="rowsCont card-rows">
             <div ng-repeat="it in food.data" class="rowElement card shadow p-4 mb-4 bg-white">
-              <div class="card-header text-center bg-white align-middle">Restaurant:
-                \{{it.res_name}},\{{it.locality}},\{{it.city}}</div>
+              <div class="card-header text-center bg-white align-middle">
+                <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">Restaurant:
+                \{{it.res_name}},\{{it.locality}},\{{it.city}}</h5>
+                <a class="chatToggler" ng-click="startChat(it.res_id,it.res_name)"><i class="fa fa-comments" aria-hidden="true"></i></a>
+                </div>
               <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
                 <div class="cardText card-text">\{{it.name}}<br>Delivery Available: \{{it.delivers}}</div>
                 <div class="cardText card-text">Discount: \{{it.discount}}%<br> Description: \{{it.cuisine}}</div>
@@ -1248,6 +1251,22 @@
           <div class="toast-body">
             <div id="toast_msg">Action Done</div>
           </div>
+        </div>
+        <div ng-hide="chat.hide" id="chatCard" class="card">
+          <div class="card-header">
+              <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">Chat With \{{chat.pName}}</h5>
+              <a class="chatToggler" ng-click="closeChat()"><i class="fa fa-times" aria-hidden="true"></i></a>
+          </div>
+            <div class="card-body chatArea">
+              <div class="row shadow pb-3 mb-5 rounded justify-content-around">
+                <input class="col-7 form-control" ng-bind="chat.newData" ng-model="chat.newData" placeholder="your message">
+                <button class="col-3 btn btn-light" ng-click="sendMessage()">Send</button>
+              </div>
+              <div class="row" ng-repeat="msg in chat.data">
+                <div ng-if="msg.side=='U'" class="col-6 ml-4 shadow p-3 mb-3 bg-light rounded">You : \{{msg.query}} (posted at \{{msg.timestamp}})</div>
+                <div style="margin-left:50%!important" ng-if="msg.side=='S'" class="col-5 ml-4 shadow p-3 mb-3 bg-light rounded">\{{msg.pname}} : \{{msg.query}} (posted at \{{msg.timestamp}})</div>
+              </div>
+            </div>
         </div>
       </div>
 

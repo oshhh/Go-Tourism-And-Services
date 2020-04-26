@@ -265,7 +265,7 @@ function getRooms(callback, attribute_values) {
 function getFoodItems(callback,filters)
 {
     query=`
-    select distinct s.service_id,f.name,f.cuisine,s.price,s.discount,p.name as res_name,l.locality,l.city,r.delivers,
+    select distinct s.service_id,f.name,f.cuisine,s.price,s.discount,p.name as res_name, p.service_provider_id as res_id, l.locality,l.city,r.delivers,
     (SELECT distinct COALESCE(AVG(service_rating),0) FROM service_request as u where u.service_id=s.service_id)  as rating 
     from food_item as f,service_provider as p,location as l, restaurant as r,service as s 
     where(

@@ -453,6 +453,29 @@ router.get('/getTouristSpotID',function(req,res,next){
     }
   },req.query.name,req.query.type,req.query.city);
 });
+router.post('/insertquery', function(req, res, next) {
+  serverjs=req.app.get('dbHandler');
+  sendResponse=function(actRes,result){
+    if(result)
+    {
+      // console.log("got result",result)
+      actRes.setHeader('Content-Type', 'application/json');
+      actRes.end(JSON.stringify({
+        isRes:true,
+        msg:"Query OK: sending result",
+        content:result
+      }));
+    }
+    else{
+      actRes.setHeader('Content-Type', 'application/json');
+      actRes.end(JSON.stringify({
+        isRes:false,
+        msg:"Unknown Request sent"
+      }));
+    }
+  };
+  serverjs.insertQuery(function(result){sendResponse(res,result);},req.body);
+});
 router.post('/insertList', function(req, res, next) {
   sendResponse=function(actRes,result){
     if(result)

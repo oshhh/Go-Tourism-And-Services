@@ -187,8 +187,26 @@
         </div>
 
         <div id="content_tab2" ng-show="tab==2">
-          <h3>Content2</h3>
+          <h5>queries by users (sorted by last message sent)</h5>
+          <div ng-repeat="(uid,it) in query.data" class="rowElement card shadow p-4 mb-4 bg-white">
+              <div class="card-header shadow-sm p-3 mb-0 bg-white rounded">
+                 <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">\{{uid}} (ID: \{{uid}})</h5>
+                 <a class="chatToggler" ng-click="toggleChat(uid)"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+              </div>
+              <div ng-show="it.showChat" class="card-body chatBox">
+                   <div class="row shadow pb-3 mb-5 rounded justify-content-around">
+                    <input class="col-7 form-control" ng-bind="query.newData[uid]" ng-model="query.newData[uid]" placeholder="your message">
+                    <button class="col-3 btn btn-light" ng-click="sendMessage(uid)">Send</button>
+                   </div>
+                   <div class="row" ng-repeat="msg in it">
+                        <div ng-if="msg.side=='U'" class="col-6 ml-4 shadow p-3 mb-3 bg-light rounded">You : \{{msg.query}} (posted at \{{msg.timestamp}})</div>
+                        <div style="margin-left:50%!important" ng-if="msg.side=='S'" class="col-5 ml-4 shadow p-3 mb-3 bg-light rounded">\{{msg.pname}} : \{{msg.query}} (posted at \{{msg.timestamp}})</div>
+                   </div>
+              </div>
+          </div>
         </div>
+
+
         <div id="content_tab3" ng-show="tab==3">
           <h3>Analyse your business</h3>
           <div class="mt-2">

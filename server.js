@@ -588,19 +588,24 @@ function getFilteredAutoCorrectPrediction(callback,queryData)
     where ( target.`+queryData.searchKey+`= source.`+queryData.searchKey+`)`;   
     runQuery(callback,query);
 }
-function getFilteredQueries(callback,userName)
+function getFilteredQueries(callback,uid,pid)
 {
-    query="";
-    if(userName.startsWith("USR"))
-    {
-        query=`select distinct `+queryData.target_column+` as prediction
-        from `+queryData.target_table+` as target, `+queryData.source_table+` as source
-        where ( target.`+queryData.searchKey+`= source.`+queryData.searchKey+`)`;
-    }
-    else{
-
-    }   
+    query=`select distinct q.*, u.name as uname, p.name as pname
+    from query as q, user as u, service_provider as p
+    where( q.service_provider_id = p.service_provider_id and q.user_id = u.user_id and
+        u.user_id REGEXP "`+uid+`" and p.service_provider_id REGEXP "`+pid+`")
+        order by q.timestamp DESC`;
     runQuery(callback,query);
+}
+function insertQuery(callback,reqObj)
+{
+    serverjs.count_table( function(result) {
+        newID="\"QRY" + ("00000" + (result[0]['cnt'] + 1)).slice(-5) + "\"";
+        console.log(newID);
+        console.log(reqObj);
+        query=`insert into query VALUES(`+newID+`,"`+reqObj.user+`","`+reqObj.provider+`",NOW(),"`+reqObj.msg+`","`+reqObj.side+`")`;
+        runQuery(callback,query);
+    } , "query");
 }
 function updateOneColumn(callback,data)
 {
@@ -932,6 +937,7 @@ module.exports = {
     'getTouristSpot':getTouristSpot,
     'getAutoCorrectPredictions':getAutoCorrectPredictions,
     'getFilteredAutoCorrectPrediction':getFilteredAutoCorrectPrediction,
-    'getFilteredQueries':getFilteredQueries
+    'getFilteredQueries':getFilteredQueries,
+    'insertQuery':insertQuery
 }
             

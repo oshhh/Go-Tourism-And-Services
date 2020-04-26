@@ -19,11 +19,6 @@ angularApp.controller("ngContent",function($scope,$http)
 		},
 		createStatus:""
 	};
-	$scope.query={
-		data:{},
-		status:"Pending",
-		newData:{}
-	}
 
 	$scope.analyse_max_service_requests = {
 		data : {},
@@ -296,10 +291,70 @@ angularApp.controller("ngContent",function($scope,$http)
 			console.error(err);
 		}
 	}
-
+	$scope.query={
+		data:{},
+		status:"Pending",
+		newData:{}
+	}
+	$scope.toggleChat = function(uid)
+	{
+		if($scope.query.data[uid])
+			$scope.query.data[uid].showChat= !$scope.query.data[uid].showChat;
+	}
+	$scope.sendMessage = async function(uid)
+	{
+		console.log(uid);
+		if(!$scope.query.data[uid])
+			return;
+		if($scope.query.newData[uid]=="")
+		{
+			$('#toast_msg').text("Write Something");
+			$('.toast').toast("show");
+		}
+		msgString=$scope.query.newData[uid];
+		$scope.query.data[uid].unshift({
+			pname:$scope.query.data[uid][0].pname,
+			timestamp:"just now",
+			query:$scope.query.newData[uid],
+			side:"S"
+		})
+		$scope.query.newData[uid]="";
+		reqBody={
+			user:uid,
+			provider:$scope.curUser.uid,
+			msg:msgString,
+			side:"S"
+		}
+		sendState=await $http.post('/api/insertquery',JSON.stringify(reqBody));
+		console.log("message Sent");
+	}
 	$scope.getData=async function(tab)
 	{
-		if(tab == 0)
+		if(tab==2)
+		{
+			$scope.query.data={};
+			$scope.query.status="Pending";
+			dataState = await $http.get("/api/getData",{params:{
+				type:"allQueries",
+				uid:".*",
+				pid:$scope.curUser.uid
+			}});
+			console.log(dataState);
+			if(dataState.data.content)
+			{
+				dataState.data.content.forEach(element => {
+					if(!$scope.query.data[element.user_id])
+						$scope.query.data[element.user_id]=[];
+					$scope.query.data[element.user_id].push(element);
+					$scope.query.data[element.user_id].showChat=false;
+					$scope.query.newData[element.user_id]="";
+				});
+			}
+			$scope.$digest();
+			console.log($scope.query.data);
+			$scope.query.status="OK";
+		}
+		else if(tab == 0)
 		{
 			console.log("sending");
 			$scope.reqs.status="Pending";
@@ -500,17 +555,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			}
 			
 		}
-		else if(tab==2)
-		{
-			$scope.query.status="Pending";
-			dataState = await $http.get("/api/getData",{params:{
-				type:"allQueries",
-				uid:".*",
-				pid:$scope.curUser.uid
-			}});
-			console.log(dataState);
-			$scope.query.status="OK";
-		}
+
 	}
 	$scope.incrementRoute=function(it)
 	{

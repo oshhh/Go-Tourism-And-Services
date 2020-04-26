@@ -200,6 +200,12 @@ angularApp.controller("ngContent",function($scope,$http)
 	}
 	$scope.planTrip = function()
 	{
+		if(!$("#plannerForm").valid())
+		{
+			$('#toast_msg').text("Please Fill Correct parameters");
+			$('.toast').toast("show");
+			return;
+		}
 		//use $scope.planner.budget/destination/keywords to output in this format:
 		//output - {service_id:"",quantity:1,price:10}
 		$scope.plan_trip.status = "Calculating"

@@ -898,25 +898,26 @@
                 </button>
               </div>
               <div class="modal-body">
+                <form id="plannerForm">
                 <div class="card pt-3 pr-2" style="align-items: center;">
                   <h5 style="text-align: center;">Plan Manually</h5>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Destination City</span>
                     </div>
-                    <input ng-model="new_trip.destination_city" type="text" class="form-control" placeholder="Mumbai">
+                    <input required list="locs" ng-model="new_trip.destination_city" type="text" class="form-control" placeholder="Mumbai">
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Departure Date</span>
                     </div>
-                    <input ng-model="new_trip.departure_date" type="text" class="form-control" placeholder="2020-04-30">
+                    <input required ng-model="new_trip.departure_date" type="text" class="form-control" placeholder="2020-04-30">
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Return Date</span>
                     </div>
-                    <input ng-model="new_trip.return_date" type="text" class="form-control" placeholder="2020-04-30">
+                    <input required ng-model="new_trip.return_date" type="text" class="form-control" placeholder="2020-04-30">
                   </div>
                   <button class="btn btn-primary mb-2" ng-click="createTrip()" style="width: 30%;">New Trip (+)
                   </button>
@@ -929,6 +930,7 @@
                     <a class="a_bar" data-dismiss="modal" href="#" ng-click="openPlanner()">Open Trip Planner</a>
                   </div>
                 </div>
+                </form>
               </div>
             </div>
           </div>
@@ -943,6 +945,7 @@
                 </button>
               </div>
               <div id="planBody" class="modal-body">
+                <form>
                 <div class="card">
                   <div class="card-header bg-white font-weight-bold">Step 1 - Specify Your Budget And Weights</div>
                   <div class="card-body">
@@ -950,7 +953,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">Maximum Budget</span>
                       </div>
-                      <input ng-model="plan_trip.budget" value="\{{plan_trip.budget}}" class="form-control"
+                      <input required pattern="[0-9]+" ng-model="plan_trip.budget" value="\{{plan_trip.budget}}" class="form-control"
                         type="number" placeholder="Maximum">
                     </div>
                     <label class="mr-5">Give more weights to services more important to you</label>
@@ -995,21 +998,21 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text">Enter Destination</span>
                         </div>
-                        <input list="locs" ng-model="plan_trip.destination_city" value="\{{plan_trip.destination_city}}"
+                        <input required list="locs" ng-model="plan_trip.destination_city" value="\{{plan_trip.destination_city}}"
                           class="form-control" type="text" placeholder="">
                       </div>
                       <div class="input-group mb-0">
                         <div class="input-group-prepend">
                           <span class="input-group-text">No of people</span>
                         </div>
-                        <input list="locs" ng-model="plan_trip.number_of_people" value="\{{plan_trip.number_of_people}}"
+                        <input required list="locs" ng-model="plan_trip.number_of_people" value="\{{plan_trip.number_of_people}}"
                           class="form-control" type="number" placeholder="">
                       </div>
                       <div class="input-group mb-0">
                         <div class="input-group-prepend">
                           <span class="input-group-text">Duration (days)</span>
                         </div>
-                        <input list="locs" ng-model="plan_trip.number_of_days" value="\{{plan_trip.number_of_days}}"
+                        <input required pattern="[0-9]+" ng-model="plan_trip.number_of_days" value="\{{plan_trip.number_of_days}}"
                           class="form-control" type="number" placeholder="">
                       </div>
                     </div>
@@ -1042,7 +1045,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Departure Date</span>
                     </div>
-                    <input ng-model="plan_trip.depDate" ng-bind="plan_trip.depDate" class="form-control"
+                    <input required ng-model="plan_trip.depDate" ng-bind="plan_trip.depDate" class="form-control"
                       type="date" placeholder="2020-04-25">
                   </div>
                   <div class="ml-3 mt-2 mb-2 custom-control custom-checkbox">
@@ -1063,6 +1066,7 @@
                     <button class="col btn btn-primary" ng-click="planTrip()">Calculate</button>
                   </div>
                 </div>
+                </form>
                 <div ng-show="plan_trip.status == 'Calculating'">
                   <label>Loading Result</label>
                 </div>

@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 
 tables = {
-    'location': ['location_id', 'locality', 'city', 'state', 'country', 'pincode'],
+    'location': ['location_id', 'locality', 'city', 'state', 'country' ],
     'administrator': ['admin_id', 'name', 'role', 'email', 'password'],
     'user': ['user_id', 'name', 'email', 'password', 'address', 'phone_no', 'location_id', 'active'],
     'service_provider': ['approved','service_provider_id', 'name', 'password', 'domain','active'],
@@ -51,7 +51,7 @@ function createDatabase(onComplete) {
     runQuery(callback, 'drop table if exists administrator;')
     runQuery(callback, 'drop table if exists user;')
     runQuery(callback, 'drop table if exists location;')
-    runQuery(callback, 'create table if not exists location (location_id char(8) primary key,locality varchar(100) not null,city varchar(100) not null,state varchar(100) not null,country varchar(100) not null,pincode int,check (location_id like \"LOC%\"));')
+    runQuery(callback, 'create table if not exists location (location_id char(8) primary key,locality varchar(100) not null,city varchar(100) not null,state varchar(100) not null,country varchar(100) not null,check (location_id like \"LOC%\"));')
     runQuery(callback, 'create table if not exists user(user_id char(8) primary key,name varchar(100) not null,email varchar(100) not null,password varchar(100) not null,address varchar(100),phone_no char(10),location_id char(8),active char(1),foreign key(location_id) references location(location_id),check (user_id like \"USR%\"),check(active in (\"Y\", \"N\")));')
     runQuery(callback, 'create table if not exists administrator(admin_id char(8) primary key,name varchar(100) not null, role varchar(100) not null,email varchar(100) not null,password varchar(100),check(admin_id like \"ADM%\"));')
     runQuery(callback, 'create table if not exists service_provider(approved char(1),service_provider_id char(8) primary key,name varchar(100),password varchar(20),domain varchar(20),active char(1),check ((service_provider_id like \"HOT%\" and domain like \"hotel\") or    (service_provider_id like \"RES%\" and domain like \"restaurant\") or(service_provider_id like \"AIR%\" and domain like \"airline\") or (service_provider_id like \"TAP%\" and domain like \"taxi provider\") or    (service_provider_id like \"BPR%\" and domain like \"bus provider\") or (service_provider_id like \"TRP%\" and domain like \"train provider\") or   (service_provider_id like \"GUP%\" and domain like \"guide provider\")),check(active in (\"Y\", \"N\")), check(approved in (\"Y\",\"N\")) );')

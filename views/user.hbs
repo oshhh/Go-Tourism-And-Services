@@ -535,11 +535,14 @@
             </div>
             <input list="roomList" ng-model="room.room_type" id="room_type" type="text" class="form-control"
               placeholder="double">
+            </div>
+          <div class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Capacity</span>
             </div>
             <input list="capList" ng-model="room.capacity" id="capacity" type="text" class="form-control"
               placeholder="4">
+            <br>
             <div class="input-group-prepend">
               <span class="input-group-text">Wifi</span>
             </div>
@@ -547,6 +550,25 @@
               <option selected value="0">Both</option>
               <option value="1">Yes</option>
               <option value="2">No</option>
+            </select>
+            <div class="input-group-prepend">
+              <span class="input-group-text">AC</span>
+            </div>
+            <select ng-model="room.wifi_facility" class="custom-select" id="taxiAC">
+              <option selected value="0">Both</option>
+              <option value="1">Yes</option>
+              <option value="2">No</option>
+            </select>
+            <div class="input-group-prepend">
+              <span class="input-group-text">Star</span>
+            </div>
+            <select ng-model="room.wifi_facility" class="custom-select" id="taxiAC">
+              <option selected value="0">Any</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
             </select>
             <div class="input-group-prepend">
               <button ng-click="getData(5)" class='btn btn-outline-primary'>Apply Filters</button>

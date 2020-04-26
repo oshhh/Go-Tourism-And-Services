@@ -68,6 +68,8 @@ angularApp.controller("ngContent",function($scope,$http)
 		room_type : "",
 		capacity : "",
 		wifi_facility : "0",
+		star : "",
+		AC : "",
 		sortOrder:"0",
 		reviews:{},
 	}
@@ -273,7 +275,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		}
 		console.log($scope.plan_trip.itinerary.pleasure_value);
 		for(i = 0; i < $scope.plan_trip.itinerary.tourist_spots.length; ++ i) {
-			$scope.plan_trip.itinerary.cost += $scope.plan_trip.itinerary.tourist_spots[i].entry_fee;
+			$scope.plan_trip.itinerary.cost += ($scope.plan_trip.itinerary.tourist_spots[i].entry_fee) * ($scope.plan_trip.number_of_people);
 		}	
 		console.log($scope.plan_trip.itinerary.pleasure_value);
 		$scope.plan_trip.itinerary.pleasure_value += (($scope.plan_trip.itinerary.tourist_spots.length)/(3 * $scope.plan_trip.number_of_days)) * $scope.plan_trip.weightage.tourist_spot;
@@ -516,7 +518,9 @@ angularApp.controller("ngContent",function($scope,$http)
 				city: "\"%" + $scope.room.city + "%\"",
 				room_type: "\"%" + $scope.room.room_type + "%\"",
 				capacity:  ($scope.room.capacity == "" ? "\"%\"" : $scope.room.capacity) ,
-				wifi_facility: ( $scope.room.wifi_facility == 0) ? ("\"%\"") : ($scope.room.wifi_facility == 1 ? "\"Y\"" : "\"N\"" )
+				wifi_facility: ( $scope.room.wifi_facility == 0) ? ("\"%\"") : ($scope.room.wifi_facility == 1 ? "\"Y\"" : "\"N\"" ),
+				AC: ( $scope.room.AC == 0) ? ("\"%\"") : ($scope.room.AC == 1 ? "\"Y\"" : "\"N\"" ),
+				star: ( $scope.room.star == 0) ? ("\"%\"") : $scope.room.star
 				}}).then(
 				function(data, status, headers, config) {
 				$scope.room.data=data.data.content;

@@ -34,6 +34,10 @@ with open('hotel_room_data.csv') as file:
 		
 		if type(locality) == float or type(city) == float or type(state) == float:
 			continue
+		locality = locality.lower()
+		state = state.lower()
+		city = city.lower()
+		country = country.lower()
 		
 		if (locality, city, state, country) not in locations:
 			locations[(locality, city, state, country)] = 'LOC' + '0' * (5 - len(str(location_id_offset))) + str(location_id_offset)
@@ -112,7 +116,32 @@ cities = list(cities)
 flights = []
 service_id_offset = 21
 service_provider_id_offset = 23
-for i in range(1000):
+for l1 in cities:
+	for l2 in cities:
+		spid = randint(0, service_provider_id_offset)
+		service_provider_id = 'AIR' + '0' * (5 - len(str(spid))) + str(spid)
+		service_id = 'FLI' + '0' * (5 - len(str(service_id_offset))) + str(service_id_offset)
+		service_id_offset += 1
+
+		service = {
+			'service_id' : '"' + service_id + '"',
+			'service_provider_id' : '"' + service_provider_id + '"',
+			'price' : str(randint(2000, 15000)),
+			'discount' : str(randint(0, 40))
+		}
+		flight = {
+			'service_id' : '"' + service_id + '"',
+			'from_city' : '"' + l1 + '"',
+			'to_city' : '"' + l2 + '"',
+			'departure_time' : '"' + char[randint(26, 27)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)] + '"',
+			'arrival_time' : '"' + char[randint(26, 27)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)] + ':' + char[randint(26, 31)] + char[randint(26, 35)] + '"',
+		}
+		if(flight['arrival_time'] < flight['departure_time']):
+			flight['arrival_time'], flight['departure_time'] = flight['departure_time'], flight['arrival_time']
+		services.append(service)
+		flights.append(flight)
+
+for i in range(500):
 	l1 = 0
 	l2 = 0
 	while l1 == l2:
@@ -191,3 +220,8 @@ print(hotel_query, file = open('hotels.txt', mode = 'w'))
 print(room_query, file = open('rooms.txt', mode = 'w'))
 print(location_query, file = open('locations.txt', mode = 'w'))
 print(flight_query, file = open('flights.txt', mode = 'w'))
+
+print('cities', len(cities))
+print('hotels', len(hotels))
+print('rooms', len(rooms))
+print('flights', len(flights))

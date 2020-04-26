@@ -202,16 +202,16 @@ var readline = require('readline');
 //     });
 // });
 
-// var rl = readline.createInterface({
-// input: fs.createReadStream('./rooms.txt'),
-// terminal: false
-// });
-// rl.on('line', function(chunk){
-//     con.query(chunk.toString('ascii'), function(err, sets, fields){
-//     if(err) console.log(err);
-//     else console.log("finished rooms")
-//     });
-// });
+var rl = readline.createInterface({
+input: fs.createReadStream('./rooms.txt'),
+terminal: false
+});
+rl.on('line', function(chunk){
+    con.query(chunk.toString('ascii'), function(err, sets, fields){
+    if(err) console.log(err);
+    else console.log("finished rooms")
+    });
+});
 
 
 var rl = readline.createInterface({

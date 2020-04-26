@@ -701,6 +701,64 @@ angularApp.controller("ngContent",function($scope,$http)
 		isDate:false,
 		isDays:true,
 	}
+	$scope.chat={
+		pName:"",
+		data:[],
+		newData:"",
+		hide:true,
+		provider_id:"",
+		status:"Pending"
+	}
+	$scope.sendMessage = async function()
+	{
+		if($scope.chat.newData=="")
+		{
+			$('#toast_msg').text("Write Something");
+			$('.toast').toast("show");
+			return;
+		}
+		msgString=$scope.chat.newData;
+		$scope.chat.data.unshift({
+			pname:$scope.chat.pName,
+			timestamp:"just now",
+			query:msgString,
+			side:"U"
+		})
+		$scope.chat.newData="";
+		reqBody={
+			user:$scope.curUser.uid,
+			provider:$scope.chat.provider_id,
+			msg:msgString,
+			side:"U"
+		}
+		sendState=await $http.post('/api/insertquery',JSON.stringify(reqBody));
+		console.log("message Sent");
+	}
+	$scope.closeChat = function()
+	{
+		$scope.chat.hide=true;
+	}
+	$scope.startChat = async function(service_provider_id,provider_name)
+	{
+		$scope.chat.hide=false;
+		$scope.chat.pName=provider_name;
+		$scope.chat.provider_id=service_provider_id;
+		$scope.chat.newData="";
+		$scope.chat.status="Pending";
+		$scope.chat.data=[];
+		dataState = await $http.get("/api/getData",{params:{
+			type:"allQueries",
+			uid:$scope.curUser.uid,
+			pid:service_provider_id
+		}});
+		if(dataState.data.content)
+			$scope.chat.data=dataState.data.content;
+		console.log(dataState.data);
+		$scope.chat.status="OK";
+		$scope.$digest();
+		$('#toast_msg').text("Opening Chat");
+		$('.toast').toast("show");
+	}
 	$scope.openRequest = function(it,isNumDays,isBookDate){
 		console.log($scope.trip.selected);
 		if(!$scope.trip.selected.trip_id) {

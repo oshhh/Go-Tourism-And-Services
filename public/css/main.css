@@ -303,7 +303,7 @@ svg{
     padding: 10px;
 }
 .chatBox{
-    box-shadow: inset 0 0 5px #000000;
+    /* box-shadow: inset 0 0 5px #000000; */
     /* padding: 10px; */
 }
 .msg{

@@ -199,8 +199,8 @@
                     <button class="col-3 btn btn-light" ng-click="sendMessage(uid)">Send</button>
                    </div>
                    <div class="row" ng-repeat="msg in it">
-                        <div ng-if="msg.side=='U'" class="col-6 ml-4 shadow p-3 mb-3 bg-light rounded">You : \{{msg.query}} (posted at \{{msg.timestamp}})</div>
-                        <div style="margin-left:50%!important" ng-if="msg.side=='S'" class="col-5 ml-4 shadow p-3 mb-3 bg-light rounded">\{{msg.pname}} : \{{msg.query}} (posted at \{{msg.timestamp}})</div>
+                        <div ng-if="msg.side=='U'" class="col-6 ml-4 shadow p-3 mb-3 bg-light rounded">\{{msg.uname}} : \{{msg.query}} (posted at \{{msg.timestamp}})</div>
+                        <div style="margin-left:50%!important" ng-if="msg.side=='S'" class="col-5 ml-4 shadow p-3 mb-3 bg-light rounded">You: \{{msg.query}} (posted at \{{msg.timestamp}})</div>
                    </div>
               </div>
           </div>

@@ -118,7 +118,7 @@ angularApp.controller("ngContent",function($scope,$http)
 				console.log(putState);
 				$scope.reqs.data=putState.data.content;
 				$scope.reqs.status="OK";
-				$scope.$digest();
+				// $scope.$digest();
 				$scope.reqs.data.forEach(element => {
 					element.updateResult="";
 				});
@@ -318,6 +318,7 @@ angularApp.controller("ngContent",function($scope,$http)
 				uid:".*",
 				pid:$scope.curUser.uid
 			}});
+			console.log(dataState);
 			$scope.query.status="OK";
 		}
 	}

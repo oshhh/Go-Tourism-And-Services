@@ -1,5 +1,5 @@
 input.ng-invalid ,textarea.ng-invalid{
-    border:1px solid rgb(233, 152, 152) !important; 
+    border:3px solid rgb(233, 152, 152) !important; 
     border-radius: 2px !important;
 }
 body{

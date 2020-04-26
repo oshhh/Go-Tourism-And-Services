@@ -9,7 +9,7 @@ import pandas as pd
 import csv
 from random import randint
 from math import isnan
-
+loil=[]
 cities = set([])
 service_providers = []
 hotels = []
@@ -106,11 +106,47 @@ with open('hotel_room_data.csv') as file:
 				'capacity' : room[1],
 				'AC' : AC
 			}
-			services.append(service)
-			rooms.append(room)
-		service_providers.append(service_provider)
-		hotels.append(hotel)
-
+			services.append(str(service))
+			rooms.append(str(room))
+		service_providers.append(str(service_provider))
+		hotels.append(str(hotel))
+lopad=""
+count=0
+for logic in services:
+    if(count==0):
+        lopad+="INSERT INTO service VALUES"
+        count+=1
+    else:
+        lopad+=logic
+loil.append(lopad)
+lopad1=""
+count1=0
+for logic1 in rooms:
+    if(count1==0):
+        lopad1+="INSERT INTO room VALUES"
+        count1+=1
+    else:
+        lopad1+=logic1
+loil.append(lopad1)
+lopad2=""
+count2=0
+for logic2 in services:
+    if(count2==0):
+        lopad2+="INSERT INTO service_privider VALUES"
+        count2+=1
+    else:
+        lopad2+=logic2
+loil.append(lopad2)
+lopad3=""
+count3=0
+for logic3 in services:
+    if(count3==0):
+        lopad3+="INSERT INTO hotel VALUES"
+        count3+=1
+    else:
+        lopad3+=logic3
+loil.append(lopad3)
+print(loil)
 flights = []
 cities = list(cities)
 service_provider_id_offset = 23

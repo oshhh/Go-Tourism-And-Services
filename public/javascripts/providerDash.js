@@ -24,6 +24,32 @@ angularApp.controller("ngContent",function($scope,$http)
 		status:"Pending",
 		newData:{}
 	}
+
+	$scope.analyse_max_service_requests = {
+		data : {},
+		status : "Pending"
+	}
+
+	$scope.analyse_max_rating = {
+		data : {},
+		status : "Pending"
+	}
+
+	$scope.analyse_min_query_response_time = {
+		data : {},
+		status : "Pending"
+	}
+
+	$scope.analyse_user_by_region = {
+		data : {},
+		status : "Pending"
+	}
+
+	$scope.analyse_status_of_requests = {
+		data : {},
+		status : "Pending"
+	}
+
 	$scope.changeStatus=function(it)
 	{
 		it.updateResult="Sending";
@@ -107,6 +133,170 @@ angularApp.controller("ngContent",function($scope,$http)
 				console.log("error");
 			});
 	}
+
+	$scope.analyseMaxServiceRequests = async function() {
+		domain = null
+		console.log($scope.curUser.uid.substring(0, 3));
+		switch($scope.curUser.uid.substring(0, 3)) {
+			case 'AIR':
+				domain = '"Airline"'
+			break;
+			case 'BPR':
+				domain = '"Bus Provider"'
+			break;
+			case 'TRP':
+				domain = '"Train Provider"'
+			break;
+			case 'TAP':
+				domain = '"Taxi Provider"'
+			break;
+			case 'RES':
+				domain = '"Restaurant"'
+			break;
+			case 'HOT':
+				domain = '"Hotel"'
+			break;
+		}
+		console.log("sending");
+		$scope.analyse_max_service_requests.status="Pending";
+		try{
+			putState= await $http.get('/api/getData',{params:{type:'analyseMaxServiceRequests', domain : domain}});
+			console.log(putState);
+			$scope.analyse_max_service_requests.data=putState.data.content;
+			$scope.analyse_max_service_requests.status="OK";
+			$scope.$digest();
+			$scope.analyse_max_service_requests.data.forEach(element => {
+				element.updateResult="";
+			});
+			console.log($scope.analyse_max_service_requests.data);
+		}
+		catch(err)
+		{
+			console.error(err);
+		}
+
+	}
+	$scope.analyseMaxRating = async function() {
+		domain = null
+		console.log($scope.curUser.uid.substring(0, 3));
+		switch($scope.curUser.uid.substring(0, 3)) {
+			case 'AIR':
+				domain = '"Airline"'
+			break;
+			case 'BPR':
+				domain = '"Bus Provider"'
+			break;
+			case 'TRP':
+				domain = '"Train Provider"'
+			break;
+			case 'TAP':
+				domain = '"Taxi Provider"'
+			break;
+			case 'RES':
+				domain = '"Restaurant"'
+			break;
+			case 'HOT':
+				domain = '"Hotel"'
+			break;
+		}
+		console.log("sending");
+		$scope.analyse_max_rating.status="Pending";
+		try{
+			putState= await $http.get('/api/getData',{params:{type:'analyseMaxRating', domain : domain}});
+			console.log(putState);
+			$scope.analyse_max_rating.data=putState.data.content;
+			$scope.analyse_max_rating.status="OK";
+			$scope.$digest();
+			$scope.analyse_max_rating.data.forEach(element => {
+				element.updateResult="";
+			});
+			console.log($scope.analyse_max_rating.data);
+		}
+		catch(err)
+		{
+			console.error(err);
+		}
+
+	}
+	$scope.analyseMinQueryResponseTime = async function() {
+		domain = null
+		console.log($scope.curUser.uid.substring(0, 3));
+		switch($scope.curUser.uid.substring(0, 3)) {
+			case 'AIR':
+				domain = '"Airline"'
+			break;
+			case 'BPR':
+				domain = '"Bus Provider"'
+			break;
+			case 'TRP':
+				domain = '"Train Provider"'
+			break;
+			case 'TAP':
+				domain = '"Taxi Provider"'
+			break;
+			case 'RES':
+				domain = '"Restaurant"'
+			break;
+			case 'HOT':
+				domain = '"Hotel"'
+			break;
+		}
+		console.log("sending");
+		$scope.analyse_min_query_response_time.status="Pending";
+		try{
+			putState= await $http.get('/api/getData',{params:{type:'analyseMinQueryResponseTime', domain : domain}});
+			console.log(putState);
+			$scope.analyse_min_query_response_time.data=putState.data.content;
+			$scope.analyse_min_query_response_time.status="OK";
+			$scope.$digest();
+			$scope.analyse_min_query_response_time.data.forEach(element => {
+				element.updateResult="";
+			});
+			console.log($scope.analyse_min_query_response_time.data);
+		}
+		catch(err)
+		{
+			console.error(err);
+		}
+
+	}
+	$scope.analyseUserByRegion = async function() {
+		$scope.analyse_user_by_region.status="Pending";
+		try{
+			putState= await $http.get('/api/getData',{params:{type:'analyseUserByRegion', service_provider_id : '"' + $scope.curUser.uid + '"'}});
+			console.log(putState);
+			$scope.analyse_user_by_region.data=putState.data.content;
+			$scope.analyse_user_by_region.status="OK";
+			$scope.$digest();
+			$scope.analyse_user_by_region.data.forEach(element => {
+				element.updateResult="";
+			});
+			console.log($scope.analyse_user_by_region.data);
+		}
+		catch(err)
+		{
+			console.error(err);
+		}
+	}
+	$scope.analyseStatusOfRequests = async function() {
+		$scope.analyse_status_of_requests.status="Pending";
+		try{
+			putState= await $http.get('/api/getData',{params:{type:'analyseStatusOfRequests', service_provider_id : '"' + $scope.curUser.uid + '"'}});
+			console.log(putState);
+			$scope.analyse_status_of_requests.data=putState.data.content;
+			$scope.analyse_status_of_requests.status="OK";
+			$scope.$digest();
+			$scope.analyse_status_of_requests.data.forEach(element => {
+				element.updateResult="";
+			});
+			console.log($scope.analyse_status_of_requests.data);
+		}
+		catch(err)
+		{
+			console.error(err);
+		}
+	}
+
 	$scope.getData=async function(tab)
 	{
 		if(tab == 0)

@@ -51,13 +51,16 @@ function createDatabase(onComplete) {
     runQuery(callback, 'drop table if exists administrator;')
     runQuery(callback, 'drop table if exists user;')
     runQuery(callback, 'drop table if exists location;')
-    runQuery(callback, 'create table if not exists location (location_id char(8) primary key,locality varchar(100) not null,city varchar(100) not null,state varchar(100) not null,country varchar(100) not null,check (location_id like \"LOC%\"));')
+    // runQuery(callback, 'create table if not exists location (location_id char(8) primary key,locality varchar(100) not null,city varchar(100) not null,state varchar(100) not null,country varchar(100) not null,check (location_id like \"LOC%\"));')
+    runQuery(callback, 'create table if not exists location (location_id char(8) primary key,locality varchar(100) not null,city varchar(100) not null,state varchar(100) not null,country varchar(100) not null,pincode int,check (location_id like \"LOC%\"));')
     runQuery(callback, 'create table if not exists user(user_id char(8) primary key,name varchar(100) not null,email varchar(100) not null,password varchar(100) not null,address varchar(100),phone_no char(10),location_id char(8),active char(1),foreign key(location_id) references location(location_id),check (user_id like \"USR%\"),check(active in (\"Y\", \"N\")));')
     runQuery(callback, 'create table if not exists administrator(admin_id char(8) primary key,name varchar(100) not null, role varchar(100) not null,email varchar(100) not null,password varchar(100),check(admin_id like \"ADM%\"));')
     runQuery(callback, 'create table if not exists service_provider(approved char(1),service_provider_id char(8) primary key,name varchar(100),password varchar(20),domain varchar(20),active char(1),check ((service_provider_id like \"HOT%\" and domain like \"hotel\") or    (service_provider_id like \"RES%\" and domain like \"restaurant\") or(service_provider_id like \"AIR%\" and domain like \"airline\") or (service_provider_id like \"TAP%\" and domain like \"taxi provider\") or    (service_provider_id like \"BPR%\" and domain like \"bus provider\") or (service_provider_id like \"TRP%\" and domain like \"train provider\") or   (service_provider_id like \"GUP%\" and domain like \"guide provider\")),check(active in (\"Y\", \"N\")), check(approved in (\"Y\",\"N\")) );')
     runQuery(callback, 'create table if not exists service(service_id char(8) primary key,service_provider_id char(8),price float,discount int,foreign key (service_provider_id) references service_provider(service_provider_id),check (discount >= 0 and discount <= 100),check ((service_provider_id like \"HOT%\" and service_id like \"ROO%\") or  (service_provider_id like \"RES%\" and service_id like \"FOO%\") or(service_provider_id like \"AIR%\" and service_id like \"FLI%\") or  (service_provider_id like \"TAP%\" and service_id like \"TAX%\") or (service_provider_id like \"BPR%\" and service_id like \"BUS%\") or (service_provider_id like \"TRP%\" and service_id like \"TRA%\") or (service_provider_id like \"GUP%\" and service_id like \"GUI%\") ));')
-    runQuery(callback, 'create table if not exists hotel(service_provider_id char(8) primary key,location_id char(8),wifi_facility char(1),stars int,foreign key (service_provider_id) references service_provider(service_provider_id),foreign key(location_id) references location(location_id),check (service_provider_id like \"HOT%\"),check (wifi_facility in (\"Y\", \"N\")),check (stars >= 0 and stars <= 5));')
-    runQuery(callback, 'create table if not exists room(service_id char(8) primary key,room_type varchar(100),capacity int,ac char(1),check(service_id like \"ROO%\"),foreign key(service_id) references service(service_id),check (capacity >= 1),check (ac in (\"Y\", \"N\")));')
+    // runQuery(callback, 'create table if not exists hotel(service_provider_id char(8) primary key,location_id char(8),wifi_facility char(1),stars int,foreign key (service_provider_id) references service_provider(service_provider_id),foreign key(location_id) references location(location_id),check (service_provider_id like \"HOT%\"),check (wifi_facility in (\"Y\", \"N\")),check (stars >= 0 and stars <= 5));')
+    // runQuery(callback, 'create table if not exists room(service_id char(8) primary key,room_type varchar(100),capacity int,ac char(1),check(service_id like \"ROO%\"),foreign key(service_id) references service(service_id),check (capacity >= 1),check (ac in (\"Y\", \"N\")));')
+    runQuery(callback, 'create table if not exists hotel(service_provider_id char(8) primary key,location_id char(8),wifi_facility char(1),foreign key (service_provider_id) references service_provider(service_provider_id),foreign key(location_id) references location(location_id),check (service_provider_id like \"HOT%\"),check (wifi_facility in (\"Y\", \"N\")));')
+    runQuery(callback, 'create table if not exists room(service_id char(8) primary key,room_type varchar(100),capacity int,check(service_id like \"ROO%\"),foreign key(service_id) references service(service_id),check (capacity >= 1));')
     runQuery(callback, 'create table if not exists restaurant(service_provider_id char(8) primary key,location_id char(8),delivers char(1),cuisine varchar(100),foreign key (service_provider_id) references service_provider(service_provider_id),check (service_provider_id like \"RES%\"),foreign key(location_id) references location(location_id),check (delivers in (\"Y\", \"N\")));')
     runQuery(callback, 'create table if not exists food_item(service_id char(8) primary key,name varchar(100),cuisine varchar(100),foreign key(service_id) references service(service_id),check (service_id like \"FOO%\"));')
     runQuery(callback, 'create table if not exists flight(service_id char(8) primary key,from_city varchar(100),to_city varchar(100),departure_time datetime,arrival_time datetime,foreign key(service_id) references service(service_id),check (service_id like \"FLI%\"),check (departure_time < arrival_time));')
@@ -103,19 +106,19 @@ function createDatabase(onComplete) {
     runQuery(callback,'INSERT INTO query VALUES(\'QRY00000\',\'USR00000\',\'HOT00001\',\'2020-01-02 10:10:10\',\'is there any smoking room In hotel ?\',\'U\'),(\'QRY00001\',\'USR00001\',\'RES00004\',\'2020-01-02 10:10:10\',\'Can you make sea food on special demand ?\',\'U\'),(\'QRY00002\',\'USR00002\',\'AIR00017\',\'2020-01-02 10:10:10\',\'What is the last time we can report before the flight ?\',\'U\'),(\'QRY00003\',\'USR00003\',\'AIR00017\',\'2020-01-02 10:10:10\',\'Can I change my destination 2 times ?\',\'U\'),(\'QRY00004\',\'USR00004\',\'AIR00017\',\'2020-01-02 10:10:10\',\'Can I book more than 2 seats on one identity card? \',\'U\'),(\'QRY00005\',\'USR00005\',\'AIR00017\',\'2020-01-02 10:10:10\',\'Can I travel with my pet dog ?\',\'U\'),(\'QRY00006\',\'USR00006\',\'GUP00001\',\'2020-01-02 10:10:10\',\'Is there any female guide ?\',\'U\'),(\'QRY00007\',\'USR00007\',\'HOT00001\',\'2020-01-02 10:10:10\',\'Will there be 2 bathroom ?\',\'U\'),(\'QRY00008\',\'USR00008\',\'HOT00001\',\'2020-01-02 10:10:10\',\'Whether they use garlic or not ?\',\'U\'),(\'QRY00009\',\'USR00009\',\'HOT00001\',\'2020-01-02 10:10:10\',\'is there swimming pool in your hotel ?\',\'U\'),(\'QRY00010\',\'USR00010\',\'HOT00001\',\'2020-01-02 10:10:10\',\'do you accept online payment ?\',\'U\'),(\'QRY00011\',\'USR00011\',\'RES00001\',\'2020-01-02 10:10:10\',\'Can you make food on special demands ?\',\'U\');')
     runQuery(callback,'INSERT INTO train VALUES(\'TRA00000\',\'LOC00005\',\'LOC00036\',\'YNYYNYY\',\'Y\'),(\'TRA00001\',\'LOC00009\',\'LOC00032\',\'YYNNYYY\',\'Y\'),(\'TRA00002\',\'LOC00004\',\'LOC00015\',\'YNYYNYY\',\'Y\'),(\'TRA00003\',\'LOC00011\',\'LOC00001\',\'YNYNYNY\',\'N\'),(\'TRA00004\',\'LOC00021\',\'LOC00002\',\'YNYNYNY\',\'Y\'),(\'TRA00005\',\'LOC00022\',\'LOC00033\',\'YNYNYNY\',\'Y\'),(\'TRA00006\',\'LOC00025\',\'LOC00002\',\'YNYNYNY\',\'N\'),(\'TRA00007\',\'LOC00035\',\'LOC00001\',\'YNYNYNY\',\'N\'), (\'TRA00008\',\'LOC00036\',\'LOC00015\',\'YNYNYNY\',\'N\'),(\'TRA00009\',\'LOC00037\',\'LOC00016\',\'YNYNYNY\',\'Y\'),(\'TRA00010\',\'LOC00001\',\'LOC00033\',\'YNYNYNY\',\'N\'),(\'TRA00011\',\'LOC00011\',\'LOC00020\',\'YNYNYNY\',\'N\'),(\'TRA00012\',\'LOC00001\',\'LOC00025\',\'YNYNYNY\',\'N\'),(\'TRA00013\',\'LOC00002\',\'LOC00034\',\'YNYNYNY\',\'N\'),(\'TRA00014\',\'LOC00025\',\'LOC00004\',\'YNYNYNY\',\'Y\'),(\'TRA00015\',\'LOC00015\',\'LOC00023\',\'YNYNYNY\',\'Y\');')
     runQuery(callback,'INSERT INTO bus VALUES(\'BUS00000\',\'LOC00031\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00001\',\'LOC00032\',\'LOC00007\',\'YYYNYNY\',\'Y\'),(\'BUS00002\',\'LOC00035\',\'LOC00005\',\'YNNNYNY\',\'Y\'),(\'BUS00003\',\'LOC00015\',\'LOC00030\',\'YNYYYNY\',\'Y\'),(\'BUS00004\',\'LOC00015\',\'LOC00026\',\'YNYNNNY\',\'Y\'),(\'BUS00005\',\'LOC00019\',\'LOC00030\',\'YNYNNYY\',\'Y\'),(\'BUS00006\',\'LOC00029\',\'LOC00033\',\'YNYNYNY\',\'Y\'),(\'BUS00007\',\'LOC00001\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00008\',\'LOC00018\',\'LOC00023\',\'YNYNYNY\',\'N\'),(\'BUS00009\',\'LOC00015\',\'LOC00001\',\'YNYNYNY\',\'Y\'),(\'BUS00010\',\'LOC00016\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00011\',\'LOC00017\',\'LOC00011\',\'YNYNYNY\',\'Y\'),(\'BUS00012\',\'LOC00018\',\'LOC00003\',\'YNYNYNY\',\'N\'),(\'BUS00013\',\'LOC00015\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00014\',\'LOC00018\',\'LOC00001\',\'YNYNYNY\',\'Y\'),(\'BUS00015\',\'LOC00033\',\'LOC00001\',\'YNYNYNY\',\'Y\'),(\'BUS00016\',\'LOC00029\',\'LOC00008\',\'YNYNYNY\',\'Y\'),(\'BUS00017\',\'LOC00008\',\'LOC00036\',\'YNYNYNY\',\'N\'),(\'BUS00018\',\'LOC00015\',\'LOC00005\',\'YNYNYNY\',\'Y\'),(\'BUS00019\',\'LOC00003\',\'LOC00037\',\'YNYNYNY\',\'N\'),(\'BUS00020\',\'LOC00009\',\'LOC00038\',\'YNYNYNY\',\'Y\');')
-    runQuery(callback, 'CREATE NONCLUSTERED INDEX a1 ON location(city ASC);')
-    runQuery(callback, 'CREATE NONCLUSTERED INDEX a2 ON service_provider(domain ASC);')
-    runQuery(callback, 'CREATE NONCLUSTERED INDEX a3 ON service(service_provider_id ASC);')
-    runQuery(callback, 'CREATE NONCLUSTERED INDEX a4 ON hotel(location_id ASC);')
-    runQuery(callback, 'CREATE NONCLUSTERED INDEX a5 ON room(room_type ASC);')
-    runQuery(callback, 'CREATE NONCLUSTERED INDEX a6 ON restaurant(location_id ASC);')
-    runQuery(callback, 'CREATE NONCLUSTERED INDEX a7 ON food_item(name ASC);')
-    runQuery(callback, 'CREATE NONCLUSTERED INDEX a8 ON flight(from_city,to_city ASC);')
-    runQuery(callback, 'CREATE NONCLUSTERED INDEX a9 ON taxi(car_name ASC);')
-    runQuery(callback, 'CREATE NONCLUSTERED INDEX a10 ON tourist_spot(name,location_id ASC);')
-    runQuery(callback, 'CREATE NONCLUSTERED INDEX a11 ON guide(tourist_spot_id ASC);')
-    runQuery(callback, 'CREATE NONCLUSTERED INDEX a12 ON trip(trip ASC);')
-    runQuery(callback, 'CREATE NONCLUSTERED INDEX a13 ON service_request(trip_id ASC);')
+    runQuery(callback, 'CREATE INDEX a1 ON location(city ASC);')
+    runQuery(callback, 'CREATE INDEX a2 ON service_provider(domain ASC);')
+    runQuery(callback, 'CREATE INDEX a3 ON service(service_provider_id ASC);')
+    runQuery(callback, 'CREATE INDEX a4 ON hotel(location_id ASC);')
+    runQuery(callback, 'CREATE INDEX a5 ON room(room_type ASC);')
+    runQuery(callback, 'CREATE INDEX a6 ON restaurant(location_id ASC);')
+    runQuery(callback, 'CREATE INDEX a7 ON food_item(name ASC);')
+    runQuery(callback, 'CREATE INDEX a8 ON flight(from_city,to_city ASC);')
+    runQuery(callback, 'CREATE INDEX a9 ON taxi(car_name ASC);')
+    runQuery(callback, 'CREATE INDEX a10 ON tourist_spot(name,location_id ASC);')
+    runQuery(callback, 'CREATE INDEX a11 ON guide(tourist_spot_id ASC);')
+    runQuery(callback, 'CREATE INDEX a12 ON trip(user_id ASC);')
+    runQuery(callback, 'CREATE INDEX a13 ON service_request(trip_id ASC);')
 }
 
 db_config = {
@@ -830,7 +833,7 @@ async function main() {
     // createDatabase(function(){
     //     console.log('done Creation');
     // });
-    runQuery(function(result){console.log(result);}, "select distinct city from location");
+    // runQuery(function(result){console.log(result);}, "select distinct city from location");
     // runQuery(function(result) {console.log("service requests");console.log(result);}, "select * from service_request where service_id like \"ROO%\";")
     console.log('done Connect');
 

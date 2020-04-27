@@ -304,8 +304,20 @@ svg{
 }
 .chatBox{
     /* box-shadow: inset 0 0 5px #000000; */
-    /* padding: 10px; */
+    padding-top: 0px!important;
+    max-height: 600px;
+    overflow-y: scroll;
 }
 .msg{
     box-shadow: 0 0 5px #000000;
+}
+.chatBox::-webkit-scrollbar{
+width: 10px;
+background: #BBB;
+}
+.chatBox:-webkit-scrollbar-track{
+box-shadow: inset 0 0 5px grey;
+}
+.chatBox::-webkit-scrollbar-thumb{
+background: #7fb5a4;
 }

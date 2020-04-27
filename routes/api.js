@@ -276,7 +276,7 @@ router.get('/getData', function(req, res, next) {
       serverjs.getFilteredAutoCorrectPrediction(function(result){sendResponse(res,result);},req.query);
       break;
     case 'allQueries':
-      logger.info(req.query.uid,req.query.pid);
+      // logger.info(req.query.uid,req.query.pid);
       serverjs.getFilteredQueries(function(result){sendResponse(res,result);},req.query.uid,req.query.pid);
       break;
     case 'analyseMaxServiceRequests':

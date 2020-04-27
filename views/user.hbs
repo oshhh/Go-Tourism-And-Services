@@ -307,9 +307,7 @@
                 </div>
               <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
                 <div class="cardText card-text">From: \{{it.from_city}} <br> To: \{{it.to_city}}</div>
-                <div class="cardText card-text">Departure Time: \{{it.departure_time.substring(11,19)}}<br> Arrival
-                  Time:
-                  \{{it.arrival_time.substring(11,19)}}</div>
+                <div class="cardText card-text">Departure Time: \{{it.departure_time}}<br> Arrival Time: \{{it.arrival_time}}</div>
                 <div class="cardText card-text">Discount: \{{it.discount}}% </div>
                 <button ng-click="openRequest(it,false,true)" class="btn btn-outline-primary">Request (+\{{it.price}}
                   Rs)"</button>
@@ -563,7 +561,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text">AC</span>
             </div>
-            <select ng-model="room.wifi_facility" class="custom-select" id="taxiAC">
+            <select ng-model="room.AC" class="custom-select" id="taxiAC">
               <option selected value="0">Both</option>
               <option value="1">Yes</option>
               <option value="2">No</option>
@@ -571,7 +569,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text">Star</span>
             </div>
-            <select ng-model="room.wifi_facility" class="custom-select" id="taxiAC">
+            <select ng-model="room.star" class="custom-select" id="taxiAC">
               <option selected value="0">Any</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -617,7 +615,7 @@
                   Hotel
                   City: \{{it.city}}</div>
                 <div class="cardText card-text">Room Type: \{{it.room_type}} <br> Capacity: \{{it.capacity}} </div>
-                <div class="cardText card-text">Wifi: \{{it.wifi_facility}} </div>
+                <div class="cardText card-text">Wifi: \{{it.wifi_facility}} <br> AC: \{{it.AC}} <br> Star: \{{it.star}} </div>
                 <button ng-click="openRequest(it,true,true)" class="btn btn-outline-primary">Request (+\{{it.price}}
                   Rs)"</button>
               </div>
@@ -1167,17 +1165,18 @@
                       <ul class="list-group" style="height: auto !important;">
                         <li ng-show="plan_trip.itinerary.room!=null" class="list-group-item">
                           <div class="row justify-content-around">
-                            <div class="col-10">Service ID: \{{plan_trip.itinerary.room[0].service_id}} <br> Hotel Name:
-                              \{{plan_trip.itinerary.room[0].name}} <br> Locality:
-                              \{{plan_trip.itinerary.room[0].locality}} <br> Room Type:
-                              \{{plan_trip.itinerary.room[0].room_type}} <br> Capacity:
-                              \{{plan_trip.itinerary.room[0].capacity}} <br> Wifi:
-                              \{{plan_trip.itinerary.room[0].wifi_facility}} <br> Price:
-                              \{{plan_trip.itinerary.room[0].price}} <br> Discount:
-                              \{{plan_trip.itinerary.room[0].discount}} <br> Quantity:
-                              \{{(plan_trip.itinerary.room[1]/plan_trip.number_of_days)}} <br> Number Of Days:
-                              \{{plan_trip.number_of_days}} <br> Total Cost:
-                              \{{plan_trip.itinerary.room[0].price * (1 - plan_trip.itinerary.room[0].discount * 0.01) * plan_trip.itinerary.room[1]}}
+                            <div class="col-10">Service ID: \{{plan_trip.itinerary.room[0].service_id}} <br> 
+                            Hotel Name: \{{plan_trip.itinerary.room[0].name}} <br> 
+                            Hotel Star:\{{plan_trip.itinerary.room[0].star}} <br> 
+                            Locality: \{{plan_trip.itinerary.room[0].locality}} <br> 
+                            Room Type:\{{plan_trip.itinerary.room[0].room_type}} <br> 
+                            Capacity:\{{plan_trip.itinerary.room[0].capacity}} <br> 
+                            Wifi:\{{plan_trip.itinerary.room[0].wifi_facility}} <br> 
+                            AC:\{{plan_trip.itinerary.room[0].AC}} <br> 
+                            Price:\{{plan_trip.itinerary.room[0].price}} <br> 
+                            Discount:\{{plan_trip.itinerary.room[0].discount}} 
+                            <br> Quantity:\{{(plan_trip.itinerary.room[1]/plan_trip.number_of_days)}} 
+                            <br> Number Of Days:\{{plan_trip.number_of_days}} <br> Total Cost:\{{plan_trip.itinerary.room[0].price * (1 - plan_trip.itinerary.room[0].discount * 0.01) * plan_trip.itinerary.room[1]}}
                             </div>
                             <button ng-click="plan_trip.itinerary.room=null;updatePlannedTrip();" type="button"
                               class="close text-right" aria-label="Close">

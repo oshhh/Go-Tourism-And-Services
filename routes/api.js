@@ -151,7 +151,7 @@ router.get('/getData', function(req, res, next) {
     break;
     case 'room':
         serverjs.user.getRooms(function(result){sendResponse(res,result);}, {
-          // name: req.query.name,
+          name: req.query.name,
           city: req.query.city,
           room_type: req.query.room_type,
           name: req.query.name,

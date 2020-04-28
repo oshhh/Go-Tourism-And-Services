@@ -190,7 +190,7 @@
           <h5>queries by users (sorted by last message sent)</h5>
           <div ng-repeat="(uid,it) in query.data" class="rowElement card shadow p-4 mb-4 bg-white" style="border:1px solid #999;">
               <div class="card-header shadow-sm p-3 mb-0 bg-white rounded">
-                 <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">\{{uid}} (ID: \{{uid}})</h5>
+                 <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">\{{it[0].uname}} (ID: \{{uid}})</h5>
                  <a class="chatToggler" ng-click="toggleChat(uid)"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
               </div>
               <div ng-show="it.showChat" class="card-body chatBox">

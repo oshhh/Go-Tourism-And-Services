@@ -745,7 +745,7 @@ function analyseMinQueryResponseTime(callback, domain) {
     runQuery(callback, query)
 }
 function analyseUserByRegion(callback, service_provider_id) {
-    query = "select (rank() over(order by count(*) desc)) as rank_, city, count(*) as count from service_request, service, trip, user, location where service_request.service_id = service.service_id and service.service_provider_id = " + service_provider_id + " and service_request.trip_id = trip.trip_id and trip.user_id = user.user_id and user.location_id = location.location_id group by (city);"
+    query = "select (rank() over(order by count(*) desc)) as rank_, city, state, count(*) as count from service_request, service, trip, user, location where service_request.service_id = service.service_id and service.service_provider_id = " + service_provider_id + " and service_request.trip_id = trip.trip_id and trip.user_id = user.user_id and user.location_id = location.location_id group by state, city with rollup;"
     runQuery(callback, query);
 }
 

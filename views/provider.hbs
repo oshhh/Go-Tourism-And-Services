@@ -286,6 +286,7 @@
               <thead class="thead-dark">
                 <tr>
                   <th scope="col">Rank</th>
+                  <th scope="col">State</th>
                   <th scope="col">City</th>
                   <th scope="col">Count</th>
                 </tr>
@@ -293,6 +294,7 @@
               <tbody >
                 <tr ng-repeat="it in analyse_user_by_region.data"> 
                   <th> \{{it.rank_}} </th>
+                  <th> \{{it.state}} </th>
                   <th> \{{it.city}} </th>
                   <th> \{{it.count}} </th>
                 </tr>

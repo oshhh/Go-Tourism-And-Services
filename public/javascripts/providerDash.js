@@ -719,10 +719,12 @@ angularApp.controller("ngContent",function($scope,$http)
 				}
 				else if($scope.currentServices.model.editable[i].type==3)
 				{
+					newTime = it[$scope.currentServices.model.editable[i].value];
+					console.log(newTime);
 					reqBody.push({
 						table_name:$scope.currentServices.model.editable[i].table,
 						column_name:$scope.currentServices.model.editable[i].column,
-						newValue:new Date(it[$scope.currentServices.model.editable[i].value]).toISOString().slice(0, 19).replace('T', ' '),
+						newValue:newTime,
 						whereColumn:$scope.currentServices.model.editable[i].searchKey,
 						whereValue:it[$scope.currentServices.model.editable[i].searchValue]
 					});

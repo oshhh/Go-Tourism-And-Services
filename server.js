@@ -22,21 +22,21 @@ tables = {
     'query': ['query_id', 'user_id', 'service_provider_id','timestamp','query','side']
 }
 
+// db_config = {
+//     host: "remotemysql.com",
+//     user: "lHyGk3wWaK",
+//     password: "IAahckiJYJ",
+//     database: "lHyGk3wWaK",
+//     multipleStatements: true
+// }
+
 db_config = {
-    host: "remotemysql.com",
-    user: "lHyGk3wWaK",
-    password: "IAahckiJYJ",
+    host: "localhost",
+    user: "root",
+    password: "zzzz",
     database: "lHyGk3wWaK",
     multipleStatements: true
 }
-
-// var con = mysql.createConnection({
-//     host: "127.0.0.1",
-//     user: "root",
-//     port:"3307",
-//     password: "zzzz",
-//     database: "dbms_project"
-//   });
 
 function handleDisconnect() {
     con = mysql.createConnection(db_config); // Recreate the connection, since

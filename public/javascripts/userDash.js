@@ -202,13 +202,12 @@ angularApp.controller("ngContent",function($scope,$http)
 	}
 	$scope.planTrip = function()
 	{
-		// console.log()
-		// if($("#plannerForm").hasClass("ng-invalid"))
-		// {
-		// 	$('#toast_msg').text("Please Fill Correct parameters");
-		// 	$('.toast').toast("show");
-		// 	return;
-		// }
+		if($("#actualForm").hasClass("ng-invalid"))
+		{
+			$('#toast_msg').text("Please Fill Correct parameters");
+			$('.toast').toast("show");
+			return;
+		}
 		//use $scope.planner.budget/destination/keywords to output in this format:
 		//output - {service_id:"",quantity:1,price:10}
 		$scope.plan_trip.status = "Calculating"
@@ -285,7 +284,8 @@ angularApp.controller("ngContent",function($scope,$http)
 	}
 	$scope.finalizeTrip = async function()
 	{
-		console.log($scope.plan_trip.itinerary);
+		console.log($scope.plan_trip.number_of_days);
+		// return;
 		//Insert Trip
 		departDate = $scope.plan_trip.depDate;
 		returnDate = new Date();
@@ -319,7 +319,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		});
 		if(!err)
 		{
-			console.log($scope.trip.selected);
+			console.log($scope.plan_trip.number_of_days);
 			if($scope.plan_trip.itinerary.departure_flight!=null)
 			{
 				if($scope.plan_trip.itinerary.departure_flight[0]!=null)
@@ -785,6 +785,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		// $scope.request(it,$scope.requestModal.days,$scope.requestModal.bookingDate)
 	}
 	$scope.addPlannedRequest = async function(it,requiredDate,numDays,quantity){
+		console.log(numDays);
 		addState=await $http.get('/api/getData',{params:{
 			type : 'request',
 			trip_id: "\"" + $scope.trip.selected.trip_id + "\"",

@@ -269,7 +269,7 @@
                 </tr>
               </thead>
               <tbody >
-                <tr ng-repeat="it in analyse_min_query_response_time.data"> 
+                <tr ng-repeat="it in analyse_min_query_response_time.data" ng-show="it.response_time != 0"> 
                   <th> \{{it.rank_}} </th>
                   <th> \{{it.service_provider_id}} </th>
                   <th> \{{it.name}} </th>

@@ -761,17 +761,14 @@ function analyseMaxRating(callback, domain) {
 }
 function analyseMinQueryResponseTime(callback, domain) {
     query = `select rank() over(order by (
-                COALESCE(AVG(TIME_TO_SEC(TIMEDIFF (
-                    (select min(q1.timestamp)
-                        from query as q1
-                        where(q1.service_provider_id=q.service_provider_id and q1.user_id=q.user_id and q1.side="S")
-                    ),
-                    (select min(q2.timestamp)
-                        from query as q2
-                        where(q2.service_provider_id=q.service_provider_id and q2.user_id=q.user_id and q2.side="U")
-                    )
-                )
-            )/60 ),NULL)
+        COALESCE(AVG(TIME_TO_SEC(TIMEDIFF (
+       (select min(q1.timestamp)
+       from query as q1
+       where(q1.service_provider_id=q.service_provider_id and q1.user_id=q.user_id and q1.side="S")),
+       (select min(q2.timestamp)
+       from query as q2
+       where(q2.service_provider_id=q.service_provider_id and q2.user_id=q.user_id and q2.side="U"))
+       ))/60 ),NULL)
         ) asc) as rank_, q.service_provider_id, p.name as name,
        COALESCE(AVG(TIME_TO_SEC(TIMEDIFF (
        (select min(q1.timestamp)
@@ -782,8 +779,17 @@ function analyseMinQueryResponseTime(callback, domain) {
        where(q2.service_provider_id=q.service_provider_id and q2.user_id=q.user_id and q2.side="U"))
        ))/60 ),NULL) as response_time
        from query as q, service_provider as p
-       where p.domain = `+domain+` and p.service_provider_id = q.service_provider_id
-      GROUP BY  q.service_provider_id;`
+       where p.domain = `+domain+` and p.service_provider_id = q.service_provider_id 
+      GROUP BY  q.service_provider_id
+      HAVING
+      COALESCE(AVG(TIME_TO_SEC(TIMEDIFF (
+        (select min(q1.timestamp)
+        from query as q1
+        where(q1.service_provider_id=q.service_provider_id and q1.user_id=q.user_id and q1.side="S")),
+        (select min(q2.timestamp)
+        from query as q2
+        where(q2.service_provider_id=q.service_provider_id and q2.user_id=q.user_id and q2.side="U"))
+        ))/60 ),NULL) is not null;`
     runQuery(callback, query)
 }
 function analyseUserByRegion(callback, service_provider_id) {
@@ -803,8 +809,6 @@ async function main() {
     // createDatabase(function(){
     //     console.log('done Creation');
     // });
-    // runQuery(function(result){console.log(result);}, "grant create routine, alter routine on lHyGk3wWaK.* to lHyGk3wWaK")
-    runQuery(function(result){console.log(result);}, "CREATE PROCEDURE get_rating(IN arg_service_id CHAR(8))BEGIN SELECT distinct COALESCE(AVG(service_rating),0) FROM service_request where service_request.service_id=arg_service_id; END;")
     // runQuery(function(result){console.log(result);}, "select distinct city from location");
     // runQuery(function(result) {console.log("service requests");console.log(result);}, "select * from service_request where service_id like \"ROO%\";")
     console.log('done Connect');

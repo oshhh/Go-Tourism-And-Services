@@ -22,21 +22,21 @@ tables = {
     'query': ['query_id', 'user_id', 'service_provider_id','timestamp','query','side']
 }
 
-// db_config = {
-//     host: "remotemysql.com",
-//     user: "lHyGk3wWaK",
-//     password: "IAahckiJYJ",
-//     database: "lHyGk3wWaK",
-//     multipleStatements: true
-// }
-
 db_config = {
-    host: "localhost",
-    user: "root",
-    password: "zzzz",
+    host: "remotemysql.com",
+    user: "lHyGk3wWaK",
+    password: "IAahckiJYJ",
     database: "lHyGk3wWaK",
     multipleStatements: true
 }
+
+// db_config = {
+//     host: "localhost",
+//     user: "root",
+//     password: "zzzz",
+//     database: "lHyGk3wWaK",
+//     multipleStatements: true
+// }
 
 function handleDisconnect() {
     con = mysql.createConnection(db_config); // Recreate the connection, since
@@ -757,18 +757,27 @@ function analyseMaxRating(callback, domain) {
     runQuery(callback, query)
 }
 function analyseMinQueryResponseTime(callback, domain) {
-    query = `select q.service_provider_id, 
-    COALESCE(AVG(TIME_TO_SEC(TIMEDIFF (
-    (select min(q1.timestamp)
-    from query as q1
-    where(q1.service_provider_id=q.service_provider_id and q1.user_id=q.user_id and q1.side="S")),
-    (select min(q2.timestamp)
-    from query as q2
-    where(q2.service_provider_id=q.service_provider_id and q2.user_id=q.user_id and q2.side="U"))
-    ))/60 ),0) as response_time
-    from query as q, service_provider as p
-    where p.domain=`+domain+`and p.service_provider_id = q.service_provider_id
-    GROUP BY  q.service_provider_id;`
+    query = `select rank() over(order by (
+        COALESCE(AVG(TIME_TO_SEC(TIMEDIFF (
+       (select min(q1.timestamp)
+       from query as q1
+       where(q1.service_provider_id=q.service_provider_id and q1.user_id=q.user_id and q1.side="S")),
+       (select min(q2.timestamp)
+       from query as q2
+       where(q2.service_provider_id=q.service_provider_id and q2.user_id=q.user_id and q2.side="U"))
+       ))/60 ),NULL)
+        ) desc) as rank_, q.service_provider_id, p.name as name,
+       COALESCE(AVG(TIME_TO_SEC(TIMEDIFF (
+       (select min(q1.timestamp)
+       from query as q1
+       where(q1.service_provider_id=q.service_provider_id and q1.user_id=q.user_id and q1.side="S")),
+       (select min(q2.timestamp)
+       from query as q2
+       where(q2.service_provider_id=q.service_provider_id and q2.user_id=q.user_id and q2.side="U"))
+       ))/60 ),NULL) as response_time
+       from query as q, service_provider as p
+       where p.domain = `+domain+` and p.service_provider_id = q.service_provider_id
+      GROUP BY  q.service_provider_id;`
     runQuery(callback, query)
 }
 function analyseUserByRegion(callback, service_provider_id) {

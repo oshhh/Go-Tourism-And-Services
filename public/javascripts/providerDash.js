@@ -47,6 +47,14 @@ angularApp.controller("ngContent",function($scope,$http)
 
 	$scope.changeStatus=function(it)
 	{
+		console.log(it);
+		if(it.completion_date!=null)
+		{
+			it.status="Completed";
+			$('#toast_msg').text("Status Can't be changed now");
+			$('.toast').toast("show");
+			return;
+		}
 		it.updateResult="Sending";
 		$http.put('/api/updateData',JSON.stringify({
 			table_name:"service_request",
@@ -56,7 +64,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			whereValue:"\"" + it.request_id + "\""
 		}))
 		.then(function(response){
-			console.log("respinse",response);
+			console.log("response",response);
 			if(response || response.data.content.affectedRows==0)
 			{
 				it.updateResult="Data updated";
@@ -69,6 +77,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		});
 		if(it.status == "Completed") {
 			it.updateResult="Sending";
+			it.completion_date="";
 			$http.put('/api/updateData',JSON.stringify({
 				table_name:"service_request",
 				column_name:"completion_date",
@@ -77,7 +86,6 @@ angularApp.controller("ngContent",function($scope,$http)
 				whereValue: "\"" + it.request_id + "\""
 			}))
 			.then(function(response){
-				console.log("respinse",response);
 				if(response || response.data.content.affectedRows==0)
 				{
 					it.updateResult="Data updated";

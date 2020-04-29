@@ -319,7 +319,7 @@ function getServiceRequests(callback, user_id, attribute_values) {
     if(Object.keys(attribute_values).length == 0) {
         attribute_values = assignAttributes(['service_request']);
     }
-    query = `select distinct * from service_request where trip_id in (select distinct trip_id from trip where trip.user_id = \"` + user_id +`\") and (` + whereClause(attribute_values) + `);`;
+    query = `select distinct * from service_request where trip_id in (select distinct trip_id from trip where trip.user_id = \"` + user_id +`\") and (` + whereClause(attribute_values) + `) ORDER BY request_timestamp DESC;`;
     runQuery(callback, query);
 }
 function providerGetRequests(callback,user_id)

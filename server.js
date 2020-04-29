@@ -799,6 +799,8 @@ async function main() {
     // createDatabase(function(){
     //     console.log('done Creation');
     // });
+    runQuery(function(result){console.log(result);}, "grant create routine, alter routine on lHyGk3wWaK.* to lHyGk3wWaK")
+    runQuery(function(result){console.log(result);}, "CREATE PROCEDURE get_rating(IN arg_service_id CHAR(8))BEGIN SELECT distinct COALESCE(AVG(service_rating),0) FROM service_request where service_request.service_id=arg_service_id; END;")
     // runQuery(function(result){console.log(result);}, "select distinct city from location");
     // runQuery(function(result) {console.log("service requests");console.log(result);}, "select * from service_request where service_id like \"ROO%\";")
     console.log('done Connect');

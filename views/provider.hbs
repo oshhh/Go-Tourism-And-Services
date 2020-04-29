@@ -110,10 +110,11 @@
                     <div ng-repeat="e in currentServices.model.newModel" class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">\{{e.name}}</span>
-                        <input required ng-model="currentServices.newData[e.value]" ng-show="e.type==0" type="text" class="form-control">
-                        <textarea required ng-model="currentServices.newData[e.value]" ng-show="e.type==1" class="form-control"></textarea>
-                        <input required ng-show="e.type==2" ng-model="currentServices.newData[e.value]" type="text" class="form-control">
-                        <input required ng-show="e.type==4" ng-model="currentServices.newData[e.value]" type="text" class="form-control">
+                        <input required pattern="\{{e.pattern}}" ng-model-options="{ allowInvalid: true }" ng-model="currentServices.newData[e.value]" ng-if="e.type==0" type="text" class="form-control">
+                        <input required pattern="(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)" ng-model-options="{ allowInvalid: true }" ng-model="currentServices.newData[e.value]" ng-if="e.type==3" type="text" class="form-control">
+                        <textarea required ng-model="currentServices.newData[e.value]" ng-if="e.type==1" class="form-control"></textarea>
+                        <input required ng-if="e.type==2" ng-model="currentServices.newData[e.value]" type="text" class="form-control">
+                        <input required ng-if="e.type==4" ng-model="currentServices.newData[e.value]" type="text" class="form-control">
                       </div>
                     </div>
                   </div>
@@ -124,7 +125,7 @@
                       <li ng-repeat="step in currentServices.newData.routeData" class="list-group-item">
                         <div class="input-group-prepend">
                           <input required ng-model="step.location_id_v" type="text" class="form-control" value="\{{step.location_id_v}}">
-                          <input required ng-model="step.arrival_time" type="text" class="form-control" value="\{{step.arrival_time}}">
+                          <input required pattern="(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)" ng-model-options="{ allowInvalid: true }" ng-model="step.arrival_time" type="text" class="form-control" value="\{{step.arrival_time}}">
                         </div>
                       </li>
                       <li class="list-group-item"><button ng-click="incrementRoute(currentServices.newData.routeData)" class="btn btn-success">+</button></li>
@@ -140,47 +141,45 @@
             <div ng-repeat="it in currentServices.data" class="rowElement card shadow p-4 mb-4 bg-white">
               <div class="card-header text-center bg-white align-middle">\{{currentServices.model.header.name}} : \{{it[currentServices.model.header.value]}}</div>
                 <form id="editForm_\{{$index}}">
-                <div style="margin: 10px;" class="editCard">
-                  <div style="padding-right:8px">
-                  <h7>Edit Details</h7>
-                  <br>
-                  <label ng-repeat="v in currentServices.model.view">\{{v.name}} : \{{it[v.value]}}</label>
-                  <div ng-repeat="e in currentServices.model.editable" class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">\{{e.name}}</span>
-                      <input required ng-model="it[e.value]" ng-if="e.type==0" type="text" class="form-control" value="\{{it[e.value]}}">
-                      <textarea required ng-model="it[e.value]" ng-if="e.type==1" class="form-control">\{  {it[e.value]}}</textarea>
-                      <input required ng-if="e.type==2" ng-model="it[e.display]" type="text" class="form-control" value="\{{it[e.display]}}">
-                      <input required type="text" class="form-control" ng-model="it[e.value]" ng-if="e.type==3" value="\{{it[e.value]}}">
-                      <input required ng-if="e.type==4" ng-model="it[e.display]" type="text" class="form-control" value="\{{it[e.display]}}">
+                <div style="margin: 10px" class="row editCard">
+                  <div style="col-4">
+                    <h7>Edit Details</h7>
+                    <br>
+                    <label ng-repeat="v in currentServices.model.view">\{{v.name}} : \{{it[v.value]}}</label>
+                    <div ng-repeat="e in currentServices.model.editable" class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">\{{e.name}}</span>
+                        <input required pattern="\{{e.pattern}}" ng-model-options="{ allowInvalid: true }" ng-model="it[e.value]" ng-if="e.type==0" type="text" class="form-control" value="\{{it[e.value]}}">
+                        <textarea required ng-model="it[e.value]" ng-if="e.type==1" class="form-control">\{  {it[e.value]}}</textarea>
+                        <input required ng-if="e.type==2" ng-model="it[e.display]" type="text" class="form-control" value="\{{it[e.display]}}">
+                        <input required pattern="(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)" ng-model-options="{ allowInvalid: true }" type="text" class="form-control" ng-model="it[e.value]" ng-if="e.type==3" value="\{{it[e.value]}}">
+                        <input required ng-if="e.type==4" ng-model="it[e.display]" type="text" class="form-control" value="\{{it[e.display]}}">
+                      </div>
                     </div>
-                  </div>
-
                   </div> 
 
-                  <div ng-if="currentServices.model.route==true" style="padding-right:20px">
+                  <div class="col-7" ng-if="currentServices.model.route==true">
                     <div style="text-align: center;">Route Definition: City Arrival Time</div>
                     <br>
                     <ul style="text-align: center;" class="list-group">
                       <li ng-repeat="step in it.routeData" class="list-group-item">
-                        <div class="input-group-prepend">
+                        <div class="input-group-prepend text-center">
                           <input required ng-model="step.location_id_v" type="text" class="form-control" value="\{{step.location_id_v}}">
-                          <input required ng-model="step.arrival_time" type="text" class="form-control" value="\{{step.arrival_time}}">
+                          <input required pattern="(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)" ng-model-options="{ allowInvalid: true }" ng-model="step.arrival_time" type="text" class="form-control" value="\{{step.arrival_time}}">
                         </div>
                       </li>
                       <li class="list-group-item"><button ng-click="incrementRoute(it.routeData)" class="btn btn-success">+</button></li>
                     </ul>
                   </div>                 
-
-                  <div class="d-flex flex-column justify-content-center">
+                </div>
+                  <div class=" mt-4 d-flex flex-row justify-content-around align-items-center">
                     <br>
-                    <button ng-click="updateService(it,$index)" class="btn btn-primary mb-2">Update</button>
-                    <button ng-click="deleteService(it)" class="btn btn-danger mt-2">Delete</button>
+                    <button ng-click="updateService(it,$index)" class="btn btn-primary">Update</button>
+                    <button ng-click="deleteService(it)" class="btn btn-danger">Delete</button>
                     <br>
                     <h6 class="mt-2">\{{it['updateResult']}}</h6>
                   </div>
 
-                </div>
                 </form>
             </div>
           </div>

@@ -185,8 +185,8 @@
                 <div ng-repeat="it in my_trips.completed_requests">
                   <div class="rowElement card p-2" style="align-items: center">
                     <div class="card-text">Request ID : \{{it.request_id}} Service ID : \{{it.service_id}}</div>
-                    <div class="card-text">Service Name : \{{it.name}} Timestamp : \{{it.timestamp.substring(0,10)}}
-                      \{{it.timestamp.substring(11,19)}}</div><br>
+                    <div class="card-text">Service Provider Name : \{{it.name}} Timestamp : \{{it.request_timestamp.substring(0,10)}}
+                      \{{it.request_timestamp.substring(11,19)}}</div><br>
                     <input type="range" class="custom-range" min="0" max="5" class="form-control" ng-model="it.rating"
                       ng-bind="it.rating" style="width: 50%;"><br>
                     <button ng-click="rate_service(it)" class="btn btn-primary">Rate</button>

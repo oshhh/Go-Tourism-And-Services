@@ -328,7 +328,8 @@ function providerGetRequests(callback,user_id)
     from service_request,service_provider as p, service as s,user as u,trip as t
     where (t.user_id=u.user_id and t.trip_id=service_request.trip_id and
     service_request.service_id=s.service_id and s.service_provider_id=p.service_provider_id 
-    and p.service_provider_id like"`+user_id+`");`;
+    and p.service_provider_id like"`+user_id+`")
+    ORDER BY request_timestamp DESC;`;
     runQuery(callback, query);
 }
 function allServiceRequest(callback,filterData)
@@ -339,7 +340,8 @@ function allServiceRequest(callback,filterData)
         r.service_id = s.service_id and p.service_provider_id=s.service_provider_id
         and u.name REGEXP "`+filterData.user_id+`" 
         and p.name REGEXP "`+filterData.pname+`"
-        and s.service_id REGEXP "`+filterData.service_id+`")`;
+        and s.service_id REGEXP "`+filterData.service_id+`")
+        ORDER BY r.request_timestamp DESC`;
     runQuery(callback,query);
 }
 function createTrip(callback, attribute_values) {
@@ -799,7 +801,7 @@ async function main() {
     // createDatabase(function(){
     //     console.log('done Creation');
     // });
-    runQuery(function(result){console.log(result);}, "grant create routine, alter routine on lHyGk3wWaK.* to lHyGk3wWaK")
+    // runQuery(function(result){console.log(result);}, "grant create routine, alter routine on lHyGk3wWaK.* to lHyGk3wWaK")
     runQuery(function(result){console.log(result);}, "CREATE PROCEDURE get_rating(IN arg_service_id CHAR(8))BEGIN SELECT distinct COALESCE(AVG(service_rating),0) FROM service_request where service_request.service_id=arg_service_id; END;")
     // runQuery(function(result){console.log(result);}, "select distinct city from location");
     // runQuery(function(result) {console.log("service requests");console.log(result);}, "select * from service_request where service_id like \"ROO%\";")

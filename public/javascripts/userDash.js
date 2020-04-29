@@ -389,6 +389,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			console.log("sent");
 			$http.get("/api/getData",{params:{
 				type:"my_trips",
+				username:$scope.curUser.uid
 				}}).then(
 				function(data, status, headers, config) {
 				console.log(data.data.content);
@@ -819,6 +820,7 @@ angularApp.controller("ngContent",function($scope,$http)
 			console.log(data.data.content);
 			$('#toast_msg').text("Request made. Please check trips tab for more info about request");
 			$('.toast').toast("show");
+			$('#requestModal').modal('hide');
 		});
 	}
 	$scope.rate_service = function(it) {
@@ -831,7 +833,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		function(data, status, headers, config) {
 			$('#toast_msg').text("The service has been rated");
 			$('.toast').toast("show");
-			getData(0);
+			$scope.getData(0);
 			$scope.$digest()
 		});
 	}

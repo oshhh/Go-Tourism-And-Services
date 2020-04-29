@@ -741,7 +741,18 @@ function analyseMaxRating(callback, domain) {
     runQuery(callback, query)
 }
 function analyseMinQueryResponseTime(callback, domain) {
-    query = ""
+    query = `  	select q.service_provider_id, 
+    COALESCE(AVG(TIME_TO_SEC(TIMEDIFF (
+    (select min(q1.timestamp)
+    from query as q1
+    where(q1.service_provider_id=q.service_provider_id and q1.user_id=q.user_id and q1.side="S")),
+    (select min(q2.timestamp)
+    from query as q2
+    where(q2.service_provider_id=q.service_provider_id and q2.user_id=q.user_id and q2.side="U"))
+    ))/60 ),0) as response_time
+    from query as q, service_provider as p
+    where p.domain=`+domain+`and p.service_provider_id = q.service_provider_id
+    GROUP BY  q.service_provider_id;`
     runQuery(callback, query)
 }
 function analyseUserByRegion(callback, service_provider_id) {

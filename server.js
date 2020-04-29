@@ -400,7 +400,7 @@ function getAdminInfo(callback,uid)
 }
 function getServiceReview(callback,service_id)
 {
-    query=`select distinct u.name as user,r.request_timestamp,r.comments as body,r.user_rating as rating
+    query=`select distinct u.name as user,r.request_timestamp,r.comments as body,r.service_rating as rating
     from user as u,service_request as r,trip as t
     where(u.user_id=t.user_id and r.trip_id=t.trip_id and r.service_id REGEXP "`+service_id+`" and r.service_rating is not null);`;
     runQuery(callback,query);
@@ -610,6 +610,7 @@ function planTrip(callback, trip) {
 
     user_city_query = "select city from user, location where user.location_id = location.location_id and user.user_id = " + trip.user_id;
     runQuery(function(result) {
+        console.log(trip.from_home);
         if(trip.from_home == false) {
             trip.user_city = "\"" + result[0].city + "\""; 
         }

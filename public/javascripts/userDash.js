@@ -12,11 +12,14 @@ angularApp.controller("ngContent",function($scope,$http)
 		sortOrder:"0",
 		reviews:{},
 	}
-
+	DEFAULT_TRIP_SIZE=2;
+	curDate = new Date();
+	offsetDate = new Date()
+	offsetDate.setDate(curDate.getDate()+DEFAULT_TRIP_SIZE);
 	$scope.new_trip={
 		destination_city : "",
-		departure_date : "",
-		return_date : "",
+		departure_date : curDate.toISOString().slice(0,10),
+		return_date : offsetDate.toISOString().slice(0,10),
 	}
 
 	$scope.food={
@@ -667,7 +670,9 @@ angularApp.controller("ngContent",function($scope,$http)
 	}
 
 	$scope.createTrip = function() {
-		if($scope.new_trip.destination_city=="" || $scope.new_trip.departure_date=="" || $scope.new_trip.return_date=="")
+		console.log($scope.new_trip.departure_date);
+		parsedDate = moment($scope.new_trip.departure_date);
+		if($scope.new_trip.destination_city=="" || !parsedDate.isValid())
 		{
 			console.log("trip field empty");
 			$('#toast_msg').text("Fill Details of trip");

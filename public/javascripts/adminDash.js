@@ -81,7 +81,16 @@ angularApp.controller("ngContent",function($scope, $http)
 		// alert(it.service_id);
 		//update records access modified details by it.service_id/name/role/email
 		//Toast on successfull update
+		emailREGEX=/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+		matchStr=it.email;
 		let reqBody=[];
+		if(it.name=="" || it.role=="" || !matchStr.match(emailREGEX))
+		{
+			console.log("Fails");
+			$('#toast_msg').text("Fill Correct Details");
+			$('.toast').toast("show");
+			return;
+		}
 		reqBody.push({
 			table_name:"administrator",
 			column_name:"name",
@@ -104,8 +113,16 @@ angularApp.controller("ngContent",function($scope, $http)
 			whereValue:it.admin_id
 		});
 		updateState=await $http.put('/api/updateList',JSON.stringify(reqBody));
-		// $('#toast_msg').innerHTML="Updated Successfully";
-		$('.toast').toast("show");
+		if(updateState.data.content)
+		{
+			$('#toast_msg').text("Updated Successfully");
+			$('.toast').toast("show");
+			it.editMode=false;
+		}
+		else{
+			$('#toast_msg').text("Update Failed");
+			$('.toast').toast("show");
+		}
 		console.log($scope.toastmsg);
 	}
 	$scope.admin.deleteRecord=async function(it)
@@ -118,7 +135,7 @@ angularApp.controller("ngContent",function($scope, $http)
 			admin_id:it.admin_id
 		}));
 		// $scope.toastmsg=;
-		$('#toast_msg').innerHTML="Deleted Successfully";
+		$('#toast_msg').text("Deleted Successfully");
 		$('.toast').toast("show");
 		console.log("tosated");
 	}
@@ -128,6 +145,17 @@ angularApp.controller("ngContent",function($scope, $http)
 		// alert(it.service_id);
 		//update records access modified details by it.service_id/name/role/email
 		//Toast on successfull update
+		emailREGEX=/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+		phoneREGEX=/([0-9]{10})|([0-9]{12})/;
+		phString = it.phone_no;
+		mailString = it.email;
+		if(it.name=="" || it.role=="" || !phString.match(phoneREGEX) || !mailString.match(emailREGEX) || it.city=="")
+		{
+			console.log("Fails");
+			$('#toast_msg').text("Fill Correct Details");
+			$('.toast').toast("show");
+			return;
+		}
 		let reqBody=[];
 		reqBody.push({
 			table_name:"user",
@@ -157,30 +185,62 @@ angularApp.controller("ngContent",function($scope, $http)
 			whereColumn:"user_id",
 			whereValue:it.user_id
 		});
+		let newLoc_ID= await $http.get("/api/getLocationID",{
+			params:{
+			city:it.city
+			}
+		});
+		if(!newLoc_ID.data.content)
+		{
+			$('#toast_msg').text("Update Failed");
+			$('.toast').toast("show");
+			return;
+		}
 		reqBody.push({
 			table_name:"user",
-			column_name:"city",
-			newValue:it.city,
+			column_name:"location_id",
+			newValue:newLoc_ID.data.content,
 			whereColumn:"user_id",
 			whereValue:it.user_id
 		});
 		updateState=await $http.put('/api/updateList',JSON.stringify(reqBody));
-		// $('#toast_msg').innerHTML="Updated Successfully";
-		$('.toast').toast("show");
-		console.log($scope.toastmsg);
+		console.log(updateState);
+		if(updateState.data.content)
+		{
+			$('#toast_msg').text("Updated Successfully");
+			$('.toast').toast("show");
+			it.editMode=false;
+			$scope.$digest();
+		}
+		else{
+			$('#toast_msg').text("Update Failed");
+			$('.toast').toast("show");
+		}
 	}
 	$scope.user.deleteRecord=async function(it)
 	{
 		// alert(it.service_id);
 		//delete record by primary key it.service_id
 		//Toast on successfull delete
-		deleteState=await $http.post('/api/deleteData',JSON.stringify({
-			type:'user',
-			user_id:it.user_id
-		}));
-		// $scope.toastmsg=;
-		$('#toast_msg').innerHTML="Deleted Successfully";
-		$('.toast').toast("show");
+		let reqBody=[];
+		reqBody.push({
+			table_name:"user",
+			column_name:"active",
+			newValue:"N",
+			whereColumn:"user_id",
+			whereValue:it.user_id
+		});
+		deleteState=await $http.put('/api/updateList',JSON.stringify(reqBody));
+		if(deleteState.data.content)
+		{
+			$('#toast_msg').text("Deleted Successfully");
+			$('.toast').toast("show");
+			it.editMode=false;
+		}
+		else{
+			$('#toast_msg').text("Deleted Failed");
+			$('.toast').toast("show");
+		}
 		console.log("tosated");
 	}
 	
@@ -189,6 +249,20 @@ angularApp.controller("ngContent",function($scope, $http)
 		// alert(it.service_id);
 		//update records access modified details by it.service_id/name/role/email
 		//Toast on successfull update
+		domainREGEX=/^(?:[hH][Oo][tT][Ee][Ll]|[Rr][Ee]stau[Rr]ant|[Aa]i[Rr]lin[Ee]|[tT]axi [Pp][Rr]ovid[Ee][Rr]|[bB]us [pP][Rr]ovid[Ee][Rr]|[tT][Rr]ain [pP][Rr]ovid[Ee][Rr]|[gG]uid[Ee] [pP][Rr]ovid[Ee][Rr])$/;
+		yesnoREGEX=/^(?:Y|N)$/;
+		domainString = it.domain;
+		activeString = it.active;
+		approveString = it.approved;
+		console.log(!activeString.match(yesnoREGEX));
+		console.log(!domainString.match(domainREGEX));
+		if(it.name=="" || !activeString.match(yesnoREGEX) || !approveString.match(yesnoREGEX) || !domainString.match(domainREGEX))
+		{
+			console.log("Fails");
+			$('#toast_msg').text("Fill Correct Details");
+			$('.toast').toast("show");
+			return;
+		}
 		let reqBody=[];
 		reqBody.push({
 			table_name:"service_provider",
@@ -220,8 +294,17 @@ angularApp.controller("ngContent",function($scope, $http)
 		});
 
 		updateState=await $http.put('/api/updateList',JSON.stringify(reqBody));
-		// $('#toast_msg').innerHTML="Updated Successfully";
-		$('.toast').toast("show");
+		if(updateState.data.content)
+		{
+			$('#toast_msg').text("Updated Successfully");
+			$('.toast').toast("show");
+			it.editMode=false;
+			$scope.$digest();
+		}
+		else{
+			$('#toast_msg').text("Update Failed");
+			$('.toast').toast("show");
+		}
 		console.log($scope.toastmsg);
 	}
 	$scope.service_provider.deleteRecord=async function(it)
@@ -229,14 +312,25 @@ angularApp.controller("ngContent",function($scope, $http)
 		// alert(it.service_id);
 		//delete record by primary key it.service_id
 		//Toast on successfull delete
-		deleteState=await $http.post('/api/deleteData',JSON.stringify({
-			type:'service_provider',
-			service_provider_id:it.service_provider_id
-		}));
-		// $scope.toastmsg=;
-		$('#toast_msg').innerHTML="Deleted Successfully";
-		$('.toast').toast("show");
-		console.log("tosated");
+		let reqBody=[];
+		reqBody.push({
+			table_name:"service_provider",
+			column_name:"active",
+			newValue:"N",
+			whereColumn:"service_provider_id",
+			whereValue:it.service_provider_id
+		});
+		deleteState=await $http.put('/api/updateList',JSON.stringify(reqBody));
+		if(deleteState.data.content)
+		{
+			$('#toast_msg').text("Deleted Successfully");
+			$('.toast').toast("show");
+			it.editMode=false;
+		}
+		else{
+			$('#toast_msg').text("Deleted Failed");
+			$('.toast').toast("show");
+		}
 	}
 
 	$scope.admin.view=function(it)

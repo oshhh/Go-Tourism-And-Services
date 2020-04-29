@@ -44,9 +44,6 @@
     <div id="content">
 
       <div id="contentTab0" ng-show="tab==0">
-        <h2 style="text-align: center;">
-          Tab0
-        </h2>
           <div class="input-group mb-3">
           <div class="input-group-prepend">
             <span class="input-group-text">Name(User)</span>
@@ -139,13 +136,13 @@
                 <td ng-hide="it.editMode" style="text-align: center;">\{{it.role}}</td>
                 <td ng-hide="it.editMode" style="text-align: center;">\{{it.email}}</td>
 
-                <td ng-show="it.editMode"><input ng-model="it.name" class="form-control" value="\{{it.name}}"></td>
-                <td ng-show="it.editMode"><input ng-model="it.role" class="form-control" value="\{{it.role}}"></td>
-                <td ng-show="it.editMode"><input ng-model="it.email" class="form-control" value="\{{it.email}}"></td>
+                <td ng-show="it.editMode"><input required ng-model="it.name" class="form-control" value="\{{it.name}}"></td>
+                <td ng-show="it.editMode"><input required ng-model="it.role" class="form-control" value="\{{it.role}}"></td>
+                <td ng-show="it.editMode"><input ng-model-options="{ allowInvalid: true }" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" ng-model="it.email" class="form-control" value="\{{it.email}}"></td>
                 <td>
                   <button ng-hide="it.editMode" ng-click="it.editMode=true"
                     class="btn btn-outline-primary butTab">Edit</button>
-                  <button ng-show="it.editMode" ng-click="it.editMode=false;admin.updateRecord(it);"
+                  <button ng-show="it.editMode" ng-click="admin.updateRecord(it);"
                     class="btn btn-outline-primary butTab">Done</button>
                   <button ng-click="admin.deleteRecord(it);" class="btn btn-outline-danger butTab">Delete</button>
                 </td>
@@ -207,15 +204,15 @@
                 <td ng-hide="it.editMode" style="text-align: center;"> \{{it.phone_no}}</td>
                 <td ng-hide="it.editMode" style="text-align: center;">\{{it.city}}</td>
 
-                <td ng-show="it.editMode"><input ng-model="it.name" class="form-control" value="\{{it.name}}"></td>
-                <td ng-show="it.editMode"><input ng-model="it.email" class="form-control" value="\{{it.email}}"></td>
-                <td ng-show="it.editMode"><input ng-model="it.phone_no" class="form-control" value="\{{it.phone_no}}">
+                <td ng-show="it.editMode"><input required ng-model="it.name" class="form-control" value="\{{it.name}}"></td>
+                <td ng-show="it.editMode"><input ng-model-options="{ allowInvalid: true }" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" ng-model="it.email" class="form-control" value="\{{it.email}}"></td>
+                <td ng-show="it.editMode"><input ng-model-options="{ allowInvalid: true }" required pattern="([0-9]{10})|([0-9]{12})" ng-model="it.phone_no" class="form-control" value="\{{it.phone_no}}">
                 </td>
-                <td ng-show="it.editMode"><input list="locs" ng-model="it.city" class="form-control" value="\{{it.city}}"></td>
+                <td ng-show="it.editMode"><input required list="locs" ng-model="it.city" class="form-control" value="\{{it.city}}"></td>
                 <td>
                   <button ng-hide="it.editMode" ng-click="it.editMode=true"
                     class="btn btn-outline-primary butTab">Edit</button>
-                  <button ng-show="it.editMode" ng-click="it.editMode=false;user.updateRecord(it);"
+                  <button ng-show="it.editMode" ng-click="user.updateRecord(it);"
                     class="btn btn-outline-primary butTab">Done</button>
                   <button ng-click="user.deleteRecord(it);" class="btn btn-outline-danger butTab">Delete</button>
                 </td>
@@ -276,16 +273,16 @@
                 <td ng-hide="it.editMode" style="text-align: center;">\{{it.active}}</td>
                 <td ng-hide="it.editMode" style="text-align: center;">\{{it.approved}}</td>
 
-                <td ng-show="it.editMode"><input ng-model="it.name" class="form-control" value="\{{it.name}}"></td>
-                <td ng-show="it.editMode"><input ng-model="it.domain" class="form-control" value="\{{it.domain}}"></td>
-                <td ng-show="it.editMode"><input ng-model="it.active" class="form-control text-center"
+                <td ng-show="it.editMode"><input required ng-model="it.name" class="form-control" value="\{{it.name}}"></td>
+                <td ng-show="it.editMode"><input ng-model-options="{ allowInvalid: true }" required pattern="^(?:[hH][Oo][tT][Ee][Ll]|[Rr][Ee]stau[Rr]ant|[Aa]i[Rr]lin[Ee]|[tT]axi [Pp][Rr]ovid[Ee][Rr]|[bB]us [pP][Rr]ovid[Ee][Rr]|[tT][Rr]ain [pP][Rr]ovid[Ee][Rr]|[gG]uid[Ee] [pP][Rr]ovid[Ee][Rr])$" ng-model="it.domain" class="form-control" value="\{{it.domain}}"></td>
+                <td ng-show="it.editMode"><input ng-model-options="{ allowInvalid: true }" required pattern="^(?:Y|N)$" ng-model="it.active" class="form-control text-center"
                     value="\{{it.active}}"></td>
-                <td ng-show="it.editMode"><input ng-model="it.approved" class="form-control text-center"
+                <td ng-show="it.editMode"><input ng-model-options="{ allowInvalid: true }" required pattern="^(?:Y|N)$" ng-model="it.approved" class="form-control text-center"
                     value="\{{it.approved}}"></td>
                 <td>
                   <button ng-hide="it.editMode" ng-click="it.editMode=true"
                     class="btn btn-outline-primary butTab">Edit</button>
-                  <button ng-show="it.editMode" ng-click="it.editMode=false;service_provider.updateRecord(it);"
+                  <button ng-show="it.editMode" ng-click="service_provider.updateRecord(it);"
                     class="btn btn-outline-primary butTab">Done</button>
                   <button ng-click="service_provider.deleteRecord(it);"
                     class="btn btn-outline-danger butTab">Delete</button>
@@ -304,7 +301,7 @@
         Message
       </div>
       <div class="toast-body">
-        <div id="toast_msg">Action Done</div>
+        <h5 id="toast_msg">Action Done</h5>
       </div>
     </div>
     <br>

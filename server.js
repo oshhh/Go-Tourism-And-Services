@@ -761,15 +761,18 @@ function analyseMaxRating(callback, domain) {
 }
 function analyseMinQueryResponseTime(callback, domain) {
     query = `select rank() over(order by (
-        COALESCE(AVG(TIME_TO_SEC(TIMEDIFF (
-       (select min(q1.timestamp)
-       from query as q1
-       where(q1.service_provider_id=q.service_provider_id and q1.user_id=q.user_id and q1.side="S")),
-       (select min(q2.timestamp)
-       from query as q2
-       where(q2.service_provider_id=q.service_provider_id and q2.user_id=q.user_id and q2.side="U"))
-       ))/60 ),NULL)
-        ) desc) as rank_, q.service_provider_id, p.name as name,
+                COALESCE(AVG(TIME_TO_SEC(TIMEDIFF (
+                    (select min(q1.timestamp)
+                        from query as q1
+                        where(q1.service_provider_id=q.service_provider_id and q1.user_id=q.user_id and q1.side="S")
+                    ),
+                    (select min(q2.timestamp)
+                        from query as q2
+                        where(q2.service_provider_id=q.service_provider_id and q2.user_id=q.user_id and q2.side="U")
+                    )
+                )
+            )/60 ),NULL)
+        ) asc) as rank_, q.service_provider_id, p.name as name,
        COALESCE(AVG(TIME_TO_SEC(TIMEDIFF (
        (select min(q1.timestamp)
        from query as q1

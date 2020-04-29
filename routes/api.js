@@ -36,6 +36,7 @@ router.get('/getData', function(req, res, next) {
     // User
     case "my_trips":
         serverjs.user.getTrips(function(result) {
+          logger.debug(req.session.uname);
           trips = {}
           for(i in result) {
             trips[result[i].trip_id] = result[i];
@@ -57,9 +58,9 @@ router.get('/getData', function(req, res, next) {
               result.push(trips[trip_id]);
             }
             sendResponse(res,{result, completed_requests});
-          },req.session.uname, {request_id : "\"%\""});
+          },req.query.username, {request_id : "\"%\""});
         }, {
-            user_id : "\"" + req.session.uname + "\"",
+            user_id : "\"" + req.query.username + "\"",
           })
     break;
     case "service_request":
@@ -194,7 +195,7 @@ router.get('/getData', function(req, res, next) {
           request_id:"\"RST" + ("00000" + result[0]['cnt']).slice(-5) + "\"",
           trip_id : req.query.trip_id,
           service_id : req.query.service_id,
-          request_timestamp : "CURDATE()",
+          request_timestamp : "NOW()",
           number_days : req.query.number_of_days,
           quantity : req.query.quantity,
           cost : req.query.cost,

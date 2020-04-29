@@ -194,7 +194,7 @@ router.get('/getData', function(req, res, next) {
           trip_id : req.query.trip_id,
           service_id : req.query.service_id,
           request_timestamp : "CURDATE()",
-          number_of_days : req.query.number_of_days,
+          number_days : req.query.number_of_days,
           quantity : req.query.quantity,
           cost : req.query.cost,
           status : "\"Pending\"",
@@ -202,7 +202,6 @@ router.get('/getData', function(req, res, next) {
           service_rating : "null",
           comments : "null",
           service_required_date : req.query.service_required_date,
-          number_days: 1,
           completion_date: "null",
         });
       } , "service_request");

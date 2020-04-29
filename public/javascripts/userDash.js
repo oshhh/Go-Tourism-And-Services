@@ -24,6 +24,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		data:[],
 		fname:"",
 		rname:"",
+		city:"",
 		delivers:"0",
 		sortOrder:"0",
 		reviews:{}
@@ -555,6 +556,7 @@ angularApp.controller("ngContent",function($scope,$http)
 				type: "food",
 				fname: "\"%" + $scope.food.fname + "%\"",
 				rname: "\"%" + $scope.food.rname + "%\"",
+				city: "\"%" + $scope.food.city + "%\"",
 				delivers: ( $scope.food.delivers ==0) ? ("\"%\"") : ($scope.food.delivers == 1 ? "\"Y\"" : "\"N\"" )
 				}}).then(
 				function(data, status, headers, config) {
@@ -1079,6 +1081,7 @@ angularApp.controller("ngContent",function($scope,$http)
 		await $scope.predictors.bindArray("capList",["1","2","3","4","5","6","7"]);
 		await $scope.predictors.bindInput("spotType","tourist_spot","type");
 		await $scope.predictors.bindInput("locality","location","locality");
+		await $scope.predictors.bindInput("cities","location","city");
 		await $scope.predictors.bindSpecialInput("hotelList","service_provider","hotel","name","service_provider_id");
 		await $scope.predictors.bindSpecialInput("restaurantList","service_provider","restaurant","name","service_provider_id");
 		await $scope.predictors.bindInput("foodList","food_item","name");

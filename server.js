@@ -22,21 +22,21 @@ tables = {
     'query': ['query_id', 'user_id', 'service_provider_id','timestamp','query','side']
 }
 
-// db_config = {
-//     host: "remotemysql.com",
-//     user: "lHyGk3wWaK",
-//     password: "IAahckiJYJ",
-//     database: "lHyGk3wWaK",
-//     multipleStatements: true
-// }
-
 db_config = {
-    host: "localhost",
-    user: "root",
-    password: "zzzz",
+    host: "remotemysql.com",
+    user: "lHyGk3wWaK",
+    password: "IAahckiJYJ",
     database: "lHyGk3wWaK",
     multipleStatements: true
 }
+
+// db_config = {
+//     host: "localhost",
+//     user: "root",
+//     password: "zzzz",
+//     database: "lHyGk3wWaK",
+//     multipleStatements: true
+// }
 
 function handleDisconnect() {
     con = mysql.createConnection(db_config); // Recreate the connection, since
@@ -273,7 +273,7 @@ function getFoodItems(callback,filters)
     p.service_provider_id=s.service_provider_id and 
     r.service_provider_id=s.service_provider_id and 
     l.location_id=r.location_id and
-    f.name like `+filters.name+` and p.name like `+filters.rest+` and r.delivers like `+filters.delivers +`
+    f.name like `+filters.name+` and p.name like `+filters.rest+` and r.delivers like `+filters.delivers +` and l.city like `+filters.city+`
     and p.service_provider_id like `+filters.service_provider_id+`);
     `
     runQuery(callback,query);
@@ -741,7 +741,7 @@ function analyseMaxRating(callback, domain) {
     runQuery(callback, query)
 }
 function analyseMinQueryResponseTime(callback, domain) {
-    query = `  	select q.service_provider_id, 
+    query = `select q.service_provider_id, 
     COALESCE(AVG(TIME_TO_SEC(TIMEDIFF (
     (select min(q1.timestamp)
     from query as q1

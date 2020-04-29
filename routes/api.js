@@ -165,6 +165,7 @@ router.get('/getData', function(req, res, next) {
       serverjs.user.getFoodItems(function(result){sendResponse(res,result);},{
         name:(req.query.fname=="")?(".*"):(req.query.fname),
         rest:(req.query.rname=="")?(".*"):(req.query.rname),
+        city:(req.query.city=="")?(".*"):(req.query.city),
         delivers: req.query.delivers,
         service_provider_id: prov
       });

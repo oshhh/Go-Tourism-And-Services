@@ -101,7 +101,7 @@ router.get('/getData', function(req, res, next) {
       } , "trip");
     break;
     case 'rate_service':
-      serverjs.user.rateService(function(result){sendResponse(res,result);}, req.query.request_id, req.query.rating);
+      serverjs.user.rateService(function(result){sendResponse(res,result);}, req.query.request_id, req.query.service_rating, req.query.comments);
     break;
     case 'flight':
         serverjs.user.getFlights(function(result){sendResponse(res,result);},{

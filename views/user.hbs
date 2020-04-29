@@ -188,8 +188,8 @@
                     <div class="card-text">Request ID : \{{it.request_id}} Service ID : \{{it.service_id}}</div>
                     <div class="card-text">Trip ID: \{{it.trip_id}} Timestamp : \{{it.request_timestamp.substring(0,10)}}
                       \{{it.request_timestamp.substring(11,19)}}</div><br>
-                    <input type="range" class="custom-range" min="0" max="5" class="form-control" ng-model="it.rating"
-                      ng-bind="it.rating" style="width: 50%;"><br>
+                    <input type="range" class="custom-range" min="0" max="5" class="form-control" ng-model="it.service_rating" ng-bind="it.service_rating" style="width: 50%;"><br>
+                    Reviews: <input type="textbox" ng-model="it.comments" ng-bind="it.comments" style="width: 50%;"><br>
                     <button ng-click="rate_service(it)" class="btn btn-primary">Rate</button>
                   </div>
                 </div>
@@ -328,9 +328,9 @@
                   <label style="text-align:center">Showing \{{flight.reviews[it.service_id].data.length}}
                     Result(s)</label>
                   <div ng-repeat="rev in flight.reviews[it.service_id].data" class="rowElement card">
-                    <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on
-                      \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
-                    <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
+                    <div class="card-header text-center bg-white align-middle commentBody">
+                      <label> Posted by : \{{rev.user}} <br> \{{rev.timeStamp}} Rating: \{{rev.rating}}/5 <br> Comments: \{{rev.body}}</label>
+                    </div>
                   </div>
                 </div>
               </div>

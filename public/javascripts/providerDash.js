@@ -370,6 +370,7 @@ angularApp.controller("ngContent",function($scope,$http)
 				});
 				console.log('Got Everything');
 				console.log($scope.reqs);
+				$scope.$digest();
 			}
 			catch(err)
 			{
@@ -386,6 +387,7 @@ angularApp.controller("ngContent",function($scope,$http)
 					fname: "\"%%\"",
 					rname: "\"%%\"",
 					delivers:"\"%\"",
+					city:"\"%%\"",
 					service_provider_id:"\""+$scope.curUser.uid+"\""
 					}}).then(
 					function(data, status, headers, config) {
@@ -1578,6 +1580,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	}
 	$scope.initModel();
 	$scope.changeTab(0);
+	// $scope.$digest();
 	console.log("init Done");
 	// console.log($scope.tab);
 });

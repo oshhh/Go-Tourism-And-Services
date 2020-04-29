@@ -22,21 +22,21 @@ tables = {
     'query': ['query_id', 'user_id', 'service_provider_id','timestamp','query','side']
 }
 
-db_config = {
-    host: "remotemysql.com",
-    user: "lHyGk3wWaK",
-    password: "IAahckiJYJ",
-    database: "lHyGk3wWaK",
-    multipleStatements: true
-}
-
 // db_config = {
-//     host: "localhost",
-//     user: "root",
-//     password: "zzzz",
+//     host: "remotemysql.com",
+//     user: "lHyGk3wWaK",
+//     password: "IAahckiJYJ",
 //     database: "lHyGk3wWaK",
 //     multipleStatements: true
 // }
+
+db_config = {
+    host: "localhost",
+    user: "root",
+    password: "zzzz",
+    database: "lHyGk3wWaK",
+    multipleStatements: true
+}
 
 function handleDisconnect() {
     con = mysql.createConnection(db_config); // Recreate the connection, since
@@ -274,6 +274,22 @@ function getFoodItems(callback,filters)
     r.service_provider_id=s.service_provider_id and 
     l.location_id=r.location_id and
     f.name like `+filters.name+` and p.name like `+filters.rest+` and r.delivers like `+filters.delivers +` and l.city like `+filters.city+`
+    and p.service_provider_id like `+filters.service_provider_id+`);
+    `
+    runQuery(callback,query);
+}
+function getFoodItem(callback,filters)
+{
+    query=`
+    select distinct s.service_id,f.name,f.cuisine,s.price,s.discount,p.name as res_name, p.service_provider_id as res_id, l.locality,l.city,r.delivers,
+    (SELECT distinct COALESCE(AVG(service_rating),0) FROM service_request as u where u.service_id=s.service_id)  as rating 
+    from food_item as f,service_provider as p,location as l, restaurant as r,service as s 
+    where(
+    f.service_id=s.service_id and 
+    p.service_provider_id=s.service_provider_id and 
+    r.service_provider_id=s.service_provider_id and 
+    l.location_id=r.location_id and
+    f.name like `+filters.name+` and p.name like `+filters.rest+` and r.delivers like `+filters.delivers +`
     and p.service_provider_id like `+filters.service_provider_id+`);
     `
     runQuery(callback,query);
@@ -817,6 +833,7 @@ module.exports = {
         'register_service':register_service,
         'deactivate_service_provider' : deactivate_service_provider,
         'getServices':getServices,
+        'getFoodItem':getFoodItem,
         'getBuses':getBuses,
         'getTrains':getTrains,
         'getFlight':getFlight,

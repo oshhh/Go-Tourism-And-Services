@@ -348,8 +348,9 @@ function createTrip(callback, attribute_values) {
 }
 
 // Update status by service_provider
-function rateService(callback, request_id, rating) {
+function rateService(callback, request_id, rating, comments) {
     runQuery(callback, 'update service_request set service_rating = ' + rating + ' where request_id = ' + request_id + ';');
+    runQuery(function(result){}, 'update service_request set comments = ' + comments + ' where request_id = ' + request_id + ';');
 }
 
 // Update status by service_provider
@@ -399,9 +400,9 @@ function getAdminInfo(callback,uid)
 }
 function getServiceReview(callback,service_id)
 {
-    query=`select distinct u.name as user,r.timestamp,r.comments as body,r.user_rating as rating
+    query=`select distinct u.name as user,r.request_timestamp,r.comments as body,r.service_rating as rating
     from user as u,service_request as r,trip as t
-    where(u.user_id=t.user_id and r.trip_id=t.trip_id and r.service_id REGEXP "`+service_id+`");`;
+    where(u.user_id=t.user_id and r.trip_id=t.trip_id and r.service_id REGEXP "`+service_id+`" and r.service_rating is not null);`;
     runQuery(callback,query);
 }
 
@@ -609,6 +610,7 @@ function planTrip(callback, trip) {
 
     user_city_query = "select city from user, location where user.location_id = location.location_id and user.user_id = " + trip.user_id;
     runQuery(function(result) {
+        console.log(trip.from_home);
         if(trip.from_home == false) {
             trip.user_city = "\"" + result[0].city + "\""; 
         }

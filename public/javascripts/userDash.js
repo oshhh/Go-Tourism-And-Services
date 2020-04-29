@@ -825,13 +825,14 @@ angularApp.controller("ngContent",function($scope,$http)
 		$http.get('/api/getData',{params:{
 			type : 'rate_service',
 			request_id: "\"" + it.request_id + "\"",
-			rating: it.rating
+			service_rating: it.service_rating,
+			comments: '"' + it.comments + '"'
 		}}).then(
 		function(data, status, headers, config) {
-			console.log(data.data.content);
 			$('#toast_msg').text("The service has been rated");
 			$('.toast').toast("show");
 			getData(0);
+			$scope.$digest()
 		});
 	}
 

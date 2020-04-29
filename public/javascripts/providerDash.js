@@ -159,6 +159,9 @@ angularApp.controller("ngContent",function($scope,$http)
 			case 'HOT':
 				domain = '"Hotel"'
 			break;
+			case 'GUP':
+				domain = '"guide provider"'
+			break;
 		}
 		console.log("sending");
 		$scope.analyse_max_service_requests.status="Pending";
@@ -201,6 +204,9 @@ angularApp.controller("ngContent",function($scope,$http)
 			case 'HOT':
 				domain = '"Hotel"'
 			break;
+			case 'GUP':
+				domain = '"guide provider"'
+			break;
 		}
 		console.log("sending");
 		$scope.analyse_max_rating.status="Pending";
@@ -242,6 +248,9 @@ angularApp.controller("ngContent",function($scope,$http)
 			break;
 			case 'HOT':
 				domain = '"Hotel"'
+			break;
+			case 'GUP':
+				domain = '"guide provider"'
 			break;
 		}
 		console.log("sending");

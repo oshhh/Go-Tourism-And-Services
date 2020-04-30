@@ -142,7 +142,7 @@
                 <td>
                   <button ng-hide="it.editMode" ng-click="it.editMode=true"
                     class="btn btn-outline-primary butTab">Edit</button>
-                  <button ng-show="it.editMode" ng-click="admin.updateRecord(it);"
+                  <button ng-show="it.editMode" ng-click="it.editMode=false;admin.updateRecord(it);"
                     class="btn btn-outline-primary butTab">Done</button>
                 </td>
               </tr>

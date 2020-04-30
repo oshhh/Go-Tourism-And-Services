@@ -621,14 +621,14 @@ angularApp.controller("ngContent",function($scope,$http)
 						city:$scope.currentServices.newData[it.value]
 						}
 					});
-					reqBody[it.value]=newLoc_ID.data.content;
+					reqBody[it.value]='"'+newLoc_ID.data.content+'"';
 				}
 				if(it.type==4)
 				{
 					flag=1;
 				}
 				else{
-					reqBody[it.value]=$scope.currentServices.newData[it.value];
+					reqBody[it.value]='"'+$scope.currentServices.newData[it.value]+'"';
 				}
 			}
 			if(flag==1)
@@ -651,17 +651,27 @@ angularApp.controller("ngContent",function($scope,$http)
 				console.log('got tspot',t_spot_id);
 				if(t_spot_id.data.content && newLoc_ID.data.content)
 				{
-					reqBody.tourist_spot_id=t_spot_id.data.content;
+					reqBody.tourist_spot_id='"'+t_spot_id.data.content+'"';
+				}
+				else{
+					$('#toast_msg').text("Some error with Database");
+					$('.toast').toast("show");
+					return;
 				}
 			}
 			console.log(reqBody);
 			reqBody.type=$scope.currentServices.model.type;
 			reqBody.prefix=$scope.currentServices.model.prefix;
-			reqBody.service_provider_id=$scope.curUser.uid;
+			reqBody.service_provider_id='"'+$scope.curUser.uid+'"';
 			console.log(reqBody);
 
 			addServiceResult=await $http.post('/api/addService',JSON.stringify(reqBody));
-
+			if(!addServiceResult.data.content)
+			{
+				$('#toast_msg').text("Some error with Database");
+				$('.toast').toast("show");
+				return;
+			}
 			if($scope.currentServices.model.route==true)
 			{
 				insertData=[];
@@ -691,6 +701,8 @@ angularApp.controller("ngContent",function($scope,$http)
 				}));
 				// console.log(addServiceResult.data);
 			}
+			$('#toast_msg').text("Service Added Successfuly");
+			$('.toast').toast("show");
 			$scope.currentServices.createStatus="Added New Service";
 			$scope.changeTab($scope.tab);
 			$scope.currentServices.showNew=false;
@@ -860,7 +872,8 @@ angularApp.controller("ngContent",function($scope,$http)
 					{
 						type:0,
 						name:"Name",
-						value:"name"
+						value:"name",
+						pattern:"^.*$"
 					},
 					{
 						type:1,
@@ -870,12 +883,14 @@ angularApp.controller("ngContent",function($scope,$http)
 					{
 						type:0,
 						name:"Price",
-						value:"price"
+						value:"price",
+						pattern:"^[0-9.]+$"
 					},
 					{
 						type:0,
 						name:"Discount",
-						value:"discount"
+						value:"discount",
+						pattern:"^[0-9.]+$"
 					}
 				],
 				routeModel:{},
@@ -897,7 +912,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"food_item",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^.*$"
 					},
 					{
 						name:"Cuisine",
@@ -915,7 +931,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"service",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 					{
 						name:"Discount",
@@ -924,7 +941,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"service",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 				],
 				globalID:{
@@ -955,22 +973,26 @@ angularApp.controller("ngContent",function($scope,$http)
 					{
 						name:"Active Days",
 						value:"active_days",
-						type:0
+						type:0,
+						pattern:"^(?:Y|N){7}$"
 					},
 					{
 						name:"AC(Y/N)",
 						value:"AC",
-						type:0
+						type:0,
+						pattern:"^(?:Y|N)$"
 					},
 					{
 						name:"Price",
 						value:"price",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 					{
 						name:"Discount",
 						value:"discount",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 				],
 				routeModel:{
@@ -1014,7 +1036,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"bus",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^(?:Y|N){7}$"
 					},
 					{
 						name:"AC(Y/N)",
@@ -1023,7 +1046,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"bus",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^(?:Y|N)$"
 					},
 					{
 						name:"Price",
@@ -1032,7 +1056,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"service",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 					{
 						name:"Discount",
@@ -1041,7 +1066,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"service",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 				],
 				globalID:{
@@ -1072,22 +1098,26 @@ angularApp.controller("ngContent",function($scope,$http)
 					{
 						name:"Active Days",
 						value:"active_days",
-						type:0
+						type:0,
+						pattern:"^(?:Y|N){7}$"
 					},
 					{
 						name:"AC(Y/N)",
 						value:"AC",
-						type:0
+						type:0,
+						pattern:"^(?:Y|N)$"
 					},
 					{
 						name:"Price",
 						value:"price",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 					{
 						name:"Discount",
 						value:"discount",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 				],
 				routeModel:{
@@ -1131,7 +1161,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"train",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^(?:Y|N){7}$"
 					},
 					{
 						name:"AC(Y/N)",
@@ -1140,7 +1171,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"train",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^(?:Y|N)$"
 					},
 					{
 						name:"Price",
@@ -1149,7 +1181,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"service",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 					{
 						name:"Discount",
@@ -1158,7 +1191,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"service",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 				],
 				globalID:{
@@ -1177,32 +1211,36 @@ angularApp.controller("ngContent",function($scope,$http)
 					{
 						type:0,
 						name:"From",
-						value:"from_city"
+						value:"from_city",
+						pattern:"^.*$"
 					},
 					{
 						type:0,
 						name:"To",
-						value:"to_city"
+						value:"to_city",
+						pattern:"^.*$"
 					},
 					{
 						name:"Departure",
 						value:"departure_time",
-						type:1
+						type:3
 					},
 					{
 						name:"Arrival",
 						value:"arrival_time",
-						type:1
+						type:3
 					},
 					{
 						type:0,
 						name:"Price",
-						value:"price"
+						value:"price",
+						pattern:"^[0-9.]*$"
 					},
 					{
 						type:0,
 						name:"Discount",
-						value:"discount"
+						value:"discount",
+						pattern:"^[0-9.]*$"
 					}
 				],
 				routeModel:{},
@@ -1224,7 +1262,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"flight",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^.*$"
 					},
 					{
 						name:"To",
@@ -1233,7 +1272,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"flight",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^.*$"
 					},
 					{
 						name:"Departure",
@@ -1260,7 +1300,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"service",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 					{
 						name:"Discount",
@@ -1269,7 +1310,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"service",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 				],
 				globalID:{
@@ -1293,17 +1335,20 @@ angularApp.controller("ngContent",function($scope,$http)
 					{
 						name:"Capacity",
 						value:"capacity",
-						type:0
+						type:0,
+						pattern:"^[0-9]+$"
 					},
 					{
 						type:0,
 						name:"Price",
-						value:"price"
+						value:"price",
+						pattern:"^[0-9.]+$"
 					},
 					{
 						type:0,
 						name:"Discount",
-						value:"discount"
+						value:"discount",
+						pattern:"^[0-9.]+$"
 					}
 				],
 				routeModel:{},
@@ -1334,7 +1379,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"room",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^[0-9]+$"
 					},
 					{
 						name:"Price",
@@ -1343,7 +1389,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"service",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 					{
 						name:"Discount",
@@ -1352,7 +1399,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"service",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 				],
 				globalID:{
@@ -1371,27 +1419,32 @@ angularApp.controller("ngContent",function($scope,$http)
 					{
 						name:"Car Name",
 						value:"car_name",
-						type:0
+						type:0,
+						pattern:"^.*$"
 					},
 					{
 						name:"Capacity",
 						value:"capacity",
-						type:0
+						type:0,
+						pattern:"^[0-9]+$"
 					},
 					{
 						name:"AC",
 						value:"AC",
-						type:0
+						type:0,
+						pattern:"^(?:Y|N)$"
 					},
 					{
 						type:0,
 						name:"Price",
-						value:"price"
+						value:"price",
+						pattern:"^[0-9.]+$"
 					},
 					{
 						type:0,
 						name:"Discount",
-						value:"discount"
+						value:"discount",
+						pattern:"^[0-9.]+$"
 					}
 				],
 				routeModel:{},
@@ -1413,7 +1466,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"taxi",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^.*$"
 					},
 					{
 						name:"Capacity",
@@ -1422,7 +1476,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"taxi",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^[0-9]+$"
 					},
 					{
 						name:"AC",
@@ -1431,7 +1486,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"taxi",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^(?:Y|N)$"
 					},
 					{
 						name:"Price",
@@ -1440,7 +1496,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"service",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 					{
 						name:"Discount",
@@ -1449,7 +1506,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"service",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 				],
 				globalID:{
@@ -1469,7 +1527,8 @@ angularApp.controller("ngContent",function($scope,$http)
 					{
 						name:"Guide Name",
 						value:"name",
-						type:0
+						type:0,
+						pattern:".*$"
 					},
 					{
 						name:"Tourist Spot",
@@ -1484,7 +1543,8 @@ angularApp.controller("ngContent",function($scope,$http)
 					{
 						name:"Entry Fee",
 						value:"entry_fee",
-						type:4
+						type:4,
+						pattern:"^[0-9.]+$"
 					},
 					{
 						name:"Location City",
@@ -1494,12 +1554,14 @@ angularApp.controller("ngContent",function($scope,$http)
 					{
 						name:"Price",
 						value:"price",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 					{
 						name:"Discount",
 						value:"discount",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 				],
 				routeModel:{},
@@ -1521,7 +1583,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"guide",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^.*$"
 					},
 					{
 						name:"Tourist Spot",
@@ -1570,7 +1633,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"service",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 					{
 						name:"Discount",
@@ -1579,7 +1643,8 @@ angularApp.controller("ngContent",function($scope,$http)
 						table:"service",
 						searchKey:"service_id",
 						searchValue:"service_id",
-						type:0
+						type:0,
+						pattern:"^[0-9.]+$"
 					},
 				],
 				globalID:{

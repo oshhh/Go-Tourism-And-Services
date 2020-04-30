@@ -160,6 +160,8 @@
 
       <div id="content" class="shadow p-4 mb-4 bg-white">
         <div id="content_tab0" ng-show="tab==0">
+          <h5>Why Trips?</h5>
+          <h6>Organise your service requests into the trips that they are associated with in order to know the total expense of any trip you make! </h6>
           <div class="card pt-3 pr-2" style="align-items: center;">
             <h5 class="modal-title" style="text-align: center;">Create New Trip</h5><br>
             <button ng-click="openNewTripModal()" class="btn btn-primary mb-3">Add New Trip (+)</button>
@@ -211,9 +213,11 @@
                 style="align-items: center;">
                 <div class="card-header text-center bg-white align-middle">Trip ID: \{{it.trip_id}}</div>
                 <div class="card-body" style="width: 100% !important; text-align:center">
-                  <label>Destination: \{{it.destination_city}} | Departure Date: \{{it.departure_date.substring(0,10)}}
-                    |
-                    Return Date: \{{it.return_date.substring(0,10)}}</label>
+                  <label>Destination: \{{it.destination_city}} </label>
+                  <br>
+                  <label> Departure Date: \{{it.departure_date.substring(0,10)}}|Return Date: \{{it.return_date.substring(0,10)}} </label>
+                  <br>
+                  <label>Total Expense: \{{it.total_expense}}</label>
                   <div class="text-center mb-2">
                     <button ng-show="!it.show_requests" ng-click="it.show_requests = !it.show_requests"
                       class="btn btn-light"> Show Service Requests of this Trip </button>

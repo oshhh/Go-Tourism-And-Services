@@ -40,6 +40,7 @@ router.get('/getData', function(req, res, next) {
           trips = {}
           for(i in result) {
             trips[result[i].trip_id] = result[i];
+            trips[result[i].trip_id].total_expense = 0;
             trips[result[i].trip_id].service_requests = [];
           }
           serverjs.user.getServiceRequests(function(result) {
@@ -50,6 +51,7 @@ router.get('/getData', function(req, res, next) {
               }
               if(result[i].trip_id in trips) {
                 trips[result[i].trip_id].service_requests.push(result[i]);
+                trips[result[i].trip_id].total_expense += (parseInt(result[i].cost) * parseInt(result[i].quantity) * parseInt(result[i].number_days));
                 trips[result[i].trip_id].show_requests = false;
               }
             }

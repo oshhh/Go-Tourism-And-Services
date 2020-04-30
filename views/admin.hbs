@@ -64,13 +64,15 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">RequestID</th>
-                <th scope="col">User</th>
-                <th scope="col">Provider</th>
-                <th scope="col">ServiceID</th>
-                <th scope="col">Status</th>
-                <th scope="col">TimeStamp</th>
+                <th scope="col" style="width: 3%; text-align:center">#</th>
+                <th scope="col" style="width: 10%;text-align:center">RequestID</th>
+                <th scope="col" style="width: 10%;text-align:center">User</th>
+                <th scope="col" style="width: 10%;text-align:center">Provider</th>
+                <th scope="col" style="width: 10%;text-align:center">ServiceID</th>
+                <th scope="col" style="width: 10%;text-align:center">Status</th>
+                <th scope="col" style="width: 15%;text-align:center">TimeStamp</th>
+                <th scope="col" style="width: 7%;text-align:center">Quantity</th>
+                <th scope="col" style="width: 7%;text-align:center">Duration</th>
               </tr>
             </thead>
             <tbody>
@@ -81,7 +83,9 @@
                 <td style="text-align: center;">\{{it.pname}}</td>
                 <td style="text-align: center;">\{{it.service_id}}</td>
                 <td style="text-align: center;">\{{it.status}}</td>
-                <td style="text-align: center;">\{{it.request_timestamp}}</td>
+                <td style="text-align: center;">\{{it.request_timestamp.substring(0, 10)}} \{{it.request_timestamp.substring(11, 19)}}</td>
+                <td style="text-align: center;">\{{it.quantity}}</td>
+                <td style="text-align: center;">\{{it.number_days}}</td>
               </tr>
             </tbody>
           </table>
@@ -120,11 +124,11 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">AdminID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Role</th>
-                <th scope="col">E-Mail</th>
+                <th scope="col" style="text-align:center">#</th>
+                <th scope="col" style="text-align:center">AdminID</th>
+                <th scope="col" style="text-align:center">Name</th>
+                <th scope="col" style="text-align:center">Role</th>
+                <th scope="col" style="text-align:center">E-Mail</th>
                 <th scope="col"></th>
               </tr>
             </thead>
@@ -186,12 +190,12 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col" style="width: 5%;">#</th>
-                <th scope="col" style="width: 10%;">UserID</th>
-                <th scope="col" style="width: 10%;">Name</th>
-                <th scope="col" style="width: 25%;">Email</th>
-                <th scope="col" style="width: 15%;">Phone No</th>
-                <th scope="col" style="width: 10%;">City</th>
+                <th scope="col" style="width: 5%;text-align:center">#</th>
+                <th scope="col" style="width: 10%;text-align:center">UserID</th>
+                <th scope="col" style="width: 10%;text-align:center">Name</th>
+                <th scope="col" style="width: 25%;text-align:center">Email</th>
+                <th scope="col" style="width: 15%;text-align:center">Phone No</th>
+                <th scope="col" style="width: 10%;text-align:center">City</th>
               </tr>
             </thead>
             <tbody>

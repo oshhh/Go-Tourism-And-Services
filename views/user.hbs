@@ -1125,7 +1125,7 @@
                     <div class="card-body">
                       <div class="input-group mb-0">
                         <div class="input-group-prepend">
-                          <span class="input-group-text">Enter Destination</span>
+                          <span class="input-group-text">Destination</span>
                         </div>
                         <input required list="locs" ng-model="plan_trip.destination_city" value="\{{plan_trip.destination_city}}"
                           class="form-control" type="text" placeholder="">
@@ -1146,43 +1146,16 @@
                       </div>
                     </div>
                   </div>
-
-                  {{!-- <div class="col-6 card">
-                  <div class="card-header bg-white font-weight-bold">Step 3 - Enter Keywords</div>
-                  <div class="card-body">
-                    <ul class="list-group" style="height: auto !important;">
-                      <li class="list-group-item" ng-repeat="it in planner.keywords">
-                        <div class="input-group mb-0">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">\{{$index}}</span>
-                          </div>
-                          <input ng-bind="it" value="\{{it.text}}" class="form-control" type="texts" placeholder="">
-                        </div>
-                      </li>
-                      <li class="list-group-item align-item-center">
-                        <div class="row">
-                          <div class="col text-center"><button ng-click="addKeyword()"
-                              class="btn btn-success">+</button></div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div> --}}
                 </div>
                 <div class="mt-2 ml-2">
-                  <div class="input-group mb-0" ng-hide="plan_trip.from_home">
+                  <div class="input-group mb-0">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Departure Date</span>
                     </div>
                     <input required ng-model="plan_trip.depDate" ng-bind="plan_trip.depDate" class="form-control"
                       type="date" placeholder="2020-04-25">
                   </div>
-                  <div class="ml-3 mt-2 mb-2 custom-control custom-checkbox">
-                    <input ng-model="plan_trip.from_home" value="\{{plan_trip.from_home}}" type="checkbox"
-                      class="custom-control-input" id="from_home">
-                    <label class="custom-control-label" for="from_home">Leave from Home</label>
-                  </div>
-                  <div class="input-group mb-0" ng-hide="plan_trip.from_home">
+                  <div class="input-group mb-0">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Leave from City</span>
                     </div>

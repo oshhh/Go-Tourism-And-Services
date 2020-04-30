@@ -1,4 +1,4 @@
-var	angularApp = angular.module("dash", []);
+var	angularApp = angular.module("dash", ['angularUtils.directives.dirPagination']);
 angularApp.controller("ngContent",function($scope,$http)
 {
 	$scope.statusLabels={0:"Pending", 1:"Accepted", 2:"Rejected", 3:"Completed", 4:"Paid",5:"Completed"};

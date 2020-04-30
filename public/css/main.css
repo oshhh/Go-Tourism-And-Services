@@ -321,3 +321,22 @@ box-shadow: inset 0 0 5px grey;
 .chatBox::-webkit-scrollbar-thumb{
 background: #7fb5a4;
 }
+th {
+    cursor:pointer;
+}
+.pagination{
+    display: inline-block;
+}
+ul.pagination li{
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+ul.pagination li.active{
+    background-color: #9DE1CC;
+    color: white;
+}
+ul.pagination li:hover{
+    background-color: #ddd;
+}

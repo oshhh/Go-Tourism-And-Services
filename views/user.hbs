@@ -22,6 +22,7 @@
     </script>
         <script src="../public/javascripts/userDash.js"></script>
          <script src="../public/javascripts/moment.js"></script>
+         <script src="../public/javascripts/dirPagination.js"></script>
   </head>
 
   <body ng-app="dash">
@@ -305,7 +306,13 @@
 
           <div style="text-align: center;" class="rowsCont" ng-show="flight.status=='Pending'">Loading Data</div>
           <div id="table3" class="rowsCont card-rows">
-            <div ng-repeat="it in flight.data" class="rowElement card shadow p-4 mb-4 bg-white">
+            <dir-pagination-controls
+              max-size="5"
+              direction-links="true"
+              boundary-links="true"
+              pagination-id="p2" >
+            </dir-pagination-controls>
+            <div dir-paginate="it in flight.data|itemsPerPage:10" pagination-id="p2" class="rowElement card shadow p-4 mb-4 bg-white">
               <div class="card-header text-center bg-white align-middle">
                 <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">Service ID: \{{it.service_id}}</h5>
                 <a class="chatToggler" ng-click="startChat(it.service_provider_id,it.service_provider_id)"><i class="fa fa-comments" aria-hidden="true"></i></a>
@@ -340,6 +347,12 @@
               </div>
 
             </div>
+            <dir-pagination-controls
+              max-size="5"
+              direction-links="true"
+              boundary-links="true"
+              pagination-id="p2" >
+            </dir-pagination-controls>
           </div>
 
         </div>
@@ -398,7 +411,13 @@
 
           <div style="text-align: center;" class="rowsCont" ng-show="bus_train.status=='Pending'">Loading Data</div>
           <div id="table3" class="rowsCont card-rows">
-            <div ng-repeat="it in bus_train.data" class="rowElement card shadow p-4 mb-4 bg-white">
+            <dir-pagination-controls
+              max-size="5"
+              direction-links="true"
+              boundary-links="true"
+              pagination-id="p3" >
+            </dir-pagination-controls>
+            <div dir-paginate="it in bus_train.data |itemsPerPage:10" pagination-id="p3" class="rowElement card shadow p-4 mb-4 bg-white">
               <div class="card-header text-center bg-white align-middle">
                 <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">Service ID: \{{it.service_id}}</h5>
                 <a class="chatToggler" ng-click="startChat(it.service_provider_id,it.service_provider_id)"><i class="fa fa-comments" aria-hidden="true"></i></a>
@@ -437,6 +456,12 @@
               </div>
 
             </div>
+            <dir-pagination-controls
+              max-size="5"
+              direction-links="true"
+              boundary-links="true"
+              pagination-id="p3" >
+            </dir-pagination-controls>
           </div>
         </div>
 
@@ -490,7 +515,13 @@
 
           <div style="text-align: center;" class="rowsCont" ng-show="taxi.status=='Pending'">Loading Data</div>
           <div id="table3" class="rowsCont card-rows">
-            <div ng-repeat="it in taxi.data" class="rowElement card shadow p-4 mb-4 bg-white">
+              <dir-pagination-controls
+              max-size="5"
+              direction-links="true"
+              boundary-links="true"
+              pagination-id="p4t" >
+            </dir-pagination-controls>
+            <div dir-paginate="it in taxi.data | itemsPerPage:10" pagination-id="p4t" class="rowElement card shadow p-4 mb-4 bg-white">
               <div class="card-header text-center bg-white align-middle">
                 <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">Service ID: \{{it.service_id}} Service Provider
                 ID: \{{it.service_provider_id}}</h5>
@@ -501,7 +532,7 @@
                 <div class="cardText card-text">Capacity: \{{it.capacity}}</div>
                 <div class="cardText card-text">AC: \{{it.AC}} </div>
                 <div class="cardText card-text">Discount: \{{it.discount}}% </div>
-          <button ng-click="openRequest(it,true,true)" class="btn btn-outline-primary">Request (+\{{it.price}}
+            <button ng-click="openRequest(it,true,true)" class="btn btn-outline-primary">Request (+\{{it.price}}
                   Rs)"</button>
               </div>
               <div
@@ -527,6 +558,12 @@
               </div>
 
             </div>
+              <dir-pagination-controls
+              max-size="5"
+              direction-links="true"
+              boundary-links="true"
+              pagination-id="p4t" >
+            </dir-pagination-controls>
           </div>
 
         </div>
@@ -610,7 +647,13 @@
 
           <div style="text-align: center;" class="rowsCont" ng-show="room.status=='Pending'">Loading Data</div>
           <div id="table3" class="rowsCont card-rows">
-            <div ng-repeat="it in room.data" class="rowElement card shadow p-4 mb-4 bg-white">
+              <dir-pagination-controls
+              max-size="5"
+              direction-links="true"
+              boundary-links="true"
+              pagination-id="p5" >
+            </dir-pagination-controls>
+            <div dir-paginate="it in room.data |itemsPerPage:10" pagination-id="p5" class="rowElement card shadow p-4 mb-4 bg-white">
               <div class="card-header text-center bg-white align-middle">
                 <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">Service ID: \{{it.service_id}} Service Provider
                 ID: \{{it.service_provider_id}}</h5>
@@ -648,6 +691,12 @@
               </div>
 
             </div>
+                                    <dir-pagination-controls
+              max-size="5"
+              direction-links="true"
+              boundary-links="true"
+              pagination-id="p5" >
+            </dir-pagination-controls>
           </div>
 
         </div>
@@ -702,7 +751,13 @@
 
           <div style="text-align: center;" class="rowsCont" ng-show="food.status=='Pending'">Loading Data</div>
           <div id="table4" class="rowsCont card-rows">
-            <div ng-repeat="it in food.data" class="rowElement card shadow p-4 mb-4 bg-white">
+            <dir-pagination-controls
+              max-size="5"
+              direction-links="true"
+              boundary-links="true"
+              pagination-id="foodLists" >
+            </dir-pagination-controls>
+            <div dir-paginate="it in food.data|itemsPerPage:10" pagination-id="foodLists" class="rowElement card shadow p-4 mb-4 bg-white">
               <div class="card-header text-center bg-white align-middle">
                 <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">Restaurant:
                 \{{it.res_name}},\{{it.locality}},\{{it.city}}</h5>
@@ -737,6 +792,12 @@
               </div>
 
             </div>
+            <dir-pagination-controls
+              max-size="5"
+              direction-links="true"
+              boundary-links="true"
+              pagination-id="foodLists" >
+            </dir-pagination-controls>
           </div>
 
         </div>
@@ -784,7 +845,13 @@
 
           <div style="text-align: center;" class="rowsCont" ng-show="tourist_spot.status=='Pending'">Loading Data</div>
           <div id="table3" class="rowsCont card-rows">
-            <div ng-repeat="it in tourist_spot.data" class="rowElement card shadow p-4 mb-4 bg-white">
+              <dir-pagination-controls
+              max-size="5"
+              direction-links="true"
+              boundary-links="true"
+              pagination-id="p7" >
+            </dir-pagination-controls>
+            <div dir-paginate="it in tourist_spot.data |itemsPerPage:10" pagination-id="p7" class="rowElement card shadow p-4 mb-4 bg-white">
               <div class="card-header text-center bg-white align-middle">Tourist Spot ID: \{{it.tourist_spot_id}}</div>
               <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
                 <div class="cardText card-text">Name: \{{it.name}} <br> Type: \{{it.type}}</div>
@@ -813,6 +880,11 @@
               </div>
 
             </div>
+              <dir-pagination-controls
+              max-size="5"
+              direction-links="true"
+              boundary-links="true"
+              pagination-id="p7" >
           </div>
 
         </div>
@@ -857,7 +929,13 @@
 
           <div style="text-align: center;" class="rowsCont" ng-show="guide.status=='Pending'">Loading Data</div>
           <div id="table3" class="rowsCont card-rows">
-            <div ng-repeat="it in guide.data" class="rowElement card shadow p-4 mb-4 bg-white">
+              <dir-pagination-controls
+              max-size="5"
+              direction-links="true"
+              boundary-links="true"
+              pagination-id="p8" >
+            </dir-pagination-controls>
+            <div dir-paginate="it in guide.data |itemsPerPage:10" pagination-id="p8" class="rowElement card shadow p-4 mb-4 bg-white">
               <div class="card-header text-center bg-white align-middle">
                 <h5 style="display: inline-block;" class="modal-title" style="text-align: center;">Guide ID: \{{it.service_id}}</h5>
                 <a class="chatToggler" ng-click="startChat(it.service_provider_id,it.service_provider_id)"><i class="fa fa-comments" aria-hidden="true"></i></a>
@@ -893,6 +971,12 @@
               </div>
 
             </div>
+              <dir-pagination-controls
+              max-size="5"
+              direction-links="true"
+              boundary-links="true"
+              pagination-id="p8" >
+            </dir-pagination-controls>
           </div>
         </div>
         <div id="requestModal" class="modal fade" role="dialog">
@@ -1002,32 +1086,32 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">Maximum Budget</span>
                       </div>
-                      <input required pattern="[0-9]+" ng-model="plan_trip.budget" value="\{{plan_trip.budget}}" class="form-control"
+                      <input ng-model-options="{ allowInvalid: true }" required pattern="^[1-9]\d*$" ng-model="plan_trip.budget" value="\{{plan_trip.budget}}" class="form-control"
                         type="number" placeholder="Maximum">
                     </div>
                     <label class="mr-5">Give more weights to services more important to you</label>
-                    <div class="row justify-content-start">
-                      <div>
-                        <label class="ml-5">Flight (\{{plan_trip.weightage.flight}})</label>
-                        <input style="width: 150px;" type="range" class="custom-range" min="0" max="5"
+                    <div class="row justify-content-between">
+                      <div class="row">
+                        <label class="col-4 ml-5">Flight (\{{plan_trip.weightage.flight}})</label>
+                        <input style="width: 150px;" type="range" class="custom-range col-5" min="0" max="5"
                           class="form-control" ng-model="plan_trip.weightage.flight"
                           ng-bind="plan_trip.weightage.flight">
                         <br>
-                        <label class="ml-5">Hotel Room (\{{plan_trip.weightage.room}})</label>
-                        <input style="width: 150px;" type="range" class="custom-range" min="0" max="5"
+                        <label class="col-4 ml-5">Hotel Room (\{{plan_trip.weightage.room}})</label>
+                        <input style="width: 150px;" type="range" class="custom-range col-5" min="0" max="5"
                           class="form-control" ng-model="plan_trip.weightage.room" ng-bind="plan_trip.weightage.room">
                         <br>
-                        <label class="ml-5">Taxi (\{{plan_trip.weightage.taxi}})</label>
-                        <input style="width: 150px;" type="range" class="custom-range" min="0" max="5"
+                        <label class="col-4 ml-5">Taxi (\{{plan_trip.weightage.taxi}})</label>
+                        <input style="width: 150px;" type="range" class="custom-range col-5" min="0" max="5"
                           class="form-control" ng-model="plan_trip.weightage.taxi" ng-bind="plan_trip.weightage.taxi">
                         <br>
-                        <label class="ml-5">Tourist Spots (\{{plan_trip.weightage.tourist_spot}})</label>
-                        <input style="width: 150px;" type="range" class="custom-range" min="0" max="5"
+                        <label class="col-4 ml-5">Tourist Spots (\{{plan_trip.weightage.tourist_spot}})</label>
+                        <input style="width: 150px;" type="range" class="custom-range col-5" min="0" max="5"
                           class="form-control" ng-model="plan_trip.weightage.tourist_spot"
                           ng-bind="plan_trip.weightage.tourist_spot">
                         <br>
-                        <label class="ml-5">Food (\{{plan_trip.weightage.food}})</label>
-                        <input style="width: 150px;" type="range" class="custom-range" min="0" max="5"
+                        <label class="col-4 ml-5">Food (\{{plan_trip.weightage.food}})</label>
+                        <input style="width: 150px;" type="range" class="custom-range col-5" min="0" max="5"
                           class="form-control" ng-model="plan_trip.weightage.food" ng-bind="plan_trip.weightage.food">
                       </div>
                     </div>
@@ -1050,14 +1134,14 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text">No of people</span>
                         </div>
-                        <input required list="locs" ng-model="plan_trip.number_of_people" value="\{{plan_trip.number_of_people}}"
+                        <input ng-model-options="{ allowInvalid: true }" required pattern="^[1-9]\d*$" list="locs" ng-model="plan_trip.number_of_people" value="\{{plan_trip.number_of_people}}"
                           class="form-control" type="number" placeholder="">
                       </div>
                       <div class="input-group mb-0">
                         <div class="input-group-prepend">
                           <span class="input-group-text">Duration (days)</span>
                         </div>
-                        <input required pattern="[0-9]+" ng-model="plan_trip.number_of_days" value="\{{plan_trip.number_of_days}}"
+                        <input ng-model-options="{ allowInvalid: true }" required pattern="^[1-9]\d*$" ng-model="plan_trip.number_of_days" value="\{{plan_trip.number_of_days}}"
                           class="form-control" type="number" placeholder="">
                       </div>
                     </div>

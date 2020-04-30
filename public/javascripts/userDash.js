@@ -1,4 +1,4 @@
-var	angularApp = angular.module("dash", []);
+var	angularApp = angular.module("dash", ['angularUtils.directives.dirPagination']);
 angularApp.controller("ngContent",function($scope,$http)
 {
 	$scope.tab=0;

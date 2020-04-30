@@ -60,7 +60,9 @@
             <div id="table1" class="rowsCont card-rows">
               <div ng-repeat="it in reqs.data" class="rowElement card shadow p-4 mb-4 bg-white">
               <div class="card-header text-center bg-white align-middle">Request by \{{it.name}} at \{{it.request_timestamp.slice(0,19).replace('T',' on ')}}</div>
-              <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
+              <button class="btn btn-outline-secondary" ng-show="!it.show_details" ng-click="it.show_details=true;">Show Details</button>
+              <button class="btn btn-outline-secondary" ng-show="it.show_details" ng-click="it.show_details=false;">Hide Details</button>
+              <div ng-show="it.show_details" class="card-body text-center d-flex flex-row justify-content-between align-middle">
                 <div>
                   <ul style="list-style-type: none;" ng-repeat="(k,v) in it">
                     <li ng-hide="k==updateResult">\{{k}} : \{{v}}</li>
@@ -141,7 +143,9 @@
             </div>
             <div ng-repeat="it in currentServices.data" class="rowElement card shadow p-4 mb-4 bg-white">
               <div class="card-header text-center bg-white align-middle">\{{currentServices.model.header.name}} : \{{it[currentServices.model.header.value]}}</div>
-                <form id="editForm_\{{$index}}">
+              <button class="btn btn-outline-secondary" ng-show="!it.show_details" ng-click="it.show_details=true;">Edit Details</button>
+              <button class="btn btn-outline-secondary" ng-show="it.show_details" ng-click="it.show_details=false;">Hide Details</button>
+                <form ng-show="it.show_details" id="editForm_\{{$index}}">
                 <div style="margin: 10px" class="row editCard">
                   <div style="col-4">
                     <h7>Edit Details</h7>

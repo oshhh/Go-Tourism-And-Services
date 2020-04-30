@@ -125,19 +125,52 @@ angularApp.controller("ngContent",function($scope, $http)
 		}
 		console.log($scope.toastmsg);
 	}
-	$scope.admin.deleteRecord=async function(it)
-	{
-		// alert(it.service_id);
-		//delete record by primary key it.service_id
-		//Toast on successfull delete
-		deleteState=await $http.post('/api/deleteData',JSON.stringify({
-			type:'administrator',
-			admin_id:it.admin_id
-		}));
-		// $scope.toastmsg=;
-		$('#toast_msg').text("Deleted Successfully");
-		$('.toast').toast("show");
-		console.log("tosated");
+
+	$scope.user.deactivateUser = function(user_id) {
+		$http.get('/api/getData',{params:{
+			type : 'deactivate_user',
+			user_id: "\"" + user_id + "\"",
+		}}).then(
+		function(data, status, headers, config) {
+			$('#toast_msg').text("Deactivated User");
+			$('.toast').toast("show");
+		});
+		$scope.getData(2);
+	}
+	$scope.user.reactivateUser = function(user_id) {
+		$http.get('/api/getData',{params:{
+			type : 'reactivate_user',
+			user_id: "\"" + user_id + "\"",
+		}}).then(
+		function(data, status, headers, config) {
+			$('#toast_msg').text("Reactivated User");
+			$('.toast').toast("show");
+		});
+		$scope.getData(2);
+	}
+	$scope.service_provider.deactivateServiceProvider = function(service_provider_id) {
+		console.log("here");
+		$http.get('/api/getData',{params:{
+			type : 'deactivate_service_provider',
+			service_provider_id: "\"" + service_provider_id + "\"",
+		}}).then(
+		function(data, status, headers, config) {
+			console.log("here2");
+			$('#toast_msg').text("Deactivated service_provider");
+			$('.toast').toast("show");
+			$scope.getData(3);
+		});
+	}
+	$scope.service_provider.reactivateServiceProvider = function(service_provider_id) {
+		$http.get('/api/getData',{params:{
+			type : 'reactivate_service_provider',
+			service_provider_id: "\"" + service_provider_id + "\"",
+		}}).then(
+		function(data, status, headers, config) {
+			$('#toast_msg').text("Reactivated service_provider");
+			$('.toast').toast("show");
+			$scope.getData(3);
+		});
 	}
 
 	$scope.user.updateRecord=async function(it)

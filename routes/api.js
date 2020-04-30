@@ -40,6 +40,7 @@ router.get('/getData', function(req, res, next) {
           trips = {}
           for(i in result) {
             trips[result[i].trip_id] = result[i];
+            trips[result[i].trip_id].total_expense = 0;
             trips[result[i].trip_id].service_requests = [];
           }
           serverjs.user.getServiceRequests(function(result) {
@@ -50,6 +51,7 @@ router.get('/getData', function(req, res, next) {
               }
               if(result[i].trip_id in trips) {
                 trips[result[i].trip_id].service_requests.push(result[i]);
+                trips[result[i].trip_id].total_expense += (parseInt(result[i].cost) * parseInt(result[i].quantity) * parseInt(result[i].number_days));
                 trips[result[i].trip_id].show_requests = false;
               }
             }
@@ -107,9 +109,7 @@ router.get('/getData', function(req, res, next) {
     case 'flight':
         serverjs.user.getFlights(function(result){sendResponse(res,result);},{
           from_city: req.query.from,
-          to_city: req.query.to,
-          service_provider_id: prov
-          
+          to_city: req.query.to,          
         });       
     break;
     case 'bus_train':
@@ -139,7 +139,6 @@ router.get('/getData', function(req, res, next) {
           });
         }, req.query.t_type, req.query.from, req.query.to, {
           AC: req.query.AC,
-          service_provider_id: prov
         });
     break;
     case 'taxi':
@@ -147,7 +146,6 @@ router.get('/getData', function(req, res, next) {
           car_name: req.query.car_name,
           capacity: req.query.capacity,
           AC: req.query.AC,
-          service_provider_id: prov
         });       
     break;
     case 'room':
@@ -168,7 +166,6 @@ router.get('/getData', function(req, res, next) {
         rest:(req.query.rname=="")?(".*"):(req.query.rname),
         city:(req.query.city=="")?(".*"):(req.query.city),
         delivers: req.query.delivers,
-        service_provider_id: prov
       });
     break;
     case 'tourist_spot':
@@ -295,6 +292,18 @@ router.get('/getData', function(req, res, next) {
     case 'analyseStatusOfRequests':
       serverjs.service_provider.analyseStatusOfRequests(function(result){sendResponse(res,result);}, req.query.service_provider_id);
       break;
+    case 'deactivate_user':
+      serverjs.user.deactivateUser(function(result){sendResponse(res,result);}, req.query.user_id);
+      break;
+    case 'deactivate_service_provider':
+      serverjs.service_provider.deactivateServiceProvider(function(result){sendResponse(res,result);}, req.query.service_provider_id);
+      break;
+    case 'reactivate_user':
+      serverjs.user.reactivateUser(function(result){sendResponse(res,result);}, req.query.user_id);
+      break;
+    case 'reactivate_service_provider':
+      serverjs.service_provider.reactivateServiceProvider(function(result){sendResponse(res,result);}, req.query.service_provider_id);
+      break;
     default:
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify({msg:"Unknown Request sent"}))
@@ -318,52 +327,6 @@ router.put('/updateData', function(req, res, next) {
       content:result
     }));
   },req.body);
-});
-router.post('/deleteData', function(req, res, next) {
-  // console.log("REQS");
-  sendResponse=function(actRes,result){
-    if(result)
-    {
-      // console.log("got result",result)
-      actRes.setHeader('Content-Type', 'application/json');
-      actRes.end(JSON.stringify({
-        isRes:true,
-        msg:"Query OK: sending result",
-        content:result
-      }));
-    }
-    else{
-      actRes.setHeader('Content-Type', 'application/json');
-      actRes.end(JSON.stringify({
-        isRes:false,
-        msg:"Unknown Request sent"
-      }));
-    }
-  };
-  console.log('DElete');
-  console.log(util.inspect(req.body, false,null,true));
-  serverjs=req.app.get('dbHandler');
-  switch(req.body.type){
-    case "route":
-      serverjs.deleteRoute(function(result){sendResponse(res,result);},req.body.service_id);
-    break;
-    case "administrator":
-      serverjs.deleteRow(function(result){sendResponse(res,result);},'administrator',"admin_id",req.body.admin_id);
-    break;
-    case "user":
-      serverjs.deleteRow(function(result){sendResponse(res,result);},'user',"user_id",req.body.user_id);
-      break;
-    case 'service_provider':
-      serverjs.deleteRow(function(result){sendResponse(res,result);},'service_provider',"service_provider_id",req.body.service_provider_id);
-      break;
-    default:
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({
-        isRes:false,
-        msg:"Unknown Request sent"
-      }));
-      break;
-  }
 });
 router.get('/getLocationID',function(req,res,next){
   console.log(util.inspect(req.query, false,null,true));

@@ -314,12 +314,12 @@
                 <div class="cardText card-text">From: \{{it.from_city}} <br> To: \{{it.to_city}}</div>
                 <div class="cardText card-text">Departure Time: \{{it.departure_time}}<br> Arrival Time: \{{it.arrival_time}}</div>
                 <div class="cardText card-text">Discount: \{{it.discount}}% </div>
-                <button ng-click="openRequest(it,false,true)" class="btn btn-outline-primary">Request (+\{{it.price}}
+                <button ng-click="openRequest(it,false,true)" class="btn btn-outline-primary">Request (+\{{it.price.toFixed(2)}}
                   Rs)"</button>
               </div>
               <div
                 class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
-                <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
+                <div class="cardText card-text">Rating: \{{it.rating.toFixed(2)}}/5</div>
                 <button ng-click="flight.view(it)" class="btn btn-outline-primary">Reviews</button>
               </div>
 
@@ -333,7 +333,7 @@
                     Result(s)</label>
                   <div ng-repeat="rev in flight.reviews[it.service_id].data" class="rowElement card">
                     <div class="card-header text-center bg-white align-middle commentBody">
-                      <label> Posted by : \{{rev.user}} <br> \{{rev.timeStamp}} Rating: \{{rev.rating}}/5 <br> Comments: \{{rev.body}}</label>
+                      <label> Posted by : \{{rev.user}} <br> \{{rev.timeStamp}} Rating: \{{rev.rating.toFixed(2)}}/5 <br> Comments: \{{rev.body}}</label>
                     </div>
                   </div>
                 </div>
@@ -407,7 +407,7 @@
                 <div class="cardText card-text">AC: \{{it.AC}} </div>
                 <div class="cardText card-text">Active Days: \{{it.active_days}} </div>
                 <div class="cardText card-text">Discount: \{{it.discount}}% </div>
-                <button ng-click="openRequest(it,false,true)" class="btn btn-outline-primary">Request (+\{{it.price}}
+                <button ng-click="openRequest(it,false,true)" class="btn btn-outline-primary">Request (+\{{it.price.toFixed(2)}}
                   Rs)"</button>
               </div>
               <label> <b>Route: </b></label>
@@ -416,7 +416,7 @@
               </div>
               <div
                 class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
-                <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
+                <div class="cardText card-text">Rating: \{{it.rating.toFixed(2)}}/5</div>
                 <button ng-click="taxi.view(it)" class="btn btn-outline-primary">Reviews</button>
               </div>
 
@@ -430,7 +430,7 @@
                     Result(s)</label>
                   <div ng-repeat="rev in taxi.reviews[it.service_id].data" class="rowElement card">
                     <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on
-                      \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
+                      \{{rev.timeStamp}} Rating: \{{rev.rating.toFixed(2)}}/5</div>
                     <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
                   </div>
                 </div>
@@ -501,12 +501,12 @@
                 <div class="cardText card-text">Capacity: \{{it.capacity}}</div>
                 <div class="cardText card-text">AC: \{{it.AC}} </div>
                 <div class="cardText card-text">Discount: \{{it.discount}}% </div>
-          <button ng-click="openRequest(it,true,true)" class="btn btn-outline-primary">Request (+\{{it.price}}
+          <button ng-click="openRequest(it,true,true)" class="btn btn-outline-primary">Request (+\{{it.price.toFixed(2)}}
                   Rs)"</button>
               </div>
               <div
                 class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
-                <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
+                <div class="cardText card-text">Rating: \{{it.rating.toFixed(2)}}/5</div>
                 <button ng-click="taxi.view(it)" class="btn btn-outline-primary">Reviews</button>
               </div>
 
@@ -520,7 +520,7 @@
                     Result(s)</label>
                   <div ng-repeat="rev in taxi.reviews[it.service_id].data" class="rowElement card">
                     <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on
-                      \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
+                      \{{rev.timeStamp}} Rating: \{{rev.rating.toFixed(2)}}/5</div>
                     <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
                   </div>
                 </div>
@@ -623,12 +623,12 @@
                   City: \{{it.city}}</div>
                 <div class="cardText card-text">Room Type: \{{it.room_type}} <br> Capacity: \{{it.capacity}} | Wifi: \{{it.wifi_facility}} | AC: \{{it.AC}} <br> Star: \{{it.star}} </div>
                 <div class="cardText card-text">Discount: \{{it.discount}}% </div>
-                <button ng-click="openRequest(it,true,true)" class="btn btn-outline-primary">Request (+\{{it.price}}
+                <button ng-click="openRequest(it,true,true)" class="btn btn-outline-primary">Request (+\{{it.price.toFixed(2)}}
                   Rs)"</button>
               </div>
               <div
                 class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
-                <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
+                <div class="cardText card-text">Rating: \{{it.rating.toFixed(2)}}/5</div>
                 <button ng-click="room.view(it)" class="btn btn-outline-primary">Reviews</button>
               </div>
               <div ng-show="it.showRev"
@@ -641,7 +641,7 @@
                     Result(s)</label>
                   <div ng-repeat="rev in room.reviews[it.service_id].data" class="rowElement card">
                     <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on
-                      \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
+                      \{{rev.timeStamp}} Rating: \{{rev.rating.toFixed(2)}}/5</div>
                     <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
                   </div>
                 </div>
@@ -711,12 +711,12 @@
               <div class="card-body text-center d-flex flex-row justify-content-between align-middle">
                 <div class="cardText card-text">\{{it.name}}<br>Delivery Available: \{{it.delivers}}</div>
                 <div class="cardText card-text">Discount: \{{it.discount}}%<br> Description: \{{it.cuisine}}</div>
-                <button ng-click="openRequest(it,false,false)" class="btn btn-outline-primary">Request (+\{{it.price}}
+                <button ng-click="openRequest(it,false,false)" class="btn btn-outline-primary">Request (+\{{it.price.toFixed(2)}}
                   Rs)"</button>
               </div>
               <div
                 class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
-                <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
+                <div class="cardText card-text">Rating: \{{it.rating.toFixed(2)}}/5</div>
                 <button ng-click="food.view(it)" class="btn btn-outline-primary">Reviews</button>
               </div>
 
@@ -730,7 +730,7 @@
                     Result(s)</label>
                   <div ng-repeat="rev in food.reviews[it.service_id].data" class="rowElement card">
                     <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on
-                      \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
+                      \{{rev.timeStamp}} Rating: \{{rev.rating.toFixed(2)}}/5</div>
                     <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
                   </div>
                 </div>
@@ -793,7 +793,7 @@
               </div>
               <div
                 class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
-                <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
+                <div class="cardText card-text">Rating: \{{it.rating.toFixed(2)}}/5</div>
               </div>
 
               <div ng-show="it.showRev"
@@ -806,7 +806,7 @@
                     Result(s)</label>
                   <div ng-repeat="rev in tourist_spot.reviews[it.service_id].data" class="rowElement card">
                     <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on
-                      \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
+                      \{{rev.timeStamp}} Rating: \{{rev.rating.toFixed(2)}}/5</div>
                     <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
                   </div>
                 </div>
@@ -867,12 +867,12 @@
                 <div class="cardText card-text">Tourist Spot Name: \{{it.tourist_spot_name}} </div>
                 <div class="cardText card-text">Locality: \{{it.locality}}<br> City: \{{it.city}}</div>
                 <div class="cardText card-text">Discount: \{{it.discount}}% </div>
-                <button ng-click="openRequest(it,true,true)" class="btn btn-outline-primary">Request (+\{{it.price}}
+                <button ng-click="openRequest(it,true,true)" class="btn btn-outline-primary">Request (+\{{it.price.toFixed(2)}}
                   Rs)"</button>
               </div>
               <div
                 class="card-footer text-center d-flex flex-row justify-content-between align-middle bg-white align-middle">
-                <div class="cardText card-text">Rating: \{{it.rating}}/5</div>
+                <div class="cardText card-text">Rating: \{{it.rating.toFixed(2)}}/5</div>
                 <button ng-click="guide.view(it)" class="btn btn-outline-primary">Reviews</button>
               </div>
 
@@ -886,7 +886,7 @@
                     Result(s)</label>
                   <div ng-repeat="rev in guide.reviews[it.service_id].data" class="rowElement card">
                     <div class="card-header text-center bg-white align-middle commentBody">Posted by : \{{rev.user}} on
-                      \{{rev.timeStamp}} Rating: \{{rev.rating}}/5</div>
+                      \{{rev.timeStamp}} Rating: \{{rev.rating.toFixed(2)}}/5</div>
                     <div class="cardText card-text commentBody">Body: \{{rev.body}}</div>
                   </div>
                 </div>
@@ -1133,10 +1133,10 @@
                               To: \{{plan_trip.itinerary.departure_flight[0].to_city}} <br> 
                               Departure Time: \{{plan_trip.itinerary.departure_flight[0].departure_time}} <br> 
                               Arrival Time: \{{plan_trip.itinerary.departure_flight[0].arrival_time}} <br> 
-                              Price: \{{plan_trip.itinerary.departure_flight[0].price}} <br> 
+                              Price: \{{plan_trip.itinerary.departure_flight[0].price.toFixed(2)}} <br> 
                               Discount: \{{plan_trip.itinerary.departure_flight[0].discount}} <br> 
                               Quantity: \{{plan_trip.itinerary.departure_flight[1]}} <br> 
-                              Total Cost: Rs. \{{plan_trip.itinerary.departure_flight[0].price * (1 - plan_trip.itinerary.departure_flight[0].discount * 0.01) * plan_trip.itinerary.departure_flight[1]}}
+                              Total Cost: Rs. \{{(plan_trip.itinerary.departure_flight[0].price.toFixed(2) * (1 - plan_trip.itinerary.departure_flight[0].discount * 0.01) * plan_trip.itinerary.departure_flight[1]).toFixed(2)}}
                             </div>
                             <button ng-click="plan_trip.itinerary.departure_flight=null;updatePlannedTrip();" type="button"
                               class="close text-right" aria-label="Close">
@@ -1151,10 +1151,10 @@
                               \{{plan_trip.itinerary.return_flight[0].to_city}} <br> Departure Time:
                               \{{plan_trip.itinerary.return_flight[0].departure_time}} <br> Arrival Time:
                               \{{plan_trip.itinerary.return_flight[0].arrival_time}} <br> Price:
-                              \{{plan_trip.itinerary.return_flight[0].price}} <br> Discount:
+                              \{{plan_trip.itinerary.return_flight[0].price.toFixed(2)}} <br> Discount:
                               \{{plan_trip.itinerary.return_flight[0].discount}} <br> Quantity:
                               \{{plan_trip.itinerary.return_flight[1]}} <br> Total Cost: Rs.
-                              \{{plan_trip.itinerary.return_flight[0].price * (1 - plan_trip.itinerary.return_flight[0].discount * 0.01) * plan_trip.itinerary.return_flight[1]}}
+                              \{{(plan_trip.itinerary.return_flight[0].price.toFixed(2) * (1 - plan_trip.itinerary.return_flight[0].discount * 0.01) * plan_trip.itinerary.return_flight[1]).toFixed(2)}}
                             </div>
                             <button ng-click="plan_trip.itinerary.return_flight=null;updatePlannedTrip();" type="button"
                               class="close text-right" aria-label="Close">
@@ -1179,10 +1179,11 @@
                             Capacity:\{{plan_trip.itinerary.room[0].capacity}} <br> 
                             Wifi:\{{plan_trip.itinerary.room[0].wifi_facility}} <br> 
                             AC:\{{plan_trip.itinerary.room[0].AC}} <br> 
-                            Price:\{{plan_trip.itinerary.room[0].price}} <br> 
+                            Price:\{{plan_trip.itinerary.room[0].price.toFixed(2)}} <br> 
                             Discount:\{{plan_trip.itinerary.room[0].discount}} 
                             <br> Quantity:\{{(plan_trip.itinerary.room[1]/plan_trip.number_of_days)}} 
-                            <br> Number Of Days:\{{plan_trip.number_of_days}} <br> Total Cost: Rs.\{{plan_trip.itinerary.room[0].price * (1 - plan_trip.itinerary.room[0].discount * 0.01) * plan_trip.itinerary.room[1]}}
+                            <br> Number Of Days:\{{plan_trip.number_of_days}} <br> 
+                            Total Cost: Rs.\{{(plan_trip.itinerary.room[0].price.toFixed(2) * (1 - plan_trip.itinerary.room[0].discount * 0.01) * plan_trip.itinerary.room[1]).toFixed(2)}}
                             </div>
                             <button ng-click="plan_trip.itinerary.room=null;updatePlannedTrip();" type="button"
                               class="close text-right" aria-label="Close">
@@ -1202,11 +1203,11 @@
                             <div class="col-10">Service ID: \{{plan_trip.itinerary.taxi[0].service_id}} <br> Car Name:
                               \{{plan_trip.itinerary.taxi[0].car_name}} <br> Capacity:
                               \{{plan_trip.itinerary.taxi[0].capacity}} <br> AC: \{{plan_trip.itinerary.taxi[0].AC}}
-                              <br> Price: \{{plan_trip.itinerary.taxi[0].price}} <br> Discount:
+                              <br> Price: \{{plan_trip.itinerary.taxi[0].price.toFixed(2)}} <br> Discount:
                               \{{plan_trip.itinerary.taxi[0].discount}} <br> Quantity:
                               \{{(plan_trip.itinerary.taxi[1]/plan_trip.number_of_days)}} <br> Number Of Days:
                               \{{plan_trip.number_of_days}} <br> Total Cost: Rs.
-                              \{{plan_trip.itinerary.taxi[0].price * (1 - plan_trip.itinerary.taxi[0].discount * 0.01) * plan_trip.itinerary.taxi[1]}}
+                              \{{plan_trip.itinerary.taxi[0].price.toFixed(2) * (1 - plan_trip.itinerary.taxi[0].discount * 0.01) * plan_trip.itinerary.taxi[1]}}
                             </div>
                             <button ng-click="plan_trip.itinerary.taxi=null;updatePlannedTrip();" type="button"
                               class="close text-right" aria-label="Close">

@@ -1000,30 +1000,30 @@
                         type="number" placeholder="Maximum">
                     </div>
                     <label class="mr-5">Give more weights to services more important to you</label>
-                    <div class="row justify-content-start">
-                      <div>
+                    <div class="row mt-2 justify-content-start">
+                      <div class="col-6">
                         <label class="mr-5">Flight (\{{plan_trip.weightage.flight}})</label>
                         <input style="width: 150px;" type="range" class="custom-range" min="0" max="5"
                           class="form-control" ng-model="plan_trip.weightage.flight"
                           ng-bind="plan_trip.weightage.flight">
                       </div>
-                      <div>
+                      <div class="col-6">
                         <label class="mr-5">Hotel Room (\{{plan_trip.weightage.room}})</label>
                         <input style="width: 150px;" type="range" class="custom-range" min="0" max="5"
                           class="form-control" ng-model="plan_trip.weightage.room" ng-bind="plan_trip.weightage.room">
                       </div>
-                      <div>
+                      <div class="col-6">
                         <label class="mr-5">Taxi (\{{plan_trip.weightage.taxi}})</label>
                         <input style="width: 150px;" type="range" class="custom-range" min="0" max="5"
                           class="form-control" ng-model="plan_trip.weightage.taxi" ng-bind="plan_trip.weightage.taxi">
                       </div>
-                      <div>
+                      <div class="col-6">
                         <label class="mr-5">Tourist Spots (\{{plan_trip.weightage.tourist_spot}})</label>
                         <input style="width: 150px;" type="range" class="custom-range" min="0" max="5"
                           class="form-control" ng-model="plan_trip.weightage.tourist_spot"
                           ng-bind="plan_trip.weightage.tourist_spot">
                       </div>
-                      <div>
+                      <div class="col-6">
                         <label class="mr-5">Food (\{{plan_trip.weightage.food}})</label>
                         <input style="width: 150px;" type="range" class="custom-range" min="0" max="5"
                           class="form-control" ng-model="plan_trip.weightage.food" ng-bind="plan_trip.weightage.food">
@@ -1235,7 +1235,7 @@
                   </div>
                   <div class="row justify-content-between mt-4">
                     <div class="col card">
-                      <div class="bg-white font-weight-bold">Food Budget</div>
+                      <div class="bg-white font-weight-bold mb-2">Food Budget</div>
                       <ul class="list-group" style="height: auto !important;">
                         <div ng-show="plan_trip.itinerary.food_expense!=null" class="row justify-content-around">
                           <h6>Food Budget: \{{plan_trip.itinerary.food_expense[0]}} per person per day</h6>

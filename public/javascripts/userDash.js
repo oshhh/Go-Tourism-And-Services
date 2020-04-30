@@ -290,7 +290,8 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		console.log($scope.plan_trip.number_of_days);
 		// return;
-		//Insert Trip
+		//Insert Trip\
+		console.log($scope.curUser.id);
 		departDate = $scope.plan_trip.depDate;
 		returnDate = new Date();
 		returnDate.setDate(departDate.getDate()+$scope.plan_trip.number_of_days);
@@ -306,10 +307,10 @@ angularApp.controller("ngContent",function($scope,$http)
 			newTripID=tripStatus.data.content.slice(1,-1);
 		else
 			return;
-		getCreatedTrip= await $http.get("/api/getData",{params:{type:"my_trips",}});
+		getCreatedTrip= await $http.get("/api/getData",{params:{type:"my_trips",username:$scope.curUser.uid}});
 		err=true;
 		console.log(newTripID)
-		console.log(getCreatedTrip);
+		// console.log(getCreatedTrip);
 		$scope.my_trips.data=getCreatedTrip.data.content.result;
 		$scope.my_trips.completed_requests=getCreatedTrip.data.content.completed_requests;
 		$scope.my_trips.data.forEach(element => {
@@ -321,6 +322,15 @@ angularApp.controller("ngContent",function($scope,$http)
 			$scope.trip.selected=element;
 		}
 		});
+		if(err)
+		{
+			console.log("TRIP NOT CREATED")
+			$('#toast_msg').text("Trip addition Failed");
+			$('.toast').toast("show");
+			return;
+		}
+		console.log("Trip Created")
+		console.log($scope.trip.selected)
 		if(!err)
 		{
 			console.log($scope.plan_trip.number_of_days);
@@ -384,7 +394,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	{
 		if(tab == 0)
 		{
-			console.log($scope.my_trips.completed_requests.length);
+			// console.log($scope.my_trips.completed_requests.length);
 			$scope.my_trips.status="Pending";
 			console.log("sent");
 			$http.get("/api/getData",{params:{
@@ -392,7 +402,7 @@ angularApp.controller("ngContent",function($scope,$http)
 				username:$scope.curUser.uid
 				}}).then(
 				function(data, status, headers, config) {
-				console.log(data.data.content);
+				// console.log(data.data.content);
 				$scope.my_trips.data=data.data.content.result;
 				$scope.my_trips.completed_requests=data.data.content.completed_requests;
 				$scope.my_trips.data.forEach(element => {
@@ -807,6 +817,7 @@ angularApp.controller("ngContent",function($scope,$http)
 	$scope.request = function(){
 		// dateString=$scope.requestModal.bookingDate.get
 		it=$scope.requestModal.service;
+		console.log(it);
 		$http.get('/api/getData',{params:{
 			type : 'request',
 			trip_id: "\"" + $scope.trip.selected.trip_id + "\"",

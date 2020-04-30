@@ -96,7 +96,7 @@ router.get('/getData', function(req, res, next) {
           }
         }, 'trip', {
           trip_id:"\"TRP" + ("00000" + (result[0]['cnt'] + 1)).slice(-5) + "\"",
-          user_id: "\"" + req.session.uname + "\"",
+          user_id: "\"" + req.query.user_id + "\"",
           destination_city : "\"" + req.query.destination_city + "\"",
           departure_date : "\"" + req.query.departure_date + "\"",
           return_date : "\"" + req.query.return_date + "\"",
@@ -404,11 +404,11 @@ router.get('/getTouristSpotID',function(req,res,next){
               }));
             }
           },'tourist_spot',{
-            tourist_spot_id:'TOR'+("00000" + res2[0]['cnt']).slice(-5),
-            name:req.query.name,
-            location_id:req.query.location_id,
-            type:req.query.type,
-            entry_fee:req.query.entry_fee
+            tourist_spot_id:'"'+'TOR'+("00000" + res2[0]['cnt']).slice(-5)+'"',
+            name:'"'+req.query.name+'"',
+            location_id:'"'+req.query.location_id+'"',
+            type:'"'+req.query.type+'"',
+            entry_fee:'"'+req.query.entry_fee+'"'
           })
         },'tourist_spot');
       }

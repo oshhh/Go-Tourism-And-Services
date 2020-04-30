@@ -75,7 +75,7 @@ function updateProvider()
 }
 function updateForm()
 {
-	for(var i=0;i<3;i++)
+	for(var i=0;i<2;i++)
 	{
 		if(i!=opt){
 		formsObj[i].style.display="none";
@@ -100,7 +100,6 @@ function updateForm()
 function onStart()
 {
     console.log("ag");
-    formsObj.push(document.getElementById("adminForm"));
     formsObj.push(document.getElementById("ProviderForm"));
     formsObj.push(document.getElementById("UserForm"));
     console.log("ag")

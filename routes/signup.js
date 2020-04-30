@@ -81,7 +81,7 @@ router.post('/',function(req,res,next){
         {
           if(req.body.providerType=='hotel' || req.body.providerType=='restaurant')
           {
-            serverjs.getLocations(function(resLoc){
+            serverjs.getLocation(function(resLoc){ 
               let addnewLoc=false;
               oldLoc="";
               if(resLoc[0])

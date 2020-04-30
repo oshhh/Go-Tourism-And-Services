@@ -26,14 +26,14 @@
             
             <label style="text-align:center;" for="acc-type">Select Type Of Account</label>
             <select onchange="selectOpt(this)" class="form-control" id="acc-type">
-            <option>Admin</option>
+            {{!-- <option>Admin</option> --}}
             <option>Service Provider</option>
             <option>User</option>
             </select>
 
             <div class="vertSep"></div>
             <div id="FormGroup">
-                <form oninput='apass2.setCustomValidity(apass2.value != apass.value ? "Passwords do not match." : "")' novalidate class="forms needs-validation" id="adminForm" autocomplete="off" method="POST" action="/signup">
+                {{!-- <form oninput='apass2.setCustomValidity(apass2.value != apass.value ? "Passwords do not match." : "")' novalidate class="forms needs-validation" id="adminForm" autocomplete="off" method="POST" action="/signup">
                       <input type="hidden" name="acc_type" value="0"/>
                         <label style="text-align:center;" for="acc-type">New Admin Details</label>
                 <div class="input-group mb-3">
@@ -79,7 +79,7 @@
 
                 <button type="submit" class="btn btn-outline-primary btn-block">Submit</button>
 
-                </form>
+                </form> --}}
 
                 <form oninput='spass2.setCustomValidity(spass2.value != spass.value ? "Passwords do not match." : "")' novalidate class="forms" id="ProviderForm" autocomplete="off" method="POST" action="/signup">
                         <input type="hidden" name="acc_type" value="1"/>

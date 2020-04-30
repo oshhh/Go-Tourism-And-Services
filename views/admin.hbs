@@ -144,7 +144,6 @@
                     class="btn btn-outline-primary butTab">Edit</button>
                   <button ng-show="it.editMode" ng-click="admin.updateRecord(it);"
                     class="btn btn-outline-primary butTab">Done</button>
-                  <button ng-click="admin.deleteRecord(it);" class="btn btn-outline-danger butTab">Delete</button>
                 </td>
               </tr>
             </tbody>
@@ -187,7 +186,7 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">#</th>
+                <th scope="col" style="width: 5%;">#</th>
                 <th scope="col" style="width: 10%;">UserID</th>
                 <th scope="col" style="width: 10%;">Name</th>
                 <th scope="col" style="width: 25%;">Email</th>
@@ -210,11 +209,14 @@
                 </td>
                 <td ng-show="it.editMode"><input required list="locs" ng-model="it.city" class="form-control" value="\{{it.city}}"></td>
                 <td>
-                  <button ng-hide="it.editMode" ng-click="it.editMode=true"
+                  <button ng-show="(it.active=='Y') && !it.editMode" ng-click="it.editMode=true"
                     class="btn btn-outline-primary butTab">Edit</button>
                   <button ng-show="it.editMode" ng-click="user.updateRecord(it);"
                     class="btn btn-outline-primary butTab">Done</button>
-                  <button ng-click="user.deleteRecord(it);" class="btn btn-outline-danger butTab">Delete</button>
+                  <button ng-show="it.active=='Y'" ng-click="user.deactivateUser(it.user_id);"
+                    class="btn btn-outline-danger butTab">Deactivate</button>
+                  <button ng-show="it.active=='N'" ng-click="user.reactivateUser(it.user_id);"
+                    class="btn btn-outline-danger butTab">Reactivate</button>
                 </td>
               </tr>
             </tbody>
@@ -258,8 +260,8 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col" style="width: 15%;">ID</th>
-                <th scope="col" style="width: 20%;">Name</th>
-                <th scope="col" style="width: 20%;">Domain</th>
+                <th scope="col" style="width: 15%;">Name</th>
+                <th scope="col" style="width: 15%;">Domain</th>
                 <th scope="col" style="width: 10%;">Active</th>
                 <th scope="col" style="width: 10%;">Approved</th>
               </tr>
@@ -280,12 +282,14 @@
                 <td ng-show="it.editMode"><input ng-model-options="{ allowInvalid: true }" required pattern="^(?:Y|N)$" ng-model="it.approved" class="form-control text-center"
                     value="\{{it.approved}}"></td>
                 <td>
-                  <button ng-hide="it.editMode" ng-click="it.editMode=true"
+                  <button ng-show="(it.active=='Y') && !it.editMode" ng-click="it.editMode=true"
                     class="btn btn-outline-primary butTab">Edit</button>
                   <button ng-show="it.editMode" ng-click="service_provider.updateRecord(it);"
                     class="btn btn-outline-primary butTab">Done</button>
-                  <button ng-click="service_provider.deleteRecord(it);"
-                    class="btn btn-outline-danger butTab">Delete</button>
+                  <button ng-show="it.active=='Y'" ng-click="service_provider.deactivateServiceProvider(it.service_provider_id);"
+                    class="btn btn-outline-danger butTab">Deactivate</button>
+                  <button ng-show="it.active=='N'" ng-click="service_provider.reactivateServiceProvider(it.service_provider_id);"
+                    class="btn btn-outline-danger butTab">Reactivate</button>
                 </td>
               </tr>
             </tbody>

@@ -590,10 +590,10 @@ function planTrip(callback, trip) {
     trip.weightage.taxi = parseInt(trip.weightage.taxi);
     trip.weightage.tourist_spot = parseInt(trip.weightage.tourist_spot);
     food_expense = [
-        [200, trip.number_of_people * trip.number_of_days], 
-        [500, trip.number_of_people * trip.number_of_days], 
-        [1000, trip.number_of_people * trip.number_of_days], 
-        [1500, trip.number_of_people * trip.number_of_days]
+        [200, trip.number_of_people, trip.number_of_days], 
+        [500, trip.number_of_people, trip.number_of_days], 
+        [1000, trip.number_of_people, trip.number_of_days], 
+        [1500, trip.number_of_people, trip.number_of_days]
     ]
     departure_flights = []
     return_flights = []
@@ -626,23 +626,23 @@ function planTrip(callback, trip) {
         runQuery(function(result) {
             console.log(trip);
             if(result.length > 0) {
-                departure_flights.push([result[0], trip.number_of_people]);
+                departure_flights.push([result[0], trip.number_of_people, 1]);
             }
             return_flight_query = "select * from flight f1, service where f1.service_id = service.service_id and from_city = " + trip.destination_city + " and to_city = " + trip.user_city + " order by (price * (1 - discount * 0.01)) limit 1;"
             runQuery(function(result) {
                 if(result.length > 0) {
-                    return_flights.push([result[0], trip.number_of_people]);
+                    return_flights.push([result[0], trip.number_of_people, 1]);
                 }
                 // Possible options for taxis based on capacity
                 ac_taxi_query = "select * from taxi t1, service where t1.service_id = service.service_id and t1.AC = \'Y\' order by price * (1 - discount * 0.01) * floor((" + trip.number_of_people + " + capacity - 1)/ capacity) limit 1;"
                 runQuery(function(result) {
                     if(result.length > 0) {
-                        taxis.push([result[0], Math.floor((trip.number_of_people + result[0].capacity - 1)/result[0].capacity) * trip.number_of_days])
+                        taxis.push([result[0], Math.floor((trip.number_of_people + result[0].capacity - 1)/result[0].capacity), trip.number_of_days])
                     }
                     nonac_taxi_query = "select * from taxi t1, service where t1.service_id = service.service_id and t1.AC = \'N\' order by price * (1 - discount * 0.01) * floor((" + trip.number_of_people + " + capacity - 1)/ + capacity) limit 1;"
                     runQuery(function(result) {
                         if(result.length > 0) 
-                            taxis.push([result[0], Math.floor((trip.number_of_people + result[0].capacity - 1)/result[0].capacity) * trip.number_of_days])
+                            taxis.push([result[0], Math.floor((trip.number_of_people + result[0].capacity - 1)/result[0].capacity), trip.number_of_days])
                         // Possible options for tourist spots
                         tourist_spot_query = "select * from tourist_spot, location where tourist_spot.location_id = location.location_id and location.city = " + trip.destination_city + ";"
                         runQuery(function(result) {
@@ -652,32 +652,32 @@ function planTrip(callback, trip) {
                             runQuery(function(result) {
                                 if(result.length > 0) {
                                     result[0].rating = 0;
-                                    rooms.push([result[0], Math.floor((trip.number_of_people + result[0].capacity - 1)/result[0].capacity) * trip.number_of_days])
+                                    rooms.push([result[0], Math.floor((trip.number_of_people + result[0].capacity - 1)/result[0].capacity), trip.number_of_days])
                                 }
                                 runQuery(function(result) {
                                     if(result.length > 0) {
                                         result[0].rating = 1;
-                                        rooms.push([result[0], Math.floor((trip.number_of_people + result[0].capacity - 1)/result[0].capacity) * trip.number_of_days])
+                                        rooms.push([result[0], Math.floor((trip.number_of_people + result[0].capacity - 1)/result[0].capacity), trip.number_of_days])
                                     }
                                     runQuery(function(result) {
                                         if(result.length > 0) {
                                             result[0].rating = 2;
-                                            rooms.push([result[0], Math.floor((trip.number_of_people + result[0].capacity - 1)/result[0].capacity) * trip.number_of_days])
+                                            rooms.push([result[0], Math.floor((trip.number_of_people + result[0].capacity - 1)/result[0].capacity), trip.number_of_days])
                                         }
                                         runQuery(function(result) {
                                             if(result.length > 0) {
                                                 result[0].rating = 3;
-                                                rooms.push([result[0], Math.floor((trip.number_of_people + result[0].capacity - 1)/result[0].capacity) * trip.number_of_days])
+                                                rooms.push([result[0], Math.floor((trip.number_of_people + result[0].capacity - 1)/result[0].capacity), trip.number_of_days])
                                             }
                                             runQuery(function(result) {
                                                 if(result.length > 0) {
                                                     result[0].rating = 4;
-                                                    rooms.push([result[0], Math.floor((trip.number_of_people + result[0].capacity - 1)/result[0].capacity) * trip.number_of_days]) 
+                                                    rooms.push([result[0], Math.floor((trip.number_of_people + result[0].capacity - 1)/result[0].capacity), trip.number_of_days]) 
                                                 }   
                                                 runQuery(function(result) {
                                                     if(result.length > 0) {
                                                         result[0].rating = 5;
-                                                        rooms.push([result[0], Math.floor((trip.number_of_people + result[0].capacity - 1)/result[0].capacity) * trip.number_of_days])
+                                                        rooms.push([result[0], Math.floor((trip.number_of_people + result[0].capacity - 1)/result[0].capacity), trip.number_of_days])
                                                     }
                                                     if(rooms.length == 0) {
                                                         trip.itinerary.status = "No hotel rooms found in city!"
@@ -704,11 +704,11 @@ function planTrip(callback, trip) {
                                                                     for(roo = 0; roo < rooms.length; ++ roo) {
                                                                         for(tor = 0; tor <= tourist_spots.length; ++ tor) {
                                                                             total_cost = 0;
-                                                                            total_cost += food_expense[foo][0] * food_expense[foo][1];
-                                                                            total_cost += (departure_flights[d_fli][0].price) * (1 - departure_flights[d_fli][0].discount * 0.01) * departure_flights[d_fli][1];
-                                                                            total_cost += (return_flights[r_fli][0].price) * (1 - return_flights[r_fli][0].discount * 0.01) * return_flights[r_fli][1];
-                                                                            total_cost += taxis[tax][0].price * (1 - taxis[tax][0].discount * 0.01) * taxis[tax][1];
-                                                                            total_cost += rooms[roo][0].price * (1 - rooms[roo][0].discount * 0.01) * rooms[roo][1];
+                                                                            total_cost += food_expense[foo][0] * food_expense[foo][1] * food_expense[foo][2];
+                                                                            total_cost += (departure_flights[d_fli][0].price) * (1 - departure_flights[d_fli][0].discount * 0.01) * departure_flights[d_fli][1] * departure_flights[d_fli][2];
+                                                                            total_cost += (return_flights[r_fli][0].price) * (1 - return_flights[r_fli][0].discount * 0.01) * return_flights[r_fli][1] * return_flights[r_fli][2];
+                                                                            total_cost += taxis[tax][0].price * (1 - taxis[tax][0].discount * 0.01) * taxis[tax][1] * taxis[tax][2];
+                                                                            total_cost += rooms[roo][0].price * (1 - rooms[roo][0].discount * 0.01) * rooms[roo][1] * rooms[roo][2];
                                                                             for(i = 0; i < tor - 1; ++ i) {
                                                                                 total_cost += (tourist_spots[i].entry_fee) * (trip.number_of_people);
                                                                             }

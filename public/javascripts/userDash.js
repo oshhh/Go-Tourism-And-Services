@@ -338,28 +338,28 @@ angularApp.controller("ngContent",function($scope,$http)
 			{
 				if($scope.plan_trip.itinerary.departure_flight[0]!=null)
 				{
-					await $scope.addPlannedRequest($scope.plan_trip.itinerary.departure_flight[0],departDate,1,$scope.plan_trip.itinerary.departure_flight[1]);
+					await $scope.addPlannedRequest($scope.plan_trip.itinerary.departure_flight[0],departDate,$scope.plan_trip.itinerary.departure_flight[2],$scope.plan_trip.itinerary.departure_flight[1]);
 				}
 			}
 			if($scope.plan_trip.itinerary.return_flight!=null)
 			{
 				if($scope.plan_trip.itinerary.return_flight[0]!=null)
 				{
-					await $scope.addPlannedRequest($scope.plan_trip.itinerary.return_flight[0],returnDate,1,$scope.plan_trip.itinerary.return_flight[1]/$scope.plan_trip.number_of_days);
+					await $scope.addPlannedRequest($scope.plan_trip.itinerary.return_flight[0],returnDate,$scope.plan_trip.itinerary.return_flight[2],$scope.plan_trip.itinerary.return_flight[1]);
 				}
 			}
 			if($scope.plan_trip.itinerary.room!=null)
 			{
 				if($scope.plan_trip.itinerary.room[0]!=null)
 				{
-					await $scope.addPlannedRequest($scope.plan_trip.itinerary.room[0],departDate,$scope.plan_trip.number_of_days,$scope.plan_trip.itinerary.room[1]/$scope.plan_trip.number_of_days);
+					await $scope.addPlannedRequest($scope.plan_trip.itinerary.room[0],departDate,$scope.plan_trip.itinerary.return_flight[2],$scope.plan_trip.itinerary.room[1]);
 				}
 			}
 			if($scope.plan_trip.itinerary.taxi!=null)
 			{
 				if($scope.plan_trip.itinerary.taxi[0]!=null)
 				{
-					await $scope.addPlannedRequest($scope.plan_trip.itinerary.taxi[0],departDate,$scope.plan_trip.number_of_days,$scope.plan_trip.itinerary.taxi[1]/$scope.plan_trip.number_of_days);
+					await $scope.addPlannedRequest($scope.plan_trip.itinerary.taxi[0],departDate,$scope.plan_trip.itinerary.taxi[2],$scope.plan_trip.itinerary.taxi[1]);
 				}
 			}
 			console.log("Added Everything");

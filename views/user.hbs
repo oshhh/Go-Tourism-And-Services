@@ -1119,7 +1119,6 @@
                 </div>
 
                 <div class="row">
-
                   <div class="col-12 card">
                     <div class="card-header bg-white font-weight-bold">Step 2 - Enter Destinations</div>
                     <div class="card-body">
@@ -1144,23 +1143,21 @@
                         <input ng-model-options="{ allowInvalid: true }" required pattern="^[1-9]\d*$" ng-model="plan_trip.number_of_days" value="\{{plan_trip.number_of_days}}"
                           class="form-control" type="number" placeholder="">
                       </div>
+                      <div class="input-group mb-0">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Departure Date</span>
+                        </div>
+                        <input required ng-model="plan_trip.depDate" ng-bind="plan_trip.depDate" class="form-control"
+                          type="date" placeholder="2020-04-25">
+                      </div>
+                      <div class="input-group mb-0">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Leave from City</span>
+                        </div>
+                        <input list="locs" ng-model="plan_trip.user_city" ng-bind="plan_trip.user_city" class="form-control"
+                          type="text" placeholder="">
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div class="mt-2 ml-2">
-                  <div class="input-group mb-0">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">Departure Date</span>
-                    </div>
-                    <input required ng-model="plan_trip.depDate" ng-bind="plan_trip.depDate" class="form-control"
-                      type="date" placeholder="2020-04-25">
-                  </div>
-                  <div class="input-group mb-0">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">Leave from City</span>
-                    </div>
-                    <input list="locs" ng-model="plan_trip.user_city" ng-bind="plan_trip.user_city" class="form-control"
-                      type="text" placeholder="">
                   </div>
                 </div>
                 <div class="row justify-content-center mt-4">
@@ -1238,9 +1235,9 @@
                             AC:\{{plan_trip.itinerary.room[0].AC}} <br> 
                             Price:\{{plan_trip.itinerary.room[0].price.toFixed(2)}} <br> 
                             Discount:\{{plan_trip.itinerary.room[0].discount}} 
-                            <br> Quantity:\{{(plan_trip.itinerary.room[1]/plan_trip.number_of_days)}} 
-                            <br> Number Of Days:\{{plan_trip.number_of_days}} <br> 
-                            Total Cost: Rs.\{{(plan_trip.itinerary.room[0].price.toFixed(2) * (1 - plan_trip.itinerary.room[0].discount * 0.01) * plan_trip.itinerary.room[1]).toFixed(2)}}
+                            <br> Quantity:\{{(plan_trip.itinerary.room[1])}} 
+                            <br> Number Of Days:\{{plan_trip.itinerary.room[2]}} <br> 
+                            Total Cost: Rs.\{{(plan_trip.itinerary.room[0].price * (1 - plan_trip.itinerary.room[0].discount * 0.01) * plan_trip.itinerary.room[1] * plan_trip.itinerary.room[2]).toFixed(2)}}
                             </div>
                             <button ng-click="plan_trip.itinerary.room=null;updatePlannedTrip();" type="button"
                               class="close text-right" aria-label="Close">
@@ -1262,9 +1259,9 @@
                               \{{plan_trip.itinerary.taxi[0].capacity}} <br> AC: \{{plan_trip.itinerary.taxi[0].AC}}
                               <br> Price: \{{plan_trip.itinerary.taxi[0].price.toFixed(2)}} <br> Discount:
                               \{{plan_trip.itinerary.taxi[0].discount}} <br> Quantity:
-                              \{{(plan_trip.itinerary.taxi[1]/plan_trip.number_of_days)}} <br> Number Of Days:
-                              \{{plan_trip.number_of_days}} <br> Total Cost: Rs.
-                              \{{plan_trip.itinerary.taxi[0].price.toFixed(2) * (1 - plan_trip.itinerary.taxi[0].discount * 0.01) * plan_trip.itinerary.taxi[1]}}
+                              \{{(plan_trip.itinerary.taxi[1])}} <br> Number Of Days:
+                              \{{plan_trip.itinerary.taxi[2]}} <br> Total Cost: Rs.
+                              \{{(plan_trip.itinerary.taxi[0].price * (1 - plan_trip.itinerary.taxi[0].discount * 0.01) * plan_trip.itinerary.taxi[1] * plan_trip.itinerary.taxi[2]).toFixed(2)}}
                             </div>
                             <button ng-click="plan_trip.itinerary.taxi=null;updatePlannedTrip();" type="button"
                               class="close text-right" aria-label="Close">
@@ -1299,7 +1296,7 @@
                         <div ng-show="plan_trip.itinerary.food_expense!=null" class="row justify-content-around">
                           <h6>Food Budget: \{{plan_trip.itinerary.food_expense[0]}} per person per day</h6>
                           <h6>Total Food Expense: Rs.
-                            \{{plan_trip.itinerary.food_expense[0] * plan_trip.itinerary.food_expense[1]}} </h6>
+                            \{{plan_trip.itinerary.food_expense[0] * plan_trip.itinerary.food_expense[1] * plan_trip.itinerary.food_expense[2]}} </h6>
                               <button ng-click="plan_trip.itinerary.food_expense = null;updatePlannedTrip();" type="button" class="close text-right"
                               aria-label="Close">
                               <span aria-hidden="true">&times;</span>

@@ -621,9 +621,12 @@ angularApp.controller("ngContent",function($scope,$http)
 						city:$scope.currentServices.newData[it.value]
 						}
 					});
+					console.log("finding city ID",$scope.currentServices.newData[it.value],newLoc_ID.data.content);
+					// console.log(it.value);
 					reqBody[it.value]='"'+newLoc_ID.data.content+'"';
+					// console.log(reqBody);
 				}
-				if(it.type==4)
+				else if(it.type==4)
 				{
 					flag=1;
 				}
@@ -813,10 +816,10 @@ angularApp.controller("ngContent",function($scope,$http)
 			if($scope.currentServices.model.route==true)
 			{
 				console.log("sending Delet");
-				deleteState=await $http.post('/api/deleteData',JSON.stringify({
-					type:'route',
-					service_id:it[$scope.currentServices.model.globalID.searchKey]
-				}));
+				// deleteState=await $http.post('/api/deleteData',JSON.stringify({
+				// 	type:'route',
+				// 	service_id:it[$scope.currentServices.model.globalID.searchKey]
+				// }));
 				console.log("delet done");
 				insertData=[];
 				console.log(it.routeData);

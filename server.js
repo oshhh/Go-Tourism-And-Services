@@ -551,7 +551,7 @@ function updateList(callback,data)
 function insertRoutes(callback,service_id,data){
     query='';
     for(i in data){
-        query+='insert into route'+
+        query+='insert IGNORE into route'+
         ' VALUES("'+service_id+'","'+data[i].location_id+'","'+data[i].arrival_time +'");';
     }
     runQuery(callback,query);
